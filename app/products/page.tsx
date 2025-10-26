@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
@@ -8,7 +8,7 @@ import { Filter, SortAsc, Grid, List } from 'lucide-react';
 import ProductCard from '@/components/ProductCard';
 import { Product } from '@/types';
 
-export default function ProductsPage() {
+function ProductsContent() {
   const { t, i18n } = useTranslation();
   const searchParams = useSearchParams();
   const category = searchParams.get('category');
@@ -263,5 +263,19 @@ export default function ProductsPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen py-20 px-4 flex items-center justify-center">
+        <div className="text-white text-center">
+          <div className="animate-pulse mb-4">Ürünler yükleniyor...</div>
+        </div>
+      </div>
+    }>
+      <ProductsContent />
+    </Suspense>
   );
 }
