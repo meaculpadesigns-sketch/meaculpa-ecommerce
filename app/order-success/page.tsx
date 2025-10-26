@@ -1,13 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { CheckCircle, Package, Mail, Phone } from 'lucide-react';
 import Link from 'next/link';
 import Confetti from 'react-confetti';
 
-export default function OrderSuccessPage() {
+function OrderSuccessContent() {
   const searchParams = useSearchParams();
   const orderNumber = searchParams.get('orderNumber');
   const [showConfetti, setShowConfetti] = useState(true);
@@ -182,13 +182,13 @@ export default function OrderSuccessPage() {
             </a>
 
             <a
-              href="tel:+905551234567"
+              href="tel:+905075620802"
               className="flex items-center gap-3 p-4 glass rounded-xl hover:bg-white hover:bg-opacity-10 transition-colors"
             >
               <Phone className="text-mea-gold" size={24} />
               <div>
                 <p className="text-white font-medium">Telefon</p>
-                <p className="text-gray-400 text-sm">+90 555 123 45 67</p>
+                <p className="text-gray-400 text-sm">+90 507 562 08 02</p>
               </div>
             </a>
           </div>
@@ -218,5 +218,19 @@ export default function OrderSuccessPage() {
         </motion.div>
       </div>
     </div>
+  );
+}
+
+export default function OrderSuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-white text-center">
+          <div className="animate-pulse mb-4">Yükleniyor...</div>
+        </div>
+      </div>
+    }>
+      <OrderSuccessContent />
+    </Suspense>
   );
 }
