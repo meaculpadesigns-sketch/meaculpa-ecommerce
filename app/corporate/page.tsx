@@ -2,8 +2,10 @@
 
 import { motion } from 'framer-motion';
 import { Building, Users, Gift, Award, Mail, Phone } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function CorporatePage() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-6xl mx-auto">
@@ -13,10 +15,10 @@ export default function CorporatePage() {
           className="text-center mb-12"
         >
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Kurumsal Çözümler
+            {t('corporate.title')}
           </h1>
           <p className="text-xl text-gray-400">
-            İşletmeniz için özel tasarım ve toplu sipariş hizmetleri
+            {t('corporate.subtitle')}
           </p>
         </motion.div>
 
@@ -32,11 +34,10 @@ export default function CorporatePage() {
               <div className="p-3 bg-mea-gold rounded-xl">
                 <Building className="text-black" size={32} />
               </div>
-              <h2 className="text-2xl font-bold text-white">Kurumsal Üniformalar</h2>
+              <h2 className="text-2xl font-bold text-white">{t('corporate.uniformsTitle')}</h2>
             </div>
             <p className="text-gray-300 leading-relaxed">
-              Otel, restoran, spa ve diğer işletmeler için özel tasarım çalışan kıyafetleri.
-              Markanızın kimliğini yansıtan, konforlu ve şık üniformalar.
+              {t('corporate.uniformsDesc')}
             </p>
           </motion.div>
 
@@ -50,11 +51,10 @@ export default function CorporatePage() {
               <div className="p-3 bg-mea-gold rounded-xl">
                 <Gift className="text-black" size={32} />
               </div>
-              <h2 className="text-2xl font-bold text-white">Kurumsal Hediyeler</h2>
+              <h2 className="text-2xl font-bold text-white">{t('corporate.giftsTitle')}</h2>
             </div>
             <p className="text-gray-300 leading-relaxed">
-              Özel günler, etkinlikler ve ödül törenleri için özel tasarım hediye setleri.
-              Logo ve marka kimliğiniz ile kişiselleştirilebilir.
+              {t('corporate.giftsDesc')}
             </p>
           </motion.div>
 
@@ -68,11 +68,10 @@ export default function CorporatePage() {
               <div className="p-3 bg-mea-gold rounded-xl">
                 <Users className="text-black" size={32} />
               </div>
-              <h2 className="text-2xl font-bold text-white">Toplu Sipariş</h2>
+              <h2 className="text-2xl font-bold text-white">{t('corporate.bulkTitle')}</h2>
             </div>
             <p className="text-gray-300 leading-relaxed">
-              Organizasyonlar, davetler ve özel günler için toplu sipariş imkanı.
-              Özel fiyatlandırma ve öncelikli üretim hizmeti.
+              {t('corporate.bulkDesc')}
             </p>
           </motion.div>
 
@@ -86,11 +85,10 @@ export default function CorporatePage() {
               <div className="p-3 bg-mea-gold rounded-xl">
                 <Award className="text-black" size={32} />
               </div>
-              <h2 className="text-2xl font-bold text-white">VIP Hizmet</h2>
+              <h2 className="text-2xl font-bold text-white">{t('corporate.vipTitle')}</h2>
             </div>
             <p className="text-gray-300 leading-relaxed">
-              Özel müşterileriniz için VIP hizmet ve özel koleksiyonlar.
-              Kişisel tasarım danışmanlığı ve premium ambalaj seçenekleri.
+              {t('corporate.vipDesc')}
             </p>
           </motion.div>
         </div>
@@ -103,7 +101,7 @@ export default function CorporatePage() {
           className="glass rounded-2xl p-8 mb-12"
         >
           <h2 className="text-3xl font-bold text-white mb-8 text-center">
-            Nasıl Çalışır?
+            {t('corporate.howItWorksTitle')}
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -111,9 +109,9 @@ export default function CorporatePage() {
               <div className="w-16 h-16 bg-mea-gold rounded-full flex items-center justify-center text-black font-bold text-2xl mx-auto mb-4">
                 1
               </div>
-              <h3 className="text-white font-semibold mb-2">İletişim</h3>
+              <h3 className="text-white font-semibold mb-2">{t('corporate.step1Title')}</h3>
               <p className="text-gray-400 text-sm">
-                Bizimle iletişime geçin ve ihtiyaçlarınızı paylaşın
+                {t('corporate.step1Desc')}
               </p>
             </div>
 
@@ -121,9 +119,9 @@ export default function CorporatePage() {
               <div className="w-16 h-16 bg-mea-gold rounded-full flex items-center justify-center text-black font-bold text-2xl mx-auto mb-4">
                 2
               </div>
-              <h3 className="text-white font-semibold mb-2">Tasarım</h3>
+              <h3 className="text-white font-semibold mb-2">{t('corporate.step2Title')}</h3>
               <p className="text-gray-400 text-sm">
-                Tasarım ekibimiz sizinle birlikte çalışır
+                {t('corporate.step2Desc')}
               </p>
             </div>
 
@@ -131,9 +129,9 @@ export default function CorporatePage() {
               <div className="w-16 h-16 bg-mea-gold rounded-full flex items-center justify-center text-black font-bold text-2xl mx-auto mb-4">
                 3
               </div>
-              <h3 className="text-white font-semibold mb-2">Teklif</h3>
+              <h3 className="text-white font-semibold mb-2">{t('corporate.step3Title')}</h3>
               <p className="text-gray-400 text-sm">
-                Detaylı fiyat teklifi ve üretim süresi bildirimi
+                {t('corporate.step3Desc')}
               </p>
             </div>
 
@@ -141,9 +139,9 @@ export default function CorporatePage() {
               <div className="w-16 h-16 bg-mea-gold rounded-full flex items-center justify-center text-black font-bold text-2xl mx-auto mb-4">
                 4
               </div>
-              <h3 className="text-white font-semibold mb-2">Üretim</h3>
+              <h3 className="text-white font-semibold mb-2">{t('corporate.step4Title')}</h3>
               <p className="text-gray-400 text-sm">
-                Onay sonrası üretim ve teslimat
+                {t('corporate.step4Desc')}
               </p>
             </div>
           </div>
@@ -157,18 +155,18 @@ export default function CorporatePage() {
           className="glass rounded-2xl p-8 mb-12"
         >
           <h2 className="text-3xl font-bold text-white mb-6">
-            Neden Mea Culpa?
+            {t('corporate.whyTitle')}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
-              'Özel tasarım ve üretim',
-              'Minimum sipariş adedi yok',
-              'Hızlı üretim süreci',
-              'Rekabetçi fiyatlandırma',
-              'Kaliteli doğal kumaşlar',
-              'Profesyonel müşteri hizmetleri',
-              'Özel ambalaj seçenekleri',
-              'Teslimatta esneklik',
+              t('corporate.benefit1'),
+              t('corporate.benefit2'),
+              t('corporate.benefit3'),
+              t('corporate.benefit4'),
+              t('corporate.benefit5'),
+              t('corporate.benefit6'),
+              t('corporate.benefit7'),
+              t('corporate.benefit8'),
             ].map((benefit, index) => (
               <div key={index} className="flex items-center gap-3">
                 <div className="w-2 h-2 bg-mea-gold rounded-full" />
@@ -186,11 +184,10 @@ export default function CorporatePage() {
           className="glass rounded-2xl p-8 text-center"
         >
           <h2 className="text-3xl font-bold text-white mb-4">
-            Projenizi Konuşalım
+            {t('corporate.ctaTitle')}
           </h2>
           <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
-            Kurumsal ihtiyaçlarınız için size özel çözümler üretelim.
-            Detaylı bilgi almak ve teklif almak için bizimle iletişime geçin.
+            {t('corporate.ctaDesc')}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

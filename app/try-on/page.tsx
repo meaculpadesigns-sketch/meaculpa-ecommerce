@@ -3,8 +3,10 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Upload, Camera, Sparkles, AlertCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function TryOnPage() {
+  const { t } = useTranslation();
   const [userImage, setUserImage] = useState<string | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -30,7 +32,7 @@ export default function TryOnPage() {
 
   const handleTryOn = async () => {
     if (!userImage || !selectedProduct) {
-      alert('Lütfen fotoğrafınızı yükleyin ve bir ürün seçin');
+      alert(t('tryOn.bestResults'));
       return;
     }
 
@@ -50,7 +52,7 @@ export default function TryOnPage() {
       setResult(data.resultImage);
     } catch (error) {
       console.error('Error during try-on:', error);
-      alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+      alert(t('common.error'));
     } finally {
       setLoading(false);
     }
@@ -67,11 +69,11 @@ export default function TryOnPage() {
           <div className="inline-flex items-center gap-2 mb-4">
             <Sparkles className="text-mea-gold" size={32} />
             <h1 className="text-4xl md:text-5xl font-bold text-white">
-              Sanal Deneme
+              {t('tryOn.title')}
             </h1>
           </div>
           <p className="text-gray-400 text-lg">
-            Ürünlerimizi yapay zeka ile üzerinizde görün
+            {t('tryOn.subtitle')}
           </p>
         </motion.div>
 
@@ -85,15 +87,15 @@ export default function TryOnPage() {
             {/* Upload Photo */}
             <div className="glass rounded-2xl p-6">
               <h2 className="text-2xl font-bold text-white mb-4">
-                1. Fotoğrafınızı Yükleyin
+                1. {t('tryOn.step1Title')}
               </h2>
 
               {!userImage ? (
                 <label className="block cursor-pointer">
                   <div className="aspect-[3/4] border-2 border-dashed border-gray-600 rounded-xl flex flex-col items-center justify-center hover:border-mea-gold transition-colors">
                     <Upload className="text-gray-400 mb-4" size={48} />
-                    <p className="text-white font-medium mb-2">Fotoğraf Yükle</p>
-                    <p className="text-gray-400 text-sm">veya sürükleyip bırakın</p>
+                    <p className="text-white font-medium mb-2">{t('tryOn.uploadPhoto')}</p>
+                    <p className="text-gray-400 text-sm">{t('tryOn.dragDrop')}</p>
                   </div>
                   <input
                     type="file"
@@ -105,7 +107,7 @@ export default function TryOnPage() {
               ) : (
                 <div className="relative aspect-[3/4] bg-zinc-800 rounded-xl overflow-hidden">
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <p className="text-white">Yüklenen Fotoğraf</p>
+                    <p className="text-white">{t('tryOn.uploadedPhoto')}</p>
                   </div>
                   <button
                     onClick={() => setUserImage(null)}
@@ -120,11 +122,11 @@ export default function TryOnPage() {
                 <div className="flex items-start gap-2">
                   <AlertCircle className="text-blue-400 flex-shrink-0 mt-0.5" size={20} />
                   <div className="text-sm text-blue-300">
-                    <p className="font-medium mb-1">En iyi sonuç için:</p>
+                    <p className="font-medium mb-1">{t('tryOn.bestResults')}</p>
                     <ul className="space-y-1 text-xs">
-                      <li>• Tam boy fotoğraf kullanın</li>
-                      <li>• Düz arka plan tercih edin</li>
-                      <li>• İyi aydınlatılmış ortamda çekin</li>
+                      <li>• {t('tryOn.tip1')}</li>
+                      <li>• {t('tryOn.tip2')}</li>
+                      <li>• {t('tryOn.tip3')}</li>
                     </ul>
                   </div>
                 </div>
@@ -134,7 +136,7 @@ export default function TryOnPage() {
             {/* Select Product */}
             <div className="glass rounded-2xl p-6">
               <h2 className="text-2xl font-bold text-white mb-4">
-                2. Ürün Seçin
+                2. {t('tryOn.step2Title')}
               </h2>
               <div className="grid grid-cols-3 gap-3">
                 {products.map((product) => (
@@ -164,12 +166,12 @@ export default function TryOnPage() {
               {loading ? (
                 <>
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" />
-                  İşleniyor...
+                  {t('tryOn.processing')}
                 </>
               ) : (
                 <>
                   <Sparkles size={24} />
-                  Dene
+                  {t('tryOn.tryOnBtn')}
                 </>
               )}
             </button>
@@ -182,34 +184,33 @@ export default function TryOnPage() {
             className="glass rounded-2xl p-6"
           >
             <h2 className="text-2xl font-bold text-white mb-4">
-              3. Sonuç
+              3. {t('tryOn.step3Title')}
             </h2>
 
             {!result ? (
               <div className="aspect-[3/4] border-2 border-dashed border-gray-600 rounded-xl flex flex-col items-center justify-center">
                 <Camera className="text-gray-400 mb-4" size={48} />
                 <p className="text-gray-400 text-center px-4">
-                  Fotoğrafınızı yükleyin ve bir ürün seçin,<br />
-                  sonuç burada görünecek
+                  {t('tryOn.noResult')}
                 </p>
               </div>
             ) : (
               <div className="space-y-4">
                 <div className="aspect-[3/4] bg-zinc-800 rounded-xl overflow-hidden">
                   <div className="w-full h-full flex items-center justify-center text-white">
-                    Deneme Sonucu
+                    {t('tryOn.tryOnResult')}
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <button className="btn-primary">
-                    Beğendim
+                    {t('tryOn.liked')}
                   </button>
                   <button
                     onClick={() => setResult(null)}
                     className="btn-secondary"
                   >
-                    Tekrar Dene
+                    {t('tryOn.tryAgain')}
                   </button>
                 </div>
               </div>
@@ -225,34 +226,34 @@ export default function TryOnPage() {
           className="mt-12 glass rounded-2xl p-8"
         >
           <h3 className="text-2xl font-bold text-white mb-4 text-center">
-            Sanal Deneme Nasıl Çalışır?
+            {t('tryOn.howItWorksTitle')}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
             <div>
               <div className="w-12 h-12 bg-mea-gold rounded-full flex items-center justify-center text-black font-bold text-xl mx-auto mb-3">
                 1
               </div>
-              <p className="text-white font-medium mb-2">Fotoğraf Yükleyin</p>
+              <p className="text-white font-medium mb-2">{t('tryOn.howStep1Title')}</p>
               <p className="text-gray-400 text-sm">
-                Tam boy bir fotoğrafınızı sisteme yükleyin
+                {t('tryOn.howStep1Desc')}
               </p>
             </div>
             <div>
               <div className="w-12 h-12 bg-mea-gold rounded-full flex items-center justify-center text-black font-bold text-xl mx-auto mb-3">
                 2
               </div>
-              <p className="text-white font-medium mb-2">Ürün Seçin</p>
+              <p className="text-white font-medium mb-2">{t('tryOn.howStep2Title')}</p>
               <p className="text-gray-400 text-sm">
-                Denemek istediğiniz ürünü katalogdan seçin
+                {t('tryOn.howStep2Desc')}
               </p>
             </div>
             <div>
               <div className="w-12 h-12 bg-mea-gold rounded-full flex items-center justify-center text-black font-bold text-xl mx-auto mb-3">
                 3
               </div>
-              <p className="text-white font-medium mb-2">Sonucu Görün</p>
+              <p className="text-white font-medium mb-2">{t('tryOn.howStep3Title')}</p>
               <p className="text-gray-400 text-sm">
-                AI teknolojisi ile ürünü üzerinizde görün
+                {t('tryOn.howStep3Desc')}
               </p>
             </div>
           </div>
@@ -266,7 +267,7 @@ export default function TryOnPage() {
           className="mt-6 text-center"
         >
           <p className="text-gray-400 text-sm">
-            🔒 Yüklediğiniz fotoğraflar güvenli bir şekilde işlenir ve saklanmaz
+            🔒 {t('tryOn.privacyNote')}
           </p>
         </motion.div>
       </div>

@@ -4,8 +4,10 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, Instagram } from 'lucide-react';
 import { createMessage } from '@/lib/firebase-helpers';
+import { useTranslation } from 'react-i18next';
 
 export default function ContactPage() {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -36,7 +38,7 @@ export default function ContactPage() {
       setTimeout(() => setSuccess(false), 5000);
     } catch (error) {
       console.error('Error sending message:', error);
-      alert('Mesaj gönderilirken bir hata oluştu');
+      alert(t('contact.errorMessage'));
     } finally {
       setLoading(false);
     }
@@ -50,9 +52,9 @@ export default function ContactPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h1 className="text-5xl font-bold text-white mb-4">Bize Ulaşın</h1>
+          <h1 className="text-5xl font-bold text-white mb-4">{t('contact.title')}</h1>
           <p className="text-xl text-gray-400">
-            Sorularınız için buradayız
+            {t('contact.subtitle')}
           </p>
         </motion.div>
 
@@ -65,20 +67,20 @@ export default function ContactPage() {
           >
             <div className="glass rounded-2xl p-8">
               <h2 className="text-2xl font-bold text-white mb-6">
-                Mesaj Gönderin
+                {t('contact.sendMessage')}
               </h2>
 
               {success && (
                 <div className="mb-6 p-4 bg-green-500 bg-opacity-20 border border-green-500 rounded-lg">
                   <p className="text-green-500">
-                    Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.
+                    {t('contact.successMessage')}
                   </p>
                 </div>
               )}
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-white mb-2">Adınız *</label>
+                  <label className="block text-white mb-2">{t('contact.name')} *</label>
                   <input
                     type="text"
                     value={formData.name}
@@ -89,7 +91,7 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white mb-2">E-posta *</label>
+                  <label className="block text-white mb-2">{t('contact.email')} *</label>
                   <input
                     type="email"
                     value={formData.email}
@@ -100,7 +102,7 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white mb-2">Telefon</label>
+                  <label className="block text-white mb-2">{t('contact.phone')}</label>
                   <input
                     type="tel"
                     value={formData.phone}
@@ -110,7 +112,7 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white mb-2">Mesajınız *</label>
+                  <label className="block text-white mb-2">{t('contact.message')} *</label>
                   <textarea
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -126,11 +128,11 @@ export default function ContactPage() {
                   className="btn-primary w-full flex items-center justify-center gap-2"
                 >
                   {loading ? (
-                    'Gönderiliyor...'
+                    t('contact.sending')
                   ) : (
                     <>
                       <Send size={20} />
-                      Gönder
+                      {t('contact.send')}
                     </>
                   )}
                 </button>
@@ -148,7 +150,7 @@ export default function ContactPage() {
             {/* Quick Contact */}
             <div className="glass rounded-2xl p-8">
               <h2 className="text-2xl font-bold text-white mb-6">
-                İletişim Bilgileri
+                {t('contact.contactInfo')}
               </h2>
 
               <div className="space-y-6">
@@ -157,7 +159,7 @@ export default function ContactPage() {
                     <Mail className="text-black" size={24} />
                   </div>
                   <div>
-                    <p className="text-white font-semibold mb-1">E-posta</p>
+                    <p className="text-white font-semibold mb-1">{t('contact.email')}</p>
                     <a
                       href="mailto:meaculpadesigns@gmail.com"
                       className="text-gray-400 hover:text-mea-gold transition-colors"
@@ -172,7 +174,7 @@ export default function ContactPage() {
                     <Phone className="text-black" size={24} />
                   </div>
                   <div>
-                    <p className="text-white font-semibold mb-1">Telefon</p>
+                    <p className="text-white font-semibold mb-1">{t('contact.phone')}</p>
                     <a
                       href="tel:+905075620802"
                       className="text-gray-400 hover:text-mea-gold transition-colors"
@@ -204,7 +206,7 @@ export default function ContactPage() {
                     <MapPin className="text-black" size={24} />
                   </div>
                   <div>
-                    <p className="text-white font-semibold mb-1">Adres</p>
+                    <p className="text-white font-semibold mb-1">{t('contact.address')}</p>
                     <p className="text-gray-400">
                       Yurt mah. 71329 sk. Erkam Apt.<br />
                       Kat: 8 No: 16<br />
@@ -218,20 +220,20 @@ export default function ContactPage() {
             {/* Working Hours */}
             <div className="glass rounded-2xl p-8">
               <h3 className="text-xl font-bold text-white mb-4">
-                Çalışma Saatleri
+                {t('contact.workingHours')}
               </h3>
               <div className="space-y-3 text-gray-300">
                 <div className="flex justify-between">
-                  <span>Pazartesi - Cuma</span>
+                  <span>{t('contact.mondayFriday')}</span>
                   <span className="text-white">09:00 - 18:00</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Cumartesi</span>
+                  <span>{t('contact.saturday')}</span>
                   <span className="text-white">10:00 - 16:00</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Pazar</span>
-                  <span className="text-red-400">Kapalı</span>
+                  <span>{t('contact.sunday')}</span>
+                  <span className="text-red-400">{t('contact.closed')}</span>
                 </div>
               </div>
             </div>
@@ -239,13 +241,13 @@ export default function ContactPage() {
             {/* FAQ Link */}
             <div className="glass rounded-2xl p-8 bg-mea-gold bg-opacity-10">
               <h3 className="text-xl font-bold text-white mb-3">
-                Sıkça Sorulan Sorular
+                {t('contact.faqTitle')}
               </h3>
               <p className="text-gray-300 mb-4">
-                Sorularınızın cevabını SSS sayfamızda bulabilirsiniz.
+                {t('contact.faqDesc')}
               </p>
               <a href="/faq" className="btn-secondary inline-block">
-                SSS&apos;ye Git
+                {t('contact.goToFaq')}
               </a>
             </div>
           </motion.div>
@@ -259,10 +261,10 @@ export default function ContactPage() {
           className="mt-12 text-center glass rounded-2xl p-8"
         >
           <h3 className="text-2xl font-bold text-white mb-4">
-            Anında Yardım İster misiniz?
+            {t('contact.instantHelp')}
           </h3>
           <p className="text-gray-300 mb-6">
-            Instagram üzerinden canlı destek hattımızla hemen iletişime geçebilirsiniz
+            {t('contact.instantHelpDesc')}
           </p>
           <a
             href="https://www.instagram.com/meaculpadesigns"
@@ -271,7 +273,7 @@ export default function ContactPage() {
             className="btn-primary inline-flex items-center gap-2"
           >
             <Instagram size={20} />
-            Instagram&apos;dan Mesaj Gönderin
+            {t('contact.sendInstagram')}
           </a>
         </motion.div>
       </div>

@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Package, Truck, CheckCircle, Clock } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { getOrderByNumber } from '@/lib/firebase-helpers';
 import { Order } from '@/types';
 
 export default function OrderTrackingPage() {
+  const { t } = useTranslation();
   const [orderNumber, setOrderNumber] = useState('');
   const [contact, setContact] = useState('');
   const [order, setOrder] = useState<Order | null>(null);
@@ -25,11 +27,11 @@ export default function OrderTrackingPage() {
       if (foundOrder) {
         setOrder(foundOrder);
       } else {
-        setError('Sipariş bulunamadı. Lütfen bilgilerinizi kontrol edin.');
+        setError(t('orderTracking.notFound'));
       }
     } catch (err) {
       console.error('Error tracking order:', err);
-      setError('Sipariş aranırken bir hata oluştu.');
+      setError(t('orderTracking.errorSearching'));
     } finally {
       setLoading(false);
     }
@@ -53,25 +55,25 @@ export default function OrderTrackingPage() {
   const getStatusText = (status: Order['status']) => {
     switch (status) {
       case 'pending':
-        return 'Beklemede';
+        return t('orderTracking.statusPending');
       case 'processing':
-        return 'Hazırlanıyor';
+        return t('orderTracking.statusProcessing');
       case 'shipped':
-        return 'Kargoda';
+        return t('orderTracking.statusShipped');
       case 'delivered':
-        return 'Teslim Edildi';
+        return t('orderTracking.statusDelivered');
       case 'cancelled':
-        return 'İptal Edildi';
+        return t('orderTracking.statusCancelled');
       default:
         return status;
     }
   };
 
   const orderSteps = [
-    { status: 'pending', label: 'Sipariş Alındı', icon: Clock },
-    { status: 'processing', label: 'Hazırlanıyor', icon: Package },
-    { status: 'shipped', label: 'Kargoya Verildi', icon: Truck },
-    { status: 'delivered', label: 'Teslim Edildi', icon: CheckCircle },
+    { status: 'pending', label: t('orderTracking.stepReceived'), icon: Clock },
+    { status: 'processing', label: t('orderTracking.stepProcessing'), icon: Package },
+    { status: 'shipped', label: t('orderTracking.stepShipped'), icon: Truck },
+    { status: 'delivered', label: t('orderTracking.stepDelivered'), icon: CheckCircle },
   ];
 
   const getCurrentStepIndex = (status: Order['status']) => {
@@ -87,10 +89,10 @@ export default function OrderTrackingPage() {
           className="text-center mb-12"
         >
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Sipariş Takip
+            {t('orderTracking.title')}
           </h1>
           <p className="text-gray-400 text-lg">
-            Siparişinizin durumunu öğrenmek için bilgilerinizi girin
+            {t('orderTracking.subtitle')}
           </p>
         </motion.div>
 
@@ -104,13 +106,13 @@ export default function OrderTrackingPage() {
           <form onSubmit={handleSearch} className="space-y-6">
             <div>
               <label className="block text-white font-medium mb-2">
-                Sipariş Numarası
+                {t('orderTracking.orderNumber')}
               </label>
               <input
                 type="text"
                 value={orderNumber}
                 onChange={(e) => setOrderNumber(e.target.value)}
-                placeholder="MEA123456789"
+                placeholder={t('orderTracking.orderNumberPlaceholder')}
                 className="input-field"
                 required
               />
@@ -118,13 +120,13 @@ export default function OrderTrackingPage() {
 
             <div>
               <label className="block text-white font-medium mb-2">
-                E-posta veya Telefon
+                {t('orderTracking.contactLabel')}
               </label>
               <input
                 type="text"
                 value={contact}
                 onChange={(e) => setContact(e.target.value)}
-                placeholder="ornek@email.com veya 0555 123 4567"
+                placeholder={t('orderTracking.contactPlaceholder')}
                 className="input-field"
                 required
               />
@@ -142,11 +144,11 @@ export default function OrderTrackingPage() {
               className="btn-primary w-full flex items-center justify-center gap-2"
             >
               {loading ? (
-                'Aranıyor...'
+                t('orderTracking.searching')
               ) : (
                 <>
                   <Search size={20} />
-                  Sipariş Ara
+                  {t('orderTracking.search')}
                 </>
               )}
             </button>
@@ -162,7 +164,7 @@ export default function OrderTrackingPage() {
           >
             {/* Status Timeline */}
             <div className="glass rounded-2xl p-8">
-              <h2 className="text-2xl font-bold text-white mb-8">Sipariş Durumu</h2>
+              <h2 className="text-2xl font-bold text-white mb-8">{t('orderTracking.statusTitle')}</h2>
 
               <div className="relative">
                 {/* Progress Line */}
@@ -214,7 +216,7 @@ export default function OrderTrackingPage() {
                       {getStatusText(order.status)}
                     </p>
                     <p className="text-gray-400 text-sm">
-                      Güncelleme: {new Date(order.updatedAt).toLocaleString('tr-TR')}
+                      {t('orderTracking.updated')} {new Date(order.updatedAt).toLocaleString('tr-TR')}
                     </p>
                   </div>
                 </div>
@@ -223,7 +225,7 @@ export default function OrderTrackingPage() {
               {/* Tracking Number */}
               {order.trackingNumber && (
                 <div className="mt-6 p-4 glass rounded-lg">
-                  <p className="text-gray-400 text-sm mb-1">Kargo Takip Numarası</p>
+                  <p className="text-gray-400 text-sm mb-1">{t('orderTracking.trackingNumber')}</p>
                   <p className="text-white font-mono font-semibold text-lg">
                     {order.trackingNumber}
                   </p>
@@ -233,7 +235,7 @@ export default function OrderTrackingPage() {
 
             {/* Order Items */}
             <div className="glass rounded-2xl p-8">
-              <h2 className="text-2xl font-bold text-white mb-6">Sipariş İçeriği</h2>
+              <h2 className="text-2xl font-bold text-white mb-6">{t('orderTracking.orderContent')}</h2>
               <div className="space-y-4">
                 {order.items.map((item, index) => (
                   <div
@@ -244,7 +246,7 @@ export default function OrderTrackingPage() {
                     <div className="flex-grow">
                       <p className="text-white font-medium">{item.product.name}</p>
                       <p className="text-gray-400 text-sm">
-                        Beden: {item.size} × {item.quantity}
+                        {t('orderTracking.size')} {item.size} × {item.quantity}
                       </p>
                     </div>
                     <p className="text-mea-gold font-semibold">
@@ -257,7 +259,7 @@ export default function OrderTrackingPage() {
               {/* Total */}
               <div className="mt-6 pt-6 border-t border-white border-opacity-10">
                 <div className="flex justify-between items-center">
-                  <span className="text-white font-semibold text-lg">Toplam</span>
+                  <span className="text-white font-semibold text-lg">{t('orderTracking.total')}</span>
                   <span className="text-mea-gold font-bold text-2xl">
                     ₺{order.total.toFixed(2)}
                   </span>
@@ -267,7 +269,7 @@ export default function OrderTrackingPage() {
 
             {/* Delivery Address */}
             <div className="glass rounded-2xl p-8">
-              <h2 className="text-2xl font-bold text-white mb-6">Teslimat Adresi</h2>
+              <h2 className="text-2xl font-bold text-white mb-6">{t('orderTracking.deliveryAddress')}</h2>
               <div className="text-gray-300">
                 <p className="font-medium text-white mb-2">
                   {order.shippingAddress.firstName} {order.shippingAddress.lastName}

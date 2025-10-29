@@ -1,9 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { Heart, Award, Users, Globe } from 'lucide-react';
 
 export default function AboutPage() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-4xl mx-auto">
@@ -14,10 +16,10 @@ export default function AboutPage() {
           className="text-center mb-16"
         >
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-            Biz Kimiz?
+            {t('about.title')}
           </h1>
           <p className="text-xl text-gray-300 leading-relaxed">
-            Doğu&apos;nun zengin kültürel mirasını modern tasarımla buluşturan bir markayız
+            {t('about.subtitle')}
           </p>
         </motion.div>
 
@@ -28,22 +30,16 @@ export default function AboutPage() {
           transition={{ delay: 0.1 }}
           className="glass rounded-2xl p-8 mb-12"
         >
-          <h2 className="text-3xl font-bold text-white mb-6">Hikayemiz</h2>
+          <h2 className="text-3xl font-bold text-white mb-6">{t('about.ourStory')}</h2>
           <div className="space-y-4 text-gray-300 leading-relaxed">
             <p>
-              <span className="text-mea-gold font-semibold">Mea Culpa</span>, Latince&apos;de
-              &quot;benim hatam, benim tercihim&quot; anlamına gelir. Bizim için bu ifade, her
-              kararın ve sonucunun sorumluluğunu cesurca üstlenmeyi simgeliyor.
+              <span className="text-mea-gold font-semibold">Mea Culpa</span>, {t('about.storyPara1')}
             </p>
             <p>
-              Her bir tasarımımız, tarihi İpek Yolu&apos;nun doğusundan özenle seçilen doğal, el
-              dokuması kumaşlardan yapılır. Türkiye&apos;nin zengin tekstil mirasını modern
-              yaşamla harmanlayan markamız, her parçanın benzersiz bir hikayesi olmasını sağlar.
+              {t('about.storyPara2')}
             </p>
             <p>
-              Sadece kıyafet üretmiyoruz; kültürler arası bir köprü kuruyoruz. Her ürünümüz,
-              geleneksel el sanatlarını yaşatırken, çağdaş tasarım anlayışıyla geleceğe
-              taşıyor.
+              {t('about.storyPara3')}
             </p>
           </div>
         </motion.div>
@@ -60,11 +56,10 @@ export default function AboutPage() {
               <div className="p-3 bg-mea-gold rounded-xl">
                 <Heart className="text-black" size={24} />
               </div>
-              <h3 className="text-xl font-bold text-white">El Emeği</h3>
+              <h3 className="text-xl font-bold text-white">{t('about.valueHandmade')}</h3>
             </div>
             <p className="text-gray-300">
-              Her bir ürünümüz, usta eller tarafından özenle hazırlanır. Seri üretim yerine,
-              özel sipariş sistemiyle çalışıyoruz.
+              {t('about.valueHandmadeDesc')}
             </p>
           </div>
 
@@ -73,11 +68,10 @@ export default function AboutPage() {
               <div className="p-3 bg-mea-gold rounded-xl">
                 <Award className="text-black" size={24} />
               </div>
-              <h3 className="text-xl font-bold text-white">Kalite</h3>
+              <h3 className="text-xl font-bold text-white">{t('about.valueQuality')}</h3>
             </div>
             <p className="text-gray-300">
-              Doğal kumaşlar, geleneksel dokuma teknikleri ve titiz kalite kontrol ile en iyi
-              ürünleri sunuyoruz.
+              {t('about.valueQualityDesc')}
             </p>
           </div>
 
@@ -86,11 +80,10 @@ export default function AboutPage() {
               <div className="p-3 bg-mea-gold rounded-xl">
                 <Users className="text-black" size={24} />
               </div>
-              <h3 className="text-xl font-bold text-white">Topluluk</h3>
+              <h3 className="text-xl font-bold text-white">{t('about.valueCommunity')}</h3>
             </div>
             <p className="text-gray-300">
-              Yerel zanaatkarlarla çalışarak, geleneksel sanatların yaşamasına ve gelişmesine
-              katkıda bulunuyoruz.
+              {t('about.valueCommunityDesc')}
             </p>
           </div>
 
@@ -99,11 +92,10 @@ export default function AboutPage() {
               <div className="p-3 bg-mea-gold rounded-xl">
                 <Globe className="text-black" size={24} />
               </div>
-              <h3 className="text-xl font-bold text-white">Sürdürülebilirlik</h3>
+              <h3 className="text-xl font-bold text-white">{t('about.valueSustainability')}</h3>
             </div>
             <p className="text-gray-300">
-              Çevre dostu üretim yöntemleri ve doğal malzemeler kullanarak, geleceğe saygılı
-              bir üretim anlayışı benimsiyoruz.
+              {t('about.valueSustainabilityDesc')}
             </p>
           </div>
         </motion.div>
@@ -115,15 +107,12 @@ export default function AboutPage() {
           transition={{ delay: 0.3 }}
           className="glass rounded-2xl p-8 mb-12"
         >
-          <h2 className="text-3xl font-bold text-white mb-6">Misyonumuz</h2>
+          <h2 className="text-3xl font-bold text-white mb-6">{t('about.mission')}</h2>
           <p className="text-gray-300 leading-relaxed mb-4">
-            Doğu&apos;nun zengin tekstil mirasını modern tasarım anlayışıyla harmanlayarak, her
-            bireyin kendi tarzını özgürce ifade edebileceği, kaliteli ve anlamlı ürünler
-            sunmak.
+            {t('about.missionPara1')}
           </p>
           <p className="text-gray-300 leading-relaxed">
-            Geleneksel el sanatlarını yaşatırken, çağdaş yaşam tarzına uygun, sürdürülebilir
-            ve etik üretim yöntemleriyle geleceğe değer katmak.
+            {t('about.missionPara2')}
           </p>
         </motion.div>
 
@@ -135,11 +124,10 @@ export default function AboutPage() {
           className="text-center"
         >
           <p className="text-2xl font-semibold text-white mb-4">
-            &quot;Her karar bir yolculuktur.&quot;
+            &quot;{t('about.quote')}&quot;
           </p>
           <p className="text-gray-400">
-            Mea Culpa ailesine hoş geldiniz. Sizinle bu yolculukta olmaktan mutluluk
-            duyuyoruz.
+            {t('about.welcome')}
           </p>
         </motion.div>
       </div>

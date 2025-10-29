@@ -36,7 +36,7 @@ export default function DesignRequestPage() {
       setImages((prev) => [...prev, ...urls]);
     } catch (error) {
       console.error('Error uploading images:', error);
-      alert('Görsel yüklenirken hata oluştu');
+      alert(t('common.error'));
     } finally {
       setUploading(false);
     }
@@ -48,19 +48,19 @@ export default function DesignRequestPage() {
 
     try {
       if (!email || !phone) {
-        alert('Lütfen iletişim bilgilerinizi girin');
+        alert(t('contact.errorMessage'));
         setLoading(false);
         return;
       }
 
       if (requestType === 'text' && !description) {
-        alert('Lütfen tasarım açıklaması girin');
+        alert(t('common.error'));
         setLoading(false);
         return;
       }
 
       if (requestType === 'image' && images.length === 0) {
-        alert('Lütfen en az bir görsel yükleyin');
+        alert(t('common.error'));
         setLoading(false);
         return;
       }
@@ -77,13 +77,13 @@ export default function DesignRequestPage() {
       });
 
       // Show success message
-      alert(`Tasarım isteğiniz alındı! Takip numaranız: ${requestNumber}`);
+      alert(`${t('designRequest.successMessage')} ${requestNumber}`);
 
       // Redirect to tracking page
       router.push(`/design-request/track?number=${requestNumber}&contact=${email}`);
     } catch (error) {
       console.error('Error creating design request:', error);
-      alert('Tasarım isteği oluşturulurken hata oluştu');
+      alert(t('common.error'));
     } finally {
       setLoading(false);
     }
@@ -101,7 +101,7 @@ export default function DesignRequestPage() {
             {t('designRequest.title')}
           </h1>
           <p className="text-gray-400 text-lg">
-            Hayalinizdeki tasarımı bize anlatın, size özel üretelim
+            {t('designRequest.subtitle')}
           </p>
         </motion.div>
 
@@ -115,7 +115,7 @@ export default function DesignRequestPage() {
           {/* Request Type Selection */}
           <div className="glass rounded-2xl p-6">
             <h2 className="text-2xl font-bold text-white mb-6">
-              İstek Türü Seçin
+              {t('designRequest.selectType')}
             </h2>
             <div className="grid grid-cols-2 gap-4">
               <button
@@ -128,9 +128,9 @@ export default function DesignRequestPage() {
                 }`}
               >
                 <FileText size={40} />
-                <span className="font-semibold">Sözel Anlatım</span>
+                <span className="font-semibold">{t('designRequest.textOption')}</span>
                 <p className="text-sm opacity-80 text-center">
-                  Tasarımınızı yazarak anlatın
+                  {t('designRequest.textOptionDesc')}
                 </p>
               </button>
 
@@ -144,9 +144,9 @@ export default function DesignRequestPage() {
                 }`}
               >
                 <ImageIcon size={40} />
-                <span className="font-semibold">Görsel Yükleme</span>
+                <span className="font-semibold">{t('designRequest.imageOption')}</span>
                 <p className="text-sm opacity-80 text-center">
-                  İlham aldığınız görselleri yükleyin
+                  {t('designRequest.imageOptionDesc')}
                 </p>
               </button>
             </div>
@@ -155,14 +155,14 @@ export default function DesignRequestPage() {
           {/* Contact Info */}
           <div className="glass rounded-2xl p-6">
             <h2 className="text-2xl font-bold text-white mb-6">
-              İletişim Bilgileri
+              {t('designRequest.contactInfo')}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="E-posta"
+                placeholder={t('auth.email')}
                 className="input-field"
                 required
               />
@@ -170,7 +170,7 @@ export default function DesignRequestPage() {
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="Telefon"
+                placeholder={t('auth.phone')}
                 className="input-field"
                 required
               />
@@ -181,24 +181,24 @@ export default function DesignRequestPage() {
           {requestType === 'text' ? (
             <div className="glass rounded-2xl p-6">
               <h2 className="text-2xl font-bold text-white mb-6">
-                Tasarım Açıklaması
+                {t('designRequest.designDescription')}
               </h2>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="Tasarımınızı detaylı bir şekilde anlatın... (Renkler, desenler, kumaş tercihleri, stil vb.)"
+                placeholder={t('designRequest.designPlaceholder')}
                 className="input-field"
                 rows={10}
                 required
               />
               <p className="text-gray-400 text-sm mt-2">
-                Ne kadar detaylı anlatırsanız, size o kadar uygun bir tasarım yapabiliriz.
+                {t('designRequest.detailHelp')}
               </p>
             </div>
           ) : (
             <div className="glass rounded-2xl p-6">
               <h2 className="text-2xl font-bold text-white mb-6">
-                Görsel Yükleme
+                {t('designRequest.uploadTitle')}
               </h2>
 
               {/* Uploaded Images */}
@@ -221,7 +221,7 @@ export default function DesignRequestPage() {
               {/* Upload Button */}
               <label className="btn-secondary cursor-pointer inline-flex items-center gap-2">
                 <Upload size={20} />
-                {uploading ? 'Yükleniyor...' : 'Görsel Yükle'}
+                {uploading ? t('designRequest.uploading') : t('designRequest.uploadBtn')}
                 <input
                   type="file"
                   multiple
@@ -235,12 +235,12 @@ export default function DesignRequestPage() {
               {/* Optional Description */}
               <div className="mt-6">
                 <label className="block text-white font-medium mb-2">
-                  Ek Açıklama (Opsiyonel)
+                  {t('designRequest.additionalDesc')}
                 </label>
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Görseller hakkında ek bilgi verebilirsiniz..."
+                  placeholder={t('designRequest.additionalPlaceholder')}
                   className="input-field"
                   rows={4}
                 />
@@ -251,14 +251,14 @@ export default function DesignRequestPage() {
           {/* Info Box */}
           <div className="glass rounded-2xl p-6 bg-mea-gold bg-opacity-10">
             <h3 className="text-white font-semibold mb-3">
-              Tasarım Süreci Nasıl İşler?
+              {t('designRequest.processTitle')}
             </h3>
             <ul className="text-gray-300 space-y-2 text-sm">
-              <li>✓ İsteğiniz 24 saat içinde incelenir</li>
-              <li>✓ Tasarım ekibimiz sizinle iletişime geçer</li>
-              <li>✓ Fiyat ve süre tahmini verilir</li>
-              <li>✓ Onayınız sonrası üretim başlar</li>
-              <li>✓ Süreç boyunca bilgilendirilirsiniz</li>
+              <li>✓ {t('designRequest.processStep1')}</li>
+              <li>✓ {t('designRequest.processStep2')}</li>
+              <li>✓ {t('designRequest.processStep3')}</li>
+              <li>✓ {t('designRequest.processStep4')}</li>
+              <li>✓ {t('designRequest.processStep5')}</li>
             </ul>
           </div>
 
@@ -269,7 +269,7 @@ export default function DesignRequestPage() {
             className="btn-primary w-full py-4 text-lg flex items-center justify-center gap-2"
           >
             {loading ? (
-              'Gönderiliyor...'
+              t('designRequest.sending')
             ) : (
               <>
                 <Send size={24} />
@@ -287,9 +287,9 @@ export default function DesignRequestPage() {
           className="mt-8 text-center"
         >
           <p className="text-gray-400">
-            Daha önce tasarım isteği yaptıysanız,{' '}
+            {t('designRequest.trackPrevious')}{' '}
             <a href="/design-request/track" className="text-mea-gold hover:underline">
-              buradan takip edebilirsiniz
+              {t('designRequest.trackLink')}
             </a>
           </p>
         </motion.div>

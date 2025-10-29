@@ -2,8 +2,10 @@
 
 import { motion } from 'framer-motion';
 import { Calendar, MapPin, Users } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function CarnivalsPage() {
+  const { t } = useTranslation();
   const carnivals = [
     {
       id: '1',
@@ -34,10 +36,10 @@ export default function CarnivalsPage() {
           className="text-center mb-12"
         >
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Karnavallar & Etkinlikler
+            {t('carnivals.title')}
           </h1>
           <p className="text-xl text-gray-400">
-            Mea Culpa&apos;yı buluşmalarda ve etkinliklerde görün
+            {t('carnivals.subtitle')}
           </p>
         </motion.div>
 
@@ -51,13 +53,13 @@ export default function CarnivalsPage() {
               className="glass rounded-2xl overflow-hidden"
             >
               <div className="aspect-video bg-zinc-800 flex items-center justify-center">
-                <p className="text-white">Etkinlik Görseli</p>
+                <p className="text-white">{t('carnivals.eventImage')}</p>
               </div>
 
               <div className="p-6">
                 <div className="mb-4">
                   <span className="px-3 py-1 rounded-full bg-mea-gold bg-opacity-20 text-mea-gold text-sm font-medium">
-                    {carnival.status === 'upcoming' ? 'Yakında' : 'Geçmiş'}
+                    {carnival.status === 'upcoming' ? t('carnivals.upcoming') : t('carnivals.past')}
                   </span>
                 </div>
 
@@ -81,7 +83,7 @@ export default function CarnivalsPage() {
                 </p>
 
                 <button className="btn-primary w-full">
-                  Detayları Gör
+                  {t('carnivals.viewDetails')}
                 </button>
               </div>
             </motion.div>
@@ -92,10 +94,10 @@ export default function CarnivalsPage() {
           <div className="text-center py-20">
             <Users className="mx-auto mb-6 text-gray-400" size={80} />
             <h2 className="text-2xl font-bold text-white mb-4">
-              Yaklaşan Etkinlik Yok
+              {t('carnivals.noEvents')}
             </h2>
             <p className="text-gray-400">
-              Yeni etkinlikler duyurulduğunda burada görünecek
+              {t('carnivals.noEventsDesc')}
             </p>
           </div>
         )}
@@ -108,10 +110,10 @@ export default function CarnivalsPage() {
           className="mt-12 glass rounded-2xl p-8 text-center"
         >
           <h3 className="text-2xl font-bold text-white mb-4">
-            Etkinliklerimizden Haberdar Olun
+            {t('carnivals.stayUpdatedTitle')}
           </h3>
           <p className="text-gray-300 mb-6">
-            Instagram&apos;dan bizi takip ederek tüm etkinliklerimizden haberdar olabilirsiniz
+            {t('carnivals.stayUpdatedDesc')}
           </p>
           <a
             href="https://www.instagram.com/meaculpadesigns"
@@ -119,7 +121,7 @@ export default function CarnivalsPage() {
             rel="noopener noreferrer"
             className="btn-primary inline-block"
           >
-            Instagram&apos;da Takip Et
+            {t('carnivals.followInstagram')}
           </a>
         </motion.div>
       </div>
