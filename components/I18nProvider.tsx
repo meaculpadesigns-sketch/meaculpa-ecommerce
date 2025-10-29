@@ -311,6 +311,15 @@ const resources = {
         stayUpdatedDesc: 'Instagram\'dan bizi takip ederek tüm etkinliklerimizden haberdar olabilirsiniz',
         followInstagram: 'Instagram\'da Takip Et',
         eventImage: 'Etkinlik Görseli',
+        // Event details
+        event1Name: 'İstanbul Moda Haftası 2024',
+        event1Date: '15-20 Haziran 2024',
+        event1Location: 'İstanbul, Türkiye',
+        event1Desc: 'Mea Culpa koleksiyonu İstanbul Moda Haftası\'nda sergilenecek.',
+        event2Name: 'Geleneksel El Sanatları Festivali',
+        event2Date: '1-5 Ağustos 2024',
+        event2Location: 'Ankara, Türkiye',
+        event2Desc: 'Geleneksel dokuma teknikleri ve tasarımlarımız festival standımızda.',
       },
       // Design Request
       designRequest: {
@@ -374,6 +383,10 @@ const resources = {
         privacyNote: 'Yüklediğiniz fotoğraflar güvenli bir şekilde işlenir ve saklanmaz',
         uploadedPhoto: 'Yüklenen Fotoğraf',
         tryOnResult: 'Deneme Sonucu',
+        // Product names
+        product1: 'Geleneksel Kimono',
+        product2: 'Modern Gömlek',
+        product3: 'Özel Set',
       },
       // Order Tracking
       orderTracking: {
@@ -758,6 +771,15 @@ const resources = {
         stayUpdatedDesc: 'Follow us on Instagram to stay informed about all our events',
         followInstagram: 'Follow on Instagram',
         eventImage: 'Event Image',
+        // Event details
+        event1Name: 'Istanbul Fashion Week 2024',
+        event1Date: 'June 15-20, 2024',
+        event1Location: 'Istanbul, Turkey',
+        event1Desc: 'Mea Culpa collection will be exhibited at Istanbul Fashion Week.',
+        event2Name: 'Traditional Handicrafts Festival',
+        event2Date: 'August 1-5, 2024',
+        event2Location: 'Ankara, Turkey',
+        event2Desc: 'Traditional weaving techniques and our designs at our festival booth.',
       },
       // Design Request
       designRequest: {
@@ -821,6 +843,10 @@ const resources = {
         privacyNote: 'Your uploaded photos are processed securely and not stored',
         uploadedPhoto: 'Uploaded Photo',
         tryOnResult: 'Try On Result',
+        // Product names
+        product1: 'Traditional Kimono',
+        product2: 'Modern Shirt',
+        product3: 'Special Set',
       },
       // Order Tracking
       orderTracking: {
