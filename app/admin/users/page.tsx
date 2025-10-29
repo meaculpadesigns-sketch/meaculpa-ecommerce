@@ -25,7 +25,9 @@ export default function AdminUsersPage() {
   }, []);
 
   useEffect(() => {
-    filterUsers();
+    if (users.length > 0 || searchTerm) {
+      filterUsers();
+    }
   }, [users, searchTerm]);
 
   const fetchUsers = async () => {
