@@ -32,13 +32,22 @@ export default function AdminDashboard() {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         console.log('User logged in:', user.uid);
-        const userData = await getUserById(user.uid);
-        console.log('User data from Firestore:', userData);
-        if (userData && userData.role === 'admin') {
-          console.log('User is admin!');
-          setIsAdmin(true);
-        } else {
-          console.log('User is NOT admin, redirecting to home');
+        console.log('Attempting to fetch user data from Firestore...');
+        try {
+          const userData = await getUserById(user.uid);
+          console.log('User data from Firestore:', userData);
+          console.log('User data type:', typeof userData);
+          console.log('User data keys:', userData ? Object.keys(userData) : 'null');
+          if (userData && userData.role === 'admin') {
+            console.log('User is admin!');
+            setIsAdmin(true);
+          } else {
+            console.log('User is NOT admin, redirecting to home');
+            console.log('userData.role:', userData?.role);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
           router.push('/');
         }
       } else {
