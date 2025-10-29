@@ -29,36 +29,35 @@ export default function AdminDashboard() {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+    let mounted = true;
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (!mounted) return;
+
       if (user) {
-        console.log('User logged in:', user.uid);
-        console.log('Attempting to fetch user data from Firestore...');
         try {
           const userData = await getUserById(user.uid);
-          console.log('User data from Firestore:', userData);
-          console.log('User data type:', typeof userData);
-          console.log('User data keys:', userData ? Object.keys(userData) : 'null');
+          if (!mounted) return;
+
           if (userData && userData.role === 'admin') {
-            console.log('User is admin!');
             setIsAdmin(true);
+            setLoading(false);
           } else {
-            console.log('User is NOT admin, redirecting to home');
-            console.log('userData.role:', userData?.role);
             router.push('/');
           }
         } catch (error) {
-          console.error('Error fetching user data:', error);
-          router.push('/');
+          console.error('Admin auth error:', error);
+          if (mounted) router.push('/');
         }
       } else {
-        console.log('No user logged in, redirecting to login');
         router.push('/login');
       }
-      setLoading(false);
     });
 
-    return () => unsubscribe();
-  }, [router]);
+    return () => {
+      mounted = false;
+      unsubscribe();
+    };
+  }, []);
 
   if (loading) {
     return (
