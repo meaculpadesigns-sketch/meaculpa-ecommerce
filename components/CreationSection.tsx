@@ -13,7 +13,7 @@ interface CreationSectionProps {
 }
 
 export default function CreationSection({ creation, index }: CreationSectionProps) {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -30,10 +30,10 @@ export default function CreationSection({ creation, index }: CreationSectionProp
 
   // Sample products for demonstration
   const sampleProducts = [
-    { id: '1', name: 'Ürün 1', price: 999, image: '/images/product-1.jpg' },
-    { id: '2', name: 'Ürün 2', price: 1299, image: '/images/product-2.jpg' },
-    { id: '3', name: 'Ürün 3', price: 899, image: '/images/product-3.jpg' },
-    { id: '4', name: 'Ürün 4', price: 1499, image: '/images/product-4.jpg' },
+    { id: '1', name: t('home.product') + ' 1', price: 999, image: '/images/product-1.jpg' },
+    { id: '2', name: t('home.product') + ' 2', price: 1299, image: '/images/product-2.jpg' },
+    { id: '3', name: t('home.product') + ' 3', price: 899, image: '/images/product-3.jpg' },
+    { id: '4', name: t('home.product') + ' 4', price: 1499, image: '/images/product-4.jpg' },
   ];
 
   const scrollContainer = (direction: 'left' | 'right') => {
@@ -68,7 +68,7 @@ export default function CreationSection({ creation, index }: CreationSectionProp
           {/* Story Label */}
           <div className="inline-block mt-6">
             <button className="glass px-6 py-3 rounded-full text-white hover:bg-white hover:bg-opacity-10 transition-all group">
-              <span className="mr-2">Hikayesi</span>
+              <span className="mr-2">{t('home.story')}</span>
               <ArrowRight className="inline group-hover:translate-x-1 transition-transform" size={20} />
             </button>
           </div>
@@ -126,7 +126,7 @@ export default function CreationSection({ creation, index }: CreationSectionProp
 
                       {/* Product placeholder */}
                       <div className="w-full h-full flex items-center justify-center text-white text-lg">
-                        Ürün Görseli
+                        {t('home.productView')}
                       </div>
 
                       {/* Hover overlay */}
@@ -155,7 +155,7 @@ export default function CreationSection({ creation, index }: CreationSectionProp
             href={`/creations/${creation.id}`}
             className="inline-flex items-center btn-primary"
           >
-            Tümünü Gör
+            {t('home.viewAll')}
             <ArrowRight className="ml-2" size={20} />
           </Link>
         </div>

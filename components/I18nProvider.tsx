@@ -94,6 +94,10 @@ const resources = {
         acceptCookies: 'Çerezleri Kabul Et',
         rejectCookies: 'Reddet',
         followUs: 'Bizi Takip Edin',
+        support: 'Destek',
+        distanceSales: 'Mesafeli Satış Sözleşmesi',
+        brandDescription: 'Doğu\'nun ilhamıyla, modern yaşamın içinde. Her karar bir yolculuktur.',
+        copyright: 'Tüm hakları saklıdır.',
       },
       // Design Request
       designRequest: {
@@ -117,6 +121,23 @@ const resources = {
         editProduct: 'Ürün Düzenle',
         deleteProduct: 'Ürün Sil',
         hideProduct: 'Ürünü Gizle',
+      },
+      // Home
+      home: {
+        bestSellers: 'Çok Satanlar',
+        bestSellersDesc: 'En çok tercih edilen ürünlerimiz',
+        productView: 'Ürün Görseli',
+        product: 'Ürün',
+        ourStory: 'Bizim Hikayemiz',
+        storyText1: 'Mea Culpa, zamana dokunan hikayeler anlatan bir moda markasıdır.',
+        storyText2: 'Doğu\'nun zengin kültürel mirasından ilham alarak, modern yaşamla buluşturan özgün tasarımlar yaratıyoruz.',
+        learnMore: 'Daha Fazla Bilgi',
+        customerReviews: 'Müşteri Yorumları',
+        customerReviewsDesc: 'Müşterilerimizin deneyimleri',
+        reviewText: 'Harika bir deneyimdi! Kaliteli ürünler ve mükemmel hizmet.',
+        customer: 'Müşteri',
+        story: 'Hikayesi',
+        viewAll: 'Tümünü Gör',
       },
       // Common
       common: {
@@ -223,6 +244,10 @@ const resources = {
         acceptCookies: 'Accept Cookies',
         rejectCookies: 'Reject',
         followUs: 'Follow Us',
+        support: 'Support',
+        distanceSales: 'Distance Sales Agreement',
+        brandDescription: 'Inspired by the East, within modern life. Every decision is a journey.',
+        copyright: 'All rights reserved.',
       },
       // Design Request
       designRequest: {
@@ -246,6 +271,23 @@ const resources = {
         editProduct: 'Edit Product',
         deleteProduct: 'Delete Product',
         hideProduct: 'Hide Product',
+      },
+      // Home
+      home: {
+        bestSellers: 'Best Sellers',
+        bestSellersDesc: 'Our most popular products',
+        productView: 'Product View',
+        product: 'Product',
+        ourStory: 'Our Story',
+        storyText1: 'Mea Culpa is a fashion brand that tells stories touching time.',
+        storyText2: 'We create unique designs inspired by the rich cultural heritage of the East, bringing them together with modern life.',
+        learnMore: 'Learn More',
+        customerReviews: 'Customer Reviews',
+        customerReviewsDesc: 'Our customers\' experiences',
+        reviewText: 'It was a great experience! Quality products and excellent service.',
+        customer: 'Customer',
+        story: 'Story',
+        viewAll: 'View All',
       },
       // Common
       common: {

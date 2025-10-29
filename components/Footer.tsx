@@ -27,9 +27,9 @@ export default function Footer() {
       { name: t('footer.returns'), href: '/returns' },
     ],
     legal: [
-      { name: 'Mesafeli Satış Sözleşmesi', href: '/distance-sales-agreement' },
-      { name: 'Gizlilik Politikası', href: '/privacy' },
-      { name: 'İade Koşulları', href: '/returns' },
+      { name: t('footer.distanceSales'), href: '/distance-sales-agreement' },
+      { name: t('footer.privacy'), href: '/privacy' },
+      { name: t('footer.returns'), href: '/returns' },
     ],
   };
 
@@ -59,7 +59,7 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <h2 className="text-2xl font-bold text-white mb-4">MEA CULPA</h2>
             <p className="text-gray-400 text-sm mb-4 max-w-md">
-              Doğu&apos;nun ilhamıyla, modern yaşamın içinde. Her karar bir yolculuktur.
+              {t('footer.brandDescription')}
             </p>
             <div className="flex space-x-4">
               {socialMedia.map((social) => (
@@ -117,7 +117,7 @@ export default function Footer() {
 
           {/* Support */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Destek</h3>
+            <h3 className="text-white font-semibold mb-4">{t('footer.support')}</h3>
             <ul className="space-y-2">
               {footerLinks.support.map((link) => (
                 <li key={link.href}>
@@ -142,7 +142,7 @@ export default function Footer() {
                 href="/distance-sales-agreement"
                 className="text-gray-400 hover:text-white transition-colors"
               >
-                Mesafeli Satış Sözleşmesi
+                {t('footer.distanceSales')}
               </Link>
               <span className="text-gray-600">•</span>
               <Link
@@ -188,7 +188,7 @@ export default function Footer() {
           {/* Copyright */}
           <div className="mt-6 text-center">
             <p className="text-gray-400 text-sm">
-              &copy; {new Date().getFullYear()} Mea Culpa. Tüm hakları saklıdır.
+              &copy; {new Date().getFullYear()} Mea Culpa. {t('footer.copyright')}
             </p>
           </div>
         </div>

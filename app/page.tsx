@@ -130,10 +130,10 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Çok Satanlar
+              {t('home.bestSellers')}
             </h2>
             <p className="text-gray-400 text-lg">
-              En çok tercih edilen ürünlerimiz
+              {t('home.bestSellersDesc')}
             </p>
           </motion.div>
 
@@ -151,7 +151,7 @@ export default function Home() {
               >
                 <div className="aspect-square bg-zinc-800 rounded-lg mb-4" />
                 <h3 className="text-white text-xl font-semibold mb-2">
-                  Ürün {i}
+                  {t('home.productView')} {i}
                 </h3>
                 <p className="text-gray-400 mb-4">₺999</p>
                 <button className="btn-primary w-full">
@@ -173,19 +173,16 @@ export default function Home() {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
-              Bizim Hikayemiz
+              {t('home.ourStory')}
             </h2>
             <p className="text-gray-300 text-lg leading-relaxed mb-6">
-              Mea Culpa, "benim hatam, benim tercihim" anlamına gelir. Bizim için bu
-              ifade, her kararın ve sonucunun sorumluluğunu cesurca üstlenmeyi simgeliyor.
+              {t('home.storyText1')}
             </p>
             <p className="text-gray-300 text-lg leading-relaxed mb-8">
-              Doğal, el dokuması kumaşları doğrudan Türkiye&apos;nin doğusundaki tarihi
-              İpek Yolu bölgesinden özenle temin ediyoruz. Her bir parça yalnızca bir kez
-              üretiliyor ve sahibine özel bir hikaye taşıyor.
+              {t('home.storyText2')}
             </p>
             <Link href="/about" className="btn-primary">
-              Daha Fazla Bilgi
+              {t('home.learnMore')}
               <ArrowRight className="inline ml-2" size={20} />
             </Link>
           </motion.div>
@@ -203,10 +200,10 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Müşteri Yorumları
+              {t('home.customerReviews')}
             </h2>
             <p className="text-gray-400 text-lg">
-              Müşterilerimizin deneyimleri
+              {t('home.customerReviewsDesc')}
             </p>
           </motion.div>
 
@@ -226,9 +223,9 @@ export default function Home() {
                   ))}
                 </div>
                 <p className="text-gray-300 mb-4">
-                  "Harika bir deneyimdi. Ürün kalitesi mükemmel ve tasarımlar benzersiz."
+                  {t('home.reviewText')}
                 </p>
-                <p className="text-white font-semibold">- Müşteri {i}</p>
+                <p className="text-white font-semibold">- {t('home.customer')} {i}</p>
               </motion.div>
             ))}
           </div>
