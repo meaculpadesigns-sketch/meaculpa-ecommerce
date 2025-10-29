@@ -142,11 +142,28 @@ export async function updateOrderStatus(id: string, status: Order['status']) {
 
 // Users
 export async function getUserById(id: string) {
+  console.log('[getUserById] Starting with id:', id);
+  console.log('[getUserById] db object:', db);
   const userRef = doc(db, 'users', id);
-  const snapshot = await getDoc(userRef);
-  if (snapshot.exists()) {
-    return { id: snapshot.id, ...snapshot.data() } as User;
+  console.log('[getUserById] userRef:', userRef);
+  console.log('[getUserById] userRef.path:', userRef.path);
+  try {
+    const snapshot = await getDoc(userRef);
+    console.log('[getUserById] snapshot received');
+    console.log('[getUserById] snapshot.exists():', snapshot.exists());
+    if (snapshot.exists()) {
+      const data = snapshot.data();
+      console.log('[getUserById] snapshot.data():', data);
+      const result = { id: snapshot.id, ...data } as User;
+      console.log('[getUserById] returning:', result);
+      return result;
+    } else {
+      console.log('[getUserById] Document does not exist');
+    }
+  } catch (error) {
+    console.error('[getUserById] Error:', error);
   }
+  console.log('[getUserById] returning null');
   return null;
 }
 
