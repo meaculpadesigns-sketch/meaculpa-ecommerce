@@ -42,7 +42,7 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
         <Link href={`/products/${product.id}`} className="flex-shrink-0">
           <div className="w-full md:w-64 aspect-square bg-zinc-800 rounded-xl overflow-hidden">
             <div className="w-full h-full flex items-center justify-center text-white">
-              Ürün Görseli
+              {t('home.productView')}
             </div>
           </div>
         </Link>
@@ -77,7 +77,7 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
             </div>
             {product.oldPrice && (
               <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm">
-                {Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}% İndirim
+                {Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}% {t('products.discount')}
               </span>
             )}
           </div>
@@ -93,7 +93,7 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
                 }`}
               >
                 {size.size}
-                {!size.inStock && size.preOrder && ' (Ön Sipariş)'}
+                {!size.inStock && size.preOrder && ` (${t('products.preOrder')})`}
               </span>
             ))}
           </div>
@@ -108,7 +108,7 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
             </button>
             <Link href={`/products/${product.id}`} className="btn-secondary flex items-center gap-2">
               <Eye size={20} />
-              İncele
+              {t('products.viewDetails')}
             </Link>
           </div>
         </div>
@@ -128,13 +128,13 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
         <Link href={`/products/${product.id}`}>
           <div className="relative aspect-[3/4] bg-zinc-800 overflow-hidden">
             <div className="w-full h-full flex items-center justify-center text-white">
-              Ürün Görseli
+              {t('home.productView')}
             </div>
 
             {/* Discount Badge */}
             {product.oldPrice && (
               <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                {Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}% İndirim
+                {Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}% {t('products.discount')}
               </div>
             )}
 
@@ -161,7 +161,7 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
                 className="btn-primary"
               >
                 <ShoppingCart size={20} className="mr-2 inline" />
-                Sepete Ekle
+                {t('products.addToCart')}
               </button>
             </div>
           </div>
@@ -237,7 +237,7 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
               onClick={() => setShowStory(false)}
               className="btn-primary mt-6"
             >
-              Kapat
+              {t('common.close')}
             </button>
           </motion.div>
         </motion.div>

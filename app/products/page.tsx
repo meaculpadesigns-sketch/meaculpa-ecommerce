@@ -110,7 +110,7 @@ function ProductsContent() {
             {categoryTitle}
           </motion.h1>
           <p className="text-gray-400">
-            {filteredProducts.length} ürün bulundu
+            {filteredProducts.length} {t('products.productsFound')}
           </p>
         </div>
 
@@ -122,7 +122,7 @@ function ProductsContent() {
             className="glass px-6 py-3 rounded-full flex items-center gap-2 hover:bg-white hover:bg-opacity-10 transition-all"
           >
             <Filter size={20} />
-            <span>Filtrele</span>
+            <span>{t('common.filter')}</span>
           </button>
 
           <div className="flex items-center gap-4">
@@ -132,10 +132,10 @@ function ProductsContent() {
               onChange={(e) => setSortBy(e.target.value)}
               className="glass px-6 py-3 rounded-full bg-transparent text-white cursor-pointer"
             >
-              <option value="newest" className="bg-zinc-900">En Yeni</option>
-              <option value="popular" className="bg-zinc-900">Popüler</option>
-              <option value="price-low" className="bg-zinc-900">Fiyat: Düşük - Yüksek</option>
-              <option value="price-high" className="bg-zinc-900">Fiyat: Yüksek - Düşük</option>
+              <option value="newest" className="bg-zinc-900">{t('products.sortNewest')}</option>
+              <option value="popular" className="bg-zinc-900">{t('products.sortPopular')}</option>
+              <option value="price-low" className="bg-zinc-900">{t('products.sortPriceLow')}</option>
+              <option value="price-high" className="bg-zinc-900">{t('products.sortPriceHigh')}</option>
             </select>
 
             {/* View Mode */}
@@ -175,7 +175,7 @@ function ProductsContent() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Price Range */}
               <div>
-                <h3 className="text-white font-semibold mb-4">Fiyat Aralığı</h3>
+                <h3 className="text-white font-semibold mb-4">{t('products.priceRange')}</h3>
                 <div className="space-y-2">
                   <input
                     type="range"
@@ -193,7 +193,7 @@ function ProductsContent() {
 
               {/* Sizes */}
               <div>
-                <h3 className="text-white font-semibold mb-4">Beden</h3>
+                <h3 className="text-white font-semibold mb-4">{t('products.size')}</h3>
                 <div className="flex flex-wrap gap-2">
                   {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) => (
                     <button
@@ -219,15 +219,15 @@ function ProductsContent() {
 
               {/* Stock Status */}
               <div>
-                <h3 className="text-white font-semibold mb-4">Stok Durumu</h3>
+                <h3 className="text-white font-semibold mb-4">{t('products.stockStatus')}</h3>
                 <div className="space-y-2">
                   <label className="flex items-center gap-2 text-gray-300 cursor-pointer">
                     <input type="checkbox" className="rounded" />
-                    <span>Stokta Olanlar</span>
+                    <span>{t('products.inStock')}</span>
                   </label>
                   <label className="flex items-center gap-2 text-gray-300 cursor-pointer">
                     <input type="checkbox" className="rounded" />
-                    <span>Ön Sipariş</span>
+                    <span>{t('products.preOrder')}</span>
                   </label>
                 </div>
               </div>
@@ -257,7 +257,7 @@ function ProductsContent() {
         {filteredProducts.length === 0 && (
           <div className="text-center py-20">
             <p className="text-gray-400 text-lg">
-              Seçtiğiniz filtrelere uygun ürün bulunamadı.
+              {t('products.noProductsFound')}
             </p>
           </div>
         )}
@@ -266,15 +266,20 @@ function ProductsContent() {
   );
 }
 
+function LoadingFallback() {
+  const { t } = useTranslation();
+  return (
+    <div className="min-h-screen py-20 px-4 flex items-center justify-center">
+      <div className="text-white text-center">
+        <div className="animate-pulse mb-4">{t('common.loading')}</div>
+      </div>
+    </div>
+  );
+}
+
 export default function ProductsPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen py-20 px-4 flex items-center justify-center">
-        <div className="text-white text-center">
-          <div className="animate-pulse mb-4">Ürünler yükleniyor...</div>
-        </div>
-      </div>
-    }>
+    <Suspense fallback={<LoadingFallback />}>
       <ProductsContent />
     </Suspense>
   );
