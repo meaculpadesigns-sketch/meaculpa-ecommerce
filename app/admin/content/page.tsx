@@ -27,7 +27,8 @@ interface ContentPage {
 }
 
 export default function AdminContentPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isTurkish = i18n.language === 'tr';
   const [activeTab, setActiveTab] = useState<'pages' | 'seo' | 'media'>('pages');
   const [editingPage, setEditingPage] = useState<ContentPage | null>(null);
 
@@ -82,10 +83,10 @@ export default function AdminContentPage() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">
-            {t('common.language') === 'tr' ? 'İçerik Yönetimi & SEO' : 'Content Management & SEO'}
+            {isTurkish ? 'İçerik Yönetimi & SEO' : 'Content Management & SEO'}
           </h1>
           <p className="text-gray-400">
-            {t('common.language') === 'tr'
+            {isTurkish
               ? 'Sayfa içerikleri ve SEO ayarlarını yönetin'
               : 'Manage page content and SEO settings'}
           </p>
@@ -102,7 +103,7 @@ export default function AdminContentPage() {
             }`}
           >
             <FileText className="inline mr-2" size={20} />
-            {t('common.language') === 'tr' ? 'Sayfalar' : 'Pages'}
+            {isTurkish ? 'Sayfalar' : 'Pages'}
           </button>
           <button
             onClick={() => setActiveTab('seo')}
@@ -113,7 +114,7 @@ export default function AdminContentPage() {
             }`}
           >
             <Search className="inline mr-2" size={20} />
-            {t('common.language') === 'tr' ? 'SEO Ayarları' : 'SEO Settings'}
+            {isTurkish ? 'SEO Ayarları' : 'SEO Settings'}
           </button>
           <button
             onClick={() => setActiveTab('media')}
@@ -124,7 +125,7 @@ export default function AdminContentPage() {
             }`}
           >
             <Image className="inline mr-2" size={20} />
-            {t('common.language') === 'tr' ? 'Medya' : 'Media'}
+            {isTurkish ? 'Medya' : 'Media'}
           </button>
         </div>
 
@@ -137,11 +138,11 @@ export default function AdminContentPage() {
           >
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-semibold text-white">
-                {t('common.language') === 'tr' ? 'Sayfa İçerikleri' : 'Page Contents'}
+                {isTurkish ? 'Sayfa İçerikleri' : 'Page Contents'}
               </h2>
               <button className="btn-primary flex items-center gap-2">
                 <Plus size={20} />
-                {t('common.language') === 'tr' ? 'Yeni Sayfa' : 'New Page'}
+                {isTurkish ? 'Yeni Sayfa' : 'New Page'}
               </button>
             </div>
 
@@ -160,8 +161,8 @@ export default function AdminContentPage() {
                         page.status === 'published' ? 'bg-green-500/20 text-green-500' : 'bg-yellow-500/20 text-yellow-500'
                       }`}>
                         {page.status === 'published'
-                          ? (t('common.language') === 'tr' ? 'Yayında' : 'Published')
-                          : (t('common.language') === 'tr' ? 'Taslak' : 'Draft')}
+                          ? (isTurkish ? 'Yayında' : 'Published')
+                          : (isTurkish ? 'Taslak' : 'Draft')}
                       </span>
                     </div>
                     <p className="text-gray-400 text-sm mb-2">{page.slug}</p>
@@ -170,28 +171,28 @@ export default function AdminContentPage() {
                       <p className="text-sm text-gray-400"><strong>Meta Description:</strong> {page.metaDescription}</p>
                     </div>
                     <p className="text-xs text-gray-500 mt-2">
-                      {t('common.language') === 'tr' ? 'Son güncelleme: ' : 'Last updated: '}
-                      {new Date(page.lastUpdated).toLocaleDateString(t('common.language') === 'tr' ? 'tr-TR' : 'en-US')}
+                      {isTurkish ? 'Son güncelleme: ' : 'Last updated: '}
+                      {new Date(page.lastUpdated).toLocaleDateString(isTurkish ? 'tr-TR' : 'en-US')}
                     </p>
                   </div>
                   <div className="flex md:flex-col gap-2">
                     <button className="btn-secondary flex items-center justify-center gap-2 px-4 py-2 text-sm">
                       <Eye size={16} />
-                      {t('common.language') === 'tr' ? 'Önizle' : 'Preview'}
+                      {isTurkish ? 'Önizle' : 'Preview'}
                     </button>
                     <button
                       onClick={() => setEditingPage(page)}
                       className="btn-primary flex items-center justify-center gap-2 px-4 py-2 text-sm"
                     >
                       <Edit size={16} />
-                      {t('common.language') === 'tr' ? 'Düzenle' : 'Edit'}
+                      {isTurkish ? 'Düzenle' : 'Edit'}
                     </button>
                     <button
                       onClick={() => handleDeletePage(page.id)}
                       className="bg-red-500 hover:bg-red-600 text-white rounded-lg flex items-center justify-center gap-2 px-4 py-2 text-sm transition-colors"
                     >
                       <Trash2 size={16} />
-                      {t('common.language') === 'tr' ? 'Sil' : 'Delete'}
+                      {isTurkish ? 'Sil' : 'Delete'}
                     </button>
                   </div>
                 </div>
@@ -208,18 +209,18 @@ export default function AdminContentPage() {
             className="glass rounded-xl p-6"
           >
             <h2 className="text-2xl font-semibold text-white mb-6">
-              {t('common.language') === 'tr' ? 'SEO Genel Ayarları' : 'General SEO Settings'}
+              {isTurkish ? 'SEO Genel Ayarları' : 'General SEO Settings'}
             </h2>
             <div className="space-y-4">
               <div>
                 <label className="block text-white mb-2">
-                  {t('common.language') === 'tr' ? 'Site Başlığı' : 'Site Title'}
+                  {isTurkish ? 'Site Başlığı' : 'Site Title'}
                 </label>
                 <input type="text" defaultValue="Mea Culpa" className="input-field w-full" />
               </div>
               <div>
                 <label className="block text-white mb-2">
-                  {t('common.language') === 'tr' ? 'Site Açıklaması' : 'Site Description'}
+                  {isTurkish ? 'Site Açıklaması' : 'Site Description'}
                 </label>
                 <textarea
                   defaultValue="Doğu'nun ilhamıyla, modern yaşamın içinde. Her karar bir yolculuktur."
@@ -229,7 +230,7 @@ export default function AdminContentPage() {
               </div>
               <div>
                 <label className="block text-white mb-2">
-                  {t('common.language') === 'tr' ? 'Anahtar Kelimeler' : 'Keywords'}
+                  {isTurkish ? 'Anahtar Kelimeler' : 'Keywords'}
                 </label>
                 <input
                   type="text"
@@ -251,7 +252,7 @@ export default function AdminContentPage() {
               </div>
               <button className="btn-primary flex items-center gap-2">
                 <Save size={20} />
-                {t('common.language') === 'tr' ? 'Kaydet' : 'Save'}
+                {isTurkish ? 'Kaydet' : 'Save'}
               </button>
             </div>
           </motion.div>
@@ -266,11 +267,11 @@ export default function AdminContentPage() {
           >
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-semibold text-white">
-                {t('common.language') === 'tr' ? 'Medya Kütüphanesi' : 'Media Library'}
+                {isTurkish ? 'Medya Kütüphanesi' : 'Media Library'}
               </h2>
               <button className="btn-primary flex items-center gap-2">
                 <Plus size={20} />
-                {t('common.language') === 'tr' ? 'Yeni Medya Yükle' : 'Upload New Media'}
+                {isTurkish ? 'Yeni Medya Yükle' : 'Upload New Media'}
               </button>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -295,12 +296,12 @@ export default function AdminContentPage() {
               className="glass rounded-2xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
             >
               <h3 className="text-2xl font-bold text-white mb-6">
-                {t('common.language') === 'tr' ? 'Sayfayı Düzenle' : 'Edit Page'}
+                {isTurkish ? 'Sayfayı Düzenle' : 'Edit Page'}
               </h3>
               <div className="space-y-4">
                 <div>
                   <label className="block text-white mb-2">
-                    {t('common.language') === 'tr' ? 'Başlık' : 'Title'}
+                    {isTurkish ? 'Başlık' : 'Title'}
                   </label>
                   <input
                     type="text"
@@ -332,13 +333,13 @@ export default function AdminContentPage() {
                     onClick={() => handleSavePage(editingPage)}
                     className="btn-primary flex-1"
                   >
-                    {t('common.language') === 'tr' ? 'Kaydet' : 'Save'}
+                    {isTurkish ? 'Kaydet' : 'Save'}
                   </button>
                   <button
                     onClick={() => setEditingPage(null)}
                     className="btn-secondary flex-1"
                   >
-                    {t('common.language') === 'tr' ? 'İptal' : 'Cancel'}
+                    {isTurkish ? 'İptal' : 'Cancel'}
                   </button>
                 </div>
               </div>

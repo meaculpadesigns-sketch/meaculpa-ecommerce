@@ -18,7 +18,8 @@ interface Review {
 }
 
 export default function AdminReviewsPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isTurkish = i18n.language === 'tr';
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState<'all' | 'pending' | 'approved' | 'rejected'>('all');
 
@@ -105,10 +106,10 @@ export default function AdminReviewsPage() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">
-            {t('common.language') === 'tr' ? 'Yorumlar & Değerlendirmeler' : 'Reviews & Ratings'}
+            {isTurkish ? 'Yorumlar & Değerlendirmeler' : 'Reviews & Ratings'}
           </h1>
           <p className="text-gray-400">
-            {t('common.language') === 'tr'
+            {isTurkish
               ? 'Müşteri yorumlarını yönetin ve değerlendirin'
               : 'Manage and evaluate customer reviews'}
           </p>
@@ -118,31 +119,31 @@ export default function AdminReviewsPage() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
           <div className="glass rounded-xl p-4">
             <p className="text-gray-400 text-sm mb-1">
-              {t('common.language') === 'tr' ? 'Toplam' : 'Total'}
+              {isTurkish ? 'Toplam' : 'Total'}
             </p>
             <p className="text-3xl font-bold text-white">{stats.total}</p>
           </div>
           <div className="glass rounded-xl p-4">
             <p className="text-gray-400 text-sm mb-1">
-              {t('common.language') === 'tr' ? 'Bekleyen' : 'Pending'}
+              {isTurkish ? 'Bekleyen' : 'Pending'}
             </p>
             <p className="text-3xl font-bold text-yellow-500">{stats.pending}</p>
           </div>
           <div className="glass rounded-xl p-4">
             <p className="text-gray-400 text-sm mb-1">
-              {t('common.language') === 'tr' ? 'Onaylanan' : 'Approved'}
+              {isTurkish ? 'Onaylanan' : 'Approved'}
             </p>
             <p className="text-3xl font-bold text-green-500">{stats.approved}</p>
           </div>
           <div className="glass rounded-xl p-4">
             <p className="text-gray-400 text-sm mb-1">
-              {t('common.language') === 'tr' ? 'Reddedilen' : 'Rejected'}
+              {isTurkish ? 'Reddedilen' : 'Rejected'}
             </p>
             <p className="text-3xl font-bold text-red-500">{stats.rejected}</p>
           </div>
           <div className="glass rounded-xl p-4">
             <p className="text-gray-400 text-sm mb-1">
-              {t('common.language') === 'tr' ? 'Ort. Puan' : 'Avg. Rating'}
+              {isTurkish ? 'Ort. Puan' : 'Avg. Rating'}
             </p>
             <p className="text-3xl font-bold text-mea-gold flex items-center gap-1">
               {stats.avgRating} <Star size={20} fill="currentColor" />
@@ -157,7 +158,7 @@ export default function AdminReviewsPage() {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
               <input
                 type="text"
-                placeholder={t('common.language') === 'tr' ? 'Ara...' : 'Search...'}
+                placeholder={isTurkish ? 'Ara...' : 'Search...'}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="input-field pl-10 w-full"
@@ -170,10 +171,10 @@ export default function AdminReviewsPage() {
                 onChange={(e) => setFilterStatus(e.target.value as any)}
                 className="input-field"
               >
-                <option value="all">{t('common.language') === 'tr' ? 'Tüm Durumlar' : 'All Statuses'}</option>
-                <option value="pending">{t('common.language') === 'tr' ? 'Bekleyen' : 'Pending'}</option>
-                <option value="approved">{t('common.language') === 'tr' ? 'Onaylanan' : 'Approved'}</option>
-                <option value="rejected">{t('common.language') === 'tr' ? 'Reddedilen' : 'Rejected'}</option>
+                <option value="all">{isTurkish ? 'Tüm Durumlar' : 'All Statuses'}</option>
+                <option value="pending">{isTurkish ? 'Bekleyen' : 'Pending'}</option>
+                <option value="approved">{isTurkish ? 'Onaylanan' : 'Approved'}</option>
+                <option value="rejected">{isTurkish ? 'Reddedilen' : 'Rejected'}</option>
               </select>
             </div>
           </div>
@@ -197,9 +198,9 @@ export default function AdminReviewsPage() {
                       review.status === 'pending' ? 'bg-yellow-500/20 text-yellow-500' :
                       'bg-red-500/20 text-red-500'
                     }`}>
-                      {review.status === 'approved' ? (t('common.language') === 'tr' ? 'Onaylı' : 'Approved') :
-                       review.status === 'pending' ? (t('common.language') === 'tr' ? 'Beklemede' : 'Pending') :
-                       (t('common.language') === 'tr' ? 'Reddedildi' : 'Rejected')}
+                      {review.status === 'approved' ? (isTurkish ? 'Onaylı' : 'Approved') :
+                       review.status === 'pending' ? (isTurkish ? 'Beklemede' : 'Pending') :
+                       (isTurkish ? 'Reddedildi' : 'Rejected')}
                     </span>
                   </div>
                   <p className="text-gray-400 text-sm mb-2">{review.productName}</p>
@@ -214,10 +215,10 @@ export default function AdminReviewsPage() {
                   </div>
                   <p className="text-white mb-2">{review.comment}</p>
                   <div className="flex items-center gap-4 text-sm text-gray-400">
-                    <span>{new Date(review.date).toLocaleDateString(t('common.language') === 'tr' ? 'tr-TR' : 'en-US')}</span>
+                    <span>{new Date(review.date).toLocaleDateString(isTurkish ? 'tr-TR' : 'en-US')}</span>
                     <span className="flex items-center gap-1">
                       <ThumbsUp size={14} />
-                      {review.helpful} {t('common.language') === 'tr' ? 'faydalı' : 'helpful'}
+                      {review.helpful} {isTurkish ? 'faydalı' : 'helpful'}
                     </span>
                   </div>
                 </div>
@@ -231,14 +232,14 @@ export default function AdminReviewsPage() {
                         className="btn-primary flex items-center justify-center gap-2 px-4 py-2 text-sm"
                       >
                         <ThumbsUp size={16} />
-                        {t('common.language') === 'tr' ? 'Onayla' : 'Approve'}
+                        {isTurkish ? 'Onayla' : 'Approve'}
                       </button>
                       <button
                         onClick={() => handleReject(review.id)}
                         className="bg-red-500 hover:bg-red-600 text-white rounded-lg flex items-center justify-center gap-2 px-4 py-2 text-sm transition-colors"
                       >
                         <ThumbsDown size={16} />
-                        {t('common.language') === 'tr' ? 'Reddet' : 'Reject'}
+                        {isTurkish ? 'Reddet' : 'Reject'}
                       </button>
                     </>
                   )}
@@ -249,8 +250,8 @@ export default function AdminReviewsPage() {
                     >
                       {review.isVisible ? <EyeOff size={16} /> : <Eye size={16} />}
                       {review.isVisible
-                        ? (t('common.language') === 'tr' ? 'Gizle' : 'Hide')
-                        : (t('common.language') === 'tr' ? 'Göster' : 'Show')}
+                        ? (isTurkish ? 'Gizle' : 'Hide')
+                        : (isTurkish ? 'Göster' : 'Show')}
                     </button>
                   )}
                   <button
@@ -258,7 +259,7 @@ export default function AdminReviewsPage() {
                     className="bg-red-500 hover:bg-red-600 text-white rounded-lg flex items-center justify-center gap-2 px-4 py-2 text-sm transition-colors"
                   >
                     <Trash2 size={16} />
-                    {t('common.language') === 'tr' ? 'Sil' : 'Delete'}
+                    {isTurkish ? 'Sil' : 'Delete'}
                   </button>
                 </div>
               </div>
@@ -269,7 +270,7 @@ export default function AdminReviewsPage() {
         {filteredReviews.length === 0 && (
           <div className="glass rounded-xl p-12 text-center">
             <p className="text-gray-400">
-              {t('common.language') === 'tr' ? 'Yorum bulunamadı' : 'No reviews found'}
+              {isTurkish ? 'Yorum bulunamadı' : 'No reviews found'}
             </p>
           </div>
         )}

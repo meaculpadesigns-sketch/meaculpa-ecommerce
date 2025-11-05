@@ -17,7 +17,8 @@ import {
 import { useTranslation } from 'react-i18next';
 
 export default function AdminSettingsPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isTurkish = i18n.language === 'tr';
   const [activeTab, setActiveTab] = useState<'general' | 'contact' | 'shipping' | 'payment' | 'notifications'>('general');
 
   const [generalSettings, setGeneralSettings] = useState({
@@ -66,10 +67,10 @@ export default function AdminSettingsPage() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">
-            {t('common.language') === 'tr' ? 'Site Ayarları' : 'Site Settings'}
+            {isTurkish ? 'Site Ayarları' : 'Site Settings'}
           </h1>
           <p className="text-gray-400">
-            {t('common.language') === 'tr'
+            {isTurkish
               ? 'Genel site ayarlarını ve konfigürasyonları yönetin'
               : 'Manage general site settings and configurations'}
           </p>
@@ -86,7 +87,7 @@ export default function AdminSettingsPage() {
             }`}
           >
             <Settings className="inline mr-2" size={20} />
-            {t('common.language') === 'tr' ? 'Genel' : 'General'}
+            {isTurkish ? 'Genel' : 'General'}
           </button>
           <button
             onClick={() => setActiveTab('contact')}
@@ -97,7 +98,7 @@ export default function AdminSettingsPage() {
             }`}
           >
             <Phone className="inline mr-2" size={20} />
-            {t('common.language') === 'tr' ? 'İletişim' : 'Contact'}
+            {isTurkish ? 'İletişim' : 'Contact'}
           </button>
           <button
             onClick={() => setActiveTab('shipping')}
@@ -108,7 +109,7 @@ export default function AdminSettingsPage() {
             }`}
           >
             <Truck className="inline mr-2" size={20} />
-            {t('common.language') === 'tr' ? 'Kargo' : 'Shipping'}
+            {isTurkish ? 'Kargo' : 'Shipping'}
           </button>
           <button
             onClick={() => setActiveTab('payment')}
@@ -119,7 +120,7 @@ export default function AdminSettingsPage() {
             }`}
           >
             <DollarSign className="inline mr-2" size={20} />
-            {t('common.language') === 'tr' ? 'Ödeme' : 'Payment'}
+            {isTurkish ? 'Ödeme' : 'Payment'}
           </button>
           <button
             onClick={() => setActiveTab('notifications')}
@@ -130,7 +131,7 @@ export default function AdminSettingsPage() {
             }`}
           >
             <Bell className="inline mr-2" size={20} />
-            {t('common.language') === 'tr' ? 'Bildirimler' : 'Notifications'}
+            {isTurkish ? 'Bildirimler' : 'Notifications'}
           </button>
         </div>
 
@@ -142,12 +143,12 @@ export default function AdminSettingsPage() {
             className="glass rounded-xl p-6"
           >
             <h2 className="text-2xl font-semibold text-white mb-6">
-              {t('common.language') === 'tr' ? 'Genel Ayarlar' : 'General Settings'}
+              {isTurkish ? 'Genel Ayarlar' : 'General Settings'}
             </h2>
             <div className="space-y-4">
               <div>
                 <label className="block text-white mb-2">
-                  {t('common.language') === 'tr' ? 'Site Adı' : 'Site Name'}
+                  {isTurkish ? 'Site Adı' : 'Site Name'}
                 </label>
                 <input
                   type="text"
@@ -158,7 +159,7 @@ export default function AdminSettingsPage() {
               </div>
               <div>
                 <label className="block text-white mb-2">
-                  {t('common.language') === 'tr' ? 'Site URL' : 'Site URL'}
+                  {isTurkish ? 'Site URL' : 'Site URL'}
                 </label>
                 <input
                   type="text"
@@ -169,7 +170,7 @@ export default function AdminSettingsPage() {
               </div>
               <div>
                 <label className="block text-white mb-2">
-                  {t('common.language') === 'tr' ? 'Varsayılan Dil' : 'Default Language'}
+                  {isTurkish ? 'Varsayılan Dil' : 'Default Language'}
                 </label>
                 <select
                   value={generalSettings.defaultLanguage}
@@ -183,10 +184,10 @@ export default function AdminSettingsPage() {
               <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
                 <div>
                   <p className="text-white font-medium">
-                    {t('common.language') === 'tr' ? 'Bakım Modu' : 'Maintenance Mode'}
+                    {isTurkish ? 'Bakım Modu' : 'Maintenance Mode'}
                   </p>
                   <p className="text-gray-400 text-sm">
-                    {t('common.language') === 'tr'
+                    {isTurkish
                       ? 'Siteyi ziyaretçilere kapalı tut'
                       : 'Close the site to visitors'}
                   </p>
@@ -204,10 +205,10 @@ export default function AdminSettingsPage() {
               <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
                 <div>
                   <p className="text-white font-medium">
-                    {t('common.language') === 'tr' ? 'Kullanıcı Kayıt' : 'User Registration'}
+                    {isTurkish ? 'Kullanıcı Kayıt' : 'User Registration'}
                   </p>
                   <p className="text-gray-400 text-sm">
-                    {t('common.language') === 'tr'
+                    {isTurkish
                       ? 'Yeni kullanıcıların kayıt olmasına izin ver'
                       : 'Allow new users to register'}
                   </p>
@@ -224,7 +225,7 @@ export default function AdminSettingsPage() {
               </div>
               <button className="btn-primary flex items-center gap-2 w-full md:w-auto">
                 <Save size={20} />
-                {t('common.language') === 'tr' ? 'Kaydet' : 'Save'}
+                {isTurkish ? 'Kaydet' : 'Save'}
               </button>
             </div>
           </motion.div>
@@ -238,13 +239,13 @@ export default function AdminSettingsPage() {
             className="glass rounded-xl p-6"
           >
             <h2 className="text-2xl font-semibold text-white mb-6">
-              {t('common.language') === 'tr' ? 'İletişim Bilgileri' : 'Contact Information'}
+              {isTurkish ? 'İletişim Bilgileri' : 'Contact Information'}
             </h2>
             <div className="space-y-4">
               <div>
                 <label className="block text-white mb-2 flex items-center gap-2">
                   <Mail size={18} />
-                  {t('common.language') === 'tr' ? 'E-posta' : 'Email'}
+                  {isTurkish ? 'E-posta' : 'Email'}
                 </label>
                 <input
                   type="email"
@@ -256,7 +257,7 @@ export default function AdminSettingsPage() {
               <div>
                 <label className="block text-white mb-2 flex items-center gap-2">
                   <Phone size={18} />
-                  {t('common.language') === 'tr' ? 'Telefon' : 'Phone'}
+                  {isTurkish ? 'Telefon' : 'Phone'}
                 </label>
                 <input
                   type="tel"
@@ -268,7 +269,7 @@ export default function AdminSettingsPage() {
               <div>
                 <label className="block text-white mb-2 flex items-center gap-2">
                   <MapPin size={18} />
-                  {t('common.language') === 'tr' ? 'Adres' : 'Address'}
+                  {isTurkish ? 'Adres' : 'Address'}
                 </label>
                 <input
                   type="text"
@@ -288,7 +289,7 @@ export default function AdminSettingsPage() {
               </div>
               <div>
                 <label className="block text-white mb-2">
-                  {t('common.language') === 'tr' ? 'Çalışma Saatleri (TR)' : 'Working Hours (TR)'}
+                  {isTurkish ? 'Çalışma Saatleri (TR)' : 'Working Hours (TR)'}
                 </label>
                 <input
                   type="text"
@@ -299,7 +300,7 @@ export default function AdminSettingsPage() {
               </div>
               <div>
                 <label className="block text-white mb-2">
-                  {t('common.language') === 'tr' ? 'Çalışma Saatleri (EN)' : 'Working Hours (EN)'}
+                  {isTurkish ? 'Çalışma Saatleri (EN)' : 'Working Hours (EN)'}
                 </label>
                 <input
                   type="text"
@@ -310,7 +311,7 @@ export default function AdminSettingsPage() {
               </div>
               <button className="btn-primary flex items-center gap-2 w-full md:w-auto">
                 <Save size={20} />
-                {t('common.language') === 'tr' ? 'Kaydet' : 'Save'}
+                {isTurkish ? 'Kaydet' : 'Save'}
               </button>
             </div>
           </motion.div>
@@ -324,12 +325,12 @@ export default function AdminSettingsPage() {
             className="glass rounded-xl p-6"
           >
             <h2 className="text-2xl font-semibold text-white mb-6">
-              {t('common.language') === 'tr' ? 'Kargo Ayarları' : 'Shipping Settings'}
+              {isTurkish ? 'Kargo Ayarları' : 'Shipping Settings'}
             </h2>
             <div className="space-y-4">
               <div>
                 <label className="block text-white mb-2">
-                  {t('common.language') === 'tr' ? 'Ücretsiz Kargo Eşiği (₺)' : 'Free Shipping Threshold (₺)'}
+                  {isTurkish ? 'Ücretsiz Kargo Eşiği (₺)' : 'Free Shipping Threshold (₺)'}
                 </label>
                 <input
                   type="number"
@@ -340,7 +341,7 @@ export default function AdminSettingsPage() {
               </div>
               <div>
                 <label className="block text-white mb-2">
-                  {t('common.language') === 'tr' ? 'Yurtiçi Kargo Ücreti (₺)' : 'Domestic Shipping Fee (₺)'}
+                  {isTurkish ? 'Yurtiçi Kargo Ücreti (₺)' : 'Domestic Shipping Fee (₺)'}
                 </label>
                 <input
                   type="number"
@@ -351,7 +352,7 @@ export default function AdminSettingsPage() {
               </div>
               <div>
                 <label className="block text-white mb-2">
-                  {t('common.language') === 'tr' ? 'Tahmini Teslimat Süresi (Gün)' : 'Estimated Delivery Time (Days)'}
+                  {isTurkish ? 'Tahmini Teslimat Süresi (Gün)' : 'Estimated Delivery Time (Days)'}
                 </label>
                 <input
                   type="text"
@@ -363,10 +364,10 @@ export default function AdminSettingsPage() {
               <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
                 <div>
                   <p className="text-white font-medium">
-                    {t('common.language') === 'tr' ? 'Uluslararası Kargo' : 'International Shipping'}
+                    {isTurkish ? 'Uluslararası Kargo' : 'International Shipping'}
                   </p>
                   <p className="text-gray-400 text-sm">
-                    {t('common.language') === 'tr'
+                    {isTurkish
                       ? 'Yurtdışı gönderimlerini aktifleştir'
                       : 'Enable international shipments'}
                   </p>
@@ -383,7 +384,7 @@ export default function AdminSettingsPage() {
               </div>
               <button className="btn-primary flex items-center gap-2 w-full md:w-auto">
                 <Save size={20} />
-                {t('common.language') === 'tr' ? 'Kaydet' : 'Save'}
+                {isTurkish ? 'Kaydet' : 'Save'}
               </button>
             </div>
           </motion.div>
@@ -397,12 +398,12 @@ export default function AdminSettingsPage() {
             className="glass rounded-xl p-6"
           >
             <h2 className="text-2xl font-semibold text-white mb-6">
-              {t('common.language') === 'tr' ? 'Ödeme Ayarları' : 'Payment Settings'}
+              {isTurkish ? 'Ödeme Ayarları' : 'Payment Settings'}
             </h2>
             <div className="space-y-4">
               <div>
                 <label className="block text-white mb-2">
-                  {t('common.language') === 'tr' ? 'Para Birimi' : 'Currency'}
+                  {isTurkish ? 'Para Birimi' : 'Currency'}
                 </label>
                 <select
                   value={paymentSettings.currency}
@@ -416,7 +417,7 @@ export default function AdminSettingsPage() {
               </div>
               <div>
                 <label className="block text-white mb-2">
-                  {t('common.language') === 'tr' ? 'KDV Oranı (%)' : 'Tax Rate (%)'}
+                  {isTurkish ? 'KDV Oranı (%)' : 'Tax Rate (%)'}
                 </label>
                 <input
                   type="number"
@@ -427,11 +428,11 @@ export default function AdminSettingsPage() {
               </div>
               <div className="space-y-3">
                 <p className="text-white font-medium">
-                  {t('common.language') === 'tr' ? 'Ödeme Yöntemleri' : 'Payment Methods'}
+                  {isTurkish ? 'Ödeme Yöntemleri' : 'Payment Methods'}
                 </p>
                 <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
                   <p className="text-white">
-                    {t('common.language') === 'tr' ? 'Kredi Kartı' : 'Credit Card'}
+                    {isTurkish ? 'Kredi Kartı' : 'Credit Card'}
                   </p>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
@@ -457,7 +458,7 @@ export default function AdminSettingsPage() {
                 </div>
                 <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
                   <p className="text-white">
-                    {t('common.language') === 'tr' ? 'Kripto Para' : 'Cryptocurrency'}
+                    {isTurkish ? 'Kripto Para' : 'Cryptocurrency'}
                   </p>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
@@ -472,7 +473,7 @@ export default function AdminSettingsPage() {
               </div>
               <button className="btn-primary flex items-center gap-2 w-full md:w-auto">
                 <Save size={20} />
-                {t('common.language') === 'tr' ? 'Kaydet' : 'Save'}
+                {isTurkish ? 'Kaydet' : 'Save'}
               </button>
             </div>
           </motion.div>
@@ -486,16 +487,16 @@ export default function AdminSettingsPage() {
             className="glass rounded-xl p-6"
           >
             <h2 className="text-2xl font-semibold text-white mb-6">
-              {t('common.language') === 'tr' ? 'Bildirim Ayarları' : 'Notification Settings'}
+              {isTurkish ? 'Bildirim Ayarları' : 'Notification Settings'}
             </h2>
             <div className="space-y-3">
               <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
                 <div>
                   <p className="text-white font-medium">
-                    {t('common.language') === 'tr' ? 'E-posta Bildirimleri' : 'Email Notifications'}
+                    {isTurkish ? 'E-posta Bildirimleri' : 'Email Notifications'}
                   </p>
                   <p className="text-gray-400 text-sm">
-                    {t('common.language') === 'tr'
+                    {isTurkish
                       ? 'E-posta ile bildirim al'
                       : 'Receive notifications via email'}
                   </p>
@@ -513,10 +514,10 @@ export default function AdminSettingsPage() {
               <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
                 <div>
                   <p className="text-white font-medium">
-                    {t('common.language') === 'tr' ? 'SMS Bildirimleri' : 'SMS Notifications'}
+                    {isTurkish ? 'SMS Bildirimleri' : 'SMS Notifications'}
                   </p>
                   <p className="text-gray-400 text-sm">
-                    {t('common.language') === 'tr'
+                    {isTurkish
                       ? 'SMS ile bildirim al'
                       : 'Receive notifications via SMS'}
                   </p>
@@ -533,7 +534,7 @@ export default function AdminSettingsPage() {
               </div>
               <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
                 <p className="text-white">
-                  {t('common.language') === 'tr' ? 'Yeni Sipariş Bildirimi' : 'New Order Alert'}
+                  {isTurkish ? 'Yeni Sipariş Bildirimi' : 'New Order Alert'}
                 </p>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input
@@ -547,7 +548,7 @@ export default function AdminSettingsPage() {
               </div>
               <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
                 <p className="text-white">
-                  {t('common.language') === 'tr' ? 'Düşük Stok Uyarısı' : 'Low Stock Alert'}
+                  {isTurkish ? 'Düşük Stok Uyarısı' : 'Low Stock Alert'}
                 </p>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input
@@ -561,7 +562,7 @@ export default function AdminSettingsPage() {
               </div>
               <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
                 <p className="text-white">
-                  {t('common.language') === 'tr' ? 'Yeni Yorum Bildirimi' : 'New Review Alert'}
+                  {isTurkish ? 'Yeni Yorum Bildirimi' : 'New Review Alert'}
                 </p>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input
@@ -575,7 +576,7 @@ export default function AdminSettingsPage() {
               </div>
               <button className="btn-primary flex items-center gap-2 w-full md:w-auto mt-4">
                 <Save size={20} />
-                {t('common.language') === 'tr' ? 'Kaydet' : 'Save'}
+                {isTurkish ? 'Kaydet' : 'Save'}
               </button>
             </div>
           </motion.div>

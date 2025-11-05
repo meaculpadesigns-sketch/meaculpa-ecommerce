@@ -15,7 +15,8 @@ import {
 import { useTranslation } from 'react-i18next';
 
 export default function AdminAnalyticsPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isTurkish = i18n.language === 'tr';
   const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
 
   // Sample analytics data
@@ -60,10 +61,10 @@ export default function AdminAnalyticsPage() {
         <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <h1 className="text-4xl font-bold text-white mb-2">
-              {t('common.language') === 'tr' ? 'Analitik & Raporlar' : 'Analytics & Reports'}
+              {isTurkish ? 'Analitik & Raporlar' : 'Analytics & Reports'}
             </h1>
             <p className="text-gray-400">
-              {t('common.language') === 'tr'
+              {isTurkish
                 ? 'Satış ve kullanıcı davranış analizleri'
                 : 'Sales and user behavior analytics'}
             </p>
@@ -75,10 +76,10 @@ export default function AdminAnalyticsPage() {
               onChange={(e) => setTimeRange(e.target.value as any)}
               className="input-field"
             >
-              <option value="7d">{t('common.language') === 'tr' ? 'Son 7 Gün' : 'Last 7 Days'}</option>
-              <option value="30d">{t('common.language') === 'tr' ? 'Son 30 Gün' : 'Last 30 Days'}</option>
-              <option value="90d">{t('common.language') === 'tr' ? 'Son 90 Gün' : 'Last 90 Days'}</option>
-              <option value="1y">{t('common.language') === 'tr' ? 'Son 1 Yıl' : 'Last 1 Year'}</option>
+              <option value="7d">{isTurkish ? 'Son 7 Gün' : 'Last 7 Days'}</option>
+              <option value="30d">{isTurkish ? 'Son 30 Gün' : 'Last 30 Days'}</option>
+              <option value="90d">{isTurkish ? 'Son 90 Gün' : 'Last 90 Days'}</option>
+              <option value="1y">{isTurkish ? 'Son 1 Yıl' : 'Last 1 Year'}</option>
             </select>
           </div>
         </div>
@@ -100,7 +101,7 @@ export default function AdminAnalyticsPage() {
               </div>
             </div>
             <p className="text-gray-400 text-sm mb-1">
-              {t('common.language') === 'tr' ? 'Toplam Gelir' : 'Total Revenue'}
+              {isTurkish ? 'Toplam Gelir' : 'Total Revenue'}
             </p>
             <p className="text-3xl font-bold text-white">₺{stats.totalRevenue.toLocaleString()}</p>
           </motion.div>
@@ -121,7 +122,7 @@ export default function AdminAnalyticsPage() {
               </div>
             </div>
             <p className="text-gray-400 text-sm mb-1">
-              {t('common.language') === 'tr' ? 'Toplam Sipariş' : 'Total Orders'}
+              {isTurkish ? 'Toplam Sipariş' : 'Total Orders'}
             </p>
             <p className="text-3xl font-bold text-white">{stats.totalOrders}</p>
           </motion.div>
@@ -142,7 +143,7 @@ export default function AdminAnalyticsPage() {
               </div>
             </div>
             <p className="text-gray-400 text-sm mb-1">
-              {t('common.language') === 'tr' ? 'Toplam Müşteri' : 'Total Customers'}
+              {isTurkish ? 'Toplam Müşteri' : 'Total Customers'}
             </p>
             <p className="text-3xl font-bold text-white">{stats.totalCustomers}</p>
           </motion.div>
@@ -163,7 +164,7 @@ export default function AdminAnalyticsPage() {
               </div>
             </div>
             <p className="text-gray-400 text-sm mb-1">
-              {t('common.language') === 'tr' ? 'Ort. Sipariş Değeri' : 'Avg. Order Value'}
+              {isTurkish ? 'Ort. Sipariş Değeri' : 'Avg. Order Value'}
             </p>
             <p className="text-3xl font-bold text-white">₺{stats.avgOrderValue}</p>
           </motion.div>
@@ -178,7 +179,7 @@ export default function AdminAnalyticsPage() {
             className="glass rounded-xl p-6"
           >
             <h3 className="text-xl font-semibold text-white mb-6">
-              {t('common.language') === 'tr' ? 'En Çok Satan Ürünler' : 'Top Selling Products'}
+              {isTurkish ? 'En Çok Satan Ürünler' : 'Top Selling Products'}
             </h3>
             <div className="space-y-4">
               {topProducts.map((product, index) => (
@@ -186,7 +187,7 @@ export default function AdminAnalyticsPage() {
                   <div className="flex-1">
                     <p className="text-white font-medium mb-1">{product.name}</p>
                     <p className="text-sm text-gray-400">
-                      {product.sales} {t('common.language') === 'tr' ? 'satış' : 'sales'}
+                      {product.sales} {isTurkish ? 'satış' : 'sales'}
                     </p>
                   </div>
                   <p className="text-mea-gold font-semibold">₺{product.revenue.toLocaleString()}</p>
@@ -204,7 +205,7 @@ export default function AdminAnalyticsPage() {
           >
             <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
               <Eye size={24} />
-              {t('common.language') === 'tr' ? 'Trafik Kaynakları' : 'Traffic Sources'}
+              {isTurkish ? 'Trafik Kaynakları' : 'Traffic Sources'}
             </h3>
             <div className="space-y-4">
               {trafficSources.map((source, index) => (
@@ -233,7 +234,7 @@ export default function AdminAnalyticsPage() {
           className="glass rounded-xl p-6"
         >
           <h3 className="text-xl font-semibold text-white mb-6">
-            {t('common.language') === 'tr' ? 'Kategoriye Göre Satışlar' : 'Sales by Category'}
+            {isTurkish ? 'Kategoriye Göre Satışlar' : 'Sales by Category'}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {salesByCategory.map((category, index) => (
