@@ -264,6 +264,23 @@ export async function getProductReviews(productId: string) {
   return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Review));
 }
 
+export async function getAllReviews() {
+  const reviewsRef = collection(db, 'reviews');
+  const q = query(reviewsRef, orderBy('createdAt', 'desc'));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Review));
+}
+
+export async function updateReview(id: string, data: Partial<Review>) {
+  const reviewRef = doc(db, 'reviews', id);
+  await updateDoc(reviewRef, data);
+}
+
+export async function deleteReview(id: string) {
+  const reviewRef = doc(db, 'reviews', id);
+  await deleteDoc(reviewRef);
+}
+
 export async function addReview(review: Omit<Review, 'id'>) {
   const reviewsRef = collection(db, 'reviews');
   const docRef = await addDoc(reviewsRef, {
@@ -308,4 +325,18 @@ export async function uploadFile(file: File, path: string): Promise<string> {
 export async function deleteFile(path: string) {
   const storageRef = ref(storage, path);
   await deleteObject(storageRef);
+}
+
+// Analytics
+export async function getAllOrders() {
+  const ordersRef = collection(db, 'orders');
+  const q = query(ordersRef, orderBy('createdAt', 'desc'));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Order));
+}
+
+export async function getAllUsers() {
+  const usersRef = collection(db, 'users');
+  const snapshot = await getDocs(usersRef);
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as User));
 }

@@ -1,20 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Star, ThumbsUp, ThumbsDown, Eye, EyeOff, Trash2, Search, Filter } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { getAllReviews, updateReview, deleteReview as deleteReviewFromDb, getProducts } from '@/lib/firebase-helpers';
+import { Review, Product } from '@/types';
 
-interface Review {
-  id: string;
-  customerName: string;
+interface AdminReview extends Review {
   productName: string;
-  rating: number;
-  comment: string;
-  date: string;
-  status: 'pending' | 'approved' | 'rejected';
-  isVisible: boolean;
-  helpful: number;
 }
 
 export default function AdminReviewsPage() {
@@ -22,70 +16,98 @@ export default function AdminReviewsPage() {
   const isTurkish = i18n.language === 'tr';
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState<'all' | 'pending' | 'approved' | 'rejected'>('all');
+  const [reviews, setReviews] = useState<AdminReview[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState<Product[]>([]);
 
-  // Sample reviews data
-  const [reviews, setReviews] = useState<Review[]>([
-    {
-      id: '1',
-      customerName: 'Ayşe Yılmaz',
-      productName: 'Geleneksel Kimono - Bej',
-      rating: 5,
-      comment: 'Harika bir ürün! Kalitesi ve işçiliği gerçekten çok iyi. Kesinlikle tavsiye ederim.',
-      date: '2024-01-15',
-      status: 'approved',
-      isVisible: true,
-      helpful: 12,
-    },
-    {
-      id: '2',
-      customerName: 'Mehmet Demir',
-      productName: 'Modern Gömlek - Lacivert',
-      rating: 4,
-      comment: 'Ürün güzel ancak beden biraz büyük geldi. Kalitesi iyi.',
-      date: '2024-01-14',
-      status: 'approved',
-      isVisible: true,
-      helpful: 8,
-    },
-    {
-      id: '3',
-      customerName: 'Zeynep Kaya',
-      productName: 'Özel Tasarım Set',
-      rating: 5,
-      comment: 'Muhteşem bir deneyim! Özel tasarım hizmeti için ekibe çok teşekkürler.',
-      date: '2024-01-13',
-      status: 'pending',
-      isVisible: false,
-      helpful: 0,
-    },
-  ]);
+  // Fetch reviews and products on mount
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoading(true);
+        const [reviewsData, productsData] = await Promise.all([
+          getAllReviews(),
+          getProducts()
+        ]);
 
-  const handleApprove = (id: string) => {
-    setReviews(reviews.map(review =>
-      review.id === id ? { ...review, status: 'approved' as const, isVisible: true } : review
-    ));
+        setProducts(productsData);
+
+        // Map reviews with product names
+        const reviewsWithProductNames = reviewsData.map(review => {
+          const product = productsData.find(p => p.id === review.productId);
+          return {
+            ...review,
+            productName: product ? (isTurkish ? product.name : product.nameEn) : 'Unknown Product',
+            status: review.status || 'pending',
+            isVisible: review.isVisible ?? true
+          } as AdminReview;
+        });
+
+        setReviews(reviewsWithProductNames);
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, [isTurkish]);
+
+  const handleApprove = async (id: string) => {
+    try {
+      await updateReview(id, { status: 'approved', isVisible: true });
+      setReviews(reviews.map(review =>
+        review.id === id ? { ...review, status: 'approved' as const, isVisible: true } : review
+      ));
+    } catch (error) {
+      console.error('Error approving review:', error);
+      alert(isTurkish ? 'Yorum onaylanırken hata oluştu' : 'Error approving review');
+    }
   };
 
-  const handleReject = (id: string) => {
-    setReviews(reviews.map(review =>
-      review.id === id ? { ...review, status: 'rejected' as const, isVisible: false } : review
-    ));
+  const handleReject = async (id: string) => {
+    try {
+      await updateReview(id, { status: 'rejected', isVisible: false });
+      setReviews(reviews.map(review =>
+        review.id === id ? { ...review, status: 'rejected' as const, isVisible: false } : review
+      ));
+    } catch (error) {
+      console.error('Error rejecting review:', error);
+      alert(isTurkish ? 'Yorum reddedilirken hata oluştu' : 'Error rejecting review');
+    }
   };
 
-  const handleToggleVisibility = (id: string) => {
-    setReviews(reviews.map(review =>
-      review.id === id ? { ...review, isVisible: !review.isVisible } : review
-    ));
+  const handleToggleVisibility = async (id: string) => {
+    try {
+      const review = reviews.find(r => r.id === id);
+      if (!review) return;
+
+      const newVisibility = !review.isVisible;
+      await updateReview(id, { isVisible: newVisibility });
+      setReviews(reviews.map(review =>
+        review.id === id ? { ...review, isVisible: newVisibility } : review
+      ));
+    } catch (error) {
+      console.error('Error toggling visibility:', error);
+      alert(isTurkish ? 'Görünürlük değiştirilirken hata oluştu' : 'Error toggling visibility');
+    }
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (confirm(t('common.delete') + '?')) {
-      setReviews(reviews.filter(review => review.id !== id));
+      try {
+        await deleteReviewFromDb(id);
+        setReviews(reviews.filter(review => review.id !== id));
+      } catch (error) {
+        console.error('Error deleting review:', error);
+        alert(isTurkish ? 'Yorum silinirken hata oluştu' : 'Error deleting review');
+      }
     }
   };
 
   const filteredReviews = reviews.filter(review => {
-    const matchesSearch = review.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    const matchesSearch = review.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          review.productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          review.comment.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesFilter = filterStatus === 'all' || review.status === filterStatus;
@@ -97,8 +119,18 @@ export default function AdminReviewsPage() {
     pending: reviews.filter(r => r.status === 'pending').length,
     approved: reviews.filter(r => r.status === 'approved').length,
     rejected: reviews.filter(r => r.status === 'rejected').length,
-    avgRating: (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1),
+    avgRating: reviews.length > 0 ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1) : '0.0',
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen py-20 px-4 flex items-center justify-center">
+        <div className="text-white text-xl">
+          {isTurkish ? 'Yükleniyor...' : 'Loading...'}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen py-20 px-4">
@@ -192,7 +224,7 @@ export default function AdminReviewsPage() {
               <div className="flex flex-col md:flex-row justify-between gap-4 mb-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-xl font-semibold text-white">{review.customerName}</h3>
+                    <h3 className="text-xl font-semibold text-white">{review.userName}</h3>
                     <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                       review.status === 'approved' ? 'bg-green-500/20 text-green-500' :
                       review.status === 'pending' ? 'bg-yellow-500/20 text-yellow-500' :
@@ -215,7 +247,7 @@ export default function AdminReviewsPage() {
                   </div>
                   <p className="text-white mb-2">{review.comment}</p>
                   <div className="flex items-center gap-4 text-sm text-gray-400">
-                    <span>{new Date(review.date).toLocaleDateString(isTurkish ? 'tr-TR' : 'en-US')}</span>
+                    <span>{review.createdAt ? new Date(review.createdAt.toString()).toLocaleDateString(isTurkish ? 'tr-TR' : 'en-US') : 'N/A'}</span>
                     <span className="flex items-center gap-1">
                       <ThumbsUp size={14} />
                       {review.helpful} {isTurkish ? 'faydalı' : 'helpful'}

@@ -153,6 +153,8 @@ export interface Review {
   verified: boolean;
   helpful: number;
   createdAt: Date;
+  status?: 'pending' | 'approved' | 'rejected';
+  isVisible?: boolean;
 }
 
 export interface Story {

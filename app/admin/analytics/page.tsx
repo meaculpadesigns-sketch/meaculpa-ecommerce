@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   TrendingUp,
@@ -13,46 +13,167 @@ import {
   BarChart3,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { getAllOrders, getAllUsers, getProducts } from '@/lib/firebase-helpers';
+import { Order, Product } from '@/types';
 
 export default function AdminAnalyticsPage() {
   const { t, i18n } = useTranslation();
   const isTurkish = i18n.language === 'tr';
   const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
+  const [loading, setLoading] = useState(true);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [users, setUsers] = useState<any[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
 
-  // Sample analytics data
-  const stats = {
-    totalRevenue: 145680,
-    revenueChange: 12.5,
-    totalOrders: 342,
-    ordersChange: 8.3,
-    totalCustomers: 1234,
-    customersChange: 15.7,
-    avgOrderValue: 426,
-    avgOrderValueChange: -2.1,
+  // Fetch data on mount
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoading(true);
+        const [ordersData, usersData, productsData] = await Promise.all([
+          getAllOrders(),
+          getAllUsers(),
+          getProducts()
+        ]);
+
+        setOrders(ordersData);
+        setUsers(usersData);
+        setProducts(productsData);
+      } catch (error) {
+        console.error('Error fetching analytics data:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  // Filter orders by time range
+  const getFilteredOrders = () => {
+    const now = new Date();
+    const cutoffDate = new Date();
+
+    switch (timeRange) {
+      case '7d':
+        cutoffDate.setDate(now.getDate() - 7);
+        break;
+      case '30d':
+        cutoffDate.setDate(now.getDate() - 30);
+        break;
+      case '90d':
+        cutoffDate.setDate(now.getDate() - 90);
+        break;
+      case '1y':
+        cutoffDate.setFullYear(now.getFullYear() - 1);
+        break;
+    }
+
+    return orders.filter(order => {
+      const orderDate = order.createdAt instanceof Date
+        ? order.createdAt
+        : new Date((order.createdAt as any).seconds * 1000);
+      return orderDate >= cutoffDate;
+    });
   };
 
-  const topProducts = [
-    { name: 'Geleneksel Kimono - Bej', sales: 45, revenue: 22500 },
-    { name: 'Modern Gömlek - Lacivert', sales: 38, revenue: 15200 },
-    { name: 'Özel Tasarım Set', sales: 32, revenue: 28800 },
-    { name: 'Kimono - Bordo', sales: 28, revenue: 14000 },
-    { name: 'Gömlek - Beyaz', sales: 24, revenue: 9600 },
-  ];
+  const filteredOrders = getFilteredOrders();
 
-  const trafficSources = [
-    { source: 'Direct', visits: 2543, percentage: 35 },
-    { source: 'Instagram', visits: 1876, percentage: 26 },
-    { source: 'Google Search', visits: 1432, percentage: 20 },
-    { source: 'Facebook', visits: 876, percentage: 12 },
-    { source: 'Others', visits: 543, percentage: 7 },
-  ];
+  // Calculate analytics
+  const stats = {
+    totalRevenue: filteredOrders.reduce((sum, order) => sum + order.total, 0),
+    revenueChange: 0, // Would need historical data to calculate
+    totalOrders: filteredOrders.length,
+    ordersChange: 0, // Would need historical data to calculate
+    totalCustomers: users.length,
+    customersChange: 0, // Would need historical data to calculate
+    avgOrderValue: filteredOrders.length > 0
+      ? filteredOrders.reduce((sum, order) => sum + order.total, 0) / filteredOrders.length
+      : 0,
+    avgOrderValueChange: 0, // Would need historical data to calculate
+  };
+
+  // Calculate top products
+  const productSales: Record<string, { name: string, sales: number, revenue: number }> = {};
+
+  filteredOrders.forEach(order => {
+    order.items.forEach(item => {
+      const productId = item.productId;
+      const product = products.find(p => p.id === productId);
+      const productName = product ? (isTurkish ? product.name : product.nameEn) : 'Unknown';
+
+      if (!productSales[productId]) {
+        productSales[productId] = { name: productName, sales: 0, revenue: 0 };
+      }
+
+      productSales[productId].sales += item.quantity;
+      productSales[productId].revenue += item.product.price * item.quantity;
+    });
+  });
+
+  const topProducts = Object.values(productSales)
+    .sort((a, b) => b.revenue - a.revenue)
+    .slice(0, 5);
+
+  // Sales by category
+  const categorySales: Record<string, number> = {
+    kimono: 0,
+    shirt: 0,
+    set: 0,
+  };
+
+  filteredOrders.forEach(order => {
+    order.items.forEach(item => {
+      const product = products.find(p => p.id === item.productId);
+      if (product && categorySales[product.category] !== undefined) {
+        categorySales[product.category] += item.quantity;
+      }
+    });
+  });
+
+  const totalCategorySales = Object.values(categorySales).reduce((a, b) => a + b, 0);
 
   const salesByCategory = [
-    { category: 'Kimono', sales: 45, percentage: 42 },
-    { category: 'Shirt', sales: 35, percentage: 33 },
-    { category: 'Set', sales: 20, percentage: 19 },
-    { category: 'Others', sales: 7, percentage: 6 },
+    {
+      category: 'Kimono',
+      sales: categorySales.kimono,
+      percentage: totalCategorySales > 0 ? Math.round((categorySales.kimono / totalCategorySales) * 100) : 0
+    },
+    {
+      category: 'Shirt',
+      sales: categorySales.shirt,
+      percentage: totalCategorySales > 0 ? Math.round((categorySales.shirt / totalCategorySales) * 100) : 0
+    },
+    {
+      category: 'Set',
+      sales: categorySales.set,
+      percentage: totalCategorySales > 0 ? Math.round((categorySales.set / totalCategorySales) * 100) : 0
+    },
+    {
+      category: 'Others',
+      sales: 0,
+      percentage: 0
+    },
+  ].filter(item => item.sales > 0 || item.category === 'Others');
+
+  // Mock traffic sources (would need analytics integration for real data)
+  const trafficSources = [
+    { source: 'Direct', visits: 0, percentage: 0 },
+    { source: 'Instagram', visits: 0, percentage: 0 },
+    { source: 'Google Search', visits: 0, percentage: 0 },
+    { source: 'Facebook', visits: 0, percentage: 0 },
+    { source: 'Others', visits: 0, percentage: 0 },
   ];
+
+  if (loading) {
+    return (
+      <div className="min-h-screen py-20 px-4 flex items-center justify-center">
+        <div className="text-white text-xl">
+          {isTurkish ? 'Yükleniyor...' : 'Loading...'}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen py-20 px-4">
@@ -103,7 +224,7 @@ export default function AdminAnalyticsPage() {
             <p className="text-gray-400 text-sm mb-1">
               {isTurkish ? 'Toplam Gelir' : 'Total Revenue'}
             </p>
-            <p className="text-3xl font-bold text-white">₺{stats.totalRevenue.toLocaleString()}</p>
+            <p className="text-3xl font-bold text-white">₺{Math.round(stats.totalRevenue).toLocaleString()}</p>
           </motion.div>
 
           <motion.div
@@ -166,7 +287,7 @@ export default function AdminAnalyticsPage() {
             <p className="text-gray-400 text-sm mb-1">
               {isTurkish ? 'Ort. Sipariş Değeri' : 'Avg. Order Value'}
             </p>
-            <p className="text-3xl font-bold text-white">₺{stats.avgOrderValue}</p>
+            <p className="text-3xl font-bold text-white">₺{Math.round(stats.avgOrderValue)}</p>
           </motion.div>
         </div>
 
@@ -181,19 +302,25 @@ export default function AdminAnalyticsPage() {
             <h3 className="text-xl font-semibold text-white mb-6">
               {isTurkish ? 'En Çok Satan Ürünler' : 'Top Selling Products'}
             </h3>
-            <div className="space-y-4">
-              {topProducts.map((product, index) => (
-                <div key={index} className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <p className="text-white font-medium mb-1">{product.name}</p>
-                    <p className="text-sm text-gray-400">
-                      {product.sales} {isTurkish ? 'satış' : 'sales'}
-                    </p>
+            {topProducts.length > 0 ? (
+              <div className="space-y-4">
+                {topProducts.map((product, index) => (
+                  <div key={index} className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <p className="text-white font-medium mb-1">{product.name}</p>
+                      <p className="text-sm text-gray-400">
+                        {product.sales} {isTurkish ? 'satış' : 'sales'}
+                      </p>
+                    </div>
+                    <p className="text-mea-gold font-semibold">₺{Math.round(product.revenue).toLocaleString()}</p>
                   </div>
-                  <p className="text-mea-gold font-semibold">₺{product.revenue.toLocaleString()}</p>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-400 text-center py-8">
+                {isTurkish ? 'Henüz satış yok' : 'No sales yet'}
+              </p>
+            )}
           </motion.div>
 
           {/* Traffic Sources */}
@@ -207,21 +334,17 @@ export default function AdminAnalyticsPage() {
               <Eye size={24} />
               {isTurkish ? 'Trafik Kaynakları' : 'Traffic Sources'}
             </h3>
-            <div className="space-y-4">
-              {trafficSources.map((source, index) => (
-                <div key={index}>
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-white font-medium">{source.source}</p>
-                    <p className="text-gray-400">{source.visits.toLocaleString()}</p>
-                  </div>
-                  <div className="w-full bg-zinc-800 rounded-full h-2">
-                    <div
-                      className="bg-mea-gold rounded-full h-2"
-                      style={{ width: `${source.percentage}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
+            <div className="text-center py-8 text-gray-400">
+              <p className="mb-2">
+                {isTurkish
+                  ? 'Trafik verilerini görmek için Google Analytics entegrasyonu gereklidir.'
+                  : 'Google Analytics integration required to view traffic data.'}
+              </p>
+              <p className="text-sm">
+                {isTurkish
+                  ? 'Lütfen ayarlar sayfasından Google Analytics ID\'nizi ekleyin.'
+                  : 'Please add your Google Analytics ID from the settings page.'}
+              </p>
             </div>
           </motion.div>
         </div>
@@ -236,21 +359,27 @@ export default function AdminAnalyticsPage() {
           <h3 className="text-xl font-semibold text-white mb-6">
             {isTurkish ? 'Kategoriye Göre Satışlar' : 'Sales by Category'}
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {salesByCategory.map((category, index) => (
-              <div key={index} className="bg-zinc-900/50 rounded-lg p-4">
-                <p className="text-gray-400 text-sm mb-2">{category.category}</p>
-                <p className="text-2xl font-bold text-white mb-2">{category.sales}</p>
-                <div className="w-full bg-zinc-800 rounded-full h-2">
-                  <div
-                    className="bg-mea-gold rounded-full h-2"
-                    style={{ width: `${category.percentage}%` }}
-                  />
+          {totalCategorySales > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {salesByCategory.map((category, index) => (
+                <div key={index} className="bg-zinc-900/50 rounded-lg p-4">
+                  <p className="text-gray-400 text-sm mb-2">{category.category}</p>
+                  <p className="text-2xl font-bold text-white mb-2">{category.sales}</p>
+                  <div className="w-full bg-zinc-800 rounded-full h-2">
+                    <div
+                      className="bg-mea-gold rounded-full h-2"
+                      style={{ width: `${category.percentage}%` }}
+                    />
+                  </div>
+                  <p className="text-gray-400 text-sm mt-2">{category.percentage}%</p>
                 </div>
-                <p className="text-gray-400 text-sm mt-2">{category.percentage}%</p>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-400 text-center py-8">
+              {isTurkish ? 'Henüz satış yok' : 'No sales yet'}
+            </p>
+          )}
         </motion.div>
       </div>
     </div>
