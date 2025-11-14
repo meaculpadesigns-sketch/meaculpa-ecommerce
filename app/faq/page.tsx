@@ -1,12 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export default function FAQPage() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    document.body.className = 'bg-home text-dark-page';
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
+
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const faqs = [

@@ -1,11 +1,19 @@
 'use client';
 
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
 export default function DistanceSalesAgreementPage() {
   const { i18n } = useTranslation();
   const isEnglish = i18n.language === 'en';
+
+  useEffect(() => {
+    document.body.className = 'bg-home text-dark-page';
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
 
   return (
     <div className="min-h-screen py-20 px-4">

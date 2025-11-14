@@ -156,7 +156,7 @@ export default function ContactPage() {
           >
             {/* Quick Contact */}
             <div className="glass rounded-2xl p-8">
-              <h2 className="text-2xl font-bold text-white mb-6">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">
                 {t('contact.contactInfo')}
               </h2>
 
@@ -166,10 +166,10 @@ export default function ContactPage() {
                     <Mail className="text-black" size={24} />
                   </div>
                   <div>
-                    <p className="text-white font-semibold mb-1">{t('contact.email')}</p>
+                    <p className="text-gray-900 font-semibold mb-1">{t('contact.email')}</p>
                     <a
                       href="mailto:meaculpadesigns@gmail.com"
-                      className="text-gray-400 hover:text-mea-gold transition-colors"
+                      className="text-gray-700 hover:text-mea-gold transition-colors"
                     >
                       meaculpadesigns@gmail.com
                     </a>
@@ -181,10 +181,10 @@ export default function ContactPage() {
                     <Phone className="text-black" size={24} />
                   </div>
                   <div>
-                    <p className="text-white font-semibold mb-1">{t('contact.phone')}</p>
+                    <p className="text-gray-900 font-semibold mb-1">{t('contact.phone')}</p>
                     <a
                       href="tel:+905075620802"
-                      className="text-gray-400 hover:text-mea-gold transition-colors"
+                      className="text-gray-700 hover:text-mea-gold transition-colors"
                     >
                       +90 507 562 08 02
                     </a>
@@ -196,12 +196,12 @@ export default function ContactPage() {
                     <Instagram className="text-black" size={24} />
                   </div>
                   <div>
-                    <p className="text-white font-semibold mb-1">Instagram</p>
+                    <p className="text-gray-900 font-semibold mb-1">Instagram</p>
                     <a
                       href="https://www.instagram.com/meaculpadesigns"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-mea-gold transition-colors"
+                      className="text-gray-700 hover:text-mea-gold transition-colors"
                     >
                       @meaculpadesigns
                     </a>
@@ -213,8 +213,8 @@ export default function ContactPage() {
                     <MapPin className="text-black" size={24} />
                   </div>
                   <div>
-                    <p className="text-white font-semibold mb-1">{t('contact.address')}</p>
-                    <p className="text-gray-400">
+                    <p className="text-gray-900 font-semibold mb-1">{t('contact.address')}</p>
+                    <p className="text-gray-700">
                       İstanbul/TÜRKİYE
                     </p>
                   </div>
@@ -224,31 +224,31 @@ export default function ContactPage() {
 
             {/* Working Hours */}
             <div className="glass rounded-2xl p-8">
-              <h3 className="text-xl font-bold text-white mb-4">
+              <h3 className="text-xl font-bold text-gray-900 mb-4">
                 {t('contact.workingHours')}
               </h3>
-              <div className="space-y-3 text-gray-300">
+              <div className="space-y-3 text-gray-700">
                 <div className="flex justify-between">
                   <span>{t('contact.mondayFriday')}</span>
-                  <span className="text-white">09:00 - 18:00</span>
+                  <span className="text-gray-900 font-semibold">09:00 - 18:00</span>
                 </div>
                 <div className="flex justify-between">
                   <span>{t('contact.saturday')}</span>
-                  <span className="text-white">10:00 - 16:00</span>
+                  <span className="text-gray-900 font-semibold">10:00 - 16:00</span>
                 </div>
                 <div className="flex justify-between">
                   <span>{t('contact.sunday')}</span>
-                  <span className="text-red-400">{t('contact.closed')}</span>
+                  <span className="text-red-600 font-semibold">{t('contact.closed')}</span>
                 </div>
               </div>
             </div>
 
             {/* FAQ Link */}
             <div className="glass rounded-2xl p-8 bg-mea-gold bg-opacity-10">
-              <h3 className="text-xl font-bold text-white mb-3">
+              <h3 className="text-xl font-bold text-gray-900 mb-3">
                 {t('contact.faqTitle')}
               </h3>
-              <p className="text-gray-300 mb-4">
+              <p className="text-gray-700 mb-4">
                 {t('contact.faqDesc')}
               </p>
               <a href="/faq" className="btn-secondary inline-block">

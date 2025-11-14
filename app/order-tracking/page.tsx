@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Package, Truck, CheckCircle, Clock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +9,13 @@ import { Order } from '@/types';
 
 export default function OrderTrackingPage() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    document.body.className = 'bg-home text-dark-page';
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
   const [orderNumber, setOrderNumber] = useState('');
   const [contact, setContact] = useState('');
   const [order, setOrder] = useState<Order | null>(null);
