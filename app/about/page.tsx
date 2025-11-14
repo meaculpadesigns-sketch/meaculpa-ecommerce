@@ -9,7 +9,7 @@ export default function AboutPage() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    document.body.className = 'bg-about';
+    document.body.className = 'bg-products';
     return () => {
       document.body.className = '';
     };

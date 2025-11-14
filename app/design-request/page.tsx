@@ -18,7 +18,7 @@ export default function DesignRequestPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    document.body.className = 'bg-home';
+    document.body.className = 'bg-about';
     return () => {
       document.body.className = '';
     };

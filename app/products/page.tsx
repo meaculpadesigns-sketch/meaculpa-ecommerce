@@ -22,7 +22,7 @@ function ProductsContent() {
   const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
-    document.body.className = 'bg-products';
+    document.body.className = 'bg-home';
     return () => {
       document.body.className = '';
     };

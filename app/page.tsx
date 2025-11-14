@@ -14,7 +14,7 @@ export default function Home() {
   const scale = useTransform(scrollY, [0, 300], [1, 0.8]);
 
   useEffect(() => {
-    document.body.className = 'bg-home';
+    document.body.className = 'bg-about';
     return () => {
       document.body.className = '';
     };
