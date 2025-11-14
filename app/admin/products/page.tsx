@@ -17,6 +17,8 @@ import {
   X,
   Save,
 } from 'lucide-react';
+import { kimonoSubcategories, setSubcategories } from '@/constants/categories';
+import { convertCurrency } from '@/lib/currency';
 
 export default function AdminProducts() {
   const router = useRouter();
@@ -30,8 +32,12 @@ export default function AdminProducts() {
     name: '',
     nameEn: '',
     price: 0,
+    priceUSD: 0,
+    priceEUR: 0,
     oldPrice: 0,
-    category: 'kimono' as 'kimono' | 'shirt' | 'set',
+    category: 'kimono' as 'kimono' | 'set',
+    subcategory: '' as Product['subcategory'],
+    collection: '',
     images: [] as string[],
     fabricImage: '',
     description: '',
@@ -42,6 +48,10 @@ export default function AdminProducts() {
     inStock: true,
     featured: false,
     estimatedDelivery: '',
+    seoTitle: '',
+    seoTitleEn: '',
+    seoDescription: '',
+    seoDescriptionEn: '',
   });
 
   useEffect(() => {
@@ -133,8 +143,12 @@ export default function AdminProducts() {
       name: product.name,
       nameEn: product.nameEn,
       price: product.price,
+      priceUSD: product.priceUSD || 0,
+      priceEUR: product.priceEUR || 0,
       oldPrice: product.oldPrice || 0,
       category: product.category,
+      subcategory: product.subcategory || '',
+      collection: product.collection || '',
       images: product.images,
       fabricImage: product.fabricImage || '',
       description: product.description,
@@ -145,6 +159,10 @@ export default function AdminProducts() {
       inStock: product.inStock,
       featured: product.featured,
       estimatedDelivery: product.estimatedDelivery || '',
+      seoTitle: product.seoTitle || '',
+      seoTitleEn: product.seoTitleEn || '',
+      seoDescription: product.seoDescription || '',
+      seoDescriptionEn: product.seoDescriptionEn || '',
     });
     setShowModal(true);
   };
@@ -176,8 +194,12 @@ export default function AdminProducts() {
       name: '',
       nameEn: '',
       price: 0,
+      priceUSD: 0,
+      priceEUR: 0,
       oldPrice: 0,
       category: 'kimono',
+      subcategory: '',
+      collection: '',
       images: [],
       fabricImage: '',
       description: '',
@@ -188,6 +210,10 @@ export default function AdminProducts() {
       inStock: true,
       featured: false,
       estimatedDelivery: '',
+      seoTitle: '',
+      seoTitleEn: '',
+      seoDescription: '',
+      seoDescriptionEn: '',
     });
   };
 
@@ -465,41 +491,100 @@ export default function AdminProducts() {
                     </div>
                   </div>
 
-                  {/* Category, Price, Old Price */}
-                  <div className="grid grid-cols-3 gap-4">
+                  {/* Category and Subcategory */}
+                  <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-white font-medium mb-2">Kategori</label>
                       <select
                         value={formData.category}
-                        onChange={(e) => setFormData({ ...formData, category: e.target.value as any })}
+                        onChange={(e) => {
+                          const newCategory = e.target.value as 'kimono' | 'set';
+                          setFormData({ ...formData, category: newCategory, subcategory: '' });
+                        }}
                         className="input-field"
+                        required
                       >
                         <option value="kimono">Kimono</option>
-                        <option value="shirt">Gömlek</option>
-                        <option value="set">Set</option>
+                        <option value="set">Setler</option>
                       </select>
                     </div>
+                    <div>
+                      <label className="block text-white font-medium mb-2">Alt Kategori</label>
+                      <select
+                        value={formData.subcategory || ''}
+                        onChange={(e) => setFormData({ ...formData, subcategory: e.target.value as any })}
+                        className="input-field"
+                      >
+                        <option value="">Seçiniz</option>
+                        {(formData.category === 'kimono' ? kimonoSubcategories : setSubcategories).map((sub) => (
+                          <option key={sub.key} value={sub.key}>
+                            {sub.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Prices: TRY, USD, EUR */}
+                  <div className="grid grid-cols-3 gap-4">
                     <div>
                       <label className="block text-white font-medium mb-2">Fiyat (₺)</label>
                       <input
                         type="number"
+                        step="0.01"
                         value={formData.price}
-                        onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) })}
+                        onChange={(e) => {
+                          const tryPrice = parseFloat(e.target.value);
+                          setFormData({
+                            ...formData,
+                            price: tryPrice,
+                            priceUSD: convertCurrency(tryPrice, 'USD'),
+                            priceEUR: convertCurrency(tryPrice, 'EUR'),
+                          });
+                        }}
                         className="input-field"
                         required
                       />
                     </div>
                     <div>
-                      <label className="block text-white font-medium mb-2">
-                        Eski Fiyat (₺) - İndirim için
-                      </label>
+                      <label className="block text-white font-medium mb-2">Fiyat ($)</label>
                       <input
                         type="number"
-                        value={formData.oldPrice}
-                        onChange={(e) => setFormData({ ...formData, oldPrice: parseFloat(e.target.value) })}
-                        className="input-field"
+                        step="0.01"
+                        value={formData.priceUSD}
+                        onChange={(e) => setFormData({ ...formData, priceUSD: parseFloat(e.target.value) })}
+                        className="input-field bg-gray-700"
+                        placeholder="Otomatik"
                       />
+                      <p className="text-xs text-gray-400 mt-1">TL fiyat girilince otomatik hesaplanır</p>
                     </div>
+                    <div>
+                      <label className="block text-white font-medium mb-2">Fiyat (€)</label>
+                      <input
+                        type="number"
+                        step="0.01"
+                        value={formData.priceEUR}
+                        onChange={(e) => setFormData({ ...formData, priceEUR: parseFloat(e.target.value) })}
+                        className="input-field bg-gray-700"
+                        placeholder="Otomatik"
+                      />
+                      <p className="text-xs text-gray-400 mt-1">TL fiyat girilince otomatik hesaplanır</p>
+                    </div>
+                  </div>
+
+                  {/* Old Price for Discount */}
+                  <div>
+                    <label className="block text-white font-medium mb-2">
+                      Eski Fiyat (₺) - İndirim göstermek için
+                    </label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      value={formData.oldPrice}
+                      onChange={(e) => setFormData({ ...formData, oldPrice: parseFloat(e.target.value) })}
+                      className="input-field"
+                      placeholder="Opsiyonel"
+                    />
                   </div>
 
                   {/* Description */}

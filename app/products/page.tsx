@@ -7,19 +7,22 @@ import { motion } from 'framer-motion';
 import { Filter, SortAsc, Grid, List } from 'lucide-react';
 import ProductCard from '@/components/ProductCard';
 import { Product } from '@/types';
+import { getProducts } from '@/lib/firebase-helpers';
 
 function ProductsContent() {
   const { t, i18n } = useTranslation();
   const searchParams = useSearchParams();
   const category = searchParams.get('category');
+  const subcategory = searchParams.get('subcategory');
 
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState('newest');
-  const [priceRange, setPriceRange] = useState([0, 5000]);
+  const [priceRange, setPriceRange] = useState([0, 10000]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     document.body.className = 'bg-home';
@@ -28,37 +31,20 @@ function ProductsContent() {
     };
   }, []);
 
-  // Sample products (will be fetched from Firebase)
-  const sampleProducts: Product[] = [
-    {
-      id: '1',
-      name: 'Geleneksel Kimono',
-      nameEn: 'Traditional Kimono',
-      price: 1299,
-      oldPrice: 1499,
-      category: 'kimono',
-      images: ['/images/product-1.jpg'],
-      description: 'El işlemeli geleneksel kimono',
-      descriptionEn: 'Hand-embroidered traditional kimono',
-      story: 'İpek Yolu geleneğinden...',
-      storyEn: 'From Silk Road tradition...',
-      sizes: [
-        { size: 'S', inStock: true, preOrder: false },
-        { size: 'M', inStock: true, preOrder: false },
-        { size: 'L', inStock: false, preOrder: true },
-      ],
-      inStock: true,
-      featured: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      estimatedDelivery: '3-5 gün',
-    },
-    // Add more sample products here
-  ];
-
+  // Fetch products from Firebase
   useEffect(() => {
-    // In production, fetch from Firebase
-    setProducts(sampleProducts);
+    async function fetchProducts() {
+      try {
+        setLoading(true);
+        const data = await getProducts();
+        setProducts(data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProducts();
   }, []);
 
   useEffect(() => {
@@ -67,6 +53,11 @@ function ProductsContent() {
     // Filter by category
     if (category) {
       filtered = filtered.filter(p => p.category === category);
+    }
+
+    // Filter by subcategory
+    if (subcategory) {
+      filtered = filtered.filter(p => p.subcategory === subcategory);
     }
 
     // Filter by price range
@@ -90,7 +81,7 @@ function ProductsContent() {
         filtered.sort((a, b) => b.price - a.price);
         break;
       case 'newest':
-        filtered.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+        filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
         break;
       case 'popular':
         // Would use sales/views data in production
@@ -98,11 +89,25 @@ function ProductsContent() {
     }
 
     setFilteredProducts(filtered);
-  }, [products, category, priceRange, selectedSizes, sortBy]);
+  }, [products, category, subcategory, priceRange, selectedSizes, sortBy]);
 
-  const categoryTitle = category
-    ? t(`nav.${category}`)
-    : t('nav.products');
+  const getPageTitle = () => {
+    if (subcategory) {
+      return t(`categories.${subcategory}`);
+    }
+    if (category) {
+      return t(`categories.${category}`);
+    }
+    return t('nav.products');
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen py-20 px-4 flex items-center justify-center">
+        <div className="text-white text-xl">{t('common.loading')}</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen py-20 px-4">
@@ -114,7 +119,7 @@ function ProductsContent() {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-5xl font-bold text-white mb-4"
           >
-            {categoryTitle}
+            {getPageTitle()}
           </motion.h1>
           <p className="text-gray-400">
             {filteredProducts.length} {t('products.productsFound')}

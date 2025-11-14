@@ -11,8 +11,7 @@ const resources = {
       nav: {
         products: 'Ürünlerimiz',
         kimono: 'Kimono',
-        shirt: 'Gömlek',
-        set: 'Set',
+        set: 'Setler',
         corporate: 'Kurumsal',
         aboutUs: 'Biz Kimiz?',
         carnivals: 'Festivaller',
@@ -25,6 +24,24 @@ const resources = {
         login: 'Giriş Yap',
         signup: 'Üye Ol',
         logout: 'Çıkış Yap',
+      },
+      // Categories
+      categories: {
+        kimono: 'Kimono',
+        set: 'Setler',
+        // Kimono Subcategories
+        'organic-handpainted': 'Organik & El Boyaması',
+        'shiny-sequined': 'Parlak & Pullu Tasarımlar',
+        'recycled-upcycled': 'Geri Dönüşüm & Atık Kumaş',
+        'family-kimono': 'Aile Setleri',
+        // Set Subcategories
+        'retro-collection': 'Retro Kreasyon',
+        'festival-line': 'Festival Kreasyon',
+        'one-only-collection': 'Kısıtlı Üretim Kreasyon',
+        'special-fabric': 'Özel Tasarım Kumaş Setleri',
+        'handpainted-linen': 'El Boyaması Keten Setler',
+        'family-sets': 'Aile Setleri',
+        'kids-collection': 'Çocuk Setleri',
       },
       // Hero Section
       hero: {
@@ -471,11 +488,10 @@ const resources = {
       nav: {
         products: 'Our Products',
         kimono: 'Kimono',
-        shirt: 'Shirt',
-        set: 'Set',
+        set: 'Sets',
         corporate: 'Corporate',
         aboutUs: 'About Us',
-        carnivals: 'Carnivals',
+        carnivals: 'Festivals',
         orderTracking: 'Order Tracking',
         designRequest: 'Design Requests',
         tryOn: 'Try On',
@@ -485,6 +501,24 @@ const resources = {
         login: 'Login',
         signup: 'Sign Up',
         logout: 'Logout',
+      },
+      // Categories
+      categories: {
+        kimono: 'Kimono',
+        set: 'Sets',
+        // Kimono Subcategories
+        'organic-handpainted': 'Organic & Hand-Painted',
+        'shiny-sequined': 'Shiny & Sequined Designs',
+        'recycled-upcycled': 'Recycled & Upcycled Fabrics',
+        'family-kimono': 'Family Sets',
+        // Set Subcategories
+        'retro-collection': 'Retro Collection',
+        'festival-line': 'Festival Line',
+        'one-only-collection': 'One & Only Collection',
+        'special-fabric': 'Special Fabric Sets',
+        'handpainted-linen': 'Hand-Painted Linen Sets',
+        'family-sets': 'Family Sets',
+        'kids-collection': 'Kids Collection',
       },
       // Hero Section
       hero: {

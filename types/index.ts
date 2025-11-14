@@ -3,8 +3,25 @@ export interface Product {
   name: string;
   nameEn: string;
   price: number;
+  priceUSD?: number;
+  priceEUR?: number;
   oldPrice?: number;
-  category: 'kimono' | 'shirt' | 'set';
+  category: 'kimono' | 'set';
+  subcategory?:
+    // Kimono subcategories
+    | 'organic-handpainted'  // Organik & El Boyaması
+    | 'shiny-sequined'       // Parlak & Pullu Tasarımlar
+    | 'recycled-upcycled'    // Geri Dönüşüm & Atık Kumaş
+    | 'family-kimono'        // Aile Setleri (Kimono)
+    // Set subcategories
+    | 'retro-collection'     // Retro Kreasyon
+    | 'festival-line'        // Festival Kreasyon
+    | 'one-only-collection'  // Kısıtlı Üretim Kreasyon
+    | 'special-fabric'       // Özel Tasarım Kumaş Setleri
+    | 'handpainted-linen'    // El Boyaması Keten Setler
+    | 'family-sets'          // Aile Setleri
+    | 'kids-collection';     // Çocuk Setleri
+  collection?: string; // New: for grouping products into collections
   images: string[];
   fabricImage?: string;
   description: string;
@@ -17,6 +34,10 @@ export interface Product {
   createdAt: Date;
   updatedAt: Date;
   estimatedDelivery?: string;
+  seoTitle?: string;
+  seoTitleEn?: string;
+  seoDescription?: string;
+  seoDescriptionEn?: string;
 }
 
 export interface Size {
@@ -197,4 +218,33 @@ export interface AnalyticsData {
     views: number;
     sales: number;
   }>;
+}
+
+export interface Collection {
+  id: string;
+  name: string;
+  nameEn: string;
+  description: string;
+  descriptionEn: string;
+  image?: string;
+  products: string[]; // Product IDs
+  active: boolean;
+  featured: boolean;
+  order?: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface CategoryInfo {
+  key: string;
+  name: string;
+  nameEn: string;
+  description?: string;
+  descriptionEn?: string;
+  slogan?: string;
+  sloganEn?: string;
+  seoTitle?: string;
+  seoTitleEn?: string;
+  seoDescription?: string;
+  seoDescriptionEn?: string;
 }
