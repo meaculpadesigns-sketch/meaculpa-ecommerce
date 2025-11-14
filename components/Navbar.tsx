@@ -13,9 +13,11 @@ import {
   Search,
   Sun,
   Moon,
-  Globe
+  Globe,
+  ChevronDown
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { kimonoSubcategories, setSubcategories } from '@/constants/categories';
 
 export default function Navbar() {
   const { t, i18n } = useTranslation();
@@ -24,6 +26,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const cartCount = getCartCount();
 
   useEffect(() => {
@@ -45,9 +48,18 @@ export default function Navbar() {
 
   const navItems = [
     { name: t('nav.products'), href: '/products' },
-    { name: t('nav.kimono'), href: '/products?category=kimono' },
-    { name: t('nav.shirt'), href: '/products?category=shirt' },
-    { name: t('nav.set'), href: '/products?category=set' },
+    {
+      name: t('nav.kimono'),
+      href: '/products?category=kimono',
+      hasDropdown: true,
+      subcategories: kimonoSubcategories
+    },
+    {
+      name: t('nav.set'),
+      href: '/products?category=set',
+      hasDropdown: true,
+      subcategories: setSubcategories
+    },
     { name: t('nav.corporate'), href: '/corporate' },
     { name: t('nav.aboutUs'), href: '/about' },
     { name: t('nav.carnivals'), href: '/carnivals' },
@@ -79,13 +91,45 @@ export default function Navbar() {
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-1">
               {navItems.slice(0, 5).map((item) => (
-                <Link
+                <div
                   key={item.href}
-                  href={item.href}
-                  className="nav-link px-3 py-2 rounded-lg hover:bg-white hover:bg-opacity-5"
+                  className="relative"
+                  onMouseEnter={() => item.hasDropdown && setOpenDropdown(item.name)}
+                  onMouseLeave={() => setOpenDropdown(null)}
                 >
-                  {item.name}
-                </Link>
+                  <Link
+                    href={item.href}
+                    className="nav-link px-3 py-2 rounded-lg hover:bg-white hover:bg-opacity-5 flex items-center gap-1"
+                  >
+                    {item.name}
+                    {item.hasDropdown && <ChevronDown size={16} />}
+                  </Link>
+
+                  {/* Dropdown Menu */}
+                  {item.hasDropdown && openDropdown === item.name && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="absolute top-full left-0 mt-2 w-64 glass rounded-xl border border-white border-opacity-10 shadow-xl overflow-hidden z-50"
+                    >
+                      {item.subcategories?.map((sub) => (
+                        <Link
+                          key={sub.key}
+                          href={`/products?category=${item.href.includes('kimono') ? 'kimono' : 'set'}&subcategory=${sub.key}`}
+                          className="block px-4 py-3 text-gray-300 hover:bg-white hover:bg-opacity-10 hover:text-white transition-colors border-b border-white border-opacity-5 last:border-0"
+                        >
+                          <div className="font-medium">{i18n.language === 'tr' ? sub.name : sub.nameEn}</div>
+                          {sub.slogan && (
+                            <div className="text-xs text-gray-400 mt-1">
+                              {i18n.language === 'tr' ? sub.slogan : sub.sloganEn}
+                            </div>
+                          )}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </div>
               ))}
             </div>
 

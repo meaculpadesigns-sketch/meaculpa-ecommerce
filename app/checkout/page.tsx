@@ -5,10 +5,10 @@ import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { useCart } from '@/lib/cart-context';
 import { auth } from '@/lib/firebase';
-import { getUserById, createOrder } from '@/lib/firebase-helpers';
-import { Address, User } from '@/types';
+import { getUserById, createOrder, getCouponByCode, useCoupon } from '@/lib/firebase-helpers';
+import { Address, User, Coupon } from '@/types';
 import { motion } from 'framer-motion';
-import { CreditCard, Wallet, CheckCircle } from 'lucide-react';
+import { CreditCard, Wallet, CheckCircle, Tag } from 'lucide-react';
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -19,6 +19,12 @@ export default function CheckoutPage() {
   const [isGuest, setIsGuest] = useState(true);
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'crypto' | 'googlepay'>('card');
   const [loading, setLoading] = useState(false);
+
+  // Coupon
+  const [couponCode, setCouponCode] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
+  const [couponError, setCouponError] = useState('');
+  const [checkingCoupon, setCheckingCoupon] = useState(false);
 
   // Guest/User Info
   const [email, setEmail] = useState('');
@@ -77,7 +83,81 @@ export default function CheckoutPage() {
 
   const subtotal = getCartTotal();
   const shipping = subtotal > 500 ? 0 : 50;
-  const total = subtotal + shipping;
+
+  // Calculate discount
+  const calculateDiscount = () => {
+    if (!appliedCoupon) return 0;
+
+    if (appliedCoupon.type === 'percentage') {
+      const discount = (subtotal * appliedCoupon.value) / 100;
+      return appliedCoupon.maxDiscount
+        ? Math.min(discount, appliedCoupon.maxDiscount)
+        : discount;
+    } else {
+      return appliedCoupon.value;
+    }
+  };
+
+  const discount = calculateDiscount();
+  const total = subtotal + shipping - discount;
+
+  // Apply coupon function
+  const handleApplyCoupon = async () => {
+    if (!couponCode.trim()) {
+      setCouponError('Lütfen bir kupon kodu girin');
+      return;
+    }
+
+    setCheckingCoupon(true);
+    setCouponError('');
+
+    try {
+      const coupon = await getCouponByCode(couponCode.trim().toUpperCase());
+
+      if (!coupon) {
+        setCouponError('Geçersiz kupon kodu');
+        setCheckingCoupon(false);
+        return;
+      }
+
+      // Check if coupon is expired
+      if (coupon.expiresAt && new Date(coupon.expiresAt) < new Date()) {
+        setCouponError('Bu kupon süresi dolmuş');
+        setCheckingCoupon(false);
+        return;
+      }
+
+      // Check usage limit
+      if (coupon.usageLimit && coupon.usedCount >= coupon.usageLimit) {
+        setCouponError('Bu kupon kullanım limitine ulaşmış');
+        setCheckingCoupon(false);
+        return;
+      }
+
+      // Check minimum purchase
+      if (coupon.minPurchase && subtotal < coupon.minPurchase) {
+        setCouponError(`Bu kupon için minimum ${coupon.minPurchase}₺ alışveriş gerekli`);
+        setCheckingCoupon(false);
+        return;
+      }
+
+      // Check if user-specific
+      if (coupon.userSpecific && user && coupon.userSpecific !== user.id) {
+        setCouponError('Bu kupon sizin için geçerli değil');
+        setCheckingCoupon(false);
+        return;
+      }
+
+      setAppliedCoupon(coupon);
+      setCouponError('');
+      setCouponCode('');
+    } catch (error) {
+      console.error('Coupon error:', error);
+      setCouponError('Kupon kontrolü sırasında hata oluştu');
+    } finally {
+      setCheckingCoupon(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -106,7 +186,7 @@ export default function CheckoutPage() {
         orderNumber,
         items: cart,
         subtotal,
-        discount: 0,
+        discount,
         shipping,
         total,
         status: 'pending',
@@ -119,6 +199,11 @@ export default function CheckoutPage() {
         createdAt: new Date(),
         updatedAt: new Date(),
       });
+
+      // If coupon was used, increment usage count
+      if (appliedCoupon) {
+        await useCoupon(appliedCoupon.id);
+      }
 
       // Clear cart
       clearCart();
@@ -444,12 +529,65 @@ export default function CheckoutPage() {
                 ))}
               </div>
 
+              {/* Coupon Code */}
+              <div className="mb-6 pb-4 border-b border-white border-opacity-10">
+                <label className="block text-white font-medium mb-2">İndirim Kodu</label>
+                {!appliedCoupon ? (
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={couponCode}
+                      onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                      placeholder="KUPON KODU"
+                      className="input-field flex-grow"
+                      disabled={checkingCoupon}
+                    />
+                    <button
+                      onClick={handleApplyCoupon}
+                      disabled={checkingCoupon || !couponCode.trim()}
+                      className="btn-secondary px-6 whitespace-nowrap"
+                    >
+                      {checkingCoupon ? 'Kontrol ediliyor...' : 'Uygula'}
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-between p-3 bg-green-500 bg-opacity-20 border border-green-500 rounded-lg">
+                    <div className="flex items-center gap-2">
+                      <Tag className="text-green-500" size={16} />
+                      <div>
+                        <p className="text-green-500 font-medium text-sm">{appliedCoupon.code}</p>
+                        <p className="text-green-400 text-xs">
+                          {appliedCoupon.type === 'percentage'
+                            ? `%${appliedCoupon.value} İndirim`
+                            : `₺${appliedCoupon.value} İndirim`}
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setAppliedCoupon(null)}
+                      className="text-green-400 hover:text-green-300 text-sm underline"
+                    >
+                      Kaldır
+                    </button>
+                  </div>
+                )}
+                {couponError && (
+                  <p className="text-red-500 text-sm mt-2">{couponError}</p>
+                )}
+              </div>
+
               {/* Totals */}
               <div className="space-y-3 mb-6 pt-4 border-t border-white border-opacity-10">
                 <div className="flex justify-between text-gray-400">
                   <span>Ara Toplam</span>
                   <span>₺{subtotal.toFixed(2)}</span>
                 </div>
+                {discount > 0 && (
+                  <div className="flex justify-between text-green-500">
+                    <span>İndirim</span>
+                    <span>-₺{discount.toFixed(2)}</span>
+                  </div>
+                )}
                 <div className="flex justify-between text-gray-400">
                   <span>Kargo</span>
                   <span>{shipping === 0 ? 'Ücretsiz' : `₺${shipping.toFixed(2)}`}</span>
