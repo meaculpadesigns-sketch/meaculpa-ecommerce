@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { createDesignRequest, uploadFile } from '@/lib/firebase-helpers';
@@ -16,6 +16,13 @@ export default function DesignRequestPage() {
   const [images, setImages] = useState<string[]>([]);
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    document.body.className = 'bg-home';
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
 
   // Guest info
   const [email, setEmail] = useState('');

@@ -74,8 +74,8 @@ export default function Home() {
           style={{ opacity, scale }}
           className="absolute inset-0 z-0"
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
-          <div className="h-full w-full bg-[url('/images/hero-bg.jpg')] bg-cover bg-center" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-transparent opacity-30" />
+          <div className="h-full w-full bg-[url('/images/hero-bg.jpg')] bg-cover bg-center opacity-20" />
         </motion.div>
 
         {/* Content */}
@@ -171,7 +171,7 @@ export default function Home() {
       </section>
 
       {/* Brand Story Section */}
-      <section className="py-20 px-4 bg-gradient-to-b from-black to-zinc-900">
+      <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 50 }}

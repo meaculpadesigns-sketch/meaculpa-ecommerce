@@ -63,7 +63,7 @@ export default function Navbar() {
         transition={{ duration: 0.5 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'bg-black bg-opacity-80 backdrop-blur-xl border-b border-white border-opacity-10'
+            ? 'glass border-b border-white border-opacity-10'
             : 'bg-transparent'
         }`}
       >
@@ -177,7 +177,7 @@ export default function Navbar() {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-40 lg:hidden"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-90 backdrop-blur-xl">
+            <div className="fixed inset-0 glass">
               <div className="flex flex-col h-full pt-20 px-6 pb-6 overflow-y-auto">
                 {navItems.map((item) => (
                   <Link
