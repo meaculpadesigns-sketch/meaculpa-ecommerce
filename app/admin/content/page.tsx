@@ -234,7 +234,7 @@ export default function AdminContentPage() {
                 </label>
                 <input
                   type="text"
-                  defaultValue="kimono, gömlek, tasarım, el işi, moda"
+                  defaultValue="kimono, set, tasarım, el işi, moda, organik kumaş, el boyaması"
                   className="input-field w-full"
                 />
               </div>

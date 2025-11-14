@@ -11,7 +11,6 @@ export default function Footer() {
     products: [
       { name: t('nav.products'), href: '/products' },
       { name: t('nav.kimono'), href: '/products?category=kimono' },
-      { name: t('nav.shirt'), href: '/products?category=shirt' },
       { name: t('nav.set'), href: '/products?category=set' },
     ],
     company: [

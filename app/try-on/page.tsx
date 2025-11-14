@@ -22,8 +22,7 @@ export default function TryOnPage() {
   // Sample products for try-on
   const products = [
     { id: '1', name: t('tryOn.product1'), image: '/images/kimono-1.jpg' },
-    { id: '2', name: t('tryOn.product2'), image: '/images/shirt-1.jpg' },
-    { id: '3', name: t('tryOn.product3'), image: '/images/set-1.jpg' },
+    { id: '2', name: t('tryOn.product3'), image: '/images/set-1.jpg' },
   ];
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {

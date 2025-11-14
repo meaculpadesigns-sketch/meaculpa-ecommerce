@@ -10,7 +10,7 @@ import CookieConsent from '@/components/CookieConsent';
 export const metadata: Metadata = {
   title: 'Mea Culpa - Zamana Dokunan Hikayeler',
   description: 'Doğu\'nun ilhamıyla, modern yaşamın içinde. Her karar bir yolculuktur.',
-  keywords: ['mea culpa', 'kimono', 'gömlek', 'tasarım', 'fashion', 'türk tasarım', 'ipek yolu'],
+  keywords: ['mea culpa', 'kimono', 'set', 'tasarım', 'fashion', 'türk tasarım', 'ipek yolu', 'organik kumaş', 'el boyaması'],
   authors: [{ name: 'Mea Culpa Designs' }],
   openGraph: {
     title: 'Mea Culpa - Zamana Dokunan Hikayeler',

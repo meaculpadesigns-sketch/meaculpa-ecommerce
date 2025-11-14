@@ -402,7 +402,6 @@ const resources = {
         tryOnResult: 'Deneme Sonucu',
         // Product names
         product1: 'Geleneksel Kimono',
-        product2: 'Modern Gömlek',
         product3: 'Özel Set',
       },
       // Order Tracking
@@ -879,7 +878,6 @@ const resources = {
         tryOnResult: 'Try On Result',
         // Product names
         product1: 'Traditional Kimono',
-        product2: 'Modern Shirt',
         product3: 'Special Set',
       },
       // Order Tracking

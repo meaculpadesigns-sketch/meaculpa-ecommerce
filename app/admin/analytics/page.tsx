@@ -118,7 +118,6 @@ export default function AdminAnalyticsPage() {
   // Sales by category
   const categorySales: Record<string, number> = {
     kimono: 0,
-    shirt: 0,
     set: 0,
   };
 
@@ -140,21 +139,11 @@ export default function AdminAnalyticsPage() {
       percentage: totalCategorySales > 0 ? Math.round((categorySales.kimono / totalCategorySales) * 100) : 0
     },
     {
-      category: 'Shirt',
-      sales: categorySales.shirt,
-      percentage: totalCategorySales > 0 ? Math.round((categorySales.shirt / totalCategorySales) * 100) : 0
-    },
-    {
-      category: 'Set',
+      category: isTurkish ? 'Setler' : 'Sets',
       sales: categorySales.set,
       percentage: totalCategorySales > 0 ? Math.round((categorySales.set / totalCategorySales) * 100) : 0
     },
-    {
-      category: 'Others',
-      sales: 0,
-      percentage: 0
-    },
-  ].filter(item => item.sales > 0 || item.category === 'Others');
+  ].filter(item => item.sales > 0);
 
   // Mock traffic sources (would need analytics integration for real data)
   const trafficSources = [
