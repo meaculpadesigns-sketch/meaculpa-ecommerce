@@ -147,7 +147,7 @@ export default function AdminProducts() {
       priceEUR: product.priceEUR || 0,
       oldPrice: product.oldPrice || 0,
       category: product.category,
-      subcategory: product.subcategory || '',
+      subcategory: product.subcategory || undefined,
       collection: product.collection || '',
       images: product.images,
       fabricImage: product.fabricImage || '',
@@ -198,7 +198,7 @@ export default function AdminProducts() {
       priceEUR: 0,
       oldPrice: 0,
       category: 'kimono',
-      subcategory: '',
+      subcategory: undefined,
       collection: '',
       images: [],
       fabricImage: '',
@@ -499,7 +499,7 @@ export default function AdminProducts() {
                         value={formData.category}
                         onChange={(e) => {
                           const newCategory = e.target.value as 'kimono' | 'set';
-                          setFormData({ ...formData, category: newCategory, subcategory: '' });
+                          setFormData({ ...formData, category: newCategory, subcategory: undefined });
                         }}
                         className="input-field"
                         required
