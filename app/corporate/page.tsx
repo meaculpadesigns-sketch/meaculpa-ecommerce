@@ -201,18 +201,18 @@ export default function CorporatePage() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="mailto:corporate@meaculpa.com"
+              href="mailto:meaculpadesigns@gmail.com"
               className="btn-primary inline-flex items-center gap-2"
             >
               <Mail size={20} />
-              corporate@meaculpa.com
+              meaculpadesigns@gmail.com
             </a>
             <a
-              href="tel:+905551234567"
+              href="tel:+905075620802"
               className="btn-secondary inline-flex items-center gap-2"
             >
               <Phone size={20} />
-              +90 555 123 45 67
+              +90 507 562 08 02
             </a>
           </div>
         </motion.div>

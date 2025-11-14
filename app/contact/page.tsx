@@ -215,9 +215,7 @@ export default function ContactPage() {
                   <div>
                     <p className="text-white font-semibold mb-1">{t('contact.address')}</p>
                     <p className="text-gray-400">
-                      Yurt mah. 71329 sk. Erkam Apt.<br />
-                      Kat: 8 No: 16<br />
-                      Çukurova/ADANA
+                      İstanbul/TÜRKİYE
                     </p>
                   </div>
                 </div>

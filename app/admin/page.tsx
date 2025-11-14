@@ -94,7 +94,7 @@ export default function AdminDashboard() {
       color: 'from-green-500 to-emerald-500',
     },
     {
-      title: 'Karnavallar & Etkinlikler',
+      title: 'Festivaller & Etkinlikler',
       description: 'Etkinlik ekle, düzenle, yönet',
       icon: Calendar,
       href: '/admin/carnivals',

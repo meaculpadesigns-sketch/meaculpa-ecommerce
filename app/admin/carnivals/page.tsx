@@ -82,7 +82,7 @@ export default function AdminCarnivalsPage() {
 
       await fetchCarnivals();
       closeModal();
-      alert(editingCarnival ? 'Karnaval güncellendi!' : 'Karnaval eklendi!');
+      alert(editingCarnival ? 'Festival güncellendi!' : 'Festival eklendi!');
     } catch (error) {
       console.error('Error saving carnival:', error);
       alert('Bir hata oluştu');
@@ -92,12 +92,12 @@ export default function AdminCarnivalsPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Bu karnavalı silmek istediğinizden emin misiniz?')) return;
+    if (!confirm('Bu festivali silmek istediğinizden emin misiniz?')) return;
 
     try {
       await deleteDoc(doc(db, 'carnivals', id));
       await fetchCarnivals();
-      alert('Karnaval silindi!');
+      alert('Festival silindi!');
     } catch (error) {
       console.error('Error deleting carnival:', error);
       alert('Silme işlemi başarısız');
@@ -148,7 +148,7 @@ export default function AdminCarnivalsPage() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-4xl font-bold text-white mb-2">
-              Karnaval Yönetimi
+              Festival Yönetimi
             </h1>
             <p className="text-gray-400">
               Etkinlikleri ekleyin, düzenleyin ve yönetin
@@ -159,7 +159,7 @@ export default function AdminCarnivalsPage() {
             className="btn-primary flex items-center gap-2"
           >
             <Plus size={20} />
-            Yeni Karnaval Ekle
+            Yeni Festival Ekle
           </button>
         </div>
 
@@ -238,10 +238,10 @@ export default function AdminCarnivalsPage() {
           <div className="text-center py-20">
             <Calendar className="mx-auto mb-6 text-gray-400" size={80} />
             <h2 className="text-2xl font-bold text-white mb-4">
-              Henüz Karnaval Yok
+              Henüz Festival Yok
             </h2>
             <p className="text-gray-400 mb-8">
-              Yeni karnaval eklemek için yukarıdaki butona tıklayın
+              Yeni festival eklemek için yukarıdaki butona tıklayın
             </p>
           </div>
         )}
@@ -256,7 +256,7 @@ export default function AdminCarnivalsPage() {
             >
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-white">
-                  {editingCarnival ? 'Karnaval Düzenle' : 'Yeni Karnaval Ekle'}
+                  {editingCarnival ? 'Festival Düzenle' : 'Yeni Festival Ekle'}
                 </h2>
                 <button
                   onClick={closeModal}
@@ -269,7 +269,7 @@ export default function AdminCarnivalsPage() {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label className="block text-white font-medium mb-2">
-                    Karnaval Adı
+                    Festival Adı
                   </label>
                   <input
                     type="text"
