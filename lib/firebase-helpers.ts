@@ -316,10 +316,33 @@ export async function addStory(story: Omit<Story, 'id'>) {
 
 // File Upload
 export async function uploadFile(file: File, path: string): Promise<string> {
-  const storageRef = ref(storage, path);
-  await uploadBytes(storageRef, file);
-  const url = await getDownloadURL(storageRef);
-  return url;
+  try {
+    console.log('🔵 Starting upload:', { fileName: file.name, path, fileSize: file.size });
+    console.log('🔵 Storage instance:', storage);
+
+    if (!storage) {
+      throw new Error('Storage is not initialized');
+    }
+
+    const storageRef = ref(storage, path);
+    console.log('🔵 Storage ref created:', storageRef.toString());
+
+    await uploadBytes(storageRef, file);
+    console.log('✅ Upload complete, getting download URL...');
+
+    const url = await getDownloadURL(storageRef);
+    console.log('✅ Download URL obtained:', url);
+
+    return url;
+  } catch (error: any) {
+    console.error('❌ Upload error:', {
+      message: error?.message,
+      code: error?.code,
+      name: error?.name,
+      fullError: error
+    });
+    throw error;
+  }
 }
 
 export async function deleteFile(path: string) {
