@@ -1,11 +1,20 @@
 'use client';
 
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Heart, Award, Users, Globe } from 'lucide-react';
 
 export default function AboutPage() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    document.body.className = 'bg-about';
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
+
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-4xl mx-auto">

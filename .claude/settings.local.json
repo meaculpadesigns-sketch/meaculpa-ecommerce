@@ -6,7 +6,10 @@
       "Bash(git push)",
       "Bash(node -c:*)",
       "Bash(npx tsc --noEmit components/I18nProvider.tsx)",
-      "Bash(.env.local)"
+      "Bash(.env.local)",
+      "Bash(git checkout:*)",
+      "Bash(find:*)",
+      "Bash(npm run build:*)"
     ],
     "deny": [],
     "ask": []

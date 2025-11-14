@@ -13,6 +13,13 @@ export default function Home() {
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
   const scale = useTransform(scrollY, [0, 300], [1, 0.8]);
 
+  useEffect(() => {
+    document.body.className = 'bg-home';
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
+
   const [creations, setCreations] = useState([
     {
       id: '1',
@@ -59,7 +66,7 @@ export default function Home() {
   ]);
 
   return (
-    <div className="bg-black">
+    <div>
       {/* Hero Section - Apple Style */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         {/* Background with parallax effect */}

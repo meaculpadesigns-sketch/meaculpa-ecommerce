@@ -19,8 +19,53 @@
 
 @layer base {
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
     font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    min-height: 100vh;
+  }
+
+  /* Background gradients for each page */
+  body.bg-home {
+    background: linear-gradient(135deg, #DDAB52 0%, #F5C77E 100%);
+  }
+
+  body.bg-products {
+    background: linear-gradient(135deg, #FB9802 0%, #FDB447 100%);
+  }
+
+  body.bg-about {
+    background: linear-gradient(135deg, #CF5C09 0%, #E87835 100%);
+  }
+
+  body.bg-contact {
+    background: linear-gradient(135deg, #6B909E 0%, #8BAAB5 100%);
+  }
+
+  body.bg-light {
+    background: linear-gradient(135deg, #EDDDC8 0%, #F5EDE1 100%);
+  }
+
+  /* Dark text for light backgrounds */
+  body.text-dark-page {
+    color: #1a1a1a;
+  }
+
+  body.text-dark-page h1,
+  body.text-dark-page h2,
+  body.text-dark-page h3,
+  body.text-dark-page h4,
+  body.text-dark-page h5,
+  body.text-dark-page h6 {
+    color: #000000;
+  }
+
+  body.text-dark-page .text-white {
+    color: #1a1a1a !important;
+  }
+
+  body.text-dark-page .text-gray-300,
+  body.text-dark-page .text-gray-400 {
+    color: #4a4a4a !important;
   }
 }
 
@@ -52,6 +97,11 @@
   /* Glass effect */
   .glass {
     @apply bg-white bg-opacity-10 backdrop-blur-lg border border-white border-opacity-20;
+  }
+
+  /* Glass effect for light backgrounds */
+  body.text-dark-page .glass {
+    @apply bg-black bg-opacity-5 backdrop-blur-lg border border-black border-opacity-10;
   }
 
   /* Scroll snap for creations */

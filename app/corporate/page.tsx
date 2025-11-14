@@ -1,11 +1,20 @@
 'use client';
 
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Building, Users, Gift, Award, Mail, Phone } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export default function CorporatePage() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    document.body.className = 'bg-light text-dark-page';
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
+
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-6xl mx-auto">

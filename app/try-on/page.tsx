@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Upload, Camera, Sparkles, AlertCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +11,13 @@ export default function TryOnPage() {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<string | null>(null);
+
+  useEffect(() => {
+    document.body.className = 'bg-light text-dark-page';
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
 
   // Sample products for try-on
   const products = [

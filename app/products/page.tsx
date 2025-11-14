@@ -21,6 +21,13 @@ function ProductsContent() {
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(false);
 
+  useEffect(() => {
+    document.body.className = 'bg-products';
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
+
   // Sample products (will be fetched from Firebase)
   const sampleProducts: Product[] = [
     {

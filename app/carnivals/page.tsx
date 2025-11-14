@@ -1,11 +1,19 @@
 'use client';
 
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, MapPin, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export default function CarnivalsPage() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    document.body.className = 'bg-light text-dark-page';
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
   const carnivals = [
     {
       id: '1',
