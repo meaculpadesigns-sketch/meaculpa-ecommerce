@@ -16,7 +16,10 @@
       "Bash(git push:*)",
       "Bash(vercel --prod:*)",
       "Bash(npx vercel --prod)",
-      "Bash(npx vercel --prod --yes)"
+      "Bash(npx vercel --prod --yes)",
+      "Bash(npm install:*)",
+      "Bash(npx vercel env pull:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []

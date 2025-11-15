@@ -204,50 +204,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              {t('home.bestSellers')}
-            </h2>
-            <p className="text-gray-400 text-lg">
-              {t('home.bestSellersDesc')}
-            </p>
-          </motion.div>
-
-          {/* Product Grid - Will be populated from Firebase */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Placeholder for products */}
-            {[1, 2, 3].map((i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="product-card p-6"
-              >
-                <div className="aspect-square bg-zinc-800 rounded-lg mb-4" />
-                <h3 className="text-white text-xl font-semibold mb-2">
-                  {t('home.productView')} {i}
-                </h3>
-                <p className="text-gray-400 mb-4">₺999</p>
-                <button className="btn-primary w-full">
-                  {t('products.addToCart')}
-                </button>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Brand Story Section */}
       <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">

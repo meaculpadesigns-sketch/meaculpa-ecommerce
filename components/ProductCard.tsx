@@ -40,10 +40,18 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
         className="glass rounded-2xl p-6 flex flex-col md:flex-row gap-6 hover:bg-white hover:bg-opacity-5 transition-all"
       >
         <Link href={`/products/${product.id}`} className="flex-shrink-0">
-          <div className="w-full md:w-64 aspect-square bg-zinc-800 rounded-xl overflow-hidden">
-            <div className="w-full h-full flex items-center justify-center text-white">
-              {t('home.productView')}
-            </div>
+          <div className="w-full md:w-64 aspect-square bg-zinc-800 rounded-xl overflow-hidden group/image">
+            {product.images && product.images.length > 0 ? (
+              <img
+                src={product.images[0]}
+                alt={name}
+                className="w-full h-full object-cover transition-transform duration-300 group-hover/image:scale-110"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-white">
+                {t('home.productView')}
+              </div>
+            )}
           </div>
         </Link>
 
@@ -126,10 +134,18 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
       <div className="product-card">
         {/* Image */}
         <Link href={`/products/${product.id}`}>
-          <div className="relative aspect-[3/4] bg-zinc-800 overflow-hidden">
-            <div className="w-full h-full flex items-center justify-center text-white">
-              {t('home.productView')}
-            </div>
+          <div className="relative aspect-[3/4] bg-zinc-800 overflow-hidden group/image">
+            {product.images && product.images.length > 0 ? (
+              <img
+                src={product.images[0]}
+                alt={name}
+                className="w-full h-full object-cover transition-transform duration-300 group-hover/image:scale-110"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-white">
+                {t('home.productView')}
+              </div>
+            )}
 
             {/* Discount Badge */}
             {product.oldPrice && (

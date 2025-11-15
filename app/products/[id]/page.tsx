@@ -148,10 +148,18 @@ export default function ProductDetailPage() {
             className="space-y-4"
           >
             {/* Main Image */}
-            <div className="relative aspect-[3/4] bg-zinc-800 rounded-2xl overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center text-white text-lg">
-                Ürün Görseli {currentImageIndex + 1}
-              </div>
+            <div className="relative aspect-[3/4] bg-zinc-800 rounded-2xl overflow-hidden group/zoom">
+              {product.images && product.images.length > 0 ? (
+                <img
+                  src={product.images[currentImageIndex]}
+                  alt={`${name} - ${currentImageIndex + 1}`}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover/zoom:scale-125"
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center text-white text-lg">
+                  Ürün Görseli {currentImageIndex + 1}
+                </div>
+              )}
 
               {/* Navigation Arrows */}
               {product.images.length > 1 && (
@@ -173,8 +181,12 @@ export default function ProductDetailPage() {
 
               {/* Fabric Sample */}
               {product.fabricImage && (
-                <div className="absolute top-4 right-4 w-20 h-20 rounded-full border-2 border-white overflow-hidden">
-                  <div className="w-full h-full bg-zinc-700" />
+                <div className="absolute top-4 right-4 w-20 h-20 rounded-full border-2 border-white overflow-hidden group/fabric cursor-pointer">
+                  <img
+                    src={product.fabricImage}
+                    alt="Kumaş Detayı"
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover/fabric:scale-150"
+                  />
                 </div>
               )}
 
@@ -189,14 +201,20 @@ export default function ProductDetailPage() {
             {/* Thumbnail Images */}
             {product.images.length > 1 && (
               <div className="grid grid-cols-4 gap-2">
-                {product.images.map((_, index) => (
+                {product.images.map((image, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
-                    className={`aspect-square bg-zinc-800 rounded-lg ${
+                    className={`aspect-square bg-zinc-800 rounded-lg overflow-hidden ${
                       currentImageIndex === index ? 'ring-2 ring-mea-gold' : ''
                     }`}
-                  />
+                  >
+                    <img
+                      src={image}
+                      alt={`${name} thumbnail ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
                 ))}
               </div>
             )}
