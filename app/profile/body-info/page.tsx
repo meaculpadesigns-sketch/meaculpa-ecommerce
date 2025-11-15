@@ -9,8 +9,10 @@ import { User } from '@/types';
 import { motion } from 'framer-motion';
 import { Save, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 
 export default function BodyInfoPage() {
+  const { t } = useTranslation();
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
@@ -71,10 +73,10 @@ export default function BodyInfoPage() {
       await updateUser(user.id, {
         bodyInfo: formData,
       });
-      alert('Beden bilgileriniz kaydedildi!');
+      alert(t('profile.saved'));
     } catch (error) {
       console.error('Error saving body info:', error);
-      alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+      alert(t('common.error'));
     } finally {
       setSaving(false);
     }
@@ -83,7 +85,7 @@ export default function BodyInfoPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-white text-xl">Yükleniyor...</div>
+        <div className="animate-pulse text-white text-xl">{t('common.loading')}</div>
       </div>
     );
   }
@@ -95,10 +97,10 @@ export default function BodyInfoPage() {
         <div className="mb-8">
           <Link href="/profile" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4">
             <ArrowLeft size={20} />
-            Profil
+            {t('profile.backToProfile')}
           </Link>
-          <h1 className="text-4xl font-bold text-white">Beden Bilgilerim</h1>
-          <p className="text-gray-400 mt-2">Özel tasarımlar için beden bilgilerinizi kaydedin</p>
+          <h1 className="text-4xl font-bold text-white">{t('profile.bodyInfoTitle')}</h1>
+          <p className="text-gray-400 mt-2">{t('profile.bodyInfoSubtitle')}</p>
         </div>
 
         {/* Form */}
@@ -110,12 +112,12 @@ export default function BodyInfoPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Gender */}
             <div className="md:col-span-2">
-              <label className="block text-white font-medium mb-3">Cinsiyet</label>
+              <label className="block text-white font-medium mb-3">{t('profile.gender')}</label>
               <div className="flex gap-4">
                 {[
-                  { value: 'female', label: 'Kadın' },
-                  { value: 'male', label: 'Erkek' },
-                  { value: 'other', label: 'Diğer' },
+                  { value: 'female', label: t('profile.female') },
+                  { value: 'male', label: t('profile.male') },
+                  { value: 'other', label: t('profile.other') },
                 ].map((option) => (
                   <button
                     key={option.value}
@@ -134,72 +136,72 @@ export default function BodyInfoPage() {
 
             {/* Height */}
             <div>
-              <label className="block text-white font-medium mb-2">Boy (cm)</label>
+              <label className="block text-white font-medium mb-2">{t('profile.height')}</label>
               <input
                 type="number"
                 value={formData.height}
                 onChange={(e) => setFormData({ ...formData, height: e.target.value })}
-                placeholder="Örn: 170"
+                placeholder="170"
                 className="input-field w-full"
               />
             </div>
 
             {/* Weight */}
             <div>
-              <label className="block text-white font-medium mb-2">Kilo (kg)</label>
+              <label className="block text-white font-medium mb-2">{t('profile.weight')}</label>
               <input
                 type="number"
                 value={formData.weight}
                 onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
-                placeholder="Örn: 65"
+                placeholder="65"
                 className="input-field w-full"
               />
             </div>
 
             {/* Chest Size */}
             <div>
-              <label className="block text-white font-medium mb-2">Göğüs Çevresi (cm)</label>
+              <label className="block text-white font-medium mb-2">{t('profile.chestSize')}</label>
               <input
                 type="number"
                 value={formData.chestSize}
                 onChange={(e) => setFormData({ ...formData, chestSize: e.target.value })}
-                placeholder="Örn: 90"
+                placeholder="90"
                 className="input-field w-full"
               />
             </div>
 
             {/* Waist Size */}
             <div>
-              <label className="block text-white font-medium mb-2">Bel Çevresi (cm)</label>
+              <label className="block text-white font-medium mb-2">{t('profile.waistSize')}</label>
               <input
                 type="number"
                 value={formData.waistSize}
                 onChange={(e) => setFormData({ ...formData, waistSize: e.target.value })}
-                placeholder="Örn: 70"
+                placeholder="70"
                 className="input-field w-full"
               />
             </div>
 
             {/* Hip Size */}
             <div>
-              <label className="block text-white font-medium mb-2">Kalça Çevresi (cm)</label>
+              <label className="block text-white font-medium mb-2">{t('profile.hipSize')}</label>
               <input
                 type="number"
                 value={formData.hipSize}
                 onChange={(e) => setFormData({ ...formData, hipSize: e.target.value })}
-                placeholder="Örn: 95"
+                placeholder="95"
                 className="input-field w-full"
               />
             </div>
 
             {/* Shoe Size */}
             <div>
-              <label className="block text-white font-medium mb-2">Ayakkabı Numarası</label>
+              <label className="block text-white font-medium mb-2">{t('profile.shoeSize')}</label>
               <input
                 type="number"
                 value={formData.shoeSize}
                 onChange={(e) => setFormData({ ...formData, shoeSize: e.target.value })}
-                placeholder="Örn: 38"
+                placeholder="38"
                 className="input-field w-full"
               />
             </div>
@@ -213,15 +215,15 @@ export default function BodyInfoPage() {
               className="btn-primary flex items-center gap-2 disabled:opacity-50"
             >
               <Save size={20} />
-              {saving ? 'Kaydediliyor...' : 'Kaydet'}
+              {saving ? t('profile.saving') : t('profile.save')}
             </button>
           </div>
         </motion.div>
 
         {/* Info */}
         <div className="glass rounded-xl p-4 text-gray-400 text-sm mt-6">
-          <p>📏 Bu bilgiler, size özel tasarımlarımızda kullanılacaktır.</p>
-          <p className="mt-2">🔒 Beden bilgileriniz güvenle saklanır ve sadece sizin için kullanılır.</p>
+          <p>📏 {t('profile.bodyInfoInfo')}</p>
+          <p className="mt-2">🔒 {t('profile.bodyInfoPrivacy')}</p>
         </div>
       </div>
     </div>

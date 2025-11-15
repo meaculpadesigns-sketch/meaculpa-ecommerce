@@ -8,8 +8,10 @@ import { getUserById } from '@/lib/firebase-helpers';
 import { motion } from 'framer-motion';
 import { Send, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 
 export default function MessagesPage() {
+  const { t } = useTranslation();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
@@ -50,7 +52,7 @@ export default function MessagesPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-white text-xl">Yükleniyor...</div>
+        <div className="animate-pulse text-white text-xl">{t('common.loading')}</div>
       </div>
     );
   }
@@ -62,10 +64,10 @@ export default function MessagesPage() {
         <div className="mb-8">
           <Link href="/profile" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4">
             <ArrowLeft size={20} />
-            Profil
+            {t('profile.backToProfile')}
           </Link>
-          <h1 className="text-4xl font-bold text-white">Mesajlarım</h1>
-          <p className="text-gray-400 mt-2">Admin ile mesajlaşma</p>
+          <h1 className="text-4xl font-bold text-white">{t('profile.messagesTitle')}</h1>
+          <p className="text-gray-400 mt-2">{t('profile.messagesDesc')}</p>
         </div>
 
         {/* Messages Container */}
@@ -78,8 +80,8 @@ export default function MessagesPage() {
           <div className="space-y-4 mb-6 max-h-[500px] overflow-y-auto">
             {messages.length === 0 ? (
               <div className="text-center py-12 text-gray-400">
-                <p>Henüz mesaj yok</p>
-                <p className="text-sm mt-2">Admin ile mesajlaşmaya başlamak için aşağıdan mesaj gönderin</p>
+                <p>{t('profile.noMessages')}</p>
+                <p className="text-sm mt-2">{t('profile.noMessagesDesc')}</p>
               </div>
             ) : (
               messages.map((msg, index) => (
@@ -111,7 +113,7 @@ export default function MessagesPage() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-              placeholder="Mesajınızı yazın..."
+              placeholder={t('profile.typeMessage')}
               className="flex-1 input-field"
             />
             <button
@@ -126,8 +128,8 @@ export default function MessagesPage() {
 
         {/* Info */}
         <div className="glass rounded-xl p-4 text-gray-400 text-sm">
-          <p>💬 Mesajlarınız admin tarafından görüntülenecek ve yanıtlanacaktır.</p>
-          <p className="mt-2">⏰ Ortalama yanıt süresi: 1-2 iş günü</p>
+          <p>💬 {t('profile.messagesInfo')}</p>
+          <p className="mt-2">⏰ {t('profile.avgResponseTime')}</p>
         </div>
       </div>
     </div>
