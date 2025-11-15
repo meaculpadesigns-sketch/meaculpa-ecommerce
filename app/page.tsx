@@ -5,13 +5,19 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { ChevronDown, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
-import CreationSection from '@/components/CreationSection';
+import { getProducts } from '@/lib/firebase-helpers';
+import { Product } from '@/types';
+import ProductCard from '@/components/ProductCard';
 
 export default function Home() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { scrollY } = useScroll();
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
   const scale = useTransform(scrollY, [0, 300], [1, 0.8]);
+
+  const [kimonoProducts, setKimonoProducts] = useState<Product[]>([]);
+  const [setProducts, setSetProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     document.body.className = 'bg-about';
@@ -20,50 +26,21 @@ export default function Home() {
     };
   }, []);
 
-  const [creations, setCreations] = useState([
-    {
-      id: '1',
-      name: 'Yazlık Koleksiyonu',
-      title: 'Yazlık Koleksiyonu',
-      titleEn: 'Summer Collection',
-      description: 'Hafif ve nefes alabilen kumaşlarla yazın sıcaklığına meydan okuyun',
-      descriptionEn: 'Challenge the summer heat with light and breathable fabrics',
-      story: 'İpek Yolu\'nun eski karavan duraklarından ilham alan yazlık koleksiyonumuz, doğal pamuk ve keten kumaşlarla hazırlanmıştır.',
-      storyEn: 'Our summer collection, inspired by the ancient caravan stops of the Silk Road, is prepared with natural cotton and linen fabrics.',
-      image: '/images/summer-collection.jpg',
-      products: [],
-      season: 'summer' as const,
-      featured: true,
-    },
-    {
-      id: '2',
-      name: 'Kışlık Koleksiyonu',
-      title: 'Kışlık Koleksiyonu',
-      titleEn: 'Winter Collection',
-      description: 'Doğu Anadolu\'nun sıcaklığını taşıyan özel tasarımlar',
-      descriptionEn: 'Special designs carrying the warmth of Eastern Anatolia',
-      story: 'Geleneksel el işlemeli motifler ve kaliteli yün kumaşlarla, kışın soğuğuna karşı hem şık hem sıcak kalın.',
-      storyEn: 'Stay both stylish and warm against the winter cold with traditional hand-embroidered motifs and quality wool fabrics.',
-      image: '/images/winter-collection.jpg',
-      products: [],
-      season: 'winter' as const,
-      featured: true,
-    },
-    {
-      id: '3',
-      name: 'Özel Tasarım',
-      title: 'Özel Tasarım',
-      titleEn: 'Custom Design',
-      description: 'Size özel, benzersiz tasarımlar',
-      descriptionEn: 'Unique designs customized for you',
-      story: 'Hayalinizdeki kıyafeti birlikte tasarlayalım. Her detayı sizinle konuşarak, tamamen size özel bir parça yaratıyoruz.',
-      storyEn: 'Let\'s design the outfit of your dreams together. We create a completely custom piece by discussing every detail with you.',
-      image: '/images/custom-design.jpg',
-      products: [],
-      season: 'special' as const,
-      featured: true,
-    },
-  ]);
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const products = await getProducts();
+        setKimonoProducts(products.filter(p => p.category === 'kimono').slice(0, 6));
+        setSetProducts(products.filter(p => p.category === 'set').slice(0, 6));
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProducts();
+  }, []);
+
 
   return (
     <div>
@@ -117,14 +94,115 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Creations - Apple Style Scrolling Sections */}
-      {creations.map((creation, index) => (
-        <CreationSection
-          key={creation.id}
-          creation={creation}
-          index={index}
-        />
-      ))}
+      {/* Kimono Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-between mb-12">
+            <div>
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                {t('nav.kimono')}
+              </h2>
+              <p className="text-gray-400 text-lg">
+                {i18n.language === 'tr'
+                  ? 'Özgün tasarımlarımızla tanışın'
+                  : 'Discover our unique designs'}
+              </p>
+            </div>
+            <Link
+              href="/products?category=kimono"
+              className="btn-primary hidden md:flex items-center gap-2"
+            >
+              {t('common.viewAll')}
+              <ArrowRight size={20} />
+            </Link>
+          </div>
+
+          {loading ? (
+            <div className="text-center py-20 text-white">
+              {t('common.loading')}
+            </div>
+          ) : kimonoProducts.length > 0 ? (
+            <div className="overflow-x-auto pb-4">
+              <div className="flex gap-6" style={{ minWidth: 'min-content' }}>
+                {kimonoProducts.map((product, index) => (
+                  <div key={product.id} className="w-80 flex-shrink-0">
+                    <ProductCard product={product} index={index} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="text-center py-20 text-gray-400">
+              {i18n.language === 'tr'
+                ? 'Henüz ürün eklenmedi'
+                : 'No products added yet'}
+            </div>
+          )}
+
+          <Link
+            href="/products?category=kimono"
+            className="btn-primary md:hidden flex items-center justify-center gap-2 mt-8 mx-auto w-full max-w-sm"
+          >
+            {t('common.viewAll')}
+            <ArrowRight size={20} />
+          </Link>
+        </div>
+      </section>
+
+      {/* Set Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-between mb-12">
+            <div>
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                {t('nav.set')}
+              </h2>
+              <p className="text-gray-400 text-lg">
+                {i18n.language === 'tr'
+                  ? 'Şık ve rahat set kombinleri'
+                  : 'Stylish and comfortable set combinations'}
+              </p>
+            </div>
+            <Link
+              href="/products?category=set"
+              className="btn-primary hidden md:flex items-center gap-2"
+            >
+              {t('common.viewAll')}
+              <ArrowRight size={20} />
+            </Link>
+          </div>
+
+          {loading ? (
+            <div className="text-center py-20 text-white">
+              {t('common.loading')}
+            </div>
+          ) : setProducts.length > 0 ? (
+            <div className="overflow-x-auto pb-4">
+              <div className="flex gap-6" style={{ minWidth: 'min-content' }}>
+                {setProducts.map((product, index) => (
+                  <div key={product.id} className="w-80 flex-shrink-0">
+                    <ProductCard product={product} index={index} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="text-center py-20 text-gray-400">
+              {i18n.language === 'tr'
+                ? 'Henüz ürün eklenmedi'
+                : 'No products added yet'}
+            </div>
+          )}
+
+          <Link
+            href="/products?category=set"
+            className="btn-primary md:hidden flex items-center justify-center gap-2 mt-8 mx-auto w-full max-w-sm"
+          >
+            {t('common.viewAll')}
+            <ArrowRight size={20} />
+          </Link>
+        </div>
+      </section>
 
       {/* Featured Section */}
       <section className="py-20 px-4">
