@@ -26,6 +26,13 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    document.body.className = 'bg-home';
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
+
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
       if (authUser) {
         const userData = await getUserById(authUser.uid);

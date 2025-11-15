@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCart } from '@/lib/cart-context';
 import Link from 'next/link';
@@ -9,6 +10,13 @@ import { Trash2, Plus, Minus, ShoppingBag, ArrowRight } from 'lucide-react';
 export default function CartPage() {
   const { t, i18n } = useTranslation();
   const { cart, removeFromCart, updateQuantity, getCartTotal } = useCart();
+
+  useEffect(() => {
+    document.body.className = 'bg-home';
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
 
   if (cart.length === 0) {
     return (

@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
-import { useTheme } from 'next-themes';
 import { useCart } from '@/lib/cart-context';
 import {
   ShoppingCart,
@@ -11,8 +10,6 @@ import {
   Menu,
   X,
   Search,
-  Sun,
-  Moon,
   Globe,
   ChevronDown
 } from 'lucide-react';
@@ -21,17 +18,11 @@ import { kimonoSubcategories, setSubcategories } from '@/constants/categories';
 
 export default function Navbar() {
   const { t, i18n } = useTranslation();
-  const { theme, setTheme } = useTheme();
   const { getCartCount } = useCart();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const cartCount = getCartCount();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -152,16 +143,6 @@ export default function Navbar() {
                   {i18n.language.toUpperCase()}
                 </span>
               </button>
-
-              {/* Theme Switcher */}
-              {mounted && (
-                <button
-                  onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-                </button>
-              )}
 
               {/* Cart */}
               <Link
