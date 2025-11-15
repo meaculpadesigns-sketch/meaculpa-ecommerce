@@ -49,7 +49,6 @@ export default function Navbar() {
   };
 
   const navItems = [
-    { name: t('nav.products'), href: '/products' },
     {
       name: t('nav.kimono'),
       href: '/products?category=kimono',

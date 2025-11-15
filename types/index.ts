@@ -75,6 +75,15 @@ export interface User {
   favorites: string[]; // Product IDs
   addresses: Address[];
   coupons: Coupon[];
+  bodyInfo?: {
+    height: string;
+    weight: string;
+    gender: 'male' | 'female' | 'other';
+    chestSize: string;
+    waistSize: string;
+    hipSize: string;
+    shoeSize: string;
+  };
 }
 
 export interface Address {

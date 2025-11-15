@@ -16,6 +16,8 @@ import {
   Gift,
   LogOut,
   Settings,
+  MessageSquare,
+  Ruler,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -92,6 +94,20 @@ export default function ProfilePage() {
       icon: Package,
       href: '/profile/orders?filter=delivered',
       color: 'from-green-500 to-emerald-500',
+    },
+    {
+      title: 'Mesajlarım',
+      description: 'Admin ile mesajlaşma',
+      icon: MessageSquare,
+      href: '/profile/messages',
+      color: 'from-indigo-500 to-blue-500',
+    },
+    {
+      title: 'Beden Bilgilerim',
+      description: 'Boy, kilo, cinsiyet bilgileri',
+      icon: Ruler,
+      href: '/profile/body-info',
+      color: 'from-teal-500 to-green-500',
     },
     {
       title: 'Adreslerim',
