@@ -20,14 +20,28 @@ import { Product, Order, User, Creation, DesignRequest, Message, Coupon, Review,
 export async function getProducts() {
   const productsRef = collection(db, 'products');
   const snapshot = await getDocs(productsRef);
-  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Product));
+  return snapshot.docs.map((doc) => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      ...data,
+      createdAt: data.createdAt?.toDate?.() || new Date(data.createdAt),
+      updatedAt: data.updatedAt?.toDate?.() || new Date(data.updatedAt),
+    } as Product;
+  });
 }
 
 export async function getProductById(id: string) {
   const productRef = doc(db, 'products', id);
   const snapshot = await getDoc(productRef);
   if (snapshot.exists()) {
-    return { id: snapshot.id, ...snapshot.data() } as Product;
+    const data = snapshot.data();
+    return {
+      id: snapshot.id,
+      ...data,
+      createdAt: data.createdAt?.toDate?.() || new Date(data.createdAt),
+      updatedAt: data.updatedAt?.toDate?.() || new Date(data.updatedAt),
+    } as Product;
   }
   return null;
 }
@@ -94,7 +108,13 @@ export async function getOrderById(id: string) {
   const orderRef = doc(db, 'orders', id);
   const snapshot = await getDoc(orderRef);
   if (snapshot.exists()) {
-    return { id: snapshot.id, ...snapshot.data() } as Order;
+    const data = snapshot.data();
+    return {
+      id: snapshot.id,
+      ...data,
+      createdAt: data.createdAt?.toDate?.() || new Date(data.createdAt),
+      updatedAt: data.updatedAt?.toDate?.() || new Date(data.updatedAt),
+    } as Order;
   }
   return null;
 }
@@ -108,7 +128,13 @@ export async function getOrderByNumber(orderNumber: string, contact: string) {
   );
   const snapshot = await getDocs(q);
   if (!snapshot.empty) {
-    return { id: snapshot.docs[0].id, ...snapshot.docs[0].data() } as Order;
+    const data = snapshot.docs[0].data();
+    return {
+      id: snapshot.docs[0].id,
+      ...data,
+      createdAt: data.createdAt?.toDate?.() || new Date(data.createdAt),
+      updatedAt: data.updatedAt?.toDate?.() || new Date(data.updatedAt),
+    } as Order;
   }
 
   // Try with phone
@@ -119,7 +145,13 @@ export async function getOrderByNumber(orderNumber: string, contact: string) {
   );
   const snapshot2 = await getDocs(q2);
   if (!snapshot2.empty) {
-    return { id: snapshot2.docs[0].id, ...snapshot2.docs[0].data() } as Order;
+    const data = snapshot2.docs[0].data();
+    return {
+      id: snapshot2.docs[0].id,
+      ...data,
+      createdAt: data.createdAt?.toDate?.() || new Date(data.createdAt),
+      updatedAt: data.updatedAt?.toDate?.() || new Date(data.updatedAt),
+    } as Order;
   }
 
   return null;
@@ -129,7 +161,15 @@ export async function getUserOrders(userId: string) {
   const ordersRef = collection(db, 'orders');
   const q = query(ordersRef, where('userId', '==', userId), orderBy('createdAt', 'desc'));
   const snapshot = await getDocs(q);
-  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Order));
+  return snapshot.docs.map((doc) => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      ...data,
+      createdAt: data.createdAt?.toDate?.() || new Date(data.createdAt),
+      updatedAt: data.updatedAt?.toDate?.() || new Date(data.updatedAt),
+    } as Order;
+  });
 }
 
 export async function updateOrderStatus(id: string, status: Order['status']) {
@@ -355,7 +395,15 @@ export async function getAllOrders() {
   const ordersRef = collection(db, 'orders');
   const q = query(ordersRef, orderBy('createdAt', 'desc'));
   const snapshot = await getDocs(q);
-  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Order));
+  return snapshot.docs.map((doc) => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      ...data,
+      createdAt: data.createdAt?.toDate?.() || new Date(data.createdAt),
+      updatedAt: data.updatedAt?.toDate?.() || new Date(data.updatedAt),
+    } as Order;
+  });
 }
 
 export async function getAllUsers() {
