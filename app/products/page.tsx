@@ -1,16 +1,18 @@
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Filter, SortAsc, Grid, List } from 'lucide-react';
 import ProductCard from '@/components/ProductCard';
 import { Product } from '@/types';
 import { getProducts } from '@/lib/firebase-helpers';
+import { kimonoSubcategories, setSubcategories } from '@/constants/categories';
 
 function ProductsContent() {
   const { t, i18n } = useTranslation();
+  const router = useRouter();
   const searchParams = useSearchParams();
   const category = searchParams.get('category');
   const subcategory = searchParams.get('subcategory');
@@ -125,6 +127,37 @@ function ProductsContent() {
             {filteredProducts.length} {t('products.productsFound')}
           </p>
         </div>
+
+        {/* Subcategory Chips */}
+        {category && (
+          <div className="mb-6">
+            <div className="flex flex-wrap gap-3">
+              <button
+                onClick={() => router.push(`/products?category=${category}`)}
+                className={`px-4 py-2 rounded-full transition-all ${
+                  !subcategory
+                    ? 'bg-mea-gold text-black font-semibold'
+                    : 'glass hover:bg-white hover:bg-opacity-10 text-gray-300'
+                }`}
+              >
+                {t('common.all')}
+              </button>
+              {(category === 'kimono' ? kimonoSubcategories : setSubcategories).map((sub) => (
+                <button
+                  key={sub.key}
+                  onClick={() => router.push(`/products?category=${category}&subcategory=${sub.key}`)}
+                  className={`px-4 py-2 rounded-full transition-all ${
+                    subcategory === sub.key
+                      ? 'bg-mea-gold text-black font-semibold'
+                      : 'glass hover:bg-white hover:bg-opacity-10 text-gray-300'
+                  }`}
+                >
+                  {i18n.language === 'tr' ? sub.name : sub.nameEn}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Filters and Sort */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">

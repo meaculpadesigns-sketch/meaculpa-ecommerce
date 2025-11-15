@@ -111,8 +111,9 @@ export default function Navbar() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      className="absolute top-full left-0 mt-2 w-64 glass rounded-xl border border-white border-opacity-10 shadow-xl overflow-hidden z-50"
+                      className="absolute top-full left-0 pt-2 w-64 z-50"
                     >
+                      <div className="glass rounded-xl border border-white border-opacity-10 shadow-xl overflow-hidden">
                       {item.subcategories?.map((sub) => (
                         <Link
                           key={sub.key}
@@ -127,6 +128,7 @@ export default function Navbar() {
                           )}
                         </Link>
                       ))}
+                      </div>
                     </motion.div>
                   )}
                 </div>
