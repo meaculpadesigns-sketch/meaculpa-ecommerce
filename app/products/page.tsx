@@ -16,6 +16,7 @@ function ProductsContent() {
   const searchParams = useSearchParams();
   const category = searchParams.get('category');
   const subcategory = searchParams.get('subcategory');
+  const searchQuery = searchParams.get('search');
 
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
@@ -51,6 +52,17 @@ function ProductsContent() {
 
   useEffect(() => {
     let filtered = [...products];
+
+    // Filter by search query
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(p =>
+        p.name.toLowerCase().includes(query) ||
+        p.nameEn.toLowerCase().includes(query) ||
+        p.description.toLowerCase().includes(query) ||
+        p.descriptionEn.toLowerCase().includes(query)
+      );
+    }
 
     // Filter by category
     if (category) {
@@ -91,9 +103,12 @@ function ProductsContent() {
     }
 
     setFilteredProducts(filtered);
-  }, [products, category, subcategory, priceRange, selectedSizes, sortBy]);
+  }, [products, category, subcategory, searchQuery, priceRange, selectedSizes, sortBy]);
 
   const getPageTitle = () => {
+    if (searchQuery) {
+      return i18n.language === 'tr' ? `"${searchQuery}" için arama sonuçları` : `Search results for "${searchQuery}"`;
+    }
     if (subcategory) {
       return t(`categories.${subcategory}`);
     }

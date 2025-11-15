@@ -22,6 +22,8 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const cartCount = getCartCount();
 
   useEffect(() => {
@@ -35,6 +37,15 @@ export default function Navbar() {
 
   const toggleLanguage = () => {
     i18n.changeLanguage(i18n.language === 'tr' ? 'en' : 'tr');
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      window.location.href = `/products?search=${encodeURIComponent(searchQuery.trim())}`;
+      setSearchOpen(false);
+      setSearchQuery('');
+    }
   };
 
   const navItems = [
@@ -129,7 +140,10 @@ export default function Navbar() {
             {/* Right Side Icons */}
             <div className="flex items-center space-x-4">
               {/* Search Icon */}
-              <button className="text-gray-300 hover:text-white transition-colors">
+              <button
+                onClick={() => setSearchOpen(true)}
+                className="text-gray-300 hover:text-white transition-colors"
+              >
                 <Search size={20} />
               </button>
 
@@ -235,6 +249,50 @@ export default function Navbar() {
                 </div>
               </div>
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Search Modal */}
+      <AnimatePresence>
+        {searchOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4"
+            onClick={() => setSearchOpen(false)}
+          >
+            <div className="absolute inset-0 bg-black bg-opacity-70" />
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-2xl glass rounded-2xl p-6"
+            >
+              <form onSubmit={handleSearch} className="flex gap-3">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder={t('common.search') + '...'}
+                  className="flex-1 px-6 py-4 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-mea-gold"
+                  autoFocus
+                />
+                <button
+                  type="submit"
+                  className="px-8 py-4 bg-mea-gold text-black font-semibold rounded-xl hover:bg-opacity-90 transition-all"
+                >
+                  {t('common.search')}
+                </button>
+              </form>
+              <p className="text-gray-400 text-sm mt-4">
+                {i18n.language === 'tr'
+                  ? 'Ürün adı veya açıklama ile arayın'
+                  : 'Search by product name or description'}
+              </p>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
