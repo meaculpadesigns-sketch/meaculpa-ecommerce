@@ -7,6 +7,7 @@ import { auth } from '@/lib/firebase';
 import { getUserById, getUserOrders } from '@/lib/firebase-helpers';
 import { User, Order } from '@/types';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import {
   User as UserIcon,
   Heart,
@@ -22,6 +23,7 @@ import {
 import Link from 'next/link';
 
 export default function ProfilePage() {
+  const { t } = useTranslation();
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
@@ -64,7 +66,7 @@ export default function ProfilePage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-white text-xl">Yükleniyor...</div>
+        <div className="animate-pulse text-white text-xl">{t('common.loading')}</div>
       </div>
     );
   }
@@ -75,57 +77,57 @@ export default function ProfilePage() {
 
   const sections = [
     {
-      title: 'Favorilerim',
-      description: `${user.favorites?.length || 0} ürün`,
+      title: t('profile.favorites'),
+      description: `${user.favorites?.length || 0} ${t('profile.products')}`,
       icon: Heart,
       href: '/profile/favorites',
       color: 'from-red-500 to-pink-500',
     },
     {
-      title: 'Aktif Siparişlerim',
-      description: `${orders.filter(o => ['pending', 'processing', 'shipped'].includes(o.status)).length} sipariş`,
+      title: t('profile.activeOrders'),
+      description: `${orders.filter(o => ['pending', 'processing', 'shipped'].includes(o.status)).length} ${t('profile.orders')}`,
       icon: Package,
       href: '/profile/orders',
       color: 'from-blue-500 to-cyan-500',
     },
     {
-      title: 'Geçmiş Siparişler',
-      description: `${orders.filter(o => o.status === 'delivered').length} sipariş`,
+      title: t('profile.pastOrders'),
+      description: `${orders.filter(o => o.status === 'delivered').length} ${t('profile.orders')}`,
       icon: Package,
       href: '/profile/orders?filter=delivered',
       color: 'from-green-500 to-emerald-500',
     },
     {
-      title: 'Mesajlarım',
-      description: 'Admin ile mesajlaşma',
+      title: t('profile.messages'),
+      description: t('profile.messagesDesc'),
       icon: MessageSquare,
       href: '/profile/messages',
       color: 'from-indigo-500 to-blue-500',
     },
     {
-      title: 'Beden Bilgilerim',
-      description: 'Boy, kilo, cinsiyet bilgileri',
+      title: t('profile.bodyInfo'),
+      description: t('profile.bodyInfoDesc'),
       icon: Ruler,
       href: '/profile/body-info',
       color: 'from-teal-500 to-green-500',
     },
     {
-      title: 'Adreslerim',
-      description: `${user.addresses?.length || 0} adres`,
+      title: t('profile.addresses'),
+      description: `${user.addresses?.length || 0} ${t('profile.address')}`,
       icon: MapPin,
       href: '/profile/addresses',
       color: 'from-purple-500 to-pink-500',
     },
     {
-      title: 'Kartlarım',
-      description: 'Kayıtlı kartlar',
+      title: t('profile.cards'),
+      description: t('profile.savedCards'),
       icon: CreditCard,
       href: '/profile/cards',
       color: 'from-yellow-500 to-orange-500',
     },
     {
-      title: 'Kuponlarım',
-      description: `${user.coupons?.length || 0} kupon`,
+      title: t('profile.coupons'),
+      description: `${user.coupons?.length || 0} ${t('profile.coupon')}`,
       icon: Gift,
       href: '/profile/coupons',
       color: 'from-pink-500 to-rose-500',
@@ -163,7 +165,7 @@ export default function ProfilePage() {
                 className="flex items-center gap-2 px-6 py-3 bg-red-500 bg-opacity-20 text-red-500 rounded-lg hover:bg-opacity-30 transition-colors"
               >
                 <LogOut size={20} />
-                Çıkış Yap
+                {t('profile.logout')}
               </button>
             </div>
           </div>
@@ -198,7 +200,7 @@ export default function ProfilePage() {
                     </p>
 
                     <div className="mt-4 flex items-center text-mea-gold text-sm font-medium">
-                      Görüntüle
+                      {t('profile.view')}
                       <span className="ml-2 transform group-hover:translate-x-2 transition-transform">
                         →
                       </span>
@@ -219,9 +221,9 @@ export default function ProfilePage() {
             className="mt-8 glass rounded-2xl p-8"
           >
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-white">Son Siparişler</h2>
+              <h2 className="text-2xl font-bold text-white">{t('profile.recentOrders')}</h2>
               <Link href="/profile/orders" className="text-mea-gold hover:underline">
-                Tümünü Gör
+                {t('profile.viewAll')}
               </Link>
             </div>
 
@@ -235,7 +237,7 @@ export default function ProfilePage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-white font-medium mb-1">
-                        Sipariş #{order.orderNumber}
+                        {t('profile.order')} #{order.orderNumber}
                       </p>
                       <p className="text-gray-400 text-sm">
                         {new Date(order.createdAt).toLocaleDateString('tr-TR')}
@@ -252,7 +254,7 @@ export default function ProfilePage() {
                             : 'bg-yellow-500 bg-opacity-20 text-yellow-500'
                         }`}
                       >
-                        {order.status === 'delivered' ? 'Teslim Edildi' : 'Devam Ediyor'}
+                        {order.status === 'delivered' ? t('profile.delivered') : t('profile.inProgress')}
                       </span>
                     </div>
                   </div>

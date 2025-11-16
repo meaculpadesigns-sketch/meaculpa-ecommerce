@@ -40,9 +40,12 @@ function ProductsContent() {
       try {
         setLoading(true);
         const data = await getProducts();
+        console.log('📦 Fetched products from Firebase:', data);
+        console.log('📦 Number of products:', data.length);
+        console.log('📦 Product categories:', data.map(p => ({ id: p.id, category: p.category, subcategory: p.subcategory })));
         setProducts(data);
       } catch (error) {
-        console.error('Error fetching products:', error);
+        console.error('❌ Error fetching products:', error);
       } finally {
         setLoading(false);
       }
@@ -51,6 +54,12 @@ function ProductsContent() {
   }, []);
 
   useEffect(() => {
+    console.log('🔍 Filtering products...');
+    console.log('🔍 Total products:', products.length);
+    console.log('🔍 Category filter:', category);
+    console.log('🔍 Subcategory filter:', subcategory);
+    console.log('🔍 Search query:', searchQuery);
+
     let filtered = [...products];
 
     // Filter by search query
@@ -62,28 +71,36 @@ function ProductsContent() {
         p.description.toLowerCase().includes(query) ||
         p.descriptionEn.toLowerCase().includes(query)
       );
+      console.log('🔍 After search filter:', filtered.length);
     }
 
     // Filter by category
     if (category) {
+      console.log('🔍 Filtering by category:', category);
+      console.log('🔍 Products before category filter:', filtered.map(p => ({ id: p.id, category: p.category })));
       filtered = filtered.filter(p => p.category === category);
+      console.log('🔍 After category filter:', filtered.length, filtered.map(p => ({ id: p.id, category: p.category })));
     }
 
     // Filter by subcategory
     if (subcategory) {
+      console.log('🔍 Filtering by subcategory:', subcategory);
       filtered = filtered.filter(p => p.subcategory === subcategory);
+      console.log('🔍 After subcategory filter:', filtered.length);
     }
 
     // Filter by price range
     filtered = filtered.filter(
       p => p.price >= priceRange[0] && p.price <= priceRange[1]
     );
+    console.log('🔍 After price filter:', filtered.length);
 
     // Filter by sizes
     if (selectedSizes.length > 0) {
       filtered = filtered.filter(p =>
         p.sizes.some(s => selectedSizes.includes(s.size) && s.inStock)
       );
+      console.log('🔍 After sizes filter:', filtered.length);
     }
 
     // Sort products
@@ -102,6 +119,7 @@ function ProductsContent() {
         break;
     }
 
+    console.log('🔍 Final filtered products:', filtered.length);
     setFilteredProducts(filtered);
   }, [products, category, subcategory, searchQuery, priceRange, selectedSizes, sortBy]);
 
