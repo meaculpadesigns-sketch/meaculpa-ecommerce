@@ -22,7 +22,7 @@ function ProductsContent() {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState('newest');
-  const [priceRange, setPriceRange] = useState([0, 10000]);
+  const [priceRange, setPriceRange] = useState([0, 1000000]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(false);
   const [loading, setLoading] = useState(true);
