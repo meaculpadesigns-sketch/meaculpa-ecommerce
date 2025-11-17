@@ -577,7 +577,7 @@ const resources = {
       products: {
         addToCart: 'Add to Cart',
         addToFavorites: 'Add to Favorites',
-        removeFromFavorities: 'Remove from Favorites',
+        removeFromFavorites: 'Remove from Favorites',
         viewStory: 'Story',
         selectSize: 'Select Size',
         preOrder: 'Pre-Order',
@@ -761,7 +761,7 @@ const resources = {
         q1: 'When will my order be shipped?',
         a1: 'Your order will be shipped within 1-3 business days after confirmation. Special design orders may take 7-14 business days.',
         q2: 'How much is the shipping cost?',
-        a2: 'Shipping is free for orders over 500 TL. For orders under 500 TL, the shipping fee is 50 TL.',
+        a2: 'Shipping is free for orders above a certain amount. A standard shipping fee applies to smaller orders.',
         q3: 'Which shipping company do you work with?',
         a3: 'We work with Yurtiçi Kargo and MNG Kargo. Your tracking number will be sent to you via SMS and email after your order.',
         q4: 'Do you ship internationally?',
