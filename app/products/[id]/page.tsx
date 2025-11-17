@@ -374,25 +374,20 @@ export default function ProductDetailPage() {
               <ShoppingCart size={24} />
               {t('products.addToCart')}
             </button>
+
+            {/* Story Section - On the right side after cart button */}
+            {story && (
+              <div className="mt-8 pt-8 border-t border-gray-700">
+                <h3 className="text-2xl font-bold text-white mb-4">{t('products.story')}</h3>
+                <div className="glass rounded-xl p-6">
+                  <p className="text-gray-300 leading-relaxed whitespace-pre-line">{story}</p>
+                </div>
+              </div>
+            )}
           </motion.div>
         </div>
 
-        {/* Story Section - Below the 2-column layout */}
-        {story && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="mt-12"
-          >
-            <h2 className="text-3xl font-bold text-white mb-6">{t('products.story')}</h2>
-            <div className="glass rounded-2xl p-8">
-              <p className="text-gray-300 text-lg leading-relaxed whitespace-pre-line">{story}</p>
-            </div>
-          </motion.div>
-        )}
-
-        {/* Product Details Section - Below Story */}
+        {/* Product Details Section - Below the 2-column layout */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
