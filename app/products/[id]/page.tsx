@@ -29,7 +29,7 @@ export default function ProductDetailPage() {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    document.body.className = 'bg-home';
+    document.body.className = 'bg-home text-dark-page';
     return () => {
       document.body.className = '';
     };
@@ -228,16 +228,6 @@ export default function ProductDetailPage() {
                 </div>
               </div>
             )}
-
-            {/* Story Section - Next to Image */}
-            {story && (
-              <div className="mt-6">
-                <h3 className="text-white font-semibold text-xl mb-3">{t('products.story')}</h3>
-                <div className="glass rounded-xl p-6">
-                  <p className="text-gray-300 leading-relaxed whitespace-pre-line">{story}</p>
-                </div>
-              </div>
-            )}
           </motion.div>
 
           {/* Product Info */}
@@ -384,6 +374,16 @@ export default function ProductDetailPage() {
               <ShoppingCart size={24} />
               {t('products.addToCart')}
             </button>
+
+            {/* Story Section - Next to Image */}
+            {story && (
+              <div className="mt-6 pt-6 border-t border-gray-700">
+                <h3 className="text-white font-semibold text-xl mb-3">{t('products.story')}</h3>
+                <div className="glass rounded-xl p-6">
+                  <p className="text-gray-300 leading-relaxed whitespace-pre-line">{story}</p>
+                </div>
+              </div>
+            )}
           </motion.div>
         </div>
 

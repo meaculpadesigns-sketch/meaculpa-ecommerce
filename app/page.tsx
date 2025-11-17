@@ -20,7 +20,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    document.body.className = 'bg-home';
+    document.body.className = 'bg-home text-dark-page';
     return () => {
       document.body.className = '';
     };

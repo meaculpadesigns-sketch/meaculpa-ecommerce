@@ -18,7 +18,7 @@ export default function MessagesPage() {
   const [messages, setMessages] = useState<any[]>([]);
 
   useEffect(() => {
-    document.body.className = 'bg-home';
+    document.body.className = 'bg-home text-dark-page';
     return () => {
       document.body.className = '';
     };

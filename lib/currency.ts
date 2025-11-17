@@ -1,7 +1,8 @@
 // Currency conversion rates (USD and EUR to TRY)
+// Güncel kurlar (Kasım 2024): 1 USD ≈ 42.35 TRY, 1 EUR ≈ 44.20 TRY
 const EXCHANGE_RATES = {
-  USD: 34.50, // 1 USD = 34.50 TRY (güncel kuru buradan güncelleyin)
-  EUR: 37.20, // 1 EUR = 37.20 TRY (güncel kuru buradan güncelleyin)
+  USD: 42.35, // 1 USD = 42.35 TRY
+  EUR: 44.20, // 1 EUR = 44.20 TRY
 };
 
 export function formatPrice(priceInTRY: number, language: string = 'tr'): string {

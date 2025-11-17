@@ -76,6 +76,13 @@ const resources = {
         inStock: 'Stokta Olanlar',
         noProductsFound: 'Seçtiğiniz filtrelere uygun ürün bulunamadı.',
         viewDetails: 'İncele',
+        story: 'Ürün Hikayesi',
+        details: 'Ürün Detayları',
+        fabricInfo: 'Kumaş Bilgisi',
+        careInstructions: 'Bakım Talimatları',
+        sizeGuide: 'Beden Rehberi',
+        deliveryInfo: 'Teslimat Bilgisi',
+        availableSizes: 'Mevcut Bedenler',
       },
       // Cart
       cart: {
@@ -598,6 +605,13 @@ const resources = {
         inStock: 'In Stock',
         noProductsFound: 'No products found matching your filters.',
         viewDetails: 'View Details',
+        story: 'Product Story',
+        details: 'Product Details',
+        fabricInfo: 'Fabric Information',
+        careInstructions: 'Care Instructions',
+        sizeGuide: 'Size Guide',
+        deliveryInfo: 'Delivery Information',
+        availableSizes: 'Available Sizes',
       },
       // Cart
       cart: {

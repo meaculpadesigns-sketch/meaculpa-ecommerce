@@ -29,7 +29,7 @@ export default function AdminDashboard() {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    document.body.className = 'bg-home';
+    document.body.className = 'bg-home text-dark-page';
     return () => {
       document.body.className = '';
     };

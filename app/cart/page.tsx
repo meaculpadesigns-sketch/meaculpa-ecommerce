@@ -12,7 +12,7 @@ export default function CartPage() {
   const { cart, removeFromCart, updateQuantity, getCartTotal } = useCart();
 
   useEffect(() => {
-    document.body.className = 'bg-home';
+    document.body.className = 'bg-home text-dark-page';
     return () => {
       document.body.className = '';
     };

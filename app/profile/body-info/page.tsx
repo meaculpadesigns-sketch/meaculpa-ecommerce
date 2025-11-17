@@ -29,7 +29,7 @@ export default function BodyInfoPage() {
   });
 
   useEffect(() => {
-    document.body.className = 'bg-home';
+    document.body.className = 'bg-home text-dark-page';
     return () => {
       document.body.className = '';
     };
