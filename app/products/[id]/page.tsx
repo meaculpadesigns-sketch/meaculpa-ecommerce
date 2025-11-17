@@ -268,7 +268,13 @@ export default function ProductDetailPage() {
                 <span className="text-gray-400">(0 değerlendirme)</span>
               </div>
 
-              <p className="text-gray-300 text-lg leading-relaxed">{description}</p>
+              {/* Story Section - After price, before size selection */}
+              {story && (
+                <div className="glass rounded-xl p-6 mt-4">
+                  <h3 className="text-xl font-bold text-white mb-3">{t('products.story')}</h3>
+                  <p className="text-gray-300 leading-relaxed whitespace-pre-line">{story}</p>
+                </div>
+              )}
             </div>
 
             {/* Size Selection */}
@@ -375,15 +381,11 @@ export default function ProductDetailPage() {
               {t('products.addToCart')}
             </button>
 
-            {/* Story Section - On the right side after cart button */}
-            {story && (
-              <div className="mt-8 pt-8 border-t border-gray-700">
-                <h3 className="text-2xl font-bold text-white mb-4">{t('products.story')}</h3>
-                <div className="glass rounded-xl p-6">
-                  <p className="text-gray-300 leading-relaxed whitespace-pre-line">{story}</p>
-                </div>
-              </div>
-            )}
+            {/* Description Section - On the right side after cart button */}
+            <div className="mt-8 pt-8 border-t border-gray-700">
+              <h3 className="text-xl font-bold text-white mb-4">Ürün Açıklaması</h3>
+              <p className="text-gray-300 leading-relaxed">{description}</p>
+            </div>
           </motion.div>
         </div>
 
