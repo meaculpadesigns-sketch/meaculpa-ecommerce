@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Heart, ShoppingCart, Eye } from 'lucide-react';
 import { Product } from '@/types';
+import { formatPrice } from '@/lib/currency';
 
 interface ProductCardProps {
   product: Product;
@@ -78,9 +79,9 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
 
           <div className="flex items-center gap-4 mb-4">
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-bold text-mea-gold">₺{product.price}</span>
+              <span className="text-3xl font-bold text-mea-gold">{formatPrice(product.price, i18n.language)}</span>
               {product.oldPrice && (
-                <span className="text-gray-500 line-through">₺{product.oldPrice}</span>
+                <span className="text-gray-500 line-through">{formatPrice(product.oldPrice, i18n.language)}</span>
               )}
             </div>
             {product.oldPrice && (
@@ -196,9 +197,9 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
           </p>
 
           <div className="flex items-baseline gap-2 mb-4">
-            <span className="text-2xl font-bold text-mea-gold">₺{product.price}</span>
+            <span className="text-2xl font-bold text-mea-gold">{formatPrice(product.price, i18n.language)}</span>
             {product.oldPrice && (
-              <span className="text-gray-500 line-through text-sm">₺{product.oldPrice}</span>
+              <span className="text-gray-500 line-through text-sm">{formatPrice(product.oldPrice, i18n.language)}</span>
             )}
           </div>
 

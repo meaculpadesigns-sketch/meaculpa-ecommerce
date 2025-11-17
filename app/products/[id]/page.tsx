@@ -10,6 +10,7 @@ import { Product } from '@/types';
 import { motion } from 'framer-motion';
 import { Heart, ShoppingCart, Gift, Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import { formatPrice } from '@/lib/currency';
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -26,7 +27,6 @@ export default function ProductDetailPage() {
   const [giftMessage, setGiftMessage] = useState('');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [showStory, setShowStory] = useState(false);
 
   useEffect(() => {
     loadProduct();
@@ -179,17 +179,6 @@ export default function ProductDetailPage() {
                 </>
               )}
 
-              {/* Fabric Sample */}
-              {product.fabricImage && (
-                <div className="absolute top-4 right-4 w-20 h-20 rounded-full border-2 border-white overflow-hidden group/fabric cursor-pointer">
-                  <img
-                    src={product.fabricImage}
-                    alt="Kumaş Detayı"
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover/fabric:scale-150"
-                  />
-                </div>
-              )}
-
               {/* Discount Badge */}
               {discountPercentage > 0 && (
                 <div className="absolute top-4 left-4 bg-red-500 text-white px-4 py-2 rounded-full font-semibold">
@@ -218,6 +207,30 @@ export default function ProductDetailPage() {
                 ))}
               </div>
             )}
+
+            {/* Fabric Image - Separate Section */}
+            {product.fabricImage && (
+              <div className="mt-4">
+                <h3 className="text-white font-semibold mb-2">Kumaş Detayı</h3>
+                <div className="aspect-square bg-zinc-800 rounded-xl overflow-hidden group/fabric">
+                  <img
+                    src={product.fabricImage}
+                    alt="Kumaş Detayı"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover/fabric:scale-150 cursor-zoom-in"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Story Section - Next to Image */}
+            {story && (
+              <div className="mt-6">
+                <h3 className="text-white font-semibold text-xl mb-3">{t('products.story')}</h3>
+                <div className="glass rounded-xl p-6">
+                  <p className="text-gray-300 leading-relaxed whitespace-pre-line">{story}</p>
+                </div>
+              </div>
+            )}
           </motion.div>
 
           {/* Product Info */}
@@ -242,9 +255,9 @@ export default function ProductDetailPage() {
 
               {/* Price */}
               <div className="flex items-baseline gap-4 mb-4">
-                <span className="text-4xl font-bold text-mea-gold">₺{product.price}</span>
+                <span className="text-4xl font-bold text-mea-gold">{formatPrice(product.price, i18n.language)}</span>
                 {product.oldPrice && (
-                  <span className="text-2xl text-gray-500 line-through">₺{product.oldPrice}</span>
+                  <span className="text-2xl text-gray-500 line-through">{formatPrice(product.oldPrice, i18n.language)}</span>
                 )}
               </div>
 
@@ -260,16 +273,6 @@ export default function ProductDetailPage() {
 
               <p className="text-gray-300 text-lg leading-relaxed">{description}</p>
             </div>
-
-            {/* Story */}
-            {story && (
-              <button
-                onClick={() => setShowStory(!showStory)}
-                className="text-mea-gold hover:underline"
-              >
-                {t('products.viewStory')}
-              </button>
-            )}
 
             {/* Size Selection */}
             <div>
@@ -345,7 +348,7 @@ export default function ProductDetailPage() {
                 <div className="flex items-center gap-2">
                   <Gift className="text-mea-gold" size={20} />
                   <span className="text-white font-medium">
-                    {t('products.giftWrapping')} (+₺20)
+                    {t('products.giftWrapping')} (+{formatPrice(20, i18n.language)})
                   </span>
                 </div>
               </label>
@@ -374,41 +377,59 @@ export default function ProductDetailPage() {
               <ShoppingCart size={24} />
               {t('products.addToCart')}
             </button>
-
-            {/* Delivery Info */}
-            {product.estimatedDelivery && (
-              <div className="glass rounded-xl p-4">
-                <p className="text-gray-400 text-sm">
-                  {t('products.estimatedDelivery')}
-                </p>
-                <p className="text-white font-medium">{product.estimatedDelivery}</p>
-              </div>
-            )}
           </motion.div>
         </div>
 
-        {/* Story Modal */}
-        {showStory && story && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-80"
-            onClick={() => setShowStory(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              className="glass rounded-2xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <h3 className="text-2xl font-bold text-white mb-4">{name} - Hikayesi</h3>
-              <p className="text-gray-300 leading-relaxed whitespace-pre-line">{story}</p>
-              <button onClick={() => setShowStory(false)} className="btn-primary mt-6">
-                Kapat
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
+        {/* Product Details Section - Below the 2-column layout */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="mt-12"
+        >
+          <h2 className="text-3xl font-bold text-white mb-6">{t('products.details')}</h2>
+          <div className="glass rounded-2xl p-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Fabric Info */}
+              {product.fabricImage && (
+                <div>
+                  <h3 className="text-white font-semibold mb-2">{t('products.fabricInfo')}</h3>
+                  <p className="text-gray-400">
+                    {i18n.language === 'tr'
+                      ? 'Yüksek kaliteli kumaştan üretilmiştir.'
+                      : 'Made from high quality fabric.'}
+                  </p>
+                </div>
+              )}
+
+              {/* Care Instructions */}
+              <div>
+                <h3 className="text-white font-semibold mb-2">{t('products.careInstructions')}</h3>
+                <p className="text-gray-400">
+                  {i18n.language === 'tr'
+                    ? '30 derecede yıkayınız. Ütü sıcaklığı orta.'
+                    : 'Wash at 30 degrees. Iron at medium temperature.'}
+                </p>
+              </div>
+
+              {/* Size Guide */}
+              <div>
+                <h3 className="text-white font-semibold mb-2">{t('products.sizeGuide')}</h3>
+                <p className="text-gray-400">
+                  {t('products.availableSizes')}: {product.sizes.map(s => s.size).join(', ')}
+                </p>
+              </div>
+
+              {/* Delivery Info */}
+              {product.estimatedDelivery && (
+                <div>
+                  <h3 className="text-white font-semibold mb-2">{t('products.deliveryInfo')}</h3>
+                  <p className="text-gray-400">{product.estimatedDelivery}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </motion.div>
       </div>
     </div>
   );

@@ -21,9 +21,10 @@ import {
   Ruler,
 } from 'lucide-react';
 import Link from 'next/link';
+import { formatPrice } from '@/lib/currency';
 
 export default function ProfilePage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
@@ -245,7 +246,7 @@ export default function ProfilePage() {
                     </div>
                     <div className="text-right">
                       <p className="text-mea-gold font-semibold mb-1">
-                        ₺{order.total.toFixed(2)}
+                        {formatPrice(order.total, i18n.language)}
                       </p>
                       <span
                         className={`px-3 py-1 rounded-full text-xs ${
