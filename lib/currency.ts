@@ -23,3 +23,8 @@ export function getCurrencySymbol(language: string = 'tr'): string {
 export function getExchangeRates() {
   return EXCHANGE_RATES;
 }
+
+// Convert TRY to other currencies
+export function convertCurrency(priceInTRY: number, toCurrency: 'USD' | 'EUR'): number {
+  return priceInTRY / EXCHANGE_RATES[toCurrency];
+}
