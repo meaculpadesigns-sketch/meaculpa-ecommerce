@@ -28,6 +28,13 @@ export default function ProductDetailPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
 
+  // Custom measurements for special products
+  const [customMeasurements, setCustomMeasurements] = useState({
+    sleeveLength: '',
+    shirtLength: '',
+    pajamaLength: '',
+  });
+
   useEffect(() => {
     document.body.className = 'bg-home text-dark-page';
     return () => {
@@ -45,9 +52,8 @@ export default function ProductDetailPage() {
       const data = await getProductById(params.id as string);
       if (data) {
         setProduct(data);
-        if (data.sizes.length > 0 && data.sizes[0].inStock) {
-          setSelectedSize(data.sizes[0].size);
-        }
+        // Set default size to M
+        setSelectedSize('M');
       } else {
         router.push('/products');
       }
@@ -77,7 +83,13 @@ export default function ProductDetailPage() {
       return;
     }
 
-    addToCart(product, selectedSize, quantity, specialRequests, giftWrapping, giftMessage);
+    // Prepare custom measurements only if they have values
+    const measurements = (product.category === 'kimono' || product.category === 'set') &&
+      (customMeasurements.sleeveLength || customMeasurements.shirtLength || customMeasurements.pajamaLength)
+      ? customMeasurements
+      : undefined;
+
+    addToCart(product, selectedSize, quantity, specialRequests, giftWrapping, giftMessage, measurements);
 
     // Success message
     alert('Ürün sepete eklendi!');
@@ -277,31 +289,84 @@ export default function ProductDetailPage() {
               )}
             </div>
 
-            {/* Size Selection */}
+            {/* Size Selection - All sizes available */}
             <div>
               <label className="block text-white font-semibold mb-3">
                 {t('products.selectSize')}
               </label>
               <div className="flex flex-wrap gap-3">
-                {product.sizes.map((size) => (
+                {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) => (
                   <button
-                    key={size.size}
-                    onClick={() => size.inStock && setSelectedSize(size.size)}
-                    disabled={!size.inStock && !size.preOrder}
+                    key={size}
+                    onClick={() => setSelectedSize(size)}
                     className={`px-6 py-3 rounded-lg font-medium transition-all ${
-                      selectedSize === size.size
+                      selectedSize === size
                         ? 'bg-mea-gold text-black'
-                        : size.inStock
-                        ? 'glass hover:bg-white hover:bg-opacity-10 text-white'
-                        : 'bg-zinc-800 text-gray-500 cursor-not-allowed'
+                        : 'glass hover:bg-white hover:bg-opacity-10 text-white'
                     }`}
                   >
-                    {size.size}
-                    {size.preOrder && ' (Ön Sipariş)'}
+                    {size}
                   </button>
                 ))}
               </div>
             </div>
+
+            {/* Custom Measurements - For Kimonos and Sets */}
+            {(product.category === 'kimono' || product.category === 'set') && (
+              <div className="glass rounded-xl p-6">
+                <h3 className="text-xl font-bold text-white mb-4">
+                  {i18n.language === 'tr' ? 'Özel Ölçüler (İsteğe Bağlı)' : 'Custom Measurements (Optional)'}
+                </h3>
+                <p className="text-gray-400 text-sm mb-4">
+                  {i18n.language === 'tr'
+                    ? 'Özel ölçü vermek isterseniz aşağıdaki alanları doldurun. Boş bırakırsanız standart ölçülerde üretilir.'
+                    : 'Fill in the fields below if you want custom measurements. Leave blank for standard measurements.'}
+                </p>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-white font-medium mb-2">
+                      {i18n.language === 'tr' ? 'Kol Boyu (cm)' : 'Sleeve Length (cm)'}
+                    </label>
+                    <input
+                      type="number"
+                      value={customMeasurements.sleeveLength}
+                      onChange={(e) => setCustomMeasurements({ ...customMeasurements, sleeveLength: e.target.value })}
+                      placeholder={i18n.language === 'tr' ? 'Örn: 60' : 'e.g. 60'}
+                      className="input-field"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-white font-medium mb-2">
+                      {i18n.language === 'tr' ? 'Gömlek Boyu (cm)' : 'Shirt Length (cm)'}
+                    </label>
+                    <input
+                      type="number"
+                      value={customMeasurements.shirtLength}
+                      onChange={(e) => setCustomMeasurements({ ...customMeasurements, shirtLength: e.target.value })}
+                      placeholder={i18n.language === 'tr' ? 'Örn: 75' : 'e.g. 75'}
+                      className="input-field"
+                    />
+                  </div>
+
+                  {product.category === 'sets' && (
+                    <div>
+                      <label className="block text-white font-medium mb-2">
+                        {i18n.language === 'tr' ? 'Pijama Boyu (cm)' : 'Pajama Length (cm)'}
+                      </label>
+                      <input
+                        type="number"
+                        value={customMeasurements.pajamaLength}
+                        onChange={(e) => setCustomMeasurements({ ...customMeasurements, pajamaLength: e.target.value })}
+                        placeholder={i18n.language === 'tr' ? 'Örn: 100' : 'e.g. 100'}
+                        className="input-field"
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
 
             {/* Quantity */}
             <div>

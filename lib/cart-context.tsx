@@ -3,9 +3,15 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { CartItem, Product } from '@/types';
 
+interface CustomMeasurements {
+  sleeveLength?: string;
+  shirtLength?: string;
+  pajamaLength?: string;
+}
+
 interface CartContextType {
   cart: CartItem[];
-  addToCart: (product: Product, size: string, quantity?: number, specialRequests?: string, giftWrapping?: boolean, giftMessage?: string) => void;
+  addToCart: (product: Product, size: string, quantity?: number, specialRequests?: string, giftWrapping?: boolean, giftMessage?: string, customMeasurements?: CustomMeasurements) => void;
   removeFromCart: (productId: string, size: string) => void;
   updateQuantity: (productId: string, size: string, quantity: number) => void;
   clearCart: () => void;
@@ -37,7 +43,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
     quantity = 1,
     specialRequests?: string,
     giftWrapping = false,
-    giftMessage?: string
+    giftMessage?: string,
+    customMeasurements?: CustomMeasurements
   ) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find(
@@ -62,6 +69,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
           specialRequests,
           giftWrapping,
           giftMessage,
+          customMeasurements,
         },
       ];
     });

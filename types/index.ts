@@ -108,6 +108,11 @@ export interface CartItem {
   specialRequests?: string;
   giftWrapping: boolean;
   giftMessage?: string;
+  customMeasurements?: {
+    sleeveLength?: string;
+    shirtLength?: string;
+    pajamaLength?: string;
+  };
 }
 
 export interface Order {
