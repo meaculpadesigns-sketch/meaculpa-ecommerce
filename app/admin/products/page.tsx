@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { auth, db } from '@/lib/firebase';
 import { getUserById, getProducts, addProduct, updateProduct, deleteProduct, uploadFile, deleteFile } from '@/lib/firebase-helpers';
-import { Product, Size } from '@/types';
+import { Product, Size, Creation } from '@/types';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Plus,
@@ -19,11 +19,13 @@ import {
 } from 'lucide-react';
 import { kimonoSubcategories, setSubcategories } from '@/constants/categories';
 import { convertCurrency } from '@/lib/currency';
+import { collection, getDocs } from 'firebase/firestore';
 
 export default function AdminProducts() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState<Product[]>([]);
+  const [creations, setCreations] = useState<Creation[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [uploadingImages, setUploadingImages] = useState(false);
@@ -60,6 +62,7 @@ export default function AdminProducts() {
         const userData = await getUserById(user.uid);
         if (userData && userData.role === 'admin') {
           loadProducts();
+          loadCreations();
         } else {
           router.push('/');
         }
@@ -75,6 +78,19 @@ export default function AdminProducts() {
   const loadProducts = async () => {
     const data = await getProducts();
     setProducts(data);
+  };
+
+  const loadCreations = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, 'creations'));
+      const creationsData = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Creation[];
+      setCreations(creationsData);
+    } catch (error) {
+      console.error('Error fetching creations:', error);
+    }
   };
 
   const handleImageUpload = async (files: FileList | null, type: 'product' | 'fabric') => {
@@ -523,6 +539,28 @@ export default function AdminProducts() {
                         ))}
                       </select>
                     </div>
+                  </div>
+
+                  {/* Creation Selection */}
+                  <div>
+                    <label className="block text-white font-medium mb-2">
+                      Kreasyon (Opsiyonel)
+                    </label>
+                    <select
+                      value={formData.collection || ''}
+                      onChange={(e) => setFormData({ ...formData, collection: e.target.value })}
+                      className="input-field"
+                    >
+                      <option value="">Seçiniz</option>
+                      {creations.map((creation) => (
+                        <option key={creation.id} value={creation.id}>
+                          {creation.name}
+                        </option>
+                      ))}
+                    </select>
+                    <p className="text-xs text-gray-400 mt-1">
+                      Ürünü bir kreasyona dahil etmek için seçim yapın
+                    </p>
                   </div>
 
                   {/* Prices: TRY, USD, EUR */}
