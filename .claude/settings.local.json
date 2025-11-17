@@ -19,7 +19,9 @@
       "Bash(npx vercel --prod --yes)",
       "Bash(npm install:*)",
       "Bash(npx vercel env pull:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(taskkill /F /PID 26940 2)",
+      "Bash(nul)"
     ],
     "deny": [],
     "ask": []

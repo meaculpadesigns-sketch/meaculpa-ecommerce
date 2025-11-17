@@ -220,14 +220,29 @@ export default function Navbar() {
             <div className="fixed inset-0 glass">
               <div className="flex flex-col h-full pt-20 px-6 pb-6 overflow-y-auto">
                 {navItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-2xl text-white font-medium py-4 border-b border-white border-opacity-10 hover:text-mea-gold transition-colors"
-                  >
-                    {item.name}
-                  </Link>
+                  <div key={item.href}>
+                    <Link
+                      href={item.href}
+                      onClick={() => !item.hasDropdown && setIsMobileMenuOpen(false)}
+                      className="text-2xl text-white font-medium py-4 border-b border-white border-opacity-10 hover:text-mea-gold transition-colors block"
+                    >
+                      {item.name}
+                    </Link>
+                    {item.hasDropdown && item.subcategories && (
+                      <div className="pl-4 pb-2">
+                        {item.subcategories.map((sub) => (
+                          <Link
+                            key={sub.key}
+                            href={`${item.href}&subcategory=${sub.key}`}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="block text-lg text-gray-300 py-2 hover:text-mea-gold transition-colors"
+                          >
+                            {i18n.language === 'tr' ? sub.name : sub.nameEn}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 ))}
 
                 <div className="mt-8 space-y-4">

@@ -42,7 +42,7 @@ export const kimonoSubcategories: CategoryInfo[] = [
     seoDescriptionEn: 'Unique kimonos handcrafted from waste fabrics. Sustainable, original and completely unique designs — in harmony with nature.',
   },
   {
-    key: 'family-kimono',
+    key: 'aile-setleri',
     name: 'Aile Setleri',
     nameEn: 'Family Sets',
     description: 'Tüm aile için özel olarak tasarlanan, uyumlu kimonolar. Her yaşa uygun bedenler ve aynı konseptte tasarımlar.',
@@ -53,6 +53,19 @@ export const kimonoSubcategories: CategoryInfo[] = [
     seoTitleEn: 'Family Kimonos – Matching Designs for the Whole Family',
     seoDescription: 'Tüm aile için özel tasarlanmış uyumlu kimonolar. Her yaşa özel bedenler, aynı konseptte özgün tasarımlar.',
     seoDescriptionEn: 'Matching kimonos specially designed for the whole family. Sizes for all ages with unique designs in the same concept.',
+  },
+  {
+    key: 'aileye-ozel-tasarim',
+    name: 'Aileye Özel Tasarım',
+    nameEn: 'Custom Family Design',
+    description: 'Aileniz için tamamen özel tasarlanan, isteklerinize göre üretilen biricik kimonolar. Her detay sizin hikayenizi anlatır.',
+    descriptionEn: 'Completely custom designed kimonos made specifically for your family. Every detail tells your story.',
+    slogan: 'Ailenizin hikayesi, bizim tasarımımız.',
+    sloganEn: 'Your family\'s story, our design.',
+    seoTitle: 'Aileye Özel Tasarım Kimonolar – Tamamen Kişiye Özel',
+    seoTitleEn: 'Custom Family Design Kimonos – Completely Personalized',
+    seoDescription: 'Aileniz için özel olarak tasarlanan biricik kimonolar. İsteklerinize göre üretilen, tamamen kişiye özel tasarımlar.',
+    seoDescriptionEn: 'Unique kimonos specially designed for your family. Completely personalized designs made according to your wishes.',
   },
 ];
 
