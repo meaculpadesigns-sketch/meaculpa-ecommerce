@@ -204,11 +204,11 @@ export default function OrdersPage() {
                 {/* Order Items Preview */}
                 <div className="mt-4 pt-4 border-t border-gray-700">
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {order.items.slice(0, 4).map((item) => (
-                      <div key={item.id} className="aspect-square bg-zinc-800 rounded-lg overflow-hidden">
+                    {order.items.slice(0, 4).map((item, idx) => (
+                      <div key={`${item.productId}-${idx}`} className="aspect-square bg-zinc-800 rounded-lg overflow-hidden">
                         <img
-                          src={item.image}
-                          alt={item.name}
+                          src={item.product.images[0]}
+                          alt={item.product.name}
                           className="w-full h-full object-cover"
                         />
                       </div>

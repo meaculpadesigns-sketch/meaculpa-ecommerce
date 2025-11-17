@@ -5,28 +5,17 @@ import { useRouter } from 'next/navigation';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { getUserById } from '@/lib/firebase-helpers';
-import { User } from '@/types';
+import { User, UserCoupon } from '@/types';
 import { motion } from 'framer-motion';
 import { Gift, ArrowLeft, Copy, Check } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 
-interface Coupon {
-  id: string;
-  code: string;
-  discount: number;
-  discountType: 'percentage' | 'fixed';
-  minAmount?: number;
-  expiryDate: string;
-  isUsed: boolean;
-  description: string;
-}
-
 export default function CouponsPage() {
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
-  const [coupons, setCoupons] = useState<Coupon[]>([]);
+  const [coupons, setCoupons] = useState<UserCoupon[]>([]);
   const [loading, setLoading] = useState(true);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
 
@@ -66,7 +55,7 @@ export default function CouponsPage() {
     return new Date(expiryDate) < new Date();
   };
 
-  const formatDiscount = (coupon: Coupon) => {
+  const formatDiscount = (coupon: UserCoupon) => {
     if (coupon.discountType === 'percentage') {
       return `%${coupon.discount}`;
     } else {

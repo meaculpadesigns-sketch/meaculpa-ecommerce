@@ -350,7 +350,7 @@ export default function ProductDetailPage() {
                     />
                   </div>
 
-                  {product.category === 'sets' && (
+                  {product.category === 'set' && (
                     <div>
                       <label className="block text-white font-medium mb-2">
                         {i18n.language === 'tr' ? 'Pijama Boyu (cm)' : 'Pajama Length (cm)'}

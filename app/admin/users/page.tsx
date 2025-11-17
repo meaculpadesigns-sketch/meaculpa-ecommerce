@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Users, Search, Gift, Mail, Phone, Calendar, Shield } from 'lucide-react';
 import { collection, getDocs, updateDoc, doc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { User, Coupon } from '@/types';
+import { User, UserCoupon } from '@/types';
 
 export default function AdminUsersPage() {
   const [users, setUsers] = useState<User[]>([]);
@@ -67,16 +67,14 @@ export default function AdminUsersPage() {
     }
 
     try {
-      const newCoupon: Coupon = {
+      const newCoupon: UserCoupon = {
         id: `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         code: couponData.code,
-        type: 'percentage',
-        value: couponData.discount,
-        expiresAt: new Date(couponData.expiryDate),
-        usedCount: 0,
-        userSpecific: selectedUser.id,
-        active: true,
-        createdAt: new Date(),
+        discount: couponData.discount,
+        discountType: 'percentage',
+        expiryDate: couponData.expiryDate,
+        isUsed: false,
+        description: `${couponData.discount}% indirim kuponu`,
       };
 
       const userCoupons = selectedUser.coupons || [];
@@ -109,16 +107,14 @@ export default function AdminUsersPage() {
 
     try {
       for (const user of users) {
-        const newCoupon: Coupon = {
+        const newCoupon: UserCoupon = {
           id: `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
           code: couponData.code,
-          type: 'percentage',
-          value: couponData.discount,
-          expiresAt: new Date(couponData.expiryDate),
-          usedCount: 0,
-          userSpecific: user.id,
-          active: true,
-          createdAt: new Date(),
+          discount: couponData.discount,
+          discountType: 'percentage',
+          expiryDate: couponData.expiryDate,
+          isUsed: false,
+          description: `${couponData.discount}% indirim kuponu`,
         };
 
         const userCoupons = user.coupons || [];
@@ -169,7 +165,7 @@ export default function AdminUsersPage() {
           <div className="glass rounded-xl p-6">
             <p className="text-gray-400 text-sm mb-1">Aktif Kuponlar</p>
             <p className="text-white text-3xl font-bold">
-              {users.reduce((sum, u) => sum + (u.coupons?.filter(c => c.active && c.usedCount === 0).length || 0), 0)}
+              {users.reduce((sum, u) => sum + (u.coupons?.filter(c => !c.isUsed).length || 0), 0)}
             </p>
           </div>
           <div className="glass rounded-xl p-6">
@@ -275,7 +271,7 @@ export default function AdminUsersPage() {
                     </td>
                     <td className="p-4">
                       <div className="text-gray-400 text-sm">
-                        <p>Aktif: {user.coupons?.filter(c => c.active && c.usedCount === 0).length || 0}</p>
+                        <p>Aktif: {user.coupons?.filter(c => !c.isUsed).length || 0}</p>
                         <p>Toplam: {user.coupons?.length || 0}</p>
                       </div>
                     </td>

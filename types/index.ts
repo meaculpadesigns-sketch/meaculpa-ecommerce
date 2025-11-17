@@ -64,6 +64,25 @@ export interface Creation {
   createdAt?: Date;
 }
 
+export interface SavedCard {
+  id: string;
+  cardNumber: string;
+  cardHolder: string;
+  expiryDate: string;
+  isDefault: boolean;
+}
+
+export interface UserCoupon {
+  id: string;
+  code: string;
+  discount: number;
+  discountType: 'percentage' | 'fixed';
+  minAmount?: number;
+  expiryDate: string;
+  isUsed: boolean;
+  description: string;
+}
+
 export interface User {
   id: string;
   email: string;
@@ -74,7 +93,8 @@ export interface User {
   createdAt: Date;
   favorites: string[]; // Product IDs
   addresses: Address[];
-  coupons: Coupon[];
+  cards?: SavedCard[];
+  coupons: UserCoupon[];
   bodyInfo?: {
     height: string;
     weight: string;

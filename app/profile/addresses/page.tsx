@@ -5,26 +5,14 @@ import { useRouter } from 'next/navigation';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { getUserById, updateUser } from '@/lib/firebase-helpers';
-import { User } from '@/types';
+import { User, Address } from '@/types';
 import { motion } from 'framer-motion';
 import { MapPin, ArrowLeft, Plus, Edit, Trash2, Save, X } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 
-interface Address {
-  id: string;
-  title: string;
-  fullName: string;
-  phone: string;
-  address: string;
-  city: string;
-  district: string;
-  zipCode: string;
-  isDefault: boolean;
-}
-
 export default function AddressesPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [addresses, setAddresses] = useState<Address[]>([]);
@@ -35,12 +23,14 @@ export default function AddressesPage() {
 
   const [formData, setFormData] = useState({
     title: '',
-    fullName: '',
+    firstName: '',
+    lastName: '',
     phone: '',
     address: '',
     city: '',
-    district: '',
+    state: '',
     zipCode: '',
+    country: 'Turkey',
     isDefault: false,
   });
 
@@ -78,12 +68,14 @@ export default function AddressesPage() {
       setEditingAddress(null);
       setFormData({
         title: '',
-        fullName: '',
+        firstName: '',
+        lastName: '',
         phone: '',
         address: '',
         city: '',
-        district: '',
+        state: '',
         zipCode: '',
+        country: 'Turkey',
         isDefault: false,
       });
     }
@@ -218,11 +210,11 @@ export default function AddressesPage() {
 
                 <h3 className="text-xl font-bold text-white mb-3">{address.title}</h3>
                 <div className="space-y-2 text-gray-300 mb-4">
-                  <p className="font-medium">{address.fullName}</p>
+                  <p className="font-medium">{address.firstName} {address.lastName}</p>
                   <p>{address.phone}</p>
                   <p>{address.address}</p>
-                  <p>{address.district} / {address.city}</p>
-                  <p>{address.zipCode}</p>
+                  <p>{address.state} / {address.city}</p>
+                  <p>{address.zipCode}{address.country && `, ${address.country}`}</p>
                 </div>
 
                 <div className="flex gap-2">
@@ -279,23 +271,33 @@ export default function AddressesPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-white font-medium mb-2">{t('profile.fullName')}</label>
+                    <label className="block text-white font-medium mb-2">{t('auth.firstName')}</label>
                     <input
                       type="text"
-                      value={formData.fullName}
-                      onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                      value={formData.firstName}
+                      onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                       className="input-field"
                     />
                   </div>
                   <div>
-                    <label className="block text-white font-medium mb-2">{t('profile.phone')}</label>
+                    <label className="block text-white font-medium mb-2">{t('auth.lastName')}</label>
                     <input
-                      type="tel"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      type="text"
+                      value={formData.lastName}
+                      onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                       className="input-field"
                     />
                   </div>
+                </div>
+
+                <div>
+                  <label className="block text-white font-medium mb-2">{t('profile.phone')}</label>
+                  <input
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="input-field"
+                  />
                 </div>
 
                 <div>
@@ -308,7 +310,7 @@ export default function AddressesPage() {
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-white font-medium mb-2">{t('profile.city')}</label>
                     <input
@@ -319,20 +321,36 @@ export default function AddressesPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-white font-medium mb-2">{t('profile.district')}</label>
+                    <label className="block text-white font-medium mb-2">
+                      {i18n.language === 'tr' ? 'İl/Eyalet' : 'State/Province'}
+                    </label>
                     <input
                       type="text"
-                      value={formData.district}
-                      onChange={(e) => setFormData({ ...formData, district: e.target.value })}
+                      value={formData.state}
+                      onChange={(e) => setFormData({ ...formData, state: e.target.value })}
                       className="input-field"
                     />
                   </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-white font-medium mb-2">{t('profile.zipCode')}</label>
                     <input
                       type="text"
                       value={formData.zipCode}
                       onChange={(e) => setFormData({ ...formData, zipCode: e.target.value })}
+                      className="input-field"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-white font-medium mb-2">
+                      {i18n.language === 'tr' ? 'Ülke' : 'Country'}
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.country}
+                      onChange={(e) => setFormData({ ...formData, country: e.target.value })}
                       className="input-field"
                     />
                   </div>
