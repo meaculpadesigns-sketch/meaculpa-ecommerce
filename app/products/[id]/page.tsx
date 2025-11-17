@@ -29,6 +29,13 @@ export default function ProductDetailPage() {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
+    document.body.className = 'bg-home';
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
+
+  useEffect(() => {
     loadProduct();
     checkFavorite();
   }, [params.id]);

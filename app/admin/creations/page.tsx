@@ -26,6 +26,13 @@ export default function AdminCreationsPage() {
   });
 
   useEffect(() => {
+    document.body.className = 'bg-home';
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
+
+  useEffect(() => {
     fetchCreations();
   }, []);
 

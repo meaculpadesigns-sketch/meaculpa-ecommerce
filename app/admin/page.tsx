@@ -29,6 +29,13 @@ export default function AdminDashboard() {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+    document.body.className = 'bg-home';
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
+
+  useEffect(() => {
     let mounted = true;
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!mounted) return;

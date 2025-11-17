@@ -20,7 +20,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    document.body.className = 'bg-about';
+    document.body.className = 'bg-home';
     return () => {
       document.body.className = '';
     };
