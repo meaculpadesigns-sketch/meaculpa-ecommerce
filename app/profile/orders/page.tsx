@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
@@ -12,7 +12,7 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { formatPrice } from '@/lib/currency';
 
-export default function OrdersPage() {
+function OrdersContent() {
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -221,5 +221,17 @@ export default function OrdersPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function OrdersPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-home text-dark-page">
+        <div className="animate-pulse text-white text-xl">Yükleniyor...</div>
+      </div>
+    }>
+      <OrdersContent />
+    </Suspense>
   );
 }
