@@ -402,7 +402,7 @@ export default function AdminProducts() {
                 initial={{ scale: 0.9 }}
                 animate={{ scale: 1 }}
                 exit={{ scale: 0.9 }}
-                className="glass rounded-2xl p-4 md:p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+                className="bg-zinc-900 bg-opacity-95 backdrop-blur-lg border border-white border-opacity-20 rounded-2xl p-4 md:p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex items-center justify-between mb-6">
