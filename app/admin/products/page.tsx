@@ -402,25 +402,25 @@ export default function AdminProducts() {
                 initial={{ scale: 0.9 }}
                 animate={{ scale: 1 }}
                 exit={{ scale: 0.9 }}
-                className="bg-zinc-900 bg-opacity-95 backdrop-blur-lg border border-white border-opacity-20 rounded-2xl p-4 md:p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+                className="bg-white rounded-2xl p-4 md:p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold text-white">
+                  <h2 className="text-2xl font-bold text-gray-900">
                     {editingProduct ? 'Ürün Düzenle' : 'Yeni Ürün Ekle'}
                   </h2>
                   <button
                     onClick={() => setShowModal(false)}
-                    className="p-2 hover:bg-white hover:bg-opacity-10 rounded-lg transition-colors"
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                   >
-                    <X size={24} className="text-white" />
+                    <X size={24} className="text-gray-700" />
                   </button>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Product Images */}
                   <div>
-                    <label className="block text-white font-medium mb-2">
+                    <label className="block text-gray-900 font-medium mb-2">
                       Ürün Görselleri
                     </label>
                     <div className="flex flex-wrap gap-4 mb-4">
@@ -437,7 +437,7 @@ export default function AdminProducts() {
                             }}
                             className="absolute -top-2 -right-2 p-1 bg-red-500 rounded-full"
                           >
-                            <X size={16} className="text-white" />
+                            <X size={16} className="text-gray-900" />
                           </button>
                         </div>
                       ))}
@@ -458,7 +458,7 @@ export default function AdminProducts() {
 
                   {/* Fabric Images */}
                   <div>
-                    <label className="block text-white font-medium mb-2">
+                    <label className="block text-gray-900 font-medium mb-2">
                       Kumaş Görselleri
                     </label>
                     <div className="flex flex-wrap gap-4 mb-4">
@@ -475,7 +475,7 @@ export default function AdminProducts() {
                             }}
                             className="absolute -top-2 -right-2 p-1 bg-red-500 rounded-full"
                           >
-                            <X size={16} className="text-white" />
+                            <X size={16} className="text-gray-900" />
                           </button>
                         </div>
                       ))}
@@ -497,7 +497,7 @@ export default function AdminProducts() {
                   {/* Name Fields */}
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-white font-medium mb-2">
+                      <label className="block text-gray-900 font-medium mb-2">
                         Ürün Adı (Türkçe)
                       </label>
                       <input
@@ -509,7 +509,7 @@ export default function AdminProducts() {
                       />
                     </div>
                     <div>
-                      <label className="block text-white font-medium mb-2">
+                      <label className="block text-gray-900 font-medium mb-2">
                         Ürün Adı (İngilizce)
                       </label>
                       <input
@@ -525,7 +525,7 @@ export default function AdminProducts() {
                   {/* Category and Subcategory */}
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-white font-medium mb-2">Kategori</label>
+                      <label className="block text-gray-900 font-medium mb-2">Kategori</label>
                       <select
                         value={formData.category}
                         onChange={(e) => {
@@ -540,7 +540,7 @@ export default function AdminProducts() {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-white font-medium mb-2">Alt Kategori</label>
+                      <label className="block text-gray-900 font-medium mb-2">Alt Kategori</label>
                       <select
                         value={formData.subcategory || ''}
                         onChange={(e) => setFormData({ ...formData, subcategory: e.target.value as any })}
@@ -558,7 +558,7 @@ export default function AdminProducts() {
 
                   {/* Creation Selection */}
                   <div>
-                    <label className="block text-white font-medium mb-2">
+                    <label className="block text-gray-900 font-medium mb-2">
                       Kreasyon (Opsiyonel)
                     </label>
                     <select
@@ -581,7 +581,7 @@ export default function AdminProducts() {
                   {/* Prices: TRY, USD, EUR */}
                   <div className="grid grid-cols-3 gap-4">
                     <div>
-                      <label className="block text-white font-medium mb-2">Fiyat (₺)</label>
+                      <label className="block text-gray-900 font-medium mb-2">Fiyat (₺)</label>
                       <input
                         type="number"
                         step="0.01"
@@ -600,7 +600,7 @@ export default function AdminProducts() {
                       />
                     </div>
                     <div>
-                      <label className="block text-white font-medium mb-2">Fiyat ($)</label>
+                      <label className="block text-gray-900 font-medium mb-2">Fiyat ($)</label>
                       <input
                         type="number"
                         step="0.01"
@@ -612,7 +612,7 @@ export default function AdminProducts() {
                       <p className="text-xs text-gray-400 mt-1">TL fiyat girilince otomatik hesaplanır</p>
                     </div>
                     <div>
-                      <label className="block text-white font-medium mb-2">Fiyat (€)</label>
+                      <label className="block text-gray-900 font-medium mb-2">Fiyat (€)</label>
                       <input
                         type="number"
                         step="0.01"
@@ -627,7 +627,7 @@ export default function AdminProducts() {
 
                   {/* Old Price for Discount */}
                   <div>
-                    <label className="block text-white font-medium mb-2">
+                    <label className="block text-gray-900 font-medium mb-2">
                       Eski Fiyat (₺) - İndirim göstermek için
                     </label>
                     <input
@@ -643,7 +643,7 @@ export default function AdminProducts() {
                   {/* Description */}
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-white font-medium mb-2">
+                      <label className="block text-gray-900 font-medium mb-2">
                         Açıklama (Türkçe)
                       </label>
                       <textarea
@@ -655,7 +655,7 @@ export default function AdminProducts() {
                       />
                     </div>
                     <div>
-                      <label className="block text-white font-medium mb-2">
+                      <label className="block text-gray-900 font-medium mb-2">
                         Açıklama (İngilizce)
                       </label>
                       <textarea
@@ -671,7 +671,7 @@ export default function AdminProducts() {
                   {/* Story */}
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-white font-medium mb-2">
+                      <label className="block text-gray-900 font-medium mb-2">
                         Hikaye (Türkçe) - Opsiyonel
                       </label>
                       <textarea
@@ -682,7 +682,7 @@ export default function AdminProducts() {
                       />
                     </div>
                     <div>
-                      <label className="block text-white font-medium mb-2">
+                      <label className="block text-gray-900 font-medium mb-2">
                         Hikaye (İngilizce) - Opsiyonel
                       </label>
                       <textarea
@@ -697,7 +697,7 @@ export default function AdminProducts() {
                   {/* Sizes */}
                   <div>
                     <div className="flex items-center justify-between mb-4">
-                      <label className="block text-white font-medium">Bedenler</label>
+                      <label className="block text-gray-900 font-medium">Bedenler</label>
                       <button
                         type="button"
                         onClick={addSize}
@@ -717,7 +717,7 @@ export default function AdminProducts() {
                             placeholder="Beden (S, M, L, vb.)"
                             className="input-field flex-1"
                           />
-                          <label className="flex items-center gap-2 text-white">
+                          <label className="flex items-center gap-2 text-gray-900">
                             <input
                               type="checkbox"
                               checked={size.inStock}
@@ -725,7 +725,7 @@ export default function AdminProducts() {
                             />
                             Stokta
                           </label>
-                          <label className="flex items-center gap-2 text-white">
+                          <label className="flex items-center gap-2 text-gray-900">
                             <input
                               type="checkbox"
                               checked={size.preOrder}
@@ -747,7 +747,7 @@ export default function AdminProducts() {
 
                   {/* Options */}
                   <div className="space-y-4">
-                    <label className="flex items-center gap-2 text-white">
+                    <label className="flex items-center gap-2 text-gray-900">
                       <input
                         type="checkbox"
                         checked={formData.featured}
@@ -756,7 +756,7 @@ export default function AdminProducts() {
                       Öne Çıkan Ürün
                     </label>
                     <div>
-                      <label className="block text-white font-medium mb-2">
+                      <label className="block text-gray-900 font-medium mb-2">
                         Tahmini Teslimat Süresi
                       </label>
                       <input
