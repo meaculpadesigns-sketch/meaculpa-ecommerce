@@ -41,7 +41,7 @@ export default function AdminProducts() {
     subcategory: '' as Product['subcategory'],
     collection: '',
     images: [] as string[],
-    fabricImage: '',
+    fabricImages: [] as string[],
     description: '',
     descriptionEn: '',
     story: '',
@@ -121,7 +121,7 @@ export default function AdminProducts() {
       } else {
         setFormData((prev) => ({
           ...prev,
-          fabricImage: urls[0],
+          fabricImages: [...prev.fabricImages, ...urls],
         }));
       }
     } catch (error) {
@@ -173,7 +173,7 @@ export default function AdminProducts() {
       subcategory: product.subcategory || undefined,
       collection: product.collection || '',
       images: product.images,
-      fabricImage: product.fabricImage || '',
+      fabricImages: product.fabricImages || [],
       description: product.description,
       descriptionEn: product.descriptionEn,
       story: product.story || '',
@@ -224,7 +224,7 @@ export default function AdminProducts() {
       subcategory: undefined,
       collection: '',
       images: [],
-      fabricImage: '',
+      fabricImages: [],
       description: '',
       descriptionEn: '',
       story: '',
@@ -456,28 +456,36 @@ export default function AdminProducts() {
                     </label>
                   </div>
 
-                  {/* Fabric Image */}
+                  {/* Fabric Images */}
                   <div>
                     <label className="block text-white font-medium mb-2">
-                      Kumaş Görseli
+                      Kumaş Görselleri
                     </label>
-                    {formData.fabricImage && (
-                      <div className="relative w-32 h-32 mb-4">
-                        <div className="w-full h-full bg-zinc-800 rounded-lg" />
-                        <button
-                          type="button"
-                          onClick={() => setFormData((prev) => ({ ...prev, fabricImage: '' }))}
-                          className="absolute -top-2 -right-2 p-1 bg-red-500 rounded-full"
-                        >
-                          <X size={16} className="text-white" />
-                        </button>
-                      </div>
-                    )}
+                    <div className="flex flex-wrap gap-4 mb-4">
+                      {formData.fabricImages.map((url, index) => (
+                        <div key={index} className="relative w-32 h-32">
+                          <div className="w-full h-full bg-zinc-800 rounded-lg" />
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setFormData((prev) => ({
+                                ...prev,
+                                fabricImages: prev.fabricImages.filter((_, i) => i !== index),
+                              }));
+                            }}
+                            className="absolute -top-2 -right-2 p-1 bg-red-500 rounded-full"
+                          >
+                            <X size={16} className="text-white" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
                     <label className="btn-secondary cursor-pointer inline-block">
                       <Upload size={20} className="inline mr-2" />
                       {uploadingImages ? 'Yükleniyor...' : 'Kumaş Görseli Yükle'}
                       <input
                         type="file"
+                        multiple
                         accept="image/*"
                         className="hidden"
                         onChange={(e) => handleImageUpload(e.target.files, 'fabric')}

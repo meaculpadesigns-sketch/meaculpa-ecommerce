@@ -23,7 +23,7 @@ export interface Product {
     | 'kids-collection';     // Çocuk Setleri
   collection?: string; // New: for grouping products into collections
   images: string[];
-  fabricImage?: string;
+  fabricImages?: string[];
   description: string;
   descriptionEn: string;
   story?: string;

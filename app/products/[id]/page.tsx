@@ -227,16 +227,22 @@ export default function ProductDetailPage() {
               </div>
             )}
 
-            {/* Fabric Image - Separate Section */}
-            {product.fabricImage && (
+            {/* Fabric Images - Separate Section */}
+            {product.fabricImages && product.fabricImages.length > 0 && (
               <div className="mt-4">
-                <h3 className="text-white font-semibold mb-2">Kumaş Detayı</h3>
-                <div className="aspect-square bg-zinc-800 rounded-xl overflow-hidden group/fabric">
-                  <img
-                    src={product.fabricImage}
-                    alt="Kumaş Detayı"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover/fabric:scale-150 cursor-zoom-in"
-                  />
+                <h3 className="text-white font-semibold mb-2">
+                  {i18n.language === 'tr' ? 'Kumaş Detayları' : 'Fabric Details'}
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  {product.fabricImages.map((fabricImg, index) => (
+                    <div key={index} className="aspect-square bg-zinc-800 rounded-xl overflow-hidden group/fabric">
+                      <img
+                        src={fabricImg}
+                        alt={`${i18n.language === 'tr' ? 'Kumaş Detayı' : 'Fabric Detail'} ${index + 1}`}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover/fabric:scale-150 cursor-zoom-in"
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
@@ -465,7 +471,7 @@ export default function ProductDetailPage() {
           <div className="glass rounded-2xl p-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Fabric Info */}
-              {product.fabricImage && (
+              {product.fabricImages && product.fabricImages.length > 0 && (
                 <div>
                   <h3 className="text-white font-semibold mb-2">{t('products.fabricInfo')}</h3>
                   <p className="text-gray-400">
