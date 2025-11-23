@@ -203,10 +203,10 @@ function ProductsContent() {
               onChange={(e) => setSortBy(e.target.value)}
               className="glass px-6 py-3 rounded-full bg-transparent text-white cursor-pointer"
             >
-              <option value="newest" className="bg-zinc-900">{t('products.sortNewest')}</option>
-              <option value="popular" className="bg-zinc-900">{t('products.sortPopular')}</option>
-              <option value="price-low" className="bg-zinc-900">{t('products.sortPriceLow')}</option>
-              <option value="price-high" className="bg-zinc-900">{t('products.sortPriceHigh')}</option>
+              <option value="newest" className="bg-white text-black">{t('products.sortNewest')}</option>
+              <option value="popular" className="bg-white text-black">{t('products.sortPopular')}</option>
+              <option value="price-low" className="bg-white text-black">{t('products.sortPriceLow')}</option>
+              <option value="price-high" className="bg-white text-black">{t('products.sortPriceHigh')}</option>
             </select>
 
             {/* View Mode */}
