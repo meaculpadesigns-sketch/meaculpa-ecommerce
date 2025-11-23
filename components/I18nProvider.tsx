@@ -389,7 +389,7 @@ const resources = {
       // Corporate
       corporate: {
         title: 'Kurumsal Çözümler',
-        subtitle: 'İşletmeniz için özel tasarım ve toplu sipariş hizmetleri',
+        subtitle: 'Toplu sipariş için bizimle iletişime geçin',
         uniformsTitle: 'Kurumsal Üniformalar',
         uniformsDesc: 'Otel, restoran, spa ve diğer işletmeler için özel tasarım çalışan kıyafetleri. Markanızın kimliğini yansıtan, konforlu ve şık üniformalar.',
         giftsTitle: 'Kurumsal Hediyeler',
@@ -970,7 +970,7 @@ const resources = {
       // Corporate
       corporate: {
         title: 'Corporate Solutions',
-        subtitle: 'Custom design and bulk order services for your business',
+        subtitle: 'Contact us for bulk orders',
         uniformsTitle: 'Corporate Uniforms',
         uniformsDesc: 'Custom designed employee clothing for hotels, restaurants, spas and other businesses. Comfortable and stylish uniforms reflecting your brand identity.',
         giftsTitle: 'Corporate Gifts',
