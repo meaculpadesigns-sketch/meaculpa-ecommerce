@@ -17,6 +17,7 @@ import {
   Calendar,
   Wand2,
   Link as LinkIcon,
+  Ticket,
 } from 'lucide-react';
 
 export default function AdminDashboard() {
@@ -79,10 +80,17 @@ export default function AdminDashboard() {
     },
     {
       title: 'İndirimler',
-      description: 'Ürün indirimleri ve kuponlar',
+      description: 'Ürün indirimleri',
       icon: Gift,
       href: '/admin/discounts',
       color: 'from-pink-500 to-rose-500',
+    },
+    {
+      title: 'Kupon Kodları',
+      description: 'Kişiye özel ve genel kuponlar',
+      icon: Ticket,
+      href: '/admin/coupons',
+      color: 'from-emerald-500 to-teal-500',
     },
     {
       title: 'Yorumlar & Hikayeler',
