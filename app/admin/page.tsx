@@ -11,7 +11,6 @@ import {
   MessageSquare,
   BarChart3,
   Settings,
-  Palette,
   FileText,
   Gift,
   Star,
@@ -49,13 +48,6 @@ export default function AdminDashboard() {
       icon: Package,
       href: '/admin/products',
       color: 'from-blue-500 to-cyan-500',
-    },
-    {
-      title: 'Kreasyon Yönetimi',
-      description: 'Kreasyonları yönet',
-      icon: Palette,
-      href: '/admin/creations',
-      color: 'from-purple-500 to-pink-500',
     },
     {
       title: 'Siparişler',
