@@ -2,13 +2,14 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Filter, SortAsc, Grid, List } from 'lucide-react';
 import ProductCard from '@/components/ProductCard';
 import { Product } from '@/types';
 import { getProducts } from '@/lib/firebase-helpers';
-import { kimonoSubcategories, setSubcategories } from '@/constants/categories';
+import { kimonoSubcategories, setSecondLevelCategories, getThirdLevelCategories, setSubcategories } from '@/constants/categories';
 
 function ProductsContent() {
   const { t, i18n } = useTranslation();
@@ -16,14 +17,13 @@ function ProductsContent() {
   const searchParams = useSearchParams();
   const category = searchParams.get('category');
   const subcategory = searchParams.get('subcategory');
+  const thirdLevel = searchParams.get('thirdLevel');
   const searchQuery = searchParams.get('search');
 
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState('newest');
-  const [priceRange, setPriceRange] = useState([0, 1000000]);
-  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -89,18 +89,11 @@ function ProductsContent() {
       console.log('🔍 After subcategory filter:', filtered.length);
     }
 
-    // Filter by price range
-    filtered = filtered.filter(
-      p => p.price >= priceRange[0] && p.price <= priceRange[1]
-    );
-    console.log('🔍 After price filter:', filtered.length);
-
-    // Filter by sizes
-    if (selectedSizes.length > 0) {
-      filtered = filtered.filter(p =>
-        p.sizes.some(s => selectedSizes.includes(s.size) && s.inStock)
-      );
-      console.log('🔍 After sizes filter:', filtered.length);
+    // Filter by third level category
+    if (thirdLevel) {
+      console.log('🔍 Filtering by thirdLevel:', thirdLevel);
+      filtered = filtered.filter(p => p.thirdLevelCategory === thirdLevel);
+      console.log('🔍 After thirdLevel filter:', filtered.length);
     }
 
     // Sort products
@@ -121,7 +114,7 @@ function ProductsContent() {
 
     console.log('🔍 Final filtered products:', filtered.length);
     setFilteredProducts(filtered);
-  }, [products, category, subcategory, searchQuery, priceRange, selectedSizes, sortBy]);
+  }, [products, category, subcategory, thirdLevel, searchQuery, sortBy]);
 
   const getPageTitle = () => {
     if (searchQuery) {
@@ -242,7 +235,7 @@ function ProductsContent() {
           </div>
         </div>
 
-        {/* Filters Panel */}
+        {/* Category Filters */}
         {showFilters && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
@@ -250,65 +243,52 @@ function ProductsContent() {
             exit={{ opacity: 0, height: 0 }}
             className="glass rounded-2xl p-6 mb-8"
           >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Price Range */}
-              <div>
-                <h3 className="text-white font-semibold mb-4">{t('products.priceRange')}</h3>
-                <div className="space-y-2">
-                  <input
-                    type="range"
-                    min="0"
-                    max="5000"
-                    value={priceRange[1]}
-                    onChange={(e) => setPriceRange([0, parseInt(e.target.value)])}
-                    className="w-full"
-                  />
-                  <p className="text-gray-400 text-sm">
-                    ₺0 - ₺{priceRange[1]}
-                  </p>
+            <h3 className="text-white font-semibold mb-4">{i18n.language === 'tr' ? 'Kategoriler' : 'Categories'}</h3>
+            <div className="flex flex-wrap gap-2">
+              {category === 'kimono' && kimonoSubcategories.map((sub) => (
+                <Link
+                  key={sub.key}
+                  href={`/products?category=kimono&subcategory=${sub.key}`}
+                  className={`px-4 py-2 rounded-lg text-sm ${
+                    subcategory === sub.key
+                      ? 'bg-mea-gold text-black font-medium'
+                      : 'glass text-gray-300 hover:bg-white hover:bg-opacity-10'
+                  }`}
+                >
+                  {i18n.language === 'tr' ? sub.name : sub.nameEn}
+                </Link>
+              ))}
+              {category === 'set' && setSecondLevelCategories.map((second) => (
+                <div key={second.key} className="space-y-2">
+                  <Link
+                    href={`/products?category=set&subcategory=${second.key}`}
+                    className={`block px-4 py-2 rounded-lg text-sm ${
+                      subcategory === second.key
+                        ? 'bg-mea-gold text-black font-medium'
+                        : 'glass text-gray-300 hover:bg-white hover:bg-opacity-10'
+                    }`}
+                  >
+                    {i18n.language === 'tr' ? second.name : second.nameEn}
+                  </Link>
+                  {subcategory === second.key && (
+                    <div className="ml-4 flex flex-wrap gap-2">
+                      {getThirdLevelCategories(second.key as 'kreasyonlar' | 'setler').map((third) => (
+                        <Link
+                          key={third.key}
+                          href={`/products?category=set&subcategory=${second.key}&thirdLevel=${third.key}`}
+                          className={`px-3 py-1 rounded-lg text-xs ${
+                            thirdLevel === third.key
+                              ? 'bg-white text-black font-medium'
+                              : 'bg-white bg-opacity-10 text-gray-400 hover:bg-opacity-20'
+                          }`}
+                        >
+                          {i18n.language === 'tr' ? third.name : third.nameEn}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              </div>
-
-              {/* Sizes */}
-              <div>
-                <h3 className="text-white font-semibold mb-4">{t('products.size')}</h3>
-                <div className="flex flex-wrap gap-2">
-                  {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) => (
-                    <button
-                      key={size}
-                      onClick={() => {
-                        if (selectedSizes.includes(size)) {
-                          setSelectedSizes(selectedSizes.filter(s => s !== size));
-                        } else {
-                          setSelectedSizes([...selectedSizes, size]);
-                        }
-                      }}
-                      className={`px-4 py-2 rounded-lg ${
-                        selectedSizes.includes(size)
-                          ? 'bg-white text-black'
-                          : 'glass hover:bg-white hover:bg-opacity-10'
-                      }`}
-                    >
-                      {size}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Stock Status */}
-              <div>
-                <h3 className="text-white font-semibold mb-4">{t('products.stockStatus')}</h3>
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-gray-300 cursor-pointer">
-                    <input type="checkbox" className="rounded" />
-                    <span>{t('products.inStock')}</span>
-                  </label>
-                  <label className="flex items-center gap-2 text-gray-300 cursor-pointer">
-                    <input type="checkbox" className="rounded" />
-                    <span>{t('products.preOrder')}</span>
-                  </label>
-                </div>
-              </div>
+              ))}
             </div>
           </motion.div>
         )}
