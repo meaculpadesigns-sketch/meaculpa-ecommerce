@@ -14,7 +14,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { kimonoSubcategories, setSubcategories } from '@/constants/categories';
+import { kimonoSubcategories, setSecondLevelCategories, getThirdLevelCategories } from '@/constants/categories';
 
 export default function Navbar() {
   const { t, i18n } = useTranslation();
@@ -59,7 +59,7 @@ export default function Navbar() {
       name: t('nav.set'),
       href: '/products?category=set',
       hasDropdown: true,
-      subcategories: setSubcategories
+      subcategories: setSecondLevelCategories
     },
     { name: t('nav.corporate'), href: '/corporate' },
     { name: t('nav.aboutUs'), href: '/about' },
@@ -112,24 +112,73 @@ export default function Navbar() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      className="absolute top-full left-0 pt-2 w-64 z-50"
+                      className="absolute top-full left-0 pt-2 z-50"
                     >
-                      <div className="glass rounded-xl border border-white border-opacity-10 shadow-xl overflow-hidden">
-                      {item.subcategories?.map((sub) => (
-                        <Link
-                          key={sub.key}
-                          href={`/products?category=${item.href.includes('kimono') ? 'kimono' : 'set'}&subcategory=${sub.key}`}
-                          className="block px-4 py-3 text-gray-300 hover:bg-white hover:bg-opacity-10 hover:text-white transition-colors border-b border-white border-opacity-5 last:border-0"
-                        >
-                          <div className="font-medium">{i18n.language === 'tr' ? sub.name : sub.nameEn}</div>
-                          {sub.slogan && (
-                            <div className="text-xs text-gray-400 mt-1">
-                              {i18n.language === 'tr' ? sub.slogan : sub.sloganEn}
-                            </div>
-                          )}
-                        </Link>
-                      ))}
-                      </div>
+                      {item.href.includes('kimono') ? (
+                        // Kimono: 2-2-1 ters piramit düzeni
+                        <div className="glass rounded-xl border border-white border-opacity-10 shadow-xl p-4">
+                          <div className="grid grid-cols-2 gap-2 mb-2">
+                            {kimonoSubcategories.slice(0, 2).map((sub) => (
+                              <Link
+                                key={sub.key}
+                                href={`/products?category=kimono&subcategory=${sub.key}`}
+                                className="block px-3 py-2 text-sm text-gray-300 hover:bg-white hover:bg-opacity-10 hover:text-white transition-colors rounded-lg"
+                              >
+                                <div className="font-medium text-xs">{i18n.language === 'tr' ? sub.name : sub.nameEn}</div>
+                              </Link>
+                            ))}
+                          </div>
+                          <div className="grid grid-cols-2 gap-2 mb-2">
+                            {kimonoSubcategories.slice(2, 4).map((sub) => (
+                              <Link
+                                key={sub.key}
+                                href={`/products?category=kimono&subcategory=${sub.key}`}
+                                className="block px-3 py-2 text-sm text-gray-300 hover:bg-white hover:bg-opacity-10 hover:text-white transition-colors rounded-lg"
+                              >
+                                <div className="font-medium text-xs">{i18n.language === 'tr' ? sub.name : sub.nameEn}</div>
+                              </Link>
+                            ))}
+                          </div>
+                          <div className="flex justify-center">
+                            {kimonoSubcategories.slice(4, 5).map((sub) => (
+                              <Link
+                                key={sub.key}
+                                href={`/products?category=kimono&subcategory=${sub.key}`}
+                                className="block px-3 py-2 text-sm text-gray-300 hover:bg-white hover:bg-opacity-10 hover:text-white transition-colors rounded-lg"
+                              >
+                                <div className="font-medium text-xs">{i18n.language === 'tr' ? sub.name : sub.nameEn}</div>
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      ) : (
+                        // Setler: 2. seviye yan yana, 3. seviye sağa açılır
+                        <div className="glass rounded-xl border border-white border-opacity-10 shadow-xl overflow-hidden">
+                          <div className="grid grid-cols-2 divide-x divide-white divide-opacity-10">
+                            {setSecondLevelCategories.map((secondLevel) => (
+                              <div key={secondLevel.key} className="relative group/sub">
+                                <div className="px-4 py-3 text-sm text-gray-300 hover:bg-white hover:bg-opacity-5 transition-colors">
+                                  <div className="font-medium text-xs">{i18n.language === 'tr' ? secondLevel.name : secondLevel.nameEn}</div>
+                                </div>
+                                {/* 3. seviye sağa açılan menü */}
+                                <div className="absolute left-full top-0 ml-1 hidden group-hover/sub:block z-50">
+                                  <div className="glass rounded-xl border border-white border-opacity-10 shadow-xl overflow-hidden w-56">
+                                    {getThirdLevelCategories(secondLevel.key as 'kreasyonlar' | 'setler').map((third) => (
+                                      <Link
+                                        key={third.key}
+                                        href={`/products?category=set&subcategory=${secondLevel.key}&thirdLevel=${third.key}`}
+                                        className="block px-4 py-2 text-sm text-gray-300 hover:bg-white hover:bg-opacity-10 hover:text-white transition-colors border-b border-white border-opacity-5 last:border-0"
+                                      >
+                                        <div className="font-medium text-xs">{i18n.language === 'tr' ? third.name : third.nameEn}</div>
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </motion.div>
                   )}
                 </div>
