@@ -17,7 +17,7 @@ import {
   X,
   Save,
 } from 'lucide-react';
-import { kimonoSubcategories, setSubcategories } from '@/constants/categories';
+import { kimonoSubcategories, setSecondLevelCategories, getThirdLevelCategories } from '@/constants/categories';
 import { convertCurrency } from '@/lib/currency';
 import { collection, getDocs } from 'firebase/firestore';
 
@@ -39,6 +39,7 @@ export default function AdminProducts() {
     oldPrice: 0,
     category: 'kimono' as 'kimono' | 'set',
     subcategory: '' as Product['subcategory'],
+    thirdLevelCategory: '' as Product['thirdLevelCategory'],
     collection: '',
     images: [] as string[],
     fabricImages: [] as string[],
@@ -171,6 +172,7 @@ export default function AdminProducts() {
       oldPrice: product.oldPrice || 0,
       category: product.category,
       subcategory: product.subcategory || undefined,
+      thirdLevelCategory: product.thirdLevelCategory || undefined,
       collection: product.collection || '',
       images: product.images,
       fabricImages: product.fabricImages || [],
@@ -222,6 +224,7 @@ export default function AdminProducts() {
       oldPrice: 0,
       category: 'kimono',
       subcategory: undefined,
+      thirdLevelCategory: undefined,
       collection: '',
       images: [],
       fabricImages: [],
@@ -538,15 +541,15 @@ export default function AdminProducts() {
                     </div>
                   </div>
 
-                  {/* Category and Subcategory */}
-                  <div className="grid grid-cols-2 gap-4">
+                  {/* Category, Subcategory, and Third Level */}
+                  <div className="grid grid-cols-3 gap-4">
                     <div>
-                      <label className="block text-gray-900 font-medium mb-2">Kategori</label>
+                      <label className="block text-gray-900 font-medium mb-2">1. Kategori</label>
                       <select
                         value={formData.category}
                         onChange={(e) => {
                           const newCategory = e.target.value as 'kimono' | 'set';
-                          setFormData({ ...formData, category: newCategory, subcategory: undefined });
+                          setFormData({ ...formData, category: newCategory, subcategory: undefined, thirdLevelCategory: undefined });
                         }}
                         className="input-field"
                         required
@@ -556,20 +559,39 @@ export default function AdminProducts() {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-gray-900 font-medium mb-2">Alt Kategori</label>
+                      <label className="block text-gray-900 font-medium mb-2">2. Alt Kategori</label>
                       <select
                         value={formData.subcategory || ''}
-                        onChange={(e) => setFormData({ ...formData, subcategory: e.target.value as any })}
+                        onChange={(e) => {
+                          setFormData({ ...formData, subcategory: e.target.value as any, thirdLevelCategory: undefined });
+                        }}
                         className="input-field"
                       >
                         <option value="">Seçiniz</option>
-                        {(formData.category === 'kimono' ? kimonoSubcategories : setSubcategories).map((sub) => (
+                        {(formData.category === 'kimono' ? kimonoSubcategories : setSecondLevelCategories).map((sub) => (
                           <option key={sub.key} value={sub.key}>
                             {sub.name}
                           </option>
                         ))}
                       </select>
                     </div>
+                    {formData.category === 'set' && (formData.subcategory === 'kreasyonlar' || formData.subcategory === 'setler') && (
+                      <div>
+                        <label className="block text-gray-900 font-medium mb-2">3. Alt Kategori</label>
+                        <select
+                          value={formData.thirdLevelCategory || ''}
+                          onChange={(e) => setFormData({ ...formData, thirdLevelCategory: e.target.value as any })}
+                          className="input-field"
+                        >
+                          <option value="">Seçiniz</option>
+                          {getThirdLevelCategories(formData.subcategory as 'kreasyonlar' | 'setler').map((third) => (
+                            <option key={third.key} value={third.key}>
+                              {third.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
                   </div>
 
                   {/* Creation Selection */}

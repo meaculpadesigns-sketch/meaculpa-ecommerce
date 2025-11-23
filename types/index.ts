@@ -8,15 +8,21 @@ export interface Product {
   oldPrice?: number;
   category: 'kimono' | 'set';
   subcategory?:
-    // Kimono subcategories
+    // Kimono subcategories (2nd level - no change)
     | 'organic-handpainted'  // Organik & El Boyaması
     | 'shiny-sequined'       // Parlak & Pullu Tasarımlar
     | 'recycled-upcycled'    // Geri Dönüşüm & Atık Kumaş
-    | 'family-kimono'        // Aile Setleri (Kimono)
-    // Set subcategories
+    | 'aile-setleri'         // Aile Setleri (Kimono)
+    | 'aileye-ozel-tasarim'  // Aileye Özel Tasarım
+    // Set 2nd level categories
+    | 'kreasyonlar'          // Kreasyonlar (new 2nd level)
+    | 'setler';              // Setler (new 2nd level)
+  thirdLevelCategory?:
+    // Kreasyonlar 3rd level (under Set > Kreasyonlar)
     | 'retro-collection'     // Retro Kreasyon
     | 'festival-line'        // Festival Kreasyon
     | 'one-only-collection'  // Kısıtlı Üretim Kreasyon
+    // Setler 3rd level (under Set > Setler)
     | 'special-fabric'       // Özel Tasarım Kumaş Setleri
     | 'handpainted-linen'    // El Boyaması Keten Setler
     | 'family-sets'          // Aile Setleri

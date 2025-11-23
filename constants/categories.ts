@@ -69,8 +69,30 @@ export const kimonoSubcategories: CategoryInfo[] = [
   },
 ];
 
-// Set Subcategories
-export const setSubcategories: CategoryInfo[] = [
+// Set 2nd Level Categories
+export const setSecondLevelCategories: CategoryInfo[] = [
+  {
+    key: 'kreasyonlar',
+    name: 'Kreasyonlar',
+    nameEn: 'Creations',
+    description: 'Özel tasarım kreasyonlarımız. Her biri özgün bir hikaye anlatır.',
+    descriptionEn: 'Our special design creations. Each tells a unique story.',
+    slogan: 'Zamana dokunan hikayeler.',
+    sloganEn: 'Stories that touch time.',
+  },
+  {
+    key: 'setler',
+    name: 'Setler',
+    nameEn: 'Sets',
+    description: 'Özel tasarım setlerimiz. Uyumlu ve zarif kombinasyonlar.',
+    descriptionEn: 'Our special design sets. Harmonious and elegant combinations.',
+    slogan: 'Zarafet ve konfor bir arada.',
+    sloganEn: 'Elegance and comfort together.',
+  },
+];
+
+// Kreasyonlar 3rd Level (under Set > Kreasyonlar)
+export const kreasyonlarThirdLevel: CategoryInfo[] = [
   {
     key: 'retro-collection',
     name: 'Retro Kreasyon',
@@ -110,6 +132,10 @@ export const setSubcategories: CategoryInfo[] = [
     seoDescription: 'Her biri kısıtlı üretilen, tekrarı olmayan özel setler. Sadece bir kısıtlı kişilere ait, gerçek anlamda benzersiz tasarımlar.',
     seoDescriptionEn: 'Special sets with limited production, never repeated. Belonging to only a few, truly unique designs.',
   },
+];
+
+// Setler 3rd Level (under Set > Setler)
+export const setlerThirdLevel: CategoryInfo[] = [
   {
     key: 'special-fabric',
     name: 'Özel Tasarım Kumaş Setleri',
@@ -182,17 +208,30 @@ export const mainCategories: CategoryInfo[] = [
   },
 ];
 
+// Backward compatibility: Old setSubcategories (now includes all 3rd level)
+export const setSubcategories: CategoryInfo[] = [
+  ...kreasyonlarThirdLevel,
+  ...setlerThirdLevel,
+];
+
 // Helper function to get category info
 export function getCategoryInfo(categoryKey: string): CategoryInfo | undefined {
   const allCategories = [
     ...mainCategories,
     ...kimonoSubcategories,
-    ...setSubcategories,
+    ...setSecondLevelCategories,
+    ...kreasyonlarThirdLevel,
+    ...setlerThirdLevel,
   ];
   return allCategories.find(cat => cat.key === categoryKey);
 }
 
-// Helper function to get subcategories for a main category
+// Helper function to get 2nd level subcategories for a main category
 export function getSubcategories(mainCategory: 'kimono' | 'set'): CategoryInfo[] {
-  return mainCategory === 'kimono' ? kimonoSubcategories : setSubcategories;
+  return mainCategory === 'kimono' ? kimonoSubcategories : setSecondLevelCategories;
+}
+
+// Helper function to get 3rd level categories for Set 2nd level
+export function getThirdLevelCategories(secondLevel: 'kreasyonlar' | 'setler'): CategoryInfo[] {
+  return secondLevel === 'kreasyonlar' ? kreasyonlarThirdLevel : setlerThirdLevel;
 }
