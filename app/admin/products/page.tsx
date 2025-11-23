@@ -322,7 +322,15 @@ export default function AdminProducts() {
                 {products.map((product) => (
                   <tr key={product.id} className="hover:bg-white hover:bg-opacity-5">
                     <td className="px-6 py-4">
-                      <div className="w-16 h-16 bg-zinc-800 rounded-lg" />
+                      {product.images && product.images.length > 0 ? (
+                        <img
+                          src={product.images[0]}
+                          alt={product.name}
+                          className="w-16 h-16 bg-zinc-800 rounded-lg object-cover"
+                        />
+                      ) : (
+                        <div className="w-16 h-16 bg-zinc-800 rounded-lg" />
+                      )}
                     </td>
                     <td className="px-6 py-4">
                       <p className="text-white font-medium">{product.name}</p>
@@ -426,7 +434,11 @@ export default function AdminProducts() {
                     <div className="flex flex-wrap gap-4 mb-4">
                       {formData.images.map((url, index) => (
                         <div key={index} className="relative w-32 h-32">
-                          <div className="w-full h-full bg-zinc-800 rounded-lg" />
+                          <img
+                            src={url}
+                            alt={`Product ${index + 1}`}
+                            className="w-full h-full bg-zinc-800 rounded-lg object-cover"
+                          />
                           <button
                             type="button"
                             onClick={() => {
@@ -437,7 +449,7 @@ export default function AdminProducts() {
                             }}
                             className="absolute -top-2 -right-2 p-1 bg-red-500 rounded-full"
                           >
-                            <X size={16} className="text-gray-900" />
+                            <X size={16} className="text-white" />
                           </button>
                         </div>
                       ))}
@@ -464,7 +476,11 @@ export default function AdminProducts() {
                     <div className="flex flex-wrap gap-4 mb-4">
                       {formData.fabricImages.map((url, index) => (
                         <div key={index} className="relative w-32 h-32">
-                          <div className="w-full h-full bg-zinc-800 rounded-lg" />
+                          <img
+                            src={url}
+                            alt={`Fabric ${index + 1}`}
+                            className="w-full h-full bg-zinc-800 rounded-lg object-cover"
+                          />
                           <button
                             type="button"
                             onClick={() => {
@@ -475,7 +491,7 @@ export default function AdminProducts() {
                             }}
                             className="absolute -top-2 -right-2 p-1 bg-red-500 rounded-full"
                           >
-                            <X size={16} className="text-gray-900" />
+                            <X size={16} className="text-white" />
                           </button>
                         </div>
                       ))}
