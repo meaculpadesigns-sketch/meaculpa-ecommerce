@@ -26,7 +26,7 @@
 
   /* Background gradients for each page */
   body.bg-home {
-    background: linear-gradient(135deg, #DDAB52 0%, #F5C77E 100%);
+    background: linear-gradient(135deg, #C89A3F 0%, #E0B86B 100%);
   }
 
   body.bg-products {
