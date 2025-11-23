@@ -41,7 +41,7 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
         className="glass rounded-2xl p-6 flex flex-col md:flex-row gap-6 hover:bg-white hover:bg-opacity-5 transition-all"
       >
         <Link href={`/products/${product.id}`} className="flex-shrink-0">
-          <div className="w-full md:w-64 aspect-square bg-zinc-800 rounded-xl overflow-hidden group/image">
+          <div className="relative w-full md:w-64 aspect-square bg-zinc-800 rounded-xl overflow-hidden group/image">
             {product.images && product.images.length > 0 ? (
               <img
                 src={product.images[0]}
@@ -51,6 +51,20 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
             ) : (
               <div className="w-full h-full flex items-center justify-center text-white">
                 {t('home.productView')}
+              </div>
+            )}
+
+            {/* Sold Out Badge */}
+            {!product.inStock && (
+              <div className="absolute top-4 left-4 bg-gray-900 text-white px-4 py-2 rounded-full text-sm font-semibold border-2 border-white">
+                {i18n.language === 'tr' ? 'Tükendi' : 'Sold Out'}
+              </div>
+            )}
+
+            {/* Discount Badge */}
+            {product.inStock && product.oldPrice && (
+              <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                {Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}% {t('products.discount')}
               </div>
             )}
           </div>
@@ -84,9 +98,14 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
                 <span className="text-gray-500 line-through">{formatPrice(product.oldPrice, i18n.language)}</span>
               )}
             </div>
-            {product.oldPrice && (
+            {product.inStock && product.oldPrice && (
               <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm">
                 {Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}% {t('products.discount')}
+              </span>
+            )}
+            {!product.inStock && (
+              <span className="bg-gray-900 text-white px-4 py-2 rounded-full text-sm font-semibold border-2 border-white">
+                {i18n.language === 'tr' ? 'Tükendi' : 'Sold Out'}
               </span>
             )}
           </div>
@@ -148,8 +167,15 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
               </div>
             )}
 
+            {/* Sold Out Badge */}
+            {!product.inStock && (
+              <div className="absolute top-4 left-4 bg-gray-900 text-white px-4 py-2 rounded-full text-sm font-semibold border-2 border-white">
+                {i18n.language === 'tr' ? 'Tükendi' : 'Sold Out'}
+              </div>
+            )}
+
             {/* Discount Badge */}
-            {product.oldPrice && (
+            {product.inStock && product.oldPrice && (
               <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
                 {Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}% {t('products.discount')}
               </div>
