@@ -159,15 +159,16 @@ export default function AdminProducts() {
     setLoading(true);
 
     try {
-      const productData = {
-        ...formData,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-
       if (editingProduct) {
-        await updateProduct(editingProduct.id, productData);
+        // When editing, don't include createdAt
+        await updateProduct(editingProduct.id, formData);
       } else {
+        // When creating new, include createdAt and updatedAt
+        const productData = {
+          ...formData,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        };
         await addProduct(productData);
       }
 
