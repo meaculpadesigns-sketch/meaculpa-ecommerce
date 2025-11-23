@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ChevronDown, ArrowRight } from 'lucide-react';
+import { ChevronDown, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { getProducts } from '@/lib/firebase-helpers';
@@ -18,6 +18,9 @@ export default function Home() {
   const [kimonoProducts, setKimonoProducts] = useState<Product[]>([]);
   const [setProducts, setSetProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const kimonoScrollRef = useRef<HTMLDivElement>(null);
+  const setScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.body.className = 'bg-home text-dark-page';
@@ -40,6 +43,54 @@ export default function Home() {
     }
     fetchProducts();
   }, []);
+
+  // Auto-scroll functionality (every 10 seconds)
+  useEffect(() => {
+    const kimonoInterval = setInterval(() => {
+      if (kimonoScrollRef.current) {
+        const container = kimonoScrollRef.current;
+        const cardWidth = 320 + 24; // Card width (80 * 4) + gap (6 * 4)
+        const maxScroll = container.scrollWidth - container.clientWidth;
+        const currentScroll = container.scrollLeft;
+
+        if (currentScroll >= maxScroll - 10) {
+          // Reset to beginning
+          container.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          // Scroll to next card
+          container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+        }
+      }
+    }, 10000);
+
+    const setInterval2 = setInterval(() => {
+      if (setScrollRef.current) {
+        const container = setScrollRef.current;
+        const cardWidth = 320 + 24;
+        const maxScroll = container.scrollWidth - container.clientWidth;
+        const currentScroll = container.scrollLeft;
+
+        if (currentScroll >= maxScroll - 10) {
+          container.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+        }
+      }
+    }, 10000);
+
+    return () => {
+      clearInterval(kimonoInterval);
+      clearInterval(setInterval2);
+    };
+  }, [kimonoProducts, setProducts]);
+
+  const scrollCarousel = (ref: React.RefObject<HTMLDivElement | null>, direction: 'left' | 'right') => {
+    if (ref.current) {
+      const cardWidth = 320 + 24; // Card width + gap
+      const scrollAmount = direction === 'left' ? -cardWidth : cardWidth;
+      ref.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
 
 
   return (
@@ -108,13 +159,29 @@ export default function Home() {
                   : 'Discover our unique designs'}
               </p>
             </div>
-            <Link
-              href="/products?category=kimono"
-              className="btn-primary hidden md:flex items-center gap-2"
-            >
-              {t('common.viewAll')}
-              <ArrowRight size={20} />
-            </Link>
+            <div className="hidden md:flex items-center gap-4">
+              <button
+                onClick={() => scrollCarousel(kimonoScrollRef, 'left')}
+                className="p-3 glass rounded-full hover:bg-white hover:bg-opacity-20 transition-colors"
+                aria-label="Previous"
+              >
+                <ChevronLeft size={24} className="text-white" />
+              </button>
+              <button
+                onClick={() => scrollCarousel(kimonoScrollRef, 'right')}
+                className="p-3 glass rounded-full hover:bg-white hover:bg-opacity-20 transition-colors"
+                aria-label="Next"
+              >
+                <ChevronRight size={24} className="text-white" />
+              </button>
+              <Link
+                href="/products?category=kimono"
+                className="btn-primary flex items-center gap-2"
+              >
+                {t('common.viewAll')}
+                <ArrowRight size={20} />
+              </Link>
+            </div>
           </div>
 
           {loading ? (
@@ -122,7 +189,7 @@ export default function Home() {
               {t('common.loading')}
             </div>
           ) : kimonoProducts.length > 0 ? (
-            <div className="overflow-x-auto pb-4">
+            <div ref={kimonoScrollRef} className="overflow-x-auto pb-4 scroll-smooth">
               <div className="flex gap-6" style={{ minWidth: 'min-content' }}>
                 {kimonoProducts.map((product, index) => (
                   <div key={product.id} className="w-80 flex-shrink-0">
@@ -139,13 +206,29 @@ export default function Home() {
             </div>
           )}
 
-          <Link
-            href="/products?category=kimono"
-            className="btn-primary md:hidden flex items-center justify-center gap-2 mt-8 mx-auto w-full max-w-sm"
-          >
-            {t('common.viewAll')}
-            <ArrowRight size={20} />
-          </Link>
+          <div className="flex md:hidden items-center gap-2 mt-8">
+            <button
+              onClick={() => scrollCarousel(kimonoScrollRef, 'left')}
+              className="p-3 glass rounded-full"
+              aria-label="Previous"
+            >
+              <ChevronLeft size={20} className="text-white" />
+            </button>
+            <Link
+              href="/products?category=kimono"
+              className="btn-primary flex-1 flex items-center justify-center gap-2"
+            >
+              {t('common.viewAll')}
+              <ArrowRight size={20} />
+            </Link>
+            <button
+              onClick={() => scrollCarousel(kimonoScrollRef, 'right')}
+              className="p-3 glass rounded-full"
+              aria-label="Next"
+            >
+              <ChevronRight size={20} className="text-white" />
+            </button>
+          </div>
         </div>
       </section>
 
@@ -163,13 +246,29 @@ export default function Home() {
                   : 'Stylish and comfortable set combinations'}
               </p>
             </div>
-            <Link
-              href="/products?category=set"
-              className="btn-primary hidden md:flex items-center gap-2"
-            >
-              {t('common.viewAll')}
-              <ArrowRight size={20} />
-            </Link>
+            <div className="hidden md:flex items-center gap-4">
+              <button
+                onClick={() => scrollCarousel(setScrollRef, 'left')}
+                className="p-3 glass rounded-full hover:bg-white hover:bg-opacity-20 transition-colors"
+                aria-label="Previous"
+              >
+                <ChevronLeft size={24} className="text-white" />
+              </button>
+              <button
+                onClick={() => scrollCarousel(setScrollRef, 'right')}
+                className="p-3 glass rounded-full hover:bg-white hover:bg-opacity-20 transition-colors"
+                aria-label="Next"
+              >
+                <ChevronRight size={24} className="text-white" />
+              </button>
+              <Link
+                href="/products?category=set"
+                className="btn-primary flex items-center gap-2"
+              >
+                {t('common.viewAll')}
+                <ArrowRight size={20} />
+              </Link>
+            </div>
           </div>
 
           {loading ? (
@@ -177,7 +276,7 @@ export default function Home() {
               {t('common.loading')}
             </div>
           ) : setProducts.length > 0 ? (
-            <div className="overflow-x-auto pb-4">
+            <div ref={setScrollRef} className="overflow-x-auto pb-4 scroll-smooth">
               <div className="flex gap-6" style={{ minWidth: 'min-content' }}>
                 {setProducts.map((product, index) => (
                   <div key={product.id} className="w-80 flex-shrink-0">
@@ -194,13 +293,29 @@ export default function Home() {
             </div>
           )}
 
-          <Link
-            href="/products?category=set"
-            className="btn-primary md:hidden flex items-center justify-center gap-2 mt-8 mx-auto w-full max-w-sm"
-          >
-            {t('common.viewAll')}
-            <ArrowRight size={20} />
-          </Link>
+          <div className="flex md:hidden items-center gap-2 mt-8">
+            <button
+              onClick={() => scrollCarousel(setScrollRef, 'left')}
+              className="p-3 glass rounded-full"
+              aria-label="Previous"
+            >
+              <ChevronLeft size={20} className="text-white" />
+            </button>
+            <Link
+              href="/products?category=set"
+              className="btn-primary flex-1 flex items-center justify-center gap-2"
+            >
+              {t('common.viewAll')}
+              <ArrowRight size={20} />
+            </Link>
+            <button
+              onClick={() => scrollCarousel(setScrollRef, 'right')}
+              className="p-3 glass rounded-full"
+              aria-label="Next"
+            >
+              <ChevronRight size={20} className="text-white" />
+            </button>
+          </div>
         </div>
       </section>
 
