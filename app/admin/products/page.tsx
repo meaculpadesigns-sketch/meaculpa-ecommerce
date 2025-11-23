@@ -16,6 +16,7 @@ import {
   Upload,
   X,
   Save,
+  Search,
 } from 'lucide-react';
 import { kimonoSubcategories, setSecondLevelCategories, getThirdLevelCategories } from '@/constants/categories';
 import { convertCurrency } from '@/lib/currency';
@@ -25,6 +26,8 @@ export default function AdminProducts() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [creations, setCreations] = useState<Creation[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -86,7 +89,25 @@ export default function AdminProducts() {
   const loadProducts = async () => {
     const data = await getProducts();
     setProducts(data);
+    setFilteredProducts(data);
   };
+
+  // Filter products based on search query
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setFilteredProducts(products);
+    } else {
+      const query = searchQuery.toLowerCase();
+      const filtered = products.filter(product =>
+        product.name.toLowerCase().includes(query) ||
+        product.nameEn.toLowerCase().includes(query) ||
+        product.category.toLowerCase().includes(query) ||
+        (product.subcategory && product.subcategory.toLowerCase().includes(query)) ||
+        (product.thirdLevelCategory && product.thirdLevelCategory.toLowerCase().includes(query))
+      );
+      setFilteredProducts(filtered);
+    }
+  }, [searchQuery, products]);
 
   const loadCreations = async () => {
     try {
@@ -278,21 +299,45 @@ export default function AdminProducts() {
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-4xl font-bold text-white mb-2">Ürün Yönetimi</h1>
-            <p className="text-gray-400">{products.length} ürün bulundu</p>
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h1 className="text-4xl font-bold text-white mb-2">Ürün Yönetimi</h1>
+              <p className="text-gray-400">
+                {filteredProducts.length} / {products.length} ürün gösteriliyor
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                resetForm();
+                setShowModal(true);
+              }}
+              className="btn-primary flex items-center gap-2"
+            >
+              <Plus size={20} />
+              Yeni Ürün Ekle
+            </button>
           </div>
-          <button
-            onClick={() => {
-              resetForm();
-              setShowModal(true);
-            }}
-            className="btn-primary flex items-center gap-2"
-          >
-            <Plus size={20} />
-            Yeni Ürün Ekle
-          </button>
+
+          {/* Search Bar */}
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+            <input
+              type="text"
+              placeholder="Ürün ara (isim, kategori, alt kategori...)"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-12 pr-4 py-3 glass rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-mea-gold"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+              >
+                <X size={20} />
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Products Table */}
@@ -322,7 +367,7 @@ export default function AdminProducts() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-white divide-opacity-10">
-                {products.map((product) => (
+                {filteredProducts.map((product) => (
                   <tr key={product.id} className="hover:bg-white hover:bg-opacity-5">
                     <td className="px-6 py-4">
                       {product.images && product.images.length > 0 ? (
