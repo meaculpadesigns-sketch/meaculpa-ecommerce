@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import { useCart } from '@/lib/cart-context';
 import {
@@ -84,9 +85,14 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center">
-              <span className="text-2xl font-bold text-white tracking-tight">
-                MEA CULPA
-              </span>
+              <Image
+                src="/images/logo.jpeg"
+                alt="MEA CULPA"
+                width={120}
+                height={40}
+                className="h-10 w-auto object-contain"
+                priority
+              />
             </Link>
 
             {/* Desktop Navigation */}
