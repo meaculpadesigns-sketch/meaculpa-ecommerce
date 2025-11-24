@@ -6,7 +6,7 @@ import { Building, Users, Gift, Award, Mail, Phone } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export default function CorporatePage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     document.body.className = 'bg-light text-dark-page';
