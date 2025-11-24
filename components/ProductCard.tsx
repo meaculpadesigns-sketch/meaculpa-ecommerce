@@ -211,21 +211,21 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
         </Link>
 
         {/* Info */}
-        <div className="p-6">
+        <div className="p-6 bg-gradient-to-br from-mea-gold to-yellow-600">
           <Link href={`/products/${product.id}`}>
-            <h3 className="text-xl font-semibold text-white mb-2 hover:text-mea-gold transition-colors">
+            <h3 className="text-xl font-semibold text-gray-900 mb-2 hover:text-white transition-colors">
               {name}
             </h3>
           </Link>
 
-          <p className="text-gray-400 text-sm mb-4 line-clamp-2">
+          <p className="text-gray-800 text-sm mb-4 line-clamp-2">
             {description}
           </p>
 
           <div className="flex items-baseline gap-2 mb-4">
-            <span className="text-2xl font-bold text-mea-gold">{formatPrice(product.price, i18n.language)}</span>
+            <span className="text-lg font-bold text-gray-900">{formatPrice(product.price, i18n.language)}</span>
             {product.oldPrice && (
-              <span className="text-gray-500 line-through text-sm">{formatPrice(product.oldPrice, i18n.language)}</span>
+              <span className="text-gray-700 line-through text-xs">{formatPrice(product.oldPrice, i18n.language)}</span>
             )}
           </div>
 
@@ -233,7 +233,7 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
           {product.story && (
             <button
               onClick={() => setShowStory(!showStory)}
-              className="text-mea-gold text-sm hover:underline mb-2"
+              className="text-gray-900 text-sm hover:text-white transition-colors mb-2 font-medium"
             >
               {t('products.viewStory')}
             </button>
@@ -246,8 +246,8 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
                 key={size.size}
                 className={`px-2 py-1 rounded text-xs ${
                   size.inStock
-                    ? 'bg-zinc-700 text-white'
-                    : 'bg-zinc-800 text-gray-500'
+                    ? 'bg-gray-900 text-white'
+                    : 'bg-gray-700 text-gray-300'
                 }`}
               >
                 {size.size}
