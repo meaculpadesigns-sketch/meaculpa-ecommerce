@@ -168,7 +168,20 @@ function ProductsContent() {
               >
                 {t('common.all')}
               </button>
-              {(category === 'kimono' ? kimonoSubcategories : setSubcategories).map((sub) => (
+              {category === 'kimono' && kimonoSubcategories.map((sub) => (
+                <button
+                  key={sub.key}
+                  onClick={() => router.push(`/products?category=${category}&subcategory=${sub.key}`)}
+                  className={`px-4 py-2 rounded-full transition-all ${
+                    subcategory === sub.key
+                      ? 'bg-mea-gold text-black font-semibold'
+                      : 'glass hover:bg-white hover:bg-opacity-10 text-gray-300'
+                  }`}
+                >
+                  {i18n.language === 'tr' ? sub.name : sub.nameEn}
+                </button>
+              ))}
+              {category === 'set' && setSecondLevelCategories.map((sub) => (
                 <button
                   key={sub.key}
                   onClick={() => router.push(`/products?category=${category}&subcategory=${sub.key}`)}

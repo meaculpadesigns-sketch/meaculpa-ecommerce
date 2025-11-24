@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ChevronDown, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import { getProducts } from '@/lib/firebase-helpers';
 import { Product } from '@/types';
@@ -95,6 +96,20 @@ export default function Home() {
 
   return (
     <div>
+      {/* Logo positioned below navbar */}
+      <div className="fixed top-20 left-8 z-40">
+        <Link href="/">
+          <Image
+            src="/images/logo.jpeg"
+            alt="MEA CULPA"
+            width={200}
+            height={80}
+            className="h-20 w-auto object-contain"
+            priority
+          />
+        </Link>
+      </div>
+
       {/* Hero Section - Apple Style */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         {/* Background with parallax effect */}

@@ -510,17 +510,20 @@ export default function AdminCouponsPage() {
                 {/* User Specific */}
                 <div>
                   <label className="block text-gray-900 font-medium mb-2">
-                    Kişiye Özel <span className="text-gray-500 font-normal">(opsiyonel - sadece bu kullanıcı kullanabilir)</span>
+                    Kullanıcı Seçimi
                   </label>
+                  <p className="text-sm text-gray-600 mb-2">
+                    Kuponu belirli bir kullanıcıya özel yapmak isterseniz aşağıdan seçim yapın. Boş bırakırsanız tüm müşteriler kullanabilir.
+                  </p>
                   <select
                     value={formData.userSpecific}
                     onChange={(e) => setFormData({ ...formData, userSpecific: e.target.value })}
                     className="w-full px-4 py-3 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mea-gold text-gray-900"
                   >
-                    <option value="">Herkese Açık</option>
+                    <option value="">Herkese Açık (Tüm Müşteriler Kullanabilir)</option>
                     {users.map((user) => (
                       <option key={user.id} value={user.id}>
-                        {user.firstName} {user.lastName} ({user.email})
+                        Kişiye Özel: {user.firstName} {user.lastName} - {user.email}
                       </option>
                     ))}
                   </select>

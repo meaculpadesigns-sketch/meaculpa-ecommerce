@@ -397,7 +397,7 @@ export default function AdminProducts() {
                             : 'bg-red-500 bg-opacity-20 text-red-500'
                         }`}
                       >
-                        {product.inStock ? 'Aktif' : 'Gizli'}
+                        {product.inStock ? 'Stokta' : 'Tükendi'}
                       </span>
                     </td>
                     <td className="px-6 py-4">
@@ -405,7 +405,7 @@ export default function AdminProducts() {
                         <button
                           onClick={() => toggleVisibility(product)}
                           className="p-2 hover:bg-white hover:bg-opacity-10 rounded-lg transition-colors"
-                          title={product.inStock ? 'Gizle' : 'Göster'}
+                          title={product.inStock ? 'Tükendi İşaretle' : 'Stokta İşaretle'}
                         >
                           {product.inStock ? (
                             <EyeOff size={18} className="text-gray-400" />

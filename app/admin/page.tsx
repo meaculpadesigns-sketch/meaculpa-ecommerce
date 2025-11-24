@@ -18,6 +18,7 @@ import {
   Wand2,
   Link as LinkIcon,
   Ticket,
+  Ruler,
 } from 'lucide-react';
 
 export default function AdminDashboard() {
@@ -91,6 +92,13 @@ export default function AdminDashboard() {
       icon: Ticket,
       href: '/admin/coupons',
       color: 'from-emerald-500 to-teal-500',
+    },
+    {
+      title: 'Beden Tabloları',
+      description: 'Ürün beden tabloları oluştur',
+      icon: Ruler,
+      href: '/admin/size-charts',
+      color: 'from-violet-500 to-purple-500',
     },
     {
       title: 'Yorumlar & Hikayeler',

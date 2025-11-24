@@ -30,13 +30,13 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Mea Culpa - Zamana Dokunan Hikayeler',
-    description: 'Doğu\'nun ilhamıyla, modern yaşamın içinde. Her karar bir yolculuktur.',
+    title: 'Mea Culpa - Zamana Dokunan Hikayeler | Özel Tasarım Kimono ve Setler',
+    description: 'Doğu\'nun ilhamıyla, modern yaşamın içinde. Özel tasarım kimono, set ve kreasyonlar. Organik kumaş, el boyaması ve kişiye özel tasarımlarla zamana dokunan hikayeler.',
     url: 'https://meaculpadesigns.com',
-    siteName: 'Mea Culpa',
+    siteName: 'Mea Culpa Designs',
     images: [
       {
-        url: '/images/og-image.jpg',
+        url: 'https://meaculpadesigns.com/images/logo.jpeg',
         width: 1200,
         height: 630,
         alt: 'Mea Culpa - Özel Tasarım Kimono ve Setler',
@@ -47,9 +47,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Mea Culpa - Zamana Dokunan Hikayeler',
-    description: 'Doğu\'nun ilhamıyla, modern yaşamın içinde.',
-    images: ['/images/twitter-image.jpg'],
+    title: 'Mea Culpa - Zamana Dokunan Hikayeler | Özel Tasarım Kimono ve Setler',
+    description: 'Doğu\'nun ilhamıyla, modern yaşamın içinde. Özel tasarım kimono, set ve kreasyonlar.',
+    images: ['https://meaculpadesigns.com/images/logo.jpeg'],
   },
   viewport: {
     width: 'device-width',

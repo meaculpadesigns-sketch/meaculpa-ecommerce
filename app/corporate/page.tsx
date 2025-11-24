@@ -41,23 +41,6 @@ export default function CorporatePage() {
           >
             <div className="flex items-center gap-4 mb-6">
               <div className="p-3 bg-mea-gold rounded-xl">
-                <Building className="text-black" size={32} />
-              </div>
-              <h2 className="text-2xl font-bold text-white">{t('corporate.uniformsTitle')}</h2>
-            </div>
-            <p className="text-gray-300 leading-relaxed">
-              {t('corporate.uniformsDesc')}
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="glass rounded-2xl p-8"
-          >
-            <div className="flex items-center gap-4 mb-6">
-              <div className="p-3 bg-mea-gold rounded-xl">
                 <Gift className="text-black" size={32} />
               </div>
               <h2 className="text-2xl font-bold text-white">{t('corporate.giftsTitle')}</h2>
@@ -70,34 +53,19 @@ export default function CorporatePage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.2 }}
             className="glass rounded-2xl p-8"
           >
             <div className="flex items-center gap-4 mb-6">
               <div className="p-3 bg-mea-gold rounded-xl">
                 <Users className="text-black" size={32} />
               </div>
-              <h2 className="text-2xl font-bold text-white">{t('corporate.bulkTitle')}</h2>
+              <h2 className="text-2xl font-bold text-white">
+                {i18n.language === 'tr' ? 'Toplu Tasarım' : 'Bulk Design'}
+              </h2>
             </div>
             <p className="text-gray-300 leading-relaxed">
               {t('corporate.bulkDesc')}
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="glass rounded-2xl p-8"
-          >
-            <div className="flex items-center gap-4 mb-6">
-              <div className="p-3 bg-mea-gold rounded-xl">
-                <Award className="text-black" size={32} />
-              </div>
-              <h2 className="text-2xl font-bold text-white">{t('corporate.vipTitle')}</h2>
-            </div>
-            <p className="text-gray-300 leading-relaxed">
-              {t('corporate.vipDesc')}
             </p>
           </motion.div>
         </div>
