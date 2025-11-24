@@ -1,10 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth, db } from '@/lib/firebase';
-import { getUserById, getProducts, addProduct, updateProduct, deleteProduct, uploadFile, deleteFile } from '@/lib/firebase-helpers';
+import { db } from '@/lib/firebase';
+import { getProducts, addProduct, updateProduct, deleteProduct, uploadFile, deleteFile } from '@/lib/firebase-helpers';
+import { useAdminAuth } from '@/lib/use-admin-auth';
 import { Product, Size, Creation } from '@/types';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -23,8 +22,7 @@ import { convertCurrency } from '@/lib/currency';
 import { collection, getDocs } from 'firebase/firestore';
 
 export default function AdminProducts() {
-  const router = useRouter();
-  const [loading, setLoading] = useState(true);
+  const { loading: authLoading, isAdmin } = useAdminAuth();
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -32,6 +30,7 @@ export default function AdminProducts() {
   const [showModal, setShowModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [uploadingImages, setUploadingImages] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -68,23 +67,11 @@ export default function AdminProducts() {
   }, []);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const userData = await getUserById(user.uid);
-        if (userData && userData.role === 'admin') {
-          loadProducts();
-          loadCreations();
-        } else {
-          router.push('/');
-        }
-      } else {
-        router.push('/login');
-      }
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, [router]);
+    if (!authLoading && isAdmin) {
+      loadProducts();
+      loadCreations();
+    }
+  }, [authLoading, isAdmin]);
 
   const loadProducts = async () => {
     const data = await getProducts();
@@ -156,7 +143,7 @@ export default function AdminProducts() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setSaving(true);
 
     try {
       if (editingProduct) {
@@ -179,7 +166,7 @@ export default function AdminProducts() {
       console.error('Error saving product:', error);
       alert('Ürün kaydedilirken hata oluştu');
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   };
 
@@ -288,12 +275,16 @@ export default function AdminProducts() {
     }));
   };
 
-  if (loading) {
+  if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-pulse text-white text-xl">Yükleniyor...</div>
       </div>
     );
+  }
+
+  if (!isAdmin) {
+    return null;
   }
 
   return (
