@@ -118,7 +118,7 @@ export default function Navbar() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      className="absolute top-full left-0 pt-4 pb-24 z-50"
+                      className="absolute top-full left-0 pt-8 pb-32 z-50"
                     >
                       {item.href.includes('kimono') ? (
                         // Kimono: 2-2-1 ters piramit düzeni

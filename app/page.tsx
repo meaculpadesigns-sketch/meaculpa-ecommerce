@@ -119,9 +119,9 @@ export default function Home() {
               <Image
                 src="/images/logo_no_bg.png"
                 alt="MEA CULPA Logo"
-                width={400}
-                height={300}
-                className="w-auto h-32 md:h-40 lg:h-48 object-contain"
+                width={600}
+                height={450}
+                className="w-auto h-48 md:h-56 lg:h-64 object-contain"
                 priority
               />
             </div>
