@@ -689,7 +689,7 @@ export default function AdminProducts() {
                         step="0.01"
                         value={formData.priceUSD}
                         onChange={(e) => setFormData({ ...formData, priceUSD: parseFloat(e.target.value) })}
-                        className="admin-input bg-gray-700"
+                        className="admin-input"
                         placeholder="Otomatik"
                       />
                       <p className="text-xs text-gray-400 mt-1">TL fiyat girilince otomatik hesaplanır</p>
@@ -701,7 +701,7 @@ export default function AdminProducts() {
                         step="0.01"
                         value={formData.priceEUR}
                         onChange={(e) => setFormData({ ...formData, priceEUR: parseFloat(e.target.value) })}
-                        className="admin-input bg-gray-700"
+                        className="admin-input"
                         placeholder="Otomatik"
                       />
                       <p className="text-xs text-gray-400 mt-1">TL fiyat girilince otomatik hesaplanır</p>

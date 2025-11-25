@@ -100,7 +100,7 @@ export default function Navbar() {
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-1">
-              {navItems.slice(0, 7).map((item) => (
+              {navItems.map((item) => (
                 <div
                   key={item.href}
                   className="relative"
@@ -162,15 +162,15 @@ export default function Navbar() {
                         </div>
                       ) : (
                         // Setler: 2. seviye yan yana, 3. seviye sağa açılır
-                        <div className="glass rounded-xl border border-white border-opacity-10 shadow-xl overflow-hidden min-w-[400px]">
+                        <div className="glass rounded-xl border border-white border-opacity-10 shadow-xl overflow-visible min-w-[400px]">
                           <div className="grid grid-cols-2 divide-x divide-white divide-opacity-10">
                             {setSecondLevelCategories.map((secondLevel) => (
-                              <div key={secondLevel.key} className="relative group/sub">
+                              <div key={secondLevel.key} className="relative group">
                                 <div className="px-8 py-4 text-gray-300 hover:bg-white hover:bg-opacity-5 transition-colors cursor-pointer">
                                   <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? secondLevel.name : secondLevel.nameEn}</div>
                                 </div>
                                 {/* 3. seviye sağa açılan menü */}
-                                <div className="absolute left-full top-0 ml-2 hidden group-hover/sub:block z-50">
+                                <div className="absolute left-full top-0 ml-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all z-50">
                                   <div className="glass rounded-xl border border-white border-opacity-10 shadow-xl overflow-hidden w-64">
                                     {getThirdLevelCategories(secondLevel.key as 'kreasyonlar' | 'setler').map((third) => (
                                       <Link
@@ -243,23 +243,6 @@ export default function Navbar() {
               >
                 {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Secondary Navigation Bar (hidden on mobile) */}
-        <div className="hidden lg:block border-t border-white border-opacity-10">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-center space-x-6 h-12">
-              {navItems.slice(7).map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="text-xs text-gray-400 hover:text-white transition-colors"
-                >
-                  {item.name}
-                </Link>
-              ))}
             </div>
           </div>
         </div>
@@ -370,7 +353,7 @@ export default function Navbar() {
       </AnimatePresence>
 
       {/* Spacer to prevent content from going under fixed navbar */}
-      <div className="h-16 lg:h-28" />
+      <div className="h-16" />
     </>
   );
 }

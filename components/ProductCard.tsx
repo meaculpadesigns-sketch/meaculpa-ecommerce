@@ -20,7 +20,7 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
   const [showStory, setShowStory] = useState(false);
 
   const name = i18n.language === 'tr' ? product.name : product.nameEn;
-  const description = i18n.language === 'tr' ? product.description : product.descriptionEn;
+  const story = i18n.language === 'tr' ? product.story : product.storyEn;
 
   const handleAddToFavorites = () => {
     // In production, save to Firebase
@@ -81,7 +81,7 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
                   {name}
                 </h3>
               </Link>
-              <p className="text-gray-400 mt-2">{description}</p>
+              {story && <p className="text-gray-400 mt-2 line-clamp-2">{story}</p>}
             </div>
 
             <button
@@ -221,9 +221,11 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
             </h3>
           </Link>
 
-          <p className="text-gray-800 text-sm mb-4 line-clamp-2">
-            {description}
-          </p>
+          {story && (
+            <p className="text-gray-800 text-sm mb-4 line-clamp-2">
+              {story}
+            </p>
+          )}
 
           <div className="flex items-baseline gap-2 mb-4">
             <span className="text-lg font-bold text-gray-900">{formatPrice(product.price, i18n.language)}</span>

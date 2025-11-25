@@ -266,13 +266,13 @@ export default function ProductDetailPage() {
               )}
             </div>
 
-            {/* Customize and Order Button */}
+            {/* Add to Cart Button */}
             <button
               onClick={handleCustomizeProduct}
               className="btn-primary w-full text-lg py-4 flex items-center justify-center gap-2 mt-6"
             >
               <ShoppingCart size={24} />
-              {i18n.language === 'tr' ? 'Özelleştir ve Sipariş Ver' : 'Customize and Order'}
+              {t('products.addToCart')}
             </button>
 
             {/* Description Section - On the right side after cart button */}

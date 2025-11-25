@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { getProducts } from '@/lib/firebase-helpers';
 import { Product } from '@/types';
 import ProductCard from '@/components/ProductCard';
+import Testimonials from '@/components/Testimonials';
 
 export default function Home() {
   const { t, i18n } = useTranslation();
@@ -359,47 +360,7 @@ export default function Home() {
       </section>
 
       {/* Customer Reviews */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              {t('home.customerReviews')}
-            </h2>
-            <p className="text-gray-400 text-lg">
-              {t('home.customerReviewsDesc')}
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="glass rounded-2xl p-6"
-              >
-                <div className="flex items-center mb-4">
-                  {[...Array(5)].map((_, index) => (
-                    <span key={index} className="text-mea-gold text-xl">★</span>
-                  ))}
-                </div>
-                <p className="text-gray-300 mb-4">
-                  {t('home.reviewText')}
-                </p>
-                <p className="text-white font-semibold">- {t('home.customer')} {i}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Testimonials />
     </div>
   );
 }
