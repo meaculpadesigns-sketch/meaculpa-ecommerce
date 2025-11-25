@@ -42,6 +42,10 @@ export default function CustomizePage() {
   const [loading, setLoading] = useState(true);
   const [orderType, setOrderType] = useState<OrderType>('individual');
   const [quantity, setQuantity] = useState(1);
+  const [specialRequests, setSpecialRequests] = useState('');
+
+  // Standard sizes
+  const STANDARD_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
   // Individual order state
   const [gender, setGender] = useState<Gender>('male');
@@ -178,7 +182,7 @@ export default function CustomizePage() {
         product,
         size,
         quantity,
-        undefined,
+        specialRequests || undefined,
         false,
         undefined,
         {
@@ -224,8 +228,8 @@ export default function CustomizePage() {
       // Add parent 1 to cart
       const parent1Label =
         i18n.language === 'tr'
-          ? `${parent1.gender === 'male' ? 'Erkek' : 'Kadın'}`
-          : `${parent1.gender === 'male' ? 'Male' : 'Female'}`;
+          ? `${parent1.gender === 'male' ? 'Erkek' : 'Kadın'}${specialRequests ? ' - ' + specialRequests : ''}`
+          : `${parent1.gender === 'male' ? 'Male' : 'Female'}${specialRequests ? ' - ' + specialRequests : ''}`;
       addToCart(
         product,
         parent1.size,
@@ -243,8 +247,8 @@ export default function CustomizePage() {
       // Add parent 2 to cart
       const parent2Label =
         i18n.language === 'tr'
-          ? `${parent2.gender === 'male' ? 'Erkek' : 'Kadın'}`
-          : `${parent2.gender === 'male' ? 'Male' : 'Female'}`;
+          ? `${parent2.gender === 'male' ? 'Erkek' : 'Kadın'}${specialRequests ? ' - ' + specialRequests : ''}`
+          : `${parent2.gender === 'male' ? 'Male' : 'Female'}${specialRequests ? ' - ' + specialRequests : ''}`;
       addToCart(
         product,
         parent2.size,
@@ -263,8 +267,8 @@ export default function CustomizePage() {
       children.forEach((child, index) => {
         const childLabel =
           i18n.language === 'tr'
-            ? `Çocuk ${index + 1} (${child.gender === 'male' ? 'Erkek' : 'Kız'}, ${child.age} yaş)`
-            : `Child ${index + 1} (${child.gender === 'male' ? 'Boy' : 'Girl'}, ${child.age} years old)`;
+            ? `Çocuk ${index + 1} (${child.gender === 'male' ? 'Erkek' : 'Kız'}, ${child.age} yaş)${specialRequests ? ' - ' + specialRequests : ''}`
+            : `Child ${index + 1} (${child.gender === 'male' ? 'Boy' : 'Girl'}, ${child.age} years old)${specialRequests ? ' - ' + specialRequests : ''}`;
         addToCart(
           product,
           'Özel Ölçü',
@@ -451,18 +455,21 @@ export default function CustomizePage() {
                   <label className="block text-white font-semibold mb-3">
                     {i18n.language === 'tr' ? 'Beden' : 'Size'}
                   </label>
-                  <select
-                    value={size}
-                    onChange={(e) => setSize(e.target.value)}
-                    className="w-full px-4 py-3 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
-                  >
-                    <option value="">{i18n.language === 'tr' ? 'Seçiniz' : 'Select'}</option>
-                    {product.sizes.filter(s => s.inStock).map((sizeOption) => (
-                      <option key={sizeOption.size} value={sizeOption.size}>
-                        {sizeOption.size}
-                      </option>
+                  <div className="grid grid-cols-3 gap-3">
+                    {STANDARD_SIZES.map((sizeOption) => (
+                      <button
+                        key={sizeOption}
+                        onClick={() => setSize(sizeOption)}
+                        className={`p-3 rounded-lg transition-all ${
+                          size === sizeOption
+                            ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                            : 'text-gray-400 hover:text-gray-300 border border-gray-600'
+                        }`}
+                      >
+                        {sizeOption}
+                      </button>
                     ))}
-                  </select>
+                  </div>
                 </div>
 
                 {/* Custom Measurements */}
@@ -607,18 +614,21 @@ export default function CustomizePage() {
                     <label className="block text-gray-300 text-sm mb-2">
                       {i18n.language === 'tr' ? 'Beden' : 'Size'}
                     </label>
-                    <select
-                      value={parent1.size}
-                      onChange={(e) => setParent1({ ...parent1, size: e.target.value })}
-                      className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
-                    >
-                      <option value="">{i18n.language === 'tr' ? 'Seçiniz' : 'Select'}</option>
-                      {product.sizes.filter(s => s.inStock).map((sizeOption) => (
-                        <option key={sizeOption.size} value={sizeOption.size}>
-                          {sizeOption.size}
-                        </option>
+                    <div className="grid grid-cols-3 gap-2">
+                      {STANDARD_SIZES.map((sizeOption) => (
+                        <button
+                          key={sizeOption}
+                          onClick={() => setParent1({ ...parent1, size: sizeOption })}
+                          className={`p-2 rounded-lg transition-all text-sm ${
+                            parent1.size === sizeOption
+                              ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                              : 'text-gray-400 hover:text-gray-300 border border-gray-600'
+                          }`}
+                        >
+                          {sizeOption}
+                        </button>
                       ))}
-                    </select>
+                    </div>
                   </div>
 
                   {/* Parent 1 Measurements */}
@@ -698,18 +708,21 @@ export default function CustomizePage() {
                     <label className="block text-gray-300 text-sm mb-2">
                       {i18n.language === 'tr' ? 'Beden' : 'Size'}
                     </label>
-                    <select
-                      value={parent2.size}
-                      onChange={(e) => setParent2({ ...parent2, size: e.target.value })}
-                      className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
-                    >
-                      <option value="">{i18n.language === 'tr' ? 'Seçiniz' : 'Select'}</option>
-                      {product.sizes.filter(s => s.inStock).map((sizeOption) => (
-                        <option key={sizeOption.size} value={sizeOption.size}>
-                          {sizeOption.size}
-                        </option>
+                    <div className="grid grid-cols-3 gap-2">
+                      {STANDARD_SIZES.map((sizeOption) => (
+                        <button
+                          key={sizeOption}
+                          onClick={() => setParent2({ ...parent2, size: sizeOption })}
+                          className={`p-2 rounded-lg transition-all text-sm ${
+                            parent2.size === sizeOption
+                              ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                              : 'text-gray-400 hover:text-gray-300 border border-gray-600'
+                          }`}
+                        >
+                          {sizeOption}
+                        </button>
                       ))}
-                    </select>
+                    </div>
                   </div>
 
                   {/* Parent 2 Measurements */}
@@ -880,6 +893,20 @@ export default function CustomizePage() {
                 )}
               </div>
             )}
+
+            {/* Special Requests */}
+            <div className="mt-8">
+              <label className="block text-white font-semibold mb-3">
+                {i18n.language === 'tr' ? 'Özel İstekleriniz' : 'Special Requests'}
+              </label>
+              <textarea
+                value={specialRequests}
+                onChange={(e) => setSpecialRequests(e.target.value)}
+                className="w-full px-4 py-3 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none resize-none"
+                rows={4}
+                placeholder={i18n.language === 'tr' ? 'Özel isteklerinizi buraya yazabilirsiniz...' : 'You can write your special requests here...'}
+              />
+            </div>
 
             {/* Add to Cart Button */}
             <button

@@ -20,20 +20,8 @@ export default function ProductDetailPage() {
 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
-  const [selectedSize, setSelectedSize] = useState('');
-  const [quantity, setQuantity] = useState(1);
-  const [specialRequests, setSpecialRequests] = useState('');
-  const [giftWrapping, setGiftWrapping] = useState(false);
-  const [giftMessage, setGiftMessage] = useState('');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
-
-  // Custom measurements for special products
-  const [customMeasurements, setCustomMeasurements] = useState({
-    sleeveLength: '',
-    shirtLength: '',
-    pajamaLength: '',
-  });
 
   useEffect(() => {
     document.body.className = 'bg-home text-dark-page';
@@ -52,8 +40,6 @@ export default function ProductDetailPage() {
       const data = await getProductById(params.id as string);
       if (data) {
         setProduct(data);
-        // Set default size to M
-        setSelectedSize('M');
       } else {
         router.push('/products');
       }
@@ -75,24 +61,9 @@ export default function ProductDetailPage() {
     }
   };
 
-  const handleAddToCart = () => {
-    if (!product) return;
-
-    if (!selectedSize) {
-      alert('Lütfen bir beden seçin');
-      return;
-    }
-
-    // Prepare custom measurements only if they have values
-    const measurements = (product.category === 'kimono' || product.category === 'set') &&
-      (customMeasurements.sleeveLength || customMeasurements.shirtLength || customMeasurements.pajamaLength)
-      ? customMeasurements
-      : undefined;
-
-    addToCart(product, selectedSize, quantity, specialRequests, giftWrapping, giftMessage, measurements);
-
-    // Success message
-    alert('Ürün sepete eklendi!');
+  const handleCustomizeProduct = () => {
+    // Navigate to customize page
+    router.push(`/products/${params.id}/customize`);
   };
 
   const handleToggleFavorite = async () => {
@@ -295,161 +266,13 @@ export default function ProductDetailPage() {
               )}
             </div>
 
-            {/* Size Selection - All sizes available */}
-            <div>
-              <label className="block text-white font-semibold mb-3">
-                {t('products.selectSize')}
-              </label>
-              <div className="flex flex-wrap gap-3">
-                {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) => (
-                  <button
-                    key={size}
-                    onClick={() => setSelectedSize(size)}
-                    className={`px-6 py-3 rounded-lg font-medium transition-all ${
-                      selectedSize === size
-                        ? 'bg-mea-gold text-black'
-                        : 'glass hover:bg-white hover:bg-opacity-10 text-white'
-                    }`}
-                  >
-                    {size}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Custom Measurements - For Kimonos and Sets */}
-            {(product.category === 'kimono' || product.category === 'set') && (
-              <div className="glass rounded-xl p-6">
-                <h3 className="text-xl font-bold text-white mb-4">
-                  {i18n.language === 'tr' ? 'Özel Ölçüler (İsteğe Bağlı)' : 'Custom Measurements (Optional)'}
-                </h3>
-                <p className="text-gray-400 text-sm mb-4">
-                  {i18n.language === 'tr'
-                    ? 'Özel ölçü vermek isterseniz aşağıdaki alanları doldurun. Boş bırakırsanız standart ölçülerde üretilir.'
-                    : 'Fill in the fields below if you want custom measurements. Leave blank for standard measurements.'}
-                </p>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-white font-medium mb-2">
-                      {i18n.language === 'tr' ? 'Kol Boyu (cm)' : 'Sleeve Length (cm)'}
-                    </label>
-                    <input
-                      type="number"
-                      value={customMeasurements.sleeveLength}
-                      onChange={(e) => setCustomMeasurements({ ...customMeasurements, sleeveLength: e.target.value })}
-                      placeholder={i18n.language === 'tr' ? 'Örn: 60' : 'e.g. 60'}
-                      className="input-field"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-white font-medium mb-2">
-                      {i18n.language === 'tr' ? 'Gömlek Boyu (cm)' : 'Shirt Length (cm)'}
-                    </label>
-                    <input
-                      type="number"
-                      value={customMeasurements.shirtLength}
-                      onChange={(e) => setCustomMeasurements({ ...customMeasurements, shirtLength: e.target.value })}
-                      placeholder={i18n.language === 'tr' ? 'Örn: 75' : 'e.g. 75'}
-                      className="input-field"
-                    />
-                  </div>
-
-                  {product.category === 'set' && (
-                    <div>
-                      <label className="block text-white font-medium mb-2">
-                        {i18n.language === 'tr' ? 'Pijama Boyu (cm)' : 'Pajama Length (cm)'}
-                      </label>
-                      <input
-                        type="number"
-                        value={customMeasurements.pajamaLength}
-                        onChange={(e) => setCustomMeasurements({ ...customMeasurements, pajamaLength: e.target.value })}
-                        placeholder={i18n.language === 'tr' ? 'Örn: 100' : 'e.g. 100'}
-                        className="input-field"
-                      />
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {/* Quantity */}
-            <div>
-              <label className="block text-white font-semibold mb-3">Adet</label>
-              <div className="flex items-center gap-4">
-                <button
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="px-4 py-2 glass rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors"
-                >
-                  -
-                </button>
-                <span className="text-white font-medium text-lg w-12 text-center">
-                  {quantity}
-                </span>
-                <button
-                  onClick={() => setQuantity(quantity + 1)}
-                  className="px-4 py-2 glass rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors"
-                >
-                  +
-                </button>
-              </div>
-            </div>
-
-            {/* Special Requests */}
-            <div>
-              <label className="block text-white font-semibold mb-3">
-                {t('products.specialRequests')}
-              </label>
-              <textarea
-                value={specialRequests}
-                onChange={(e) => setSpecialRequests(e.target.value)}
-                className="input-field"
-                rows={3}
-                placeholder="Özel isteklerinizi buraya yazabilirsiniz..."
-              />
-            </div>
-
-            {/* Gift Wrapping */}
-            <div className="glass rounded-xl p-4">
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={giftWrapping}
-                  onChange={(e) => setGiftWrapping(e.target.checked)}
-                  className="w-5 h-5"
-                />
-                <div className="flex items-center gap-2">
-                  <Gift className="text-mea-gold" size={20} />
-                  <span className="text-white font-medium">
-                    {t('products.giftWrapping')} (+{formatPrice(20, i18n.language)})
-                  </span>
-                </div>
-              </label>
-
-              {giftWrapping && (
-                <div className="mt-4">
-                  <label className="block text-white text-sm mb-2">
-                    {t('products.giftMessage')}
-                  </label>
-                  <textarea
-                    value={giftMessage}
-                    onChange={(e) => setGiftMessage(e.target.value)}
-                    className="input-field"
-                    rows={2}
-                    placeholder="Hediye mesajınızı yazın..."
-                  />
-                </div>
-              )}
-            </div>
-
-            {/* Add to Cart Button */}
+            {/* Customize and Order Button */}
             <button
-              onClick={handleAddToCart}
-              className="btn-primary w-full text-lg py-4 flex items-center justify-center gap-2"
+              onClick={handleCustomizeProduct}
+              className="btn-primary w-full text-lg py-4 flex items-center justify-center gap-2 mt-6"
             >
               <ShoppingCart size={24} />
-              {t('products.addToCart')}
+              {i18n.language === 'tr' ? 'Özelleştir ve Sipariş Ver' : 'Customize and Order'}
             </button>
 
             {/* Description Section - On the right side after cart button */}
