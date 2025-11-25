@@ -311,6 +311,13 @@ export async function getAllReviews() {
   return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Review));
 }
 
+export async function getApprovedReviews() {
+  const reviewsRef = collection(db, 'reviews');
+  const q = query(reviewsRef, where('isApproved', '==', true), orderBy('createdAt', 'desc'), limit(10));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Review));
+}
+
 export async function updateReview(id: string, data: Partial<Review>) {
   const reviewRef = doc(db, 'reviews', id);
   await updateDoc(reviewRef, data);
