@@ -486,7 +486,7 @@ export default function CustomizePage() {
                         type="number"
                         value={shirtLength}
                         onChange={(e) => setShirtLength(e.target.value)}
-                        className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
+                        className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg text-black focus:border-mea-gold focus:outline-none"
                         placeholder="cm"
                       />
                     </div>
@@ -498,7 +498,7 @@ export default function CustomizePage() {
                         type="number"
                         value={sleeveLength}
                         onChange={(e) => setSleeveLength(e.target.value)}
-                        className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
+                        className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg text-black focus:border-mea-gold focus:outline-none"
                         placeholder="cm"
                       />
                     </div>
@@ -510,7 +510,7 @@ export default function CustomizePage() {
                         type="number"
                         value={pajamaLength}
                         onChange={(e) => setPajamaLength(e.target.value)}
-                        className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
+                        className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg text-black focus:border-mea-gold focus:outline-none"
                         placeholder="cm"
                       />
                     </div>
@@ -642,7 +642,7 @@ export default function CustomizePage() {
                           type="number"
                           value={parent1.shirtLength}
                           onChange={(e) => setParent1({ ...parent1, shirtLength: e.target.value })}
-                          className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
+                          className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg text-black focus:border-mea-gold focus:outline-none text-sm"
                           placeholder={i18n.language === 'tr' ? 'Gömlek (cm)' : 'Shirt (cm)'}
                         />
                       </div>
@@ -651,7 +651,7 @@ export default function CustomizePage() {
                           type="number"
                           value={parent1.sleeveLength}
                           onChange={(e) => setParent1({ ...parent1, sleeveLength: e.target.value })}
-                          className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
+                          className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg text-black focus:border-mea-gold focus:outline-none text-sm"
                           placeholder={i18n.language === 'tr' ? 'Kol (cm)' : 'Sleeve (cm)'}
                         />
                       </div>
@@ -660,7 +660,7 @@ export default function CustomizePage() {
                           type="number"
                           value={parent1.pajamaLength}
                           onChange={(e) => setParent1({ ...parent1, pajamaLength: e.target.value })}
-                          className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
+                          className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg text-black focus:border-mea-gold focus:outline-none text-sm"
                           placeholder={i18n.language === 'tr' ? 'Pijama (cm)' : 'Pajama (cm)'}
                         />
                       </div>
@@ -736,7 +736,7 @@ export default function CustomizePage() {
                           type="number"
                           value={parent2.shirtLength}
                           onChange={(e) => setParent2({ ...parent2, shirtLength: e.target.value })}
-                          className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
+                          className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg text-black focus:border-mea-gold focus:outline-none text-sm"
                           placeholder={i18n.language === 'tr' ? 'Gömlek (cm)' : 'Shirt (cm)'}
                         />
                       </div>
@@ -745,7 +745,7 @@ export default function CustomizePage() {
                           type="number"
                           value={parent2.sleeveLength}
                           onChange={(e) => setParent2({ ...parent2, sleeveLength: e.target.value })}
-                          className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
+                          className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg text-black focus:border-mea-gold focus:outline-none text-sm"
                           placeholder={i18n.language === 'tr' ? 'Kol (cm)' : 'Sleeve (cm)'}
                         />
                       </div>
@@ -754,7 +754,7 @@ export default function CustomizePage() {
                           type="number"
                           value={parent2.pajamaLength}
                           onChange={(e) => setParent2({ ...parent2, pajamaLength: e.target.value })}
-                          className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
+                          className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg text-black focus:border-mea-gold focus:outline-none text-sm"
                           placeholder={i18n.language === 'tr' ? 'Pijama (cm)' : 'Pajama (cm)'}
                         />
                       </div>
@@ -814,7 +814,7 @@ export default function CustomizePage() {
                             max="14"
                             value={child.age}
                             onChange={(e) => updateChild(child.id, 'age', e.target.value)}
-                            className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
+                            className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg text-black focus:border-mea-gold focus:outline-none"
                             placeholder={i18n.language === 'tr' ? 'Yaş (0-14)' : 'Age (0-14)'}
                           />
                         </div>
@@ -823,7 +823,7 @@ export default function CustomizePage() {
                             type="number"
                             value={child.height}
                             onChange={(e) => updateChild(child.id, 'height', e.target.value)}
-                            className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
+                            className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg text-black focus:border-mea-gold focus:outline-none"
                             placeholder={i18n.language === 'tr' ? 'Boy (cm)' : 'Height (cm)'}
                           />
                         </div>
@@ -832,7 +832,7 @@ export default function CustomizePage() {
                             type="number"
                             value={child.weight}
                             onChange={(e) => updateChild(child.id, 'weight', e.target.value)}
-                            className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
+                            className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg text-black focus:border-mea-gold focus:outline-none"
                             placeholder={i18n.language === 'tr' ? 'Kilo (kg)' : 'Weight (kg)'}
                           />
                         </div>
@@ -856,7 +856,7 @@ export default function CustomizePage() {
                               type="number"
                               value={child.shirtLength}
                               onChange={(e) => updateChild(child.id, 'shirtLength', e.target.value)}
-                              className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
+                              className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg text-black focus:border-mea-gold focus:outline-none text-sm"
                               placeholder={i18n.language === 'tr' ? 'Gömlek (cm)' : 'Shirt (cm)'}
                             />
                           </div>
@@ -865,7 +865,7 @@ export default function CustomizePage() {
                               type="number"
                               value={child.sleeveLength}
                               onChange={(e) => updateChild(child.id, 'sleeveLength', e.target.value)}
-                              className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
+                              className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg text-black focus:border-mea-gold focus:outline-none text-sm"
                               placeholder={i18n.language === 'tr' ? 'Kol (cm)' : 'Sleeve (cm)'}
                             />
                           </div>
@@ -874,7 +874,7 @@ export default function CustomizePage() {
                               type="number"
                               value={child.pajamaLength}
                               onChange={(e) => updateChild(child.id, 'pajamaLength', e.target.value)}
-                              className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
+                              className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg text-black focus:border-mea-gold focus:outline-none text-sm"
                               placeholder={i18n.language === 'tr' ? 'Pijama (cm)' : 'Pajama (cm)'}
                             />
                           </div>
@@ -902,7 +902,7 @@ export default function CustomizePage() {
               <textarea
                 value={specialRequests}
                 onChange={(e) => setSpecialRequests(e.target.value)}
-                className="w-full px-4 py-3 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none resize-none"
+                className="w-full px-4 py-3 bg-gray-100 border border-gray-300 rounded-lg text-black focus:border-mea-gold focus:outline-none resize-none"
                 rows={4}
                 placeholder={i18n.language === 'tr' ? 'Özel isteklerinizi buraya yazabilirsiniz...' : 'You can write your special requests here...'}
               />

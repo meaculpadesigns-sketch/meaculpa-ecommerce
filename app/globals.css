@@ -89,8 +89,13 @@
     @apply bg-zinc-900 rounded-2xl overflow-hidden hover:scale-105 transition-transform duration-300 cursor-pointer;
   }
 
-  /* Input fields */
+  /* Input fields - Site geneli için gri arka plan */
   .input-field {
+    @apply w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-3 text-black placeholder-gray-500 focus:outline-none focus:border-mea-gold transition-colors;
+  }
+
+  /* Admin panel için beyaz yazı */
+  .admin-input {
     @apply w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-mea-gold transition-colors;
   }
 
