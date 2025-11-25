@@ -11,18 +11,26 @@ import { formatPrice } from '@/lib/currency';
 import { useCart } from '@/lib/cart-context';
 
 type OrderType = 'individual' | 'family';
-type Gender = 'male' | 'female' | 'child';
+type Gender = 'male' | 'female';
+type ParentType = 'father' | 'mother';
 
-interface FamilyMember {
-  id: string;
-  gender: Gender;
+interface ParentInfo {
+  type: ParentType;
   size: string;
   shirtLength: string;
   sleeveLength: string;
   pajamaLength: string;
-  childAge?: string;
-  childHeight?: string;
-  childWeight?: string;
+}
+
+interface ChildInfo {
+  id: string;
+  age: string;
+  height: string;
+  weight: string;
+  size: string;
+  shirtLength: string;
+  sleeveLength: string;
+  pajamaLength: string;
 }
 
 export default function CustomizePage() {
@@ -42,19 +50,24 @@ export default function CustomizePage() {
   const [shirtLength, setShirtLength] = useState('');
   const [sleeveLength, setSleeveLength] = useState('');
   const [pajamaLength, setPajamaLength] = useState('');
-  const [childAge, setChildAge] = useState('');
-  const [childHeight, setChildHeight] = useState('');
-  const [childWeight, setChildWeight] = useState('');
 
   // Family order state
-  const [familyMembers, setFamilyMembers] = useState<FamilyMember[]>([{
-    id: '1',
-    gender: 'male',
+  const [childCount, setChildCount] = useState(0);
+  const [father, setFather] = useState<ParentInfo>({
+    type: 'father',
     size: '',
     shirtLength: '',
     sleeveLength: '',
     pajamaLength: '',
-  }]);
+  });
+  const [mother, setMother] = useState<ParentInfo>({
+    type: 'mother',
+    size: '',
+    shirtLength: '',
+    sleeveLength: '',
+    pajamaLength: '',
+  });
+  const [children, setChildren] = useState<ChildInfo[]>([]);
 
   useEffect(() => {
     document.body.className = 'bg-home text-dark-page';
@@ -85,42 +98,71 @@ export default function CustomizePage() {
     fetchProduct();
   }, [id]);
 
-  // Auto-calculate measurements for children
+  // Update children array when childCount changes
   useEffect(() => {
-    if (gender === 'child' && childAge && childHeight && childWeight) {
-      const age = parseInt(childAge);
-      const height = parseInt(childHeight);
-
-      // Simple estimation formulas (can be refined)
-      if (age >= 2 && age <= 14) {
-        setShirtLength(String(Math.round(height * 0.4)));
-        setSleeveLength(String(Math.round(height * 0.3)));
-        setPajamaLength(String(Math.round(height * 0.55)));
+    if (orderType === 'family') {
+      const currentCount = children.length;
+      if (childCount > currentCount) {
+        // Add new children
+        const newChildren = Array.from({ length: childCount - currentCount }, (_, i) => ({
+          id: `child-${Date.now()}-${i}`,
+          age: '',
+          height: '',
+          weight: '',
+          size: '',
+          shirtLength: '',
+          sleeveLength: '',
+          pajamaLength: '',
+        }));
+        setChildren([...children, ...newChildren]);
+      } else if (childCount < currentCount) {
+        // Remove children
+        setChildren(children.slice(0, childCount));
       }
     }
-  }, [childAge, childHeight, childWeight, gender]);
+  }, [childCount, orderType]);
 
-  const addFamilyMember = () => {
-    setFamilyMembers([...familyMembers, {
-      id: Date.now().toString(),
-      gender: 'male',
-      size: '',
-      shirtLength: '',
-      sleeveLength: '',
-      pajamaLength: '',
-    }]);
-  };
+  // Auto-calculate measurements for a child
+  const calculateChildMeasurements = (age: string, height: string, weight: string) => {
+    if (!age || !height || !weight) return null;
 
-  const removeFamilyMember = (id: string) => {
-    if (familyMembers.length > 1) {
-      setFamilyMembers(familyMembers.filter(m => m.id !== id));
+    const ageNum = parseInt(age);
+    const heightNum = parseInt(height);
+
+    if (ageNum >= 0 && ageNum <= 14 && heightNum > 0) {
+      return {
+        shirtLength: String(Math.round(heightNum * 0.4)),
+        sleeveLength: String(Math.round(heightNum * 0.3)),
+        pajamaLength: String(Math.round(heightNum * 0.55)),
+      };
     }
+    return null;
   };
 
-  const updateFamilyMember = (id: string, field: keyof FamilyMember, value: string) => {
-    setFamilyMembers(familyMembers.map(m =>
-      m.id === id ? { ...m, [field]: value } : m
-    ));
+  const updateChild = (id: string, field: keyof ChildInfo, value: string) => {
+    setChildren(prevChildren =>
+      prevChildren.map(child => {
+        if (child.id !== id) return child;
+
+        const updatedChild = { ...child, [field]: value };
+
+        // Auto-calculate measurements if age, height, or weight changes
+        if (field === 'age' || field === 'height' || field === 'weight') {
+          const measurements = calculateChildMeasurements(
+            field === 'age' ? value : child.age,
+            field === 'height' ? value : child.height,
+            field === 'weight' ? value : child.weight
+          );
+          if (measurements) {
+            updatedChild.shirtLength = measurements.shirtLength;
+            updatedChild.sleeveLength = measurements.sleeveLength;
+            updatedChild.pajamaLength = measurements.pajamaLength;
+          }
+        }
+
+        return updatedChild;
+      })
+    );
   };
 
   const handleAddToCart = () => {
@@ -137,9 +179,9 @@ export default function CustomizePage() {
         product,
         size,
         quantity,
-        undefined, // specialRequests
-        false, // giftWrapping
-        undefined, // giftMessage
+        undefined,
+        false,
+        undefined,
         {
           shirtLength: shirtLength || undefined,
           sleeveLength: sleeveLength || undefined,
@@ -149,25 +191,82 @@ export default function CustomizePage() {
 
       router.push('/cart');
     } else {
-      // Family order - add each member separately
-      const invalidMember = familyMembers.find(m => !m.size);
-      if (invalidMember) {
-        alert(i18n.language === 'tr' ? 'Lütfen tüm aile üyeleri için beden seçin' : 'Please select size for all family members');
+      // Validate family order
+      if (!father.size) {
+        alert(i18n.language === 'tr' ? 'Lütfen baba için beden seçin' : 'Please select size for father');
+        return;
+      }
+      if (!mother.size) {
+        alert(i18n.language === 'tr' ? 'Lütfen anne için beden seçin' : 'Please select size for mother');
         return;
       }
 
-      familyMembers.forEach(member => {
+      // Validate children
+      for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        if (!child.age || !child.height || !child.weight) {
+          alert(
+            i18n.language === 'tr'
+              ? `Lütfen ${i + 1}. çocuk için yaş, boy ve kilo bilgilerini girin`
+              : `Please enter age, height and weight for child ${i + 1}`
+          );
+          return;
+        }
+        if (!child.size) {
+          alert(
+            i18n.language === 'tr'
+              ? `Lütfen ${i + 1}. çocuk için beden seçin`
+              : `Please select size for child ${i + 1}`
+          );
+          return;
+        }
+      }
+
+      // Add father to cart
+      addToCart(
+        product,
+        father.size,
+        1,
+        i18n.language === 'tr' ? 'Baba' : 'Father',
+        false,
+        undefined,
+        {
+          shirtLength: father.shirtLength || undefined,
+          sleeveLength: father.sleeveLength || undefined,
+          pajamaLength: father.pajamaLength || undefined,
+        }
+      );
+
+      // Add mother to cart
+      addToCart(
+        product,
+        mother.size,
+        1,
+        i18n.language === 'tr' ? 'Anne' : 'Mother',
+        false,
+        undefined,
+        {
+          shirtLength: mother.shirtLength || undefined,
+          sleeveLength: mother.sleeveLength || undefined,
+          pajamaLength: mother.pajamaLength || undefined,
+        }
+      );
+
+      // Add each child to cart
+      children.forEach((child, index) => {
         addToCart(
           product,
-          member.size,
-          1, // quantity
-          undefined, // specialRequests
-          false, // giftWrapping
-          undefined, // giftMessage
+          child.size,
+          1,
+          i18n.language === 'tr'
+            ? `Çocuk ${index + 1} (${child.age} yaş)`
+            : `Child ${index + 1} (${child.age} years old)`,
+          false,
+          undefined,
           {
-            shirtLength: member.shirtLength || undefined,
-            sleeveLength: member.sleeveLength || undefined,
-            pajamaLength: member.pajamaLength || undefined,
+            shirtLength: child.shirtLength || undefined,
+            sleeveLength: child.sleeveLength || undefined,
+            pajamaLength: child.pajamaLength || undefined,
           }
         );
       });
@@ -282,7 +381,7 @@ export default function CustomizePage() {
                   <label className="block text-white font-semibold mb-3">
                     {i18n.language === 'tr' ? 'Cinsiyet' : 'Gender'}
                   </label>
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-2 gap-3">
                     <button
                       onClick={() => setGender('male')}
                       className={`p-3 rounded-lg border-2 transition-all ${
@@ -303,72 +402,8 @@ export default function CustomizePage() {
                     >
                       {i18n.language === 'tr' ? 'Kadın' : 'Female'}
                     </button>
-                    <button
-                      onClick={() => setGender('child')}
-                      className={`p-3 rounded-lg border-2 transition-all ${
-                        gender === 'child'
-                          ? 'border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                          : 'border-gray-600 text-gray-400 hover:border-gray-500'
-                      }`}
-                    >
-                      {i18n.language === 'tr' ? 'Çocuk (≤14)' : 'Child (≤14)'}
-                    </button>
                   </div>
                 </div>
-
-                {/* Child Info (if child selected) */}
-                {gender === 'child' && (
-                  <div className="glass rounded-lg p-4 space-y-4">
-                    <h4 className="text-white font-semibold">
-                      {i18n.language === 'tr' ? 'Çocuk Bilgileri' : 'Child Information'}
-                    </h4>
-                    <div className="grid grid-cols-3 gap-3">
-                      <div>
-                        <label className="block text-gray-300 text-sm mb-2">
-                          {i18n.language === 'tr' ? 'Yaş' : 'Age'}
-                        </label>
-                        <input
-                          type="number"
-                          min="0"
-                          max="14"
-                          value={childAge}
-                          onChange={(e) => setChildAge(e.target.value)}
-                          className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
-                          placeholder="0-14"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-gray-300 text-sm mb-2">
-                          {i18n.language === 'tr' ? 'Boy (cm)' : 'Height (cm)'}
-                        </label>
-                        <input
-                          type="number"
-                          value={childHeight}
-                          onChange={(e) => setChildHeight(e.target.value)}
-                          className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
-                          placeholder="cm"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-gray-300 text-sm mb-2">
-                          {i18n.language === 'tr' ? 'Kilo (kg)' : 'Weight (kg)'}
-                        </label>
-                        <input
-                          type="number"
-                          value={childWeight}
-                          onChange={(e) => setChildWeight(e.target.value)}
-                          className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
-                          placeholder="kg"
-                        />
-                      </div>
-                    </div>
-                    {childAge && childHeight && childWeight && (
-                      <p className="text-green-400 text-sm">
-                        {i18n.language === 'tr' ? '✓ Ölçüler otomatik hesaplandı' : '✓ Measurements auto-calculated'}
-                      </p>
-                    )}
-                  </div>
-                )}
 
                 {/* Size Selection */}
                 <div>
@@ -408,7 +443,6 @@ export default function CustomizePage() {
                         onChange={(e) => setShirtLength(e.target.value)}
                         className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
                         placeholder="cm"
-                        disabled={gender === 'child' && !!childAge && !!childHeight && !!childWeight}
                       />
                     </div>
                     <div>
@@ -421,7 +455,6 @@ export default function CustomizePage() {
                         onChange={(e) => setSleeveLength(e.target.value)}
                         className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
                         placeholder="cm"
-                        disabled={gender === 'child' && !!childAge && !!childHeight && !!childWeight}
                       />
                     </div>
                     <div>
@@ -434,7 +467,6 @@ export default function CustomizePage() {
                         onChange={(e) => setPajamaLength(e.target.value)}
                         className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
                         placeholder="cm"
-                        disabled={gender === 'child' && !!childAge && !!childHeight && !!childWeight}
                       />
                     </div>
                   </div>
@@ -464,76 +496,224 @@ export default function CustomizePage() {
               </div>
             ) : (
               /* Family Order Form */
-              <div className="space-y-6">
-                <p className="text-gray-300">
+              <div className="space-y-8">
+                <p className="text-gray-300 text-sm">
                   {i18n.language === 'tr'
-                    ? 'Aile üyeleriniz için ayrı ayrı ölçü ve beden bilgilerini girin.'
-                    : 'Enter size and measurement information for each family member.'}
+                    ? 'Aile siparişi otomatik olarak 2 ebeveyn içerir. İstediğiniz sayıda çocuk ekleyebilirsiniz. (14 yaş ve altı çocuk sayılır)'
+                    : 'Family order automatically includes 2 parents. You can add any number of children. (14 years old and under counts as child)'}
                 </p>
 
-                {familyMembers.map((member, index) => (
-                  <div key={member.id} className="glass rounded-lg p-6 space-y-4">
-                    <div className="flex items-center justify-between mb-4">
-                      <h4 className="text-white font-semibold">
-                        {i18n.language === 'tr' ? `Aile Üyesi ${index + 1}` : `Family Member ${index + 1}`}
-                      </h4>
-                      {familyMembers.length > 1 && (
-                        <button
-                          onClick={() => removeFamilyMember(member.id)}
-                          className="text-red-400 hover:text-red-300 transition-colors"
-                        >
-                          {i18n.language === 'tr' ? 'Kaldır' : 'Remove'}
-                        </button>
+                {/* Child Count Selection */}
+                <div>
+                  <label className="block text-white font-semibold mb-3">
+                    {i18n.language === 'tr' ? 'Çocuk Sayısı' : 'Number of Children'}
+                  </label>
+                  <div className="flex items-center gap-4">
+                    <button
+                      onClick={() => setChildCount(Math.max(0, childCount - 1))}
+                      className="p-2 glass rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors"
+                      disabled={childCount === 0}
+                    >
+                      <Minus size={20} className="text-white" />
+                    </button>
+                    <span className="text-2xl font-bold text-white w-12 text-center">{childCount}</span>
+                    <button
+                      onClick={() => setChildCount(Math.min(10, childCount + 1))}
+                      className="p-2 glass rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors"
+                    >
+                      <Plus size={20} className="text-white" />
+                    </button>
+                  </div>
+                  <p className="text-gray-400 text-sm mt-2">
+                    {i18n.language === 'tr' ? '0-10 arası çocuk ekleyebilirsiniz' : 'You can add 0-10 children'}
+                  </p>
+                </div>
+
+                {/* Father Section */}
+                <div className="glass rounded-lg p-6 space-y-4 border-2 border-blue-500 border-opacity-30">
+                  <h4 className="text-white font-bold text-lg flex items-center gap-2">
+                    {i18n.language === 'tr' ? '👨 Baba' : '👨 Father'}
+                  </h4>
+
+                  {/* Father Size */}
+                  <div>
+                    <label className="block text-gray-300 text-sm mb-2">
+                      {i18n.language === 'tr' ? 'Beden' : 'Size'}
+                    </label>
+                    <select
+                      value={father.size}
+                      onChange={(e) => setFather({ ...father, size: e.target.value })}
+                      className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
+                    >
+                      <option value="">{i18n.language === 'tr' ? 'Seçiniz' : 'Select'}</option>
+                      {product.sizes.filter(s => s.inStock).map((sizeOption) => (
+                        <option key={sizeOption.size} value={sizeOption.size}>
+                          {sizeOption.size}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Father Measurements */}
+                  <div>
+                    <label className="block text-gray-300 text-sm mb-2">
+                      {i18n.language === 'tr' ? 'Özel Ölçüler (Opsiyonel)' : 'Custom Measurements (Optional)'}
+                    </label>
+                    <div className="grid grid-cols-3 gap-3">
+                      <div>
+                        <input
+                          type="number"
+                          value={father.shirtLength}
+                          onChange={(e) => setFather({ ...father, shirtLength: e.target.value })}
+                          className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
+                          placeholder={i18n.language === 'tr' ? 'Gömlek (cm)' : 'Shirt (cm)'}
+                        />
+                      </div>
+                      <div>
+                        <input
+                          type="number"
+                          value={father.sleeveLength}
+                          onChange={(e) => setFather({ ...father, sleeveLength: e.target.value })}
+                          className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
+                          placeholder={i18n.language === 'tr' ? 'Kol (cm)' : 'Sleeve (cm)'}
+                        />
+                      </div>
+                      <div>
+                        <input
+                          type="number"
+                          value={father.pajamaLength}
+                          onChange={(e) => setFather({ ...father, pajamaLength: e.target.value })}
+                          className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
+                          placeholder={i18n.language === 'tr' ? 'Pijama (cm)' : 'Pajama (cm)'}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Mother Section */}
+                <div className="glass rounded-lg p-6 space-y-4 border-2 border-pink-500 border-opacity-30">
+                  <h4 className="text-white font-bold text-lg flex items-center gap-2">
+                    {i18n.language === 'tr' ? '👩 Anne' : '👩 Mother'}
+                  </h4>
+
+                  {/* Mother Size */}
+                  <div>
+                    <label className="block text-gray-300 text-sm mb-2">
+                      {i18n.language === 'tr' ? 'Beden' : 'Size'}
+                    </label>
+                    <select
+                      value={mother.size}
+                      onChange={(e) => setMother({ ...mother, size: e.target.value })}
+                      className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
+                    >
+                      <option value="">{i18n.language === 'tr' ? 'Seçiniz' : 'Select'}</option>
+                      {product.sizes.filter(s => s.inStock).map((sizeOption) => (
+                        <option key={sizeOption.size} value={sizeOption.size}>
+                          {sizeOption.size}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Mother Measurements */}
+                  <div>
+                    <label className="block text-gray-300 text-sm mb-2">
+                      {i18n.language === 'tr' ? 'Özel Ölçüler (Opsiyonel)' : 'Custom Measurements (Optional)'}
+                    </label>
+                    <div className="grid grid-cols-3 gap-3">
+                      <div>
+                        <input
+                          type="number"
+                          value={mother.shirtLength}
+                          onChange={(e) => setMother({ ...mother, shirtLength: e.target.value })}
+                          className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
+                          placeholder={i18n.language === 'tr' ? 'Gömlek (cm)' : 'Shirt (cm)'}
+                        />
+                      </div>
+                      <div>
+                        <input
+                          type="number"
+                          value={mother.sleeveLength}
+                          onChange={(e) => setMother({ ...mother, sleeveLength: e.target.value })}
+                          className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
+                          placeholder={i18n.language === 'tr' ? 'Kol (cm)' : 'Sleeve (cm)'}
+                        />
+                      </div>
+                      <div>
+                        <input
+                          type="number"
+                          value={mother.pajamaLength}
+                          onChange={(e) => setMother({ ...mother, pajamaLength: e.target.value })}
+                          className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
+                          placeholder={i18n.language === 'tr' ? 'Pijama (cm)' : 'Pajama (cm)'}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Children Sections */}
+                {children.map((child, index) => (
+                  <div key={child.id} className="glass rounded-lg p-6 space-y-4 border-2 border-green-500 border-opacity-30">
+                    <h4 className="text-white font-bold text-lg flex items-center gap-2">
+                      {i18n.language === 'tr' ? `👶 Çocuk ${index + 1}` : `👶 Child ${index + 1}`}
+                      <span className="text-xs text-gray-400 font-normal ml-2">
+                        {i18n.language === 'tr' ? '(14 yaş ve altı)' : '(14 years old and under)'}
+                      </span>
+                    </h4>
+
+                    {/* Child Info */}
+                    <div>
+                      <label className="block text-gray-300 text-sm mb-2">
+                        {i18n.language === 'tr' ? 'Çocuk Bilgileri' : 'Child Information'}
+                      </label>
+                      <div className="grid grid-cols-3 gap-3">
+                        <div>
+                          <input
+                            type="number"
+                            min="0"
+                            max="14"
+                            value={child.age}
+                            onChange={(e) => updateChild(child.id, 'age', e.target.value)}
+                            className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
+                            placeholder={i18n.language === 'tr' ? 'Yaş (0-14)' : 'Age (0-14)'}
+                          />
+                        </div>
+                        <div>
+                          <input
+                            type="number"
+                            value={child.height}
+                            onChange={(e) => updateChild(child.id, 'height', e.target.value)}
+                            className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
+                            placeholder={i18n.language === 'tr' ? 'Boy (cm)' : 'Height (cm)'}
+                          />
+                        </div>
+                        <div>
+                          <input
+                            type="number"
+                            value={child.weight}
+                            onChange={(e) => updateChild(child.id, 'weight', e.target.value)}
+                            className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
+                            placeholder={i18n.language === 'tr' ? 'Kilo (kg)' : 'Weight (kg)'}
+                          />
+                        </div>
+                      </div>
+                      {child.age && child.height && child.weight && (
+                        <p className="text-green-400 text-xs mt-2">
+                          {i18n.language === 'tr' ? '✓ Ölçüler otomatik hesaplandı' : '✓ Measurements auto-calculated'}
+                        </p>
                       )}
                     </div>
 
-                    {/* Gender for each member */}
-                    <div>
-                      <label className="block text-gray-300 text-sm mb-2">
-                        {i18n.language === 'tr' ? 'Cinsiyet' : 'Gender'}
-                      </label>
-                      <div className="grid grid-cols-3 gap-2">
-                        <button
-                          onClick={() => updateFamilyMember(member.id, 'gender', 'male')}
-                          className={`p-2 rounded-lg border-2 transition-all text-sm ${
-                            member.gender === 'male'
-                              ? 'border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                              : 'border-gray-600 text-gray-400 hover:border-gray-500'
-                          }`}
-                        >
-                          {i18n.language === 'tr' ? 'Erkek' : 'Male'}
-                        </button>
-                        <button
-                          onClick={() => updateFamilyMember(member.id, 'gender', 'female')}
-                          className={`p-2 rounded-lg border-2 transition-all text-sm ${
-                            member.gender === 'female'
-                              ? 'border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                              : 'border-gray-600 text-gray-400 hover:border-gray-500'
-                          }`}
-                        >
-                          {i18n.language === 'tr' ? 'Kadın' : 'Female'}
-                        </button>
-                        <button
-                          onClick={() => updateFamilyMember(member.id, 'gender', 'child')}
-                          className={`p-2 rounded-lg border-2 transition-all text-sm ${
-                            member.gender === 'child'
-                              ? 'border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                              : 'border-gray-600 text-gray-400 hover:border-gray-500'
-                          }`}
-                        >
-                          {i18n.language === 'tr' ? 'Çocuk' : 'Child'}
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Size */}
+                    {/* Child Size */}
                     <div>
                       <label className="block text-gray-300 text-sm mb-2">
                         {i18n.language === 'tr' ? 'Beden' : 'Size'}
                       </label>
                       <select
-                        value={member.size}
-                        onChange={(e) => updateFamilyMember(member.id, 'size', e.target.value)}
+                        value={child.size}
+                        onChange={(e) => updateChild(child.id, 'size', e.target.value)}
                         className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
                       >
                         <option value="">{i18n.language === 'tr' ? 'Seçiniz' : 'Select'}</option>
@@ -545,55 +725,35 @@ export default function CustomizePage() {
                       </select>
                     </div>
 
-                    {/* Measurements */}
-                    <div className="grid grid-cols-3 gap-3">
+                    {/* Child Measurements (Auto-calculated, read-only display) */}
+                    {child.shirtLength && (
                       <div>
                         <label className="block text-gray-300 text-sm mb-2">
-                          {i18n.language === 'tr' ? 'Gömlek (cm)' : 'Shirt (cm)'}
+                          {i18n.language === 'tr' ? 'Hesaplanan Ölçüler' : 'Calculated Measurements'}
                         </label>
-                        <input
-                          type="number"
-                          value={member.shirtLength}
-                          onChange={(e) => updateFamilyMember(member.id, 'shirtLength', e.target.value)}
-                          className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
-                          placeholder="cm"
-                        />
+                        <div className="grid grid-cols-3 gap-3">
+                          <div className="px-3 py-2 bg-zinc-900 border border-gray-700 rounded-lg text-gray-300 text-sm">
+                            {i18n.language === 'tr' ? 'Gömlek:' : 'Shirt:'} {child.shirtLength} cm
+                          </div>
+                          <div className="px-3 py-2 bg-zinc-900 border border-gray-700 rounded-lg text-gray-300 text-sm">
+                            {i18n.language === 'tr' ? 'Kol:' : 'Sleeve:'} {child.sleeveLength} cm
+                          </div>
+                          <div className="px-3 py-2 bg-zinc-900 border border-gray-700 rounded-lg text-gray-300 text-sm">
+                            {i18n.language === 'tr' ? 'Pijama:' : 'Pajama:'} {child.pajamaLength} cm
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <label className="block text-gray-300 text-sm mb-2">
-                          {i18n.language === 'tr' ? 'Kol (cm)' : 'Sleeve (cm)'}
-                        </label>
-                        <input
-                          type="number"
-                          value={member.sleeveLength}
-                          onChange={(e) => updateFamilyMember(member.id, 'sleeveLength', e.target.value)}
-                          className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
-                          placeholder="cm"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-gray-300 text-sm mb-2">
-                          {i18n.language === 'tr' ? 'Pijama (cm)' : 'Pajama (cm)'}
-                        </label>
-                        <input
-                          type="number"
-                          value={member.pajamaLength}
-                          onChange={(e) => updateFamilyMember(member.id, 'pajamaLength', e.target.value)}
-                          className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
-                          placeholder="cm"
-                        />
-                      </div>
-                    </div>
+                    )}
                   </div>
                 ))}
 
-                <button
-                  onClick={addFamilyMember}
-                  className="w-full p-4 border-2 border-dashed border-gray-600 rounded-lg text-gray-400 hover:border-mea-gold hover:text-mea-gold transition-all flex items-center justify-center gap-2"
-                >
-                  <Plus size={20} />
-                  {i18n.language === 'tr' ? 'Aile Üyesi Ekle' : 'Add Family Member'}
-                </button>
+                {childCount === 0 && (
+                  <div className="text-center py-4 text-gray-400 text-sm">
+                    {i18n.language === 'tr'
+                      ? 'Çocuk eklenmedi. Yukarıdan çocuk sayısını seçebilirsiniz.'
+                      : 'No children added. You can select the number of children above.'}
+                  </div>
+                )}
               </div>
             )}
 
