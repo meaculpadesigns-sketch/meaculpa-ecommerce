@@ -154,50 +154,6 @@ function ProductsContent() {
           </p>
         </div>
 
-        {/* Subcategory Chips */}
-        {category && (
-          <div className="mb-6">
-            <div className="flex flex-wrap gap-3">
-              <button
-                onClick={() => router.push(`/products?category=${category}`)}
-                className={`px-4 py-2 rounded-full transition-all ${
-                  !subcategory
-                    ? 'bg-mea-gold text-black font-semibold'
-                    : 'glass hover:bg-white hover:bg-opacity-10 text-gray-300'
-                }`}
-              >
-                {t('common.all')}
-              </button>
-              {category === 'kimono' && kimonoSubcategories.map((sub) => (
-                <button
-                  key={sub.key}
-                  onClick={() => router.push(`/products?category=${category}&subcategory=${sub.key}`)}
-                  className={`px-4 py-2 rounded-full transition-all ${
-                    subcategory === sub.key
-                      ? 'bg-mea-gold text-black font-semibold'
-                      : 'glass hover:bg-white hover:bg-opacity-10 text-gray-300'
-                  }`}
-                >
-                  {i18n.language === 'tr' ? sub.name : sub.nameEn}
-                </button>
-              ))}
-              {category === 'set' && setSecondLevelCategories.map((sub) => (
-                <button
-                  key={sub.key}
-                  onClick={() => router.push(`/products?category=${category}&subcategory=${sub.key}`)}
-                  className={`px-4 py-2 rounded-full transition-all ${
-                    subcategory === sub.key
-                      ? 'bg-mea-gold text-black font-semibold'
-                      : 'glass hover:bg-white hover:bg-opacity-10 text-gray-300'
-                  }`}
-                >
-                  {i18n.language === 'tr' ? sub.name : sub.nameEn}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
         {/* Filters and Sort */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
           {/* Filter Button */}

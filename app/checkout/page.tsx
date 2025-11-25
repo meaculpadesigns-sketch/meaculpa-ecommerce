@@ -47,6 +47,14 @@ export default function CheckoutPage() {
   const [sameAsBilling, setSameAsBilling] = useState(true);
   const [billingAddress, setBillingAddress] = useState<Partial<Address>>({});
 
+  // Set background gradient
+  useEffect(() => {
+    document.body.className = 'bg-home text-dark-page';
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
+
   // Card Info (for Stripe)
   const [cardNumber, setCardNumber] = useState('');
   const [cardExpiry, setCardExpiry] = useState('');

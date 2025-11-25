@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     default: 'Mea Culpa - Zamana Dokunan Hikayeler | Özel Tasarım Kimono ve Setler',
     template: '%s | Mea Culpa',
   },
+  applicationName: 'Mea Culpa Designs',
   description: 'Doğu\'nun ilhamıyla, modern yaşamın içinde. Özel tasarım kimono, set ve kreasyonlar. Organik kumaş, el boyaması ve kişiye özel tasarımlarla zamana dokunan hikayeler.',
   keywords: ['mea culpa', 'kimono', 'set', 'tasarım', 'fashion', 'türk tasarım', 'ipek yolu', 'organik kumaş', 'el boyaması', 'özel tasarım kimono', 'retro kreasyon', 'kişiye özel tasarım', 'luxury fashion'],
   authors: [{ name: 'Mea Culpa Designs' }],
@@ -55,10 +56,6 @@ export const metadata: Metadata = {
     width: 'device-width',
     initialScale: 1,
     maximumScale: 5,
-  },
-  icons: {
-    icon: '/favicon.ico',
-    apple: '/apple-icon.png',
   },
 };
 

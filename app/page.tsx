@@ -96,20 +96,6 @@ export default function Home() {
 
   return (
     <div>
-      {/* Logo positioned below navbar */}
-      <div className="fixed top-20 left-8 z-40">
-        <Link href="/">
-          <Image
-            src="/images/logo.jpeg"
-            alt="MEA CULPA"
-            width={200}
-            height={80}
-            className="h-20 w-auto object-contain"
-            priority
-          />
-        </Link>
-      </div>
-
       {/* Hero Section - Apple Style */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         {/* Background with parallax effect */}

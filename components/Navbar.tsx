@@ -88,8 +88,20 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            {/* Logo - Hidden, will be placed on page */}
-            <div className="w-32"></div>
+            {/* Logo & Brand */}
+            <Link href="/" className="flex items-center gap-3">
+              <Image
+                src="/images/logo.jpeg"
+                alt="MEA CULPA"
+                width={60}
+                height={60}
+                className="h-12 w-auto object-contain rounded-lg"
+                priority
+              />
+              <span className="hidden md:block text-xl font-bold text-white tracking-wider">
+                MEA CULPA
+              </span>
+            </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-1">
@@ -114,7 +126,7 @@ export default function Navbar() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      className="absolute top-full left-0 pt-2 z-50"
+                      className="absolute top-full left-0 pt-2 pb-16 z-50"
                     >
                       {item.href.includes('kimono') ? (
                         // Kimono: 2-2-1 ters piramit düzeni
@@ -155,11 +167,11 @@ export default function Navbar() {
                         </div>
                       ) : (
                         // Setler: 2. seviye yan yana, 3. seviye sağa açılır
-                        <div className="glass rounded-xl border border-white border-opacity-10 shadow-xl overflow-hidden w-auto">
+                        <div className="glass rounded-xl border border-white border-opacity-10 shadow-xl overflow-hidden min-w-[400px]">
                           <div className="grid grid-cols-2 divide-x divide-white divide-opacity-10">
                             {setSecondLevelCategories.map((secondLevel) => (
                               <div key={secondLevel.key} className="relative group/sub">
-                                <div className="px-6 py-4 text-gray-300 hover:bg-white hover:bg-opacity-5 transition-colors cursor-pointer">
+                                <div className="px-8 py-4 text-gray-300 hover:bg-white hover:bg-opacity-5 transition-colors cursor-pointer">
                                   <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? secondLevel.name : secondLevel.nameEn}</div>
                                 </div>
                                 {/* 3. seviye sağa açılan menü */}
