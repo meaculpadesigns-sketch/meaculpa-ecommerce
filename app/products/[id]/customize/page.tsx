@@ -12,10 +12,9 @@ import { useCart } from '@/lib/cart-context';
 
 type OrderType = 'individual' | 'family';
 type Gender = 'male' | 'female';
-type ParentType = 'father' | 'mother';
 
 interface ParentInfo {
-  type: ParentType;
+  gender: Gender;
   size: string;
   shirtLength: string;
   sleeveLength: string;
@@ -24,10 +23,10 @@ interface ParentInfo {
 
 interface ChildInfo {
   id: string;
+  gender: Gender;
   age: string;
   height: string;
   weight: string;
-  size: string;
   shirtLength: string;
   sleeveLength: string;
   pajamaLength: string;
@@ -53,15 +52,15 @@ export default function CustomizePage() {
 
   // Family order state
   const [childCount, setChildCount] = useState(0);
-  const [father, setFather] = useState<ParentInfo>({
-    type: 'father',
+  const [parent1, setParent1] = useState<ParentInfo>({
+    gender: 'male',
     size: '',
     shirtLength: '',
     sleeveLength: '',
     pajamaLength: '',
   });
-  const [mother, setMother] = useState<ParentInfo>({
-    type: 'mother',
+  const [parent2, setParent2] = useState<ParentInfo>({
+    gender: 'female',
     size: '',
     shirtLength: '',
     sleeveLength: '',
@@ -106,10 +105,10 @@ export default function CustomizePage() {
         // Add new children
         const newChildren = Array.from({ length: childCount - currentCount }, (_, i) => ({
           id: `child-${Date.now()}-${i}`,
+          gender: 'male' as Gender,
           age: '',
           height: '',
           weight: '',
-          size: '',
           shirtLength: '',
           sleeveLength: '',
           pajamaLength: '',
@@ -192,12 +191,20 @@ export default function CustomizePage() {
       router.push('/cart');
     } else {
       // Validate family order
-      if (!father.size) {
-        alert(i18n.language === 'tr' ? 'Lütfen baba için beden seçin' : 'Please select size for father');
+      if (!parent1.size) {
+        alert(
+          i18n.language === 'tr'
+            ? 'Lütfen 1. kişi için beden seçin'
+            : 'Please select size for person 1'
+        );
         return;
       }
-      if (!mother.size) {
-        alert(i18n.language === 'tr' ? 'Lütfen anne için beden seçin' : 'Please select size for mother');
+      if (!parent2.size) {
+        alert(
+          i18n.language === 'tr'
+            ? 'Lütfen 2. kişi için beden seçin'
+            : 'Please select size for person 2'
+        );
         return;
       }
 
@@ -212,55 +219,57 @@ export default function CustomizePage() {
           );
           return;
         }
-        if (!child.size) {
-          alert(
-            i18n.language === 'tr'
-              ? `Lütfen ${i + 1}. çocuk için beden seçin`
-              : `Please select size for child ${i + 1}`
-          );
-          return;
-        }
       }
 
-      // Add father to cart
+      // Add parent 1 to cart
+      const parent1Label =
+        i18n.language === 'tr'
+          ? `${parent1.gender === 'male' ? 'Erkek' : 'Kadın'}`
+          : `${parent1.gender === 'male' ? 'Male' : 'Female'}`;
       addToCart(
         product,
-        father.size,
+        parent1.size,
         1,
-        i18n.language === 'tr' ? 'Baba' : 'Father',
+        parent1Label,
         false,
         undefined,
         {
-          shirtLength: father.shirtLength || undefined,
-          sleeveLength: father.sleeveLength || undefined,
-          pajamaLength: father.pajamaLength || undefined,
+          shirtLength: parent1.shirtLength || undefined,
+          sleeveLength: parent1.sleeveLength || undefined,
+          pajamaLength: parent1.pajamaLength || undefined,
         }
       );
 
-      // Add mother to cart
+      // Add parent 2 to cart
+      const parent2Label =
+        i18n.language === 'tr'
+          ? `${parent2.gender === 'male' ? 'Erkek' : 'Kadın'}`
+          : `${parent2.gender === 'male' ? 'Male' : 'Female'}`;
       addToCart(
         product,
-        mother.size,
+        parent2.size,
         1,
-        i18n.language === 'tr' ? 'Anne' : 'Mother',
+        parent2Label,
         false,
         undefined,
         {
-          shirtLength: mother.shirtLength || undefined,
-          sleeveLength: mother.sleeveLength || undefined,
-          pajamaLength: mother.pajamaLength || undefined,
+          shirtLength: parent2.shirtLength || undefined,
+          sleeveLength: parent2.sleeveLength || undefined,
+          pajamaLength: parent2.pajamaLength || undefined,
         }
       );
 
       // Add each child to cart
       children.forEach((child, index) => {
+        const childLabel =
+          i18n.language === 'tr'
+            ? `Çocuk ${index + 1} (${child.gender === 'male' ? 'Erkek' : 'Kız'}, ${child.age} yaş)`
+            : `Child ${index + 1} (${child.gender === 'male' ? 'Boy' : 'Girl'}, ${child.age} years old)`;
         addToCart(
           product,
-          child.size,
+          'Özel Ölçü',
           1,
-          i18n.language === 'tr'
-            ? `Çocuk ${index + 1} (${child.age} yaş)`
-            : `Child ${index + 1} (${child.age} years old)`,
+          childLabel,
           false,
           undefined,
           {
@@ -298,6 +307,9 @@ export default function CustomizePage() {
 
   const name = i18n.language === 'tr' ? product.name : product.nameEn;
   const description = i18n.language === 'tr' ? product.description : product.descriptionEn;
+
+  // Determine order type button order based on category
+  const isSetProduct = product.category === 'set';
 
   return (
     <div className="min-h-screen py-20 px-4">
@@ -350,26 +362,55 @@ export default function CustomizePage() {
                 {i18n.language === 'tr' ? 'Sipariş Tipi' : 'Order Type'}
               </label>
               <div className="grid grid-cols-2 gap-4">
-                <button
-                  onClick={() => setOrderType('individual')}
-                  className={`p-4 rounded-xl border-2 transition-all ${
-                    orderType === 'individual'
-                      ? 'border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                      : 'border-gray-600 text-gray-400 hover:border-gray-500'
-                  }`}
-                >
-                  {i18n.language === 'tr' ? 'Bireysel' : 'Individual'}
-                </button>
-                <button
-                  onClick={() => setOrderType('family')}
-                  className={`p-4 rounded-xl border-2 transition-all ${
-                    orderType === 'family'
-                      ? 'border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                      : 'border-gray-600 text-gray-400 hover:border-gray-500'
-                  }`}
-                >
-                  {i18n.language === 'tr' ? 'Aile' : 'Family'}
-                </button>
+                {/* For Set: Family first, Individual second */}
+                {/* For Kimono: Individual first, Family second */}
+                {isSetProduct ? (
+                  <>
+                    <button
+                      onClick={() => setOrderType('family')}
+                      className={`p-4 rounded-xl transition-all ${
+                        orderType === 'family'
+                          ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                          : 'text-gray-400 hover:text-gray-300'
+                      }`}
+                    >
+                      {i18n.language === 'tr' ? 'Aile' : 'Family'}
+                    </button>
+                    <button
+                      onClick={() => setOrderType('individual')}
+                      className={`p-4 rounded-xl transition-all ${
+                        orderType === 'individual'
+                          ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                          : 'text-gray-400 hover:text-gray-300'
+                      }`}
+                    >
+                      {i18n.language === 'tr' ? 'Bireysel' : 'Individual'}
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => setOrderType('individual')}
+                      className={`p-4 rounded-xl transition-all ${
+                        orderType === 'individual'
+                          ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                          : 'text-gray-400 hover:text-gray-300'
+                      }`}
+                    >
+                      {i18n.language === 'tr' ? 'Bireysel' : 'Individual'}
+                    </button>
+                    <button
+                      onClick={() => setOrderType('family')}
+                      className={`p-4 rounded-xl transition-all ${
+                        orderType === 'family'
+                          ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                          : 'text-gray-400 hover:text-gray-300'
+                      }`}
+                    >
+                      {i18n.language === 'tr' ? 'Aile' : 'Family'}
+                    </button>
+                  </>
+                )}
               </div>
             </div>
 
@@ -384,20 +425,20 @@ export default function CustomizePage() {
                   <div className="grid grid-cols-2 gap-3">
                     <button
                       onClick={() => setGender('male')}
-                      className={`p-3 rounded-lg border-2 transition-all ${
+                      className={`p-3 rounded-lg transition-all ${
                         gender === 'male'
-                          ? 'border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                          : 'border-gray-600 text-gray-400 hover:border-gray-500'
+                          ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                          : 'text-gray-400 hover:text-gray-300'
                       }`}
                     >
                       {i18n.language === 'tr' ? 'Erkek' : 'Male'}
                     </button>
                     <button
                       onClick={() => setGender('female')}
-                      className={`p-3 rounded-lg border-2 transition-all ${
+                      className={`p-3 rounded-lg transition-all ${
                         gender === 'female'
-                          ? 'border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                          : 'border-gray-600 text-gray-400 hover:border-gray-500'
+                          ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                          : 'text-gray-400 hover:text-gray-300'
                       }`}
                     >
                       {i18n.language === 'tr' ? 'Kadın' : 'Female'}
@@ -410,21 +451,18 @@ export default function CustomizePage() {
                   <label className="block text-white font-semibold mb-3">
                     {i18n.language === 'tr' ? 'Beden' : 'Size'}
                   </label>
-                  <div className="grid grid-cols-4 gap-3">
+                  <select
+                    value={size}
+                    onChange={(e) => setSize(e.target.value)}
+                    className="w-full px-4 py-3 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
+                  >
+                    <option value="">{i18n.language === 'tr' ? 'Seçiniz' : 'Select'}</option>
                     {product.sizes.filter(s => s.inStock).map((sizeOption) => (
-                      <button
-                        key={sizeOption.size}
-                        onClick={() => setSize(sizeOption.size)}
-                        className={`p-3 rounded-lg border-2 transition-all ${
-                          size === sizeOption.size
-                            ? 'border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                            : 'border-gray-600 text-gray-400 hover:border-gray-500'
-                        }`}
-                      >
+                      <option key={sizeOption.size} value={sizeOption.size}>
                         {sizeOption.size}
-                      </button>
+                      </option>
                     ))}
-                  </div>
+                  </select>
                 </div>
 
                 {/* Custom Measurements */}
@@ -499,8 +537,8 @@ export default function CustomizePage() {
               <div className="space-y-8">
                 <p className="text-gray-300 text-sm">
                   {i18n.language === 'tr'
-                    ? 'Aile siparişi otomatik olarak 2 ebeveyn içerir. İstediğiniz sayıda çocuk ekleyebilirsiniz. (14 yaş ve altı çocuk sayılır)'
-                    : 'Family order automatically includes 2 parents. You can add any number of children. (14 years old and under counts as child)'}
+                    ? 'Aile siparişi otomatik olarak 2 kişi içerir. İstediğiniz sayıda çocuk ekleyebilirsiniz. (14 yaş ve altı çocuk sayılır)'
+                    : 'Family order automatically includes 2 people. You can add any number of children. (14 years old and under counts as child)'}
                 </p>
 
                 {/* Child Count Selection */}
@@ -529,20 +567,49 @@ export default function CustomizePage() {
                   </p>
                 </div>
 
-                {/* Father Section */}
+                {/* Parent 1 Section */}
                 <div className="glass rounded-lg p-6 space-y-4 border-2 border-blue-500 border-opacity-30">
-                  <h4 className="text-white font-bold text-lg flex items-center gap-2">
-                    {i18n.language === 'tr' ? '👨 Baba' : '👨 Father'}
+                  <h4 className="text-white font-bold text-lg">
+                    {i18n.language === 'tr' ? 'Kişi 1' : 'Person 1'}
                   </h4>
 
-                  {/* Father Size */}
+                  {/* Parent 1 Gender */}
+                  <div>
+                    <label className="block text-gray-300 text-sm mb-2">
+                      {i18n.language === 'tr' ? 'Cinsiyet' : 'Gender'}
+                    </label>
+                    <div className="grid grid-cols-2 gap-3">
+                      <button
+                        onClick={() => setParent1({ ...parent1, gender: 'male' })}
+                        className={`p-3 rounded-lg transition-all ${
+                          parent1.gender === 'male'
+                            ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                            : 'text-gray-400 hover:text-gray-300'
+                        }`}
+                      >
+                        {i18n.language === 'tr' ? 'Erkek' : 'Male'}
+                      </button>
+                      <button
+                        onClick={() => setParent1({ ...parent1, gender: 'female' })}
+                        className={`p-3 rounded-lg transition-all ${
+                          parent1.gender === 'female'
+                            ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                            : 'text-gray-400 hover:text-gray-300'
+                        }`}
+                      >
+                        {i18n.language === 'tr' ? 'Kadın' : 'Female'}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Parent 1 Size */}
                   <div>
                     <label className="block text-gray-300 text-sm mb-2">
                       {i18n.language === 'tr' ? 'Beden' : 'Size'}
                     </label>
                     <select
-                      value={father.size}
-                      onChange={(e) => setFather({ ...father, size: e.target.value })}
+                      value={parent1.size}
+                      onChange={(e) => setParent1({ ...parent1, size: e.target.value })}
                       className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
                     >
                       <option value="">{i18n.language === 'tr' ? 'Seçiniz' : 'Select'}</option>
@@ -554,7 +621,7 @@ export default function CustomizePage() {
                     </select>
                   </div>
 
-                  {/* Father Measurements */}
+                  {/* Parent 1 Measurements */}
                   <div>
                     <label className="block text-gray-300 text-sm mb-2">
                       {i18n.language === 'tr' ? 'Özel Ölçüler (Opsiyonel)' : 'Custom Measurements (Optional)'}
@@ -563,8 +630,8 @@ export default function CustomizePage() {
                       <div>
                         <input
                           type="number"
-                          value={father.shirtLength}
-                          onChange={(e) => setFather({ ...father, shirtLength: e.target.value })}
+                          value={parent1.shirtLength}
+                          onChange={(e) => setParent1({ ...parent1, shirtLength: e.target.value })}
                           className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
                           placeholder={i18n.language === 'tr' ? 'Gömlek (cm)' : 'Shirt (cm)'}
                         />
@@ -572,8 +639,8 @@ export default function CustomizePage() {
                       <div>
                         <input
                           type="number"
-                          value={father.sleeveLength}
-                          onChange={(e) => setFather({ ...father, sleeveLength: e.target.value })}
+                          value={parent1.sleeveLength}
+                          onChange={(e) => setParent1({ ...parent1, sleeveLength: e.target.value })}
                           className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
                           placeholder={i18n.language === 'tr' ? 'Kol (cm)' : 'Sleeve (cm)'}
                         />
@@ -581,8 +648,8 @@ export default function CustomizePage() {
                       <div>
                         <input
                           type="number"
-                          value={father.pajamaLength}
-                          onChange={(e) => setFather({ ...father, pajamaLength: e.target.value })}
+                          value={parent1.pajamaLength}
+                          onChange={(e) => setParent1({ ...parent1, pajamaLength: e.target.value })}
                           className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
                           placeholder={i18n.language === 'tr' ? 'Pijama (cm)' : 'Pajama (cm)'}
                         />
@@ -591,20 +658,49 @@ export default function CustomizePage() {
                   </div>
                 </div>
 
-                {/* Mother Section */}
+                {/* Parent 2 Section */}
                 <div className="glass rounded-lg p-6 space-y-4 border-2 border-pink-500 border-opacity-30">
-                  <h4 className="text-white font-bold text-lg flex items-center gap-2">
-                    {i18n.language === 'tr' ? '👩 Anne' : '👩 Mother'}
+                  <h4 className="text-white font-bold text-lg">
+                    {i18n.language === 'tr' ? 'Kişi 2' : 'Person 2'}
                   </h4>
 
-                  {/* Mother Size */}
+                  {/* Parent 2 Gender */}
+                  <div>
+                    <label className="block text-gray-300 text-sm mb-2">
+                      {i18n.language === 'tr' ? 'Cinsiyet' : 'Gender'}
+                    </label>
+                    <div className="grid grid-cols-2 gap-3">
+                      <button
+                        onClick={() => setParent2({ ...parent2, gender: 'male' })}
+                        className={`p-3 rounded-lg transition-all ${
+                          parent2.gender === 'male'
+                            ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                            : 'text-gray-400 hover:text-gray-300'
+                        }`}
+                      >
+                        {i18n.language === 'tr' ? 'Erkek' : 'Male'}
+                      </button>
+                      <button
+                        onClick={() => setParent2({ ...parent2, gender: 'female' })}
+                        className={`p-3 rounded-lg transition-all ${
+                          parent2.gender === 'female'
+                            ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                            : 'text-gray-400 hover:text-gray-300'
+                        }`}
+                      >
+                        {i18n.language === 'tr' ? 'Kadın' : 'Female'}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Parent 2 Size */}
                   <div>
                     <label className="block text-gray-300 text-sm mb-2">
                       {i18n.language === 'tr' ? 'Beden' : 'Size'}
                     </label>
                     <select
-                      value={mother.size}
-                      onChange={(e) => setMother({ ...mother, size: e.target.value })}
+                      value={parent2.size}
+                      onChange={(e) => setParent2({ ...parent2, size: e.target.value })}
                       className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
                     >
                       <option value="">{i18n.language === 'tr' ? 'Seçiniz' : 'Select'}</option>
@@ -616,7 +712,7 @@ export default function CustomizePage() {
                     </select>
                   </div>
 
-                  {/* Mother Measurements */}
+                  {/* Parent 2 Measurements */}
                   <div>
                     <label className="block text-gray-300 text-sm mb-2">
                       {i18n.language === 'tr' ? 'Özel Ölçüler (Opsiyonel)' : 'Custom Measurements (Optional)'}
@@ -625,8 +721,8 @@ export default function CustomizePage() {
                       <div>
                         <input
                           type="number"
-                          value={mother.shirtLength}
-                          onChange={(e) => setMother({ ...mother, shirtLength: e.target.value })}
+                          value={parent2.shirtLength}
+                          onChange={(e) => setParent2({ ...parent2, shirtLength: e.target.value })}
                           className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
                           placeholder={i18n.language === 'tr' ? 'Gömlek (cm)' : 'Shirt (cm)'}
                         />
@@ -634,8 +730,8 @@ export default function CustomizePage() {
                       <div>
                         <input
                           type="number"
-                          value={mother.sleeveLength}
-                          onChange={(e) => setMother({ ...mother, sleeveLength: e.target.value })}
+                          value={parent2.sleeveLength}
+                          onChange={(e) => setParent2({ ...parent2, sleeveLength: e.target.value })}
                           className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
                           placeholder={i18n.language === 'tr' ? 'Kol (cm)' : 'Sleeve (cm)'}
                         />
@@ -643,8 +739,8 @@ export default function CustomizePage() {
                       <div>
                         <input
                           type="number"
-                          value={mother.pajamaLength}
-                          onChange={(e) => setMother({ ...mother, pajamaLength: e.target.value })}
+                          value={parent2.pajamaLength}
+                          onChange={(e) => setParent2({ ...parent2, pajamaLength: e.target.value })}
                           className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
                           placeholder={i18n.language === 'tr' ? 'Pijama (cm)' : 'Pajama (cm)'}
                         />
@@ -657,11 +753,40 @@ export default function CustomizePage() {
                 {children.map((child, index) => (
                   <div key={child.id} className="glass rounded-lg p-6 space-y-4 border-2 border-green-500 border-opacity-30">
                     <h4 className="text-white font-bold text-lg flex items-center gap-2">
-                      {i18n.language === 'tr' ? `👶 Çocuk ${index + 1}` : `👶 Child ${index + 1}`}
+                      {i18n.language === 'tr' ? `Çocuk ${index + 1}` : `Child ${index + 1}`}
                       <span className="text-xs text-gray-400 font-normal ml-2">
                         {i18n.language === 'tr' ? '(14 yaş ve altı)' : '(14 years old and under)'}
                       </span>
                     </h4>
+
+                    {/* Child Gender */}
+                    <div>
+                      <label className="block text-gray-300 text-sm mb-2">
+                        {i18n.language === 'tr' ? 'Cinsiyet' : 'Gender'}
+                      </label>
+                      <div className="grid grid-cols-2 gap-3">
+                        <button
+                          onClick={() => updateChild(child.id, 'gender', 'male')}
+                          className={`p-3 rounded-lg transition-all ${
+                            child.gender === 'male'
+                              ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                              : 'text-gray-400 hover:text-gray-300'
+                          }`}
+                        >
+                          {i18n.language === 'tr' ? 'Erkek' : 'Boy'}
+                        </button>
+                        <button
+                          onClick={() => updateChild(child.id, 'gender', 'female')}
+                          className={`p-3 rounded-lg transition-all ${
+                            child.gender === 'female'
+                              ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                              : 'text-gray-400 hover:text-gray-300'
+                          }`}
+                        >
+                          {i18n.language === 'tr' ? 'Kız' : 'Girl'}
+                        </button>
+                      </div>
+                    </div>
 
                     {/* Child Info */}
                     <div>
@@ -706,40 +831,39 @@ export default function CustomizePage() {
                       )}
                     </div>
 
-                    {/* Child Size */}
-                    <div>
-                      <label className="block text-gray-300 text-sm mb-2">
-                        {i18n.language === 'tr' ? 'Beden' : 'Size'}
-                      </label>
-                      <select
-                        value={child.size}
-                        onChange={(e) => updateChild(child.id, 'size', e.target.value)}
-                        className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
-                      >
-                        <option value="">{i18n.language === 'tr' ? 'Seçiniz' : 'Select'}</option>
-                        {product.sizes.filter(s => s.inStock).map((sizeOption) => (
-                          <option key={sizeOption.size} value={sizeOption.size}>
-                            {sizeOption.size}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* Child Measurements (Auto-calculated, read-only display) */}
+                    {/* Child Measurements - Editable fields for algorithm results */}
                     {child.shirtLength && (
                       <div>
                         <label className="block text-gray-300 text-sm mb-2">
-                          {i18n.language === 'tr' ? 'Hesaplanan Ölçüler' : 'Calculated Measurements'}
+                          {i18n.language === 'tr' ? 'Hesaplanan Ölçüler (Düzenlenebilir)' : 'Calculated Measurements (Editable)'}
                         </label>
                         <div className="grid grid-cols-3 gap-3">
-                          <div className="px-3 py-2 bg-zinc-900 border border-gray-700 rounded-lg text-gray-300 text-sm">
-                            {i18n.language === 'tr' ? 'Gömlek:' : 'Shirt:'} {child.shirtLength} cm
+                          <div>
+                            <input
+                              type="number"
+                              value={child.shirtLength}
+                              onChange={(e) => updateChild(child.id, 'shirtLength', e.target.value)}
+                              className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
+                              placeholder={i18n.language === 'tr' ? 'Gömlek (cm)' : 'Shirt (cm)'}
+                            />
                           </div>
-                          <div className="px-3 py-2 bg-zinc-900 border border-gray-700 rounded-lg text-gray-300 text-sm">
-                            {i18n.language === 'tr' ? 'Kol:' : 'Sleeve:'} {child.sleeveLength} cm
+                          <div>
+                            <input
+                              type="number"
+                              value={child.sleeveLength}
+                              onChange={(e) => updateChild(child.id, 'sleeveLength', e.target.value)}
+                              className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
+                              placeholder={i18n.language === 'tr' ? 'Kol (cm)' : 'Sleeve (cm)'}
+                            />
                           </div>
-                          <div className="px-3 py-2 bg-zinc-900 border border-gray-700 rounded-lg text-gray-300 text-sm">
-                            {i18n.language === 'tr' ? 'Pijama:' : 'Pajama:'} {child.pajamaLength} cm
+                          <div>
+                            <input
+                              type="number"
+                              value={child.pajamaLength}
+                              onChange={(e) => updateChild(child.id, 'pajamaLength', e.target.value)}
+                              className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
+                              placeholder={i18n.language === 'tr' ? 'Pijama (cm)' : 'Pajama (cm)'}
+                            />
                           </div>
                         </div>
                       </div>
