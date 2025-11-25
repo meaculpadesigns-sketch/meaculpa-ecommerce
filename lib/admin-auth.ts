@@ -1,6 +1,9 @@
 // Admin authentication with username/password
 // Passwords are hashed with SHA-256 for basic security
 
+import { signInAnonymously, signOut } from 'firebase/auth';
+import { auth } from './firebase';
+
 interface AdminCredential {
   username: string;
   passwordHash: string;
@@ -57,6 +60,15 @@ export async function authenticateAdmin(username: string, password: string): Pro
           displayName: admin.displayName,
           timestamp: Date.now(),
         }));
+
+        // Sign in to Firebase Auth anonymously to enable Storage uploads
+        try {
+          await signInAnonymously(auth);
+          console.log('✅ Admin signed in to Firebase Auth for storage access');
+        } catch (firebaseError) {
+          console.error('⚠️ Firebase Auth sign-in failed:', firebaseError);
+          // Continue anyway - admin session is still valid for page access
+        }
       }
       return true;
     }
@@ -100,8 +112,16 @@ export function getAdminInfo(): { username: string; displayName: string } | null
   }
 }
 
-export function logoutAdmin(): void {
+export async function logoutAdmin(): Promise<void> {
   if (typeof window !== 'undefined') {
     sessionStorage.removeItem('adminAuth');
+
+    // Sign out from Firebase Auth as well
+    try {
+      await signOut(auth);
+      console.log('✅ Admin signed out from Firebase Auth');
+    } catch (error) {
+      console.error('⚠️ Firebase Auth sign-out failed:', error);
+    }
   }
 }
