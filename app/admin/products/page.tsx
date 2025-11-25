@@ -146,13 +146,21 @@ export default function AdminProducts() {
     setSaving(true);
 
     try {
+      // Remove undefined and empty string values from formData
+      const cleanedFormData: any = {};
+      Object.entries(formData).forEach(([key, value]) => {
+        if (value !== undefined && value !== '') {
+          cleanedFormData[key] = value;
+        }
+      });
+
       if (editingProduct) {
         // When editing, don't include createdAt
-        await updateProduct(editingProduct.id, formData);
+        await updateProduct(editingProduct.id, cleanedFormData);
       } else {
         // When creating new, include createdAt and updatedAt
         const productData = {
-          ...formData,
+          ...cleanedFormData,
           createdAt: new Date(),
           updatedAt: new Date(),
         };
