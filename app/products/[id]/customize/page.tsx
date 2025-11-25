@@ -6,9 +6,9 @@ import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Plus, Minus, ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
 import { Product } from '@/types';
-import { getProduct } from '@/lib/firebase-helpers';
+import { getProductById } from '@/lib/firebase-helpers';
 import { formatPrice } from '@/lib/currency';
-import { useCart } from '@/contexts/CartContext';
+import { useCart } from '@/lib/cart-context';
 
 type OrderType = 'individual' | 'family';
 type Gender = 'male' | 'female' | 'child';
@@ -66,7 +66,7 @@ export default function CustomizePage() {
   useEffect(() => {
     async function fetchProduct() {
       try {
-        const productData = await getProduct(id as string);
+        const productData = await getProductById(id as string);
         if (productData) {
           setProduct(productData);
           // Set default order type based on category
@@ -133,18 +133,19 @@ export default function CustomizePage() {
         return;
       }
 
-      addToCart({
-        productId: product.id,
+      addToCart(
         product,
         size,
         quantity,
-        giftWrapping: false,
-        customMeasurements: {
+        undefined, // specialRequests
+        false, // giftWrapping
+        undefined, // giftMessage
+        {
           shirtLength: shirtLength || undefined,
           sleeveLength: sleeveLength || undefined,
           pajamaLength: pajamaLength || undefined,
-        },
-      });
+        }
+      );
 
       router.push('/cart');
     } else {
@@ -156,18 +157,19 @@ export default function CustomizePage() {
       }
 
       familyMembers.forEach(member => {
-        addToCart({
-          productId: product.id,
+        addToCart(
           product,
-          size: member.size,
-          quantity: 1,
-          giftWrapping: false,
-          customMeasurements: {
+          member.size,
+          1, // quantity
+          undefined, // specialRequests
+          false, // giftWrapping
+          undefined, // giftMessage
+          {
             shirtLength: member.shirtLength || undefined,
             sleeveLength: member.sleeveLength || undefined,
             pajamaLength: member.pajamaLength || undefined,
-          },
-        });
+          }
+        );
       });
 
       router.push('/cart');
@@ -406,7 +408,7 @@ export default function CustomizePage() {
                         onChange={(e) => setShirtLength(e.target.value)}
                         className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
                         placeholder="cm"
-                        disabled={gender === 'child' && childAge && childHeight && childWeight}
+                        disabled={gender === 'child' && !!childAge && !!childHeight && !!childWeight}
                       />
                     </div>
                     <div>
@@ -419,7 +421,7 @@ export default function CustomizePage() {
                         onChange={(e) => setSleeveLength(e.target.value)}
                         className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
                         placeholder="cm"
-                        disabled={gender === 'child' && childAge && childHeight && childWeight}
+                        disabled={gender === 'child' && !!childAge && !!childHeight && !!childWeight}
                       />
                     </div>
                     <div>
@@ -432,7 +434,7 @@ export default function CustomizePage() {
                         onChange={(e) => setPajamaLength(e.target.value)}
                         className="w-full px-3 py-2 bg-zinc-800 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
                         placeholder="cm"
-                        disabled={gender === 'child' && childAge && childHeight && childWeight}
+                        disabled={gender === 'child' && !!childAge && !!childHeight && !!childWeight}
                       />
                     </div>
                   </div>
