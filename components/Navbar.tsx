@@ -88,17 +88,9 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            {/* Logo & Brand */}
-            <Link href="/" className="flex items-center gap-3">
-              <Image
-                src="/images/logo.jpeg"
-                alt="MEA CULPA"
-                width={60}
-                height={60}
-                className="h-12 w-auto object-contain rounded-lg"
-                priority
-              />
-              <span className="hidden md:block text-xl font-bold text-white tracking-wider">
+            {/* Brand Name Only */}
+            <Link href="/" className="flex items-center">
+              <span className="text-2xl font-bold text-white tracking-wider">
                 MEA CULPA
               </span>
             </Link>
@@ -126,7 +118,7 @@ export default function Navbar() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      className="absolute top-full left-0 pt-2 pb-16 z-50"
+                      className="absolute top-full left-0 pt-4 pb-24 z-50"
                     >
                       {item.href.includes('kimono') ? (
                         // Kimono: 2-2-1 ters piramit düzeni

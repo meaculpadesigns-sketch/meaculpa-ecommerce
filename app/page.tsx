@@ -114,6 +114,18 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
+            {/* Large Logo */}
+            <div className="mb-8 flex justify-center">
+              <Image
+                src="/images/logo_no_bg.png"
+                alt="MEA CULPA Logo"
+                width={400}
+                height={300}
+                className="w-auto h-32 md:h-40 lg:h-48 object-contain"
+                priority
+              />
+            </div>
+
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6">
               MEA CULPA
             </h1>

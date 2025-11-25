@@ -27,9 +27,12 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
     setIsFavorite(!isFavorite);
   };
 
-  const handleAddToCart = () => {
-    // In production, add to cart
-    console.log('Added to cart:', product.id);
+  const handleAddToCart = (e?: React.MouseEvent) => {
+    // Navigate to customize page instead of directly adding to cart
+    if (e) {
+      e.preventDefault();
+    }
+    window.location.href = `/products/${product.id}/customize`;
   };
 
   if (viewMode === 'list') {
