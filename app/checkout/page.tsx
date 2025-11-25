@@ -9,10 +9,11 @@ import { getUserById, createOrder, getCouponByCode, useCoupon } from '@/lib/fire
 import { Address, User, Coupon } from '@/types';
 import { motion } from 'framer-motion';
 import { CreditCard, Wallet, CheckCircle, Tag } from 'lucide-react';
+import { formatPrice } from '@/lib/currency';
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { cart, getCartTotal, clearCart } = useCart();
 
   const [user, setUser] = useState<User | null>(null);
@@ -112,7 +113,7 @@ export default function CheckoutPage() {
   // Apply coupon function
   const handleApplyCoupon = async () => {
     if (!couponCode.trim()) {
-      setCouponError('Lütfen bir kupon kodu girin');
+      setCouponError(t('checkout.enterCoupon'));
       return;
     }
 
@@ -123,35 +124,35 @@ export default function CheckoutPage() {
       const coupon = await getCouponByCode(couponCode.trim().toUpperCase());
 
       if (!coupon) {
-        setCouponError('Geçersiz kupon kodu');
+        setCouponError(t('checkout.invalidCoupon'));
         setCheckingCoupon(false);
         return;
       }
 
       // Check if coupon is expired
       if (coupon.expiresAt && new Date(coupon.expiresAt) < new Date()) {
-        setCouponError('Bu kupon süresi dolmuş');
+        setCouponError(t('checkout.expiredCoupon'));
         setCheckingCoupon(false);
         return;
       }
 
       // Check usage limit
       if (coupon.usageLimit && coupon.usedCount >= coupon.usageLimit) {
-        setCouponError('Bu kupon kullanım limitine ulaşmış');
+        setCouponError(t('checkout.usageLimitReached'));
         setCheckingCoupon(false);
         return;
       }
 
       // Check minimum purchase
       if (coupon.minPurchase && subtotal < coupon.minPurchase) {
-        setCouponError(`Bu kupon için minimum ${coupon.minPurchase}₺ alışveriş gerekli`);
+        setCouponError(`${t('checkout.minPurchaseRequired')} ${formatPrice(coupon.minPurchase, i18n.language)} ${t('checkout.minPurchaseRequired2')}`);
         setCheckingCoupon(false);
         return;
       }
 
       // Check if user-specific
       if (coupon.userSpecific && user && coupon.userSpecific !== user.id) {
-        setCouponError('Bu kupon sizin için geçerli değil');
+        setCouponError(t('checkout.couponNotValid'));
         setCheckingCoupon(false);
         return;
       }
@@ -161,7 +162,7 @@ export default function CheckoutPage() {
       setCouponCode('');
     } catch (error) {
       console.error('Coupon error:', error);
-      setCouponError('Kupon kontrolü sırasında hata oluştu');
+      setCouponError(t('checkout.couponError'));
     } finally {
       setCheckingCoupon(false);
     }
@@ -174,13 +175,13 @@ export default function CheckoutPage() {
     try {
       // Validate required fields
       if (isGuest && (!email || !phone || !firstName || !lastName)) {
-        alert('Lütfen tüm zorunlu alanları doldurun');
+        alert(t('checkout.fillRequired'));
         setLoading(false);
         return;
       }
 
       if (!shippingAddress.address || !shippingAddress.city || !shippingAddress.zipCode) {
-        alert('Lütfen teslimat adresini eksiksiz doldurun');
+        alert(t('checkout.fillAddress'));
         setLoading(false);
         return;
       }
@@ -220,7 +221,7 @@ export default function CheckoutPage() {
       router.push(`/order-success?orderNumber=${orderNumber}`);
     } catch (error) {
       console.error('Error creating order:', error);
-      alert('Sipariş oluşturulurken bir hata oluştu');
+      alert(t('common.error'));
     } finally {
       setLoading(false);
     }
@@ -234,8 +235,8 @@ export default function CheckoutPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-4xl font-bold text-white mb-2">Ödeme</h1>
-          <p className="text-gray-400">Siparişinizi tamamlayın</p>
+          <h1 className="text-4xl font-bold text-white mb-2">{t('checkout.title')}</h1>
+          <p className="text-gray-400">{t('checkout.subtitle')}</p>
         </motion.div>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -248,7 +249,7 @@ export default function CheckoutPage() {
                 animate={{ opacity: 1, y: 0 }}
                 className="glass rounded-2xl p-6"
               >
-                <h2 className="text-2xl font-bold text-white mb-4">Üye Bilgileri</h2>
+                <h2 className="text-2xl font-bold text-white mb-4">{t('checkout.memberInfo')}</h2>
                 <div className="flex gap-4 mb-6">
                   <button
                     type="button"
@@ -257,14 +258,14 @@ export default function CheckoutPage() {
                       isGuest ? 'bg-mea-gold text-black' : 'glass text-white'
                     }`}
                   >
-                    Misafir Alışveriş
+                    {t('checkout.guestCheckout')}
                   </button>
                   <button
                     type="button"
                     onClick={() => router.push('/login')}
                     className="flex-1 py-3 rounded-lg glass text-white font-medium"
                   >
-                    Üye Girişi
+                    {t('checkout.memberLogin')}
                   </button>
                 </div>
 
@@ -274,7 +275,7 @@ export default function CheckoutPage() {
                       type="text"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
-                      placeholder="Ad"
+                      placeholder={t('checkout.firstName')}
                       className="input-field"
                       required
                     />
@@ -282,7 +283,7 @@ export default function CheckoutPage() {
                       type="text"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
-                      placeholder="Soyad"
+                      placeholder={t('checkout.lastName')}
                       className="input-field"
                       required
                     />
@@ -290,7 +291,7 @@ export default function CheckoutPage() {
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="E-posta"
+                      placeholder={t('checkout.email')}
                       className="input-field"
                       required
                     />
@@ -298,7 +299,7 @@ export default function CheckoutPage() {
                       type="tel"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      placeholder="Telefon"
+                      placeholder={t('checkout.phone')}
                       className="input-field"
                       required
                     />
@@ -314,14 +315,14 @@ export default function CheckoutPage() {
               transition={{ delay: 0.1 }}
               className="glass rounded-2xl p-6"
             >
-              <h2 className="text-2xl font-bold text-white mb-4">Teslimat Adresi</h2>
+              <h2 className="text-2xl font-bold text-white mb-4">{t('checkout.shippingAddress')}</h2>
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <input
                     type="text"
                     value={shippingAddress.firstName}
                     onChange={(e) => setShippingAddress({ ...shippingAddress, firstName: e.target.value })}
-                    placeholder="Ad"
+                    placeholder={t('checkout.firstName')}
                     className="input-field"
                     required
                   />
@@ -329,7 +330,7 @@ export default function CheckoutPage() {
                     type="text"
                     value={shippingAddress.lastName}
                     onChange={(e) => setShippingAddress({ ...shippingAddress, lastName: e.target.value })}
-                    placeholder="Soyad"
+                    placeholder={t('checkout.lastName')}
                     className="input-field"
                     required
                   />
@@ -337,7 +338,7 @@ export default function CheckoutPage() {
                 <textarea
                   value={shippingAddress.address}
                   onChange={(e) => setShippingAddress({ ...shippingAddress, address: e.target.value })}
-                  placeholder="Adres"
+                  placeholder={t('checkout.address')}
                   className="input-field"
                   rows={3}
                   required
@@ -347,7 +348,7 @@ export default function CheckoutPage() {
                     type="text"
                     value={shippingAddress.city}
                     onChange={(e) => setShippingAddress({ ...shippingAddress, city: e.target.value })}
-                    placeholder="Şehir"
+                    placeholder={t('checkout.city')}
                     className="input-field"
                     required
                   />
@@ -355,7 +356,7 @@ export default function CheckoutPage() {
                     type="text"
                     value={shippingAddress.state}
                     onChange={(e) => setShippingAddress({ ...shippingAddress, state: e.target.value })}
-                    placeholder="İlçe"
+                    placeholder={t('checkout.district')}
                     className="input-field"
                     required
                   />
@@ -365,7 +366,7 @@ export default function CheckoutPage() {
                     type="text"
                     value={shippingAddress.zipCode}
                     onChange={(e) => setShippingAddress({ ...shippingAddress, zipCode: e.target.value })}
-                    placeholder="Posta Kodu"
+                    placeholder={t('checkout.zipCode')}
                     className="input-field"
                     required
                   />
@@ -373,7 +374,7 @@ export default function CheckoutPage() {
                     type="tel"
                     value={shippingAddress.phone}
                     onChange={(e) => setShippingAddress({ ...shippingAddress, phone: e.target.value })}
-                    placeholder="Telefon"
+                    placeholder={t('checkout.phone')}
                     className="input-field"
                     required
                   />
@@ -388,7 +389,7 @@ export default function CheckoutPage() {
               transition={{ delay: 0.2 }}
               className="glass rounded-2xl p-6"
             >
-              <h2 className="text-2xl font-bold text-white mb-4">Ödeme Yöntemi</h2>
+              <h2 className="text-2xl font-bold text-white mb-4">{t('checkout.paymentMethod')}</h2>
               <div className="grid grid-cols-3 gap-4 mb-6">
                 <button
                   type="button"
@@ -398,7 +399,7 @@ export default function CheckoutPage() {
                   }`}
                 >
                   <CreditCard size={32} />
-                  <span className="text-sm font-medium">Kredi Kartı</span>
+                  <span className="text-sm font-medium">{t('checkout.creditCard')}</span>
                 </button>
                 <button
                   type="button"
@@ -408,7 +409,7 @@ export default function CheckoutPage() {
                   }`}
                 >
                   <Wallet size={32} />
-                  <span className="text-sm font-medium">Kripto</span>
+                  <span className="text-sm font-medium">{t('checkout.crypto')}</span>
                 </button>
                 <button
                   type="button"
@@ -418,7 +419,7 @@ export default function CheckoutPage() {
                   }`}
                 >
                   <CheckCircle size={32} />
-                  <span className="text-sm font-medium">Google Pay</span>
+                  <span className="text-sm font-medium">{t('checkout.googlePay')}</span>
                 </button>
               </div>
 
@@ -431,8 +432,8 @@ export default function CheckoutPage() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                       </svg>
                       <div>
-                        <p className="text-white text-sm font-medium">Güvenli Ödeme</p>
-                        <p className="text-gray-400 text-xs">256-bit SSL Şifreleme</p>
+                        <p className="text-white text-sm font-medium">{t('checkout.securePayment')}</p>
+                        <p className="text-gray-400 text-xs">{t('checkout.sslEncryption')}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
@@ -456,7 +457,7 @@ export default function CheckoutPage() {
                     type="text"
                     value={cardNumber}
                     onChange={(e) => setCardNumber(e.target.value)}
-                    placeholder="Kart Numarası"
+                    placeholder={t('checkout.cardNumber')}
                     className="input-field"
                     maxLength={19}
                   />
@@ -465,7 +466,7 @@ export default function CheckoutPage() {
                       type="text"
                       value={cardExpiry}
                       onChange={(e) => setCardExpiry(e.target.value)}
-                      placeholder="AA/YY"
+                      placeholder={t('checkout.expiry')}
                       className="input-field"
                       maxLength={5}
                     />
@@ -473,7 +474,7 @@ export default function CheckoutPage() {
                       type="text"
                       value={cardCvv}
                       onChange={(e) => setCardCvv(e.target.value)}
-                      placeholder="CVV"
+                      placeholder={t('checkout.cvv')}
                       className="input-field"
                       maxLength={3}
                     />
@@ -481,7 +482,7 @@ export default function CheckoutPage() {
 
                   {/* Powered by iyzico */}
                   <div className="flex items-center justify-center gap-2 p-3 bg-white bg-opacity-5 rounded-lg">
-                    <span className="text-gray-400 text-xs">Güvenli ödeme altyapısı:</span>
+                    <span className="text-gray-400 text-xs">{t('checkout.poweredBy')}</span>
                     <div className="bg-white px-3 py-1.5 rounded">
                       <span className="text-[#1d3557] font-bold text-sm">iyzico</span>
                     </div>
@@ -492,7 +493,7 @@ export default function CheckoutPage() {
               {paymentMethod === 'crypto' && (
                 <div className="p-4 bg-mea-gold bg-opacity-20 rounded-lg">
                   <p className="text-mea-gold text-sm">
-                    Kripto ödemesi için sonraki adımda cüzdan adresiniz gösterilecektir.
+                    {t('checkout.cryptoNote')}
                   </p>
                 </div>
               )}
@@ -500,7 +501,7 @@ export default function CheckoutPage() {
               {paymentMethod === 'googlepay' && (
                 <div className="p-4 bg-mea-gold bg-opacity-20 rounded-lg">
                   <p className="text-mea-gold text-sm">
-                    Google Pay ile ödeme yapmak için sonraki adıma geçin.
+                    {t('checkout.googlePayNote')}
                   </p>
                 </div>
               )}
@@ -515,38 +516,41 @@ export default function CheckoutPage() {
               transition={{ delay: 0.3 }}
               className="glass rounded-2xl p-6 sticky top-24"
             >
-              <h2 className="text-2xl font-bold text-white mb-6">Sipariş Özeti</h2>
+              <h2 className="text-2xl font-bold text-white mb-6">{t('checkout.orderSummary')}</h2>
 
               {/* Cart Items */}
               <div className="space-y-4 mb-6 max-h-60 overflow-y-auto">
-                {cart.map((item) => (
-                  <div key={`${item.productId}-${item.size}`} className="flex gap-3">
-                    <div className="w-16 h-16 bg-zinc-800 rounded-lg flex-shrink-0" />
-                    <div className="flex-grow">
-                      <p className="text-white text-sm font-medium line-clamp-1">
-                        {item.product.name}
-                      </p>
-                      <p className="text-gray-400 text-xs">
-                        {item.size} × {item.quantity}
-                      </p>
-                      <p className="text-mea-gold text-sm font-medium">
-                        ₺{(item.product.price * item.quantity).toFixed(2)}
-                      </p>
+                {cart.map((item) => {
+                  const itemName = i18n.language === 'tr' ? item.product.name : item.product.nameEn;
+                  return (
+                    <div key={`${item.productId}-${item.size}`} className="flex gap-3">
+                      <div className="w-16 h-16 bg-zinc-800 rounded-lg flex-shrink-0" />
+                      <div className="flex-grow">
+                        <p className="text-white text-sm font-medium line-clamp-1">
+                          {itemName}
+                        </p>
+                        <p className="text-gray-400 text-xs">
+                          {item.size} × {item.quantity}
+                        </p>
+                        <p className="text-mea-gold text-sm font-medium">
+                          {formatPrice(item.product.price * item.quantity, i18n.language)}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               {/* Coupon Code */}
               <div className="mb-6 pb-4 border-b border-white border-opacity-10">
-                <label className="block text-white font-medium mb-2">İndirim Kodu</label>
+                <label className="block text-white font-medium mb-2">{t('checkout.couponCode')}</label>
                 {!appliedCoupon ? (
                   <div className="flex gap-2">
                     <input
                       type="text"
                       value={couponCode}
                       onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                      placeholder="KUPON KODU"
+                      placeholder={t('checkout.couponPlaceholder')}
                       className="input-field flex-grow"
                       disabled={checkingCoupon}
                     />
@@ -555,7 +559,7 @@ export default function CheckoutPage() {
                       disabled={checkingCoupon || !couponCode.trim()}
                       className="btn-secondary px-6 whitespace-nowrap"
                     >
-                      {checkingCoupon ? 'Kontrol ediliyor...' : 'Uygula'}
+                      {checkingCoupon ? t('checkout.checkingCoupon') : t('checkout.applyCoupon')}
                     </button>
                   </div>
                 ) : (
@@ -566,8 +570,8 @@ export default function CheckoutPage() {
                         <p className="text-green-500 font-medium text-sm">{appliedCoupon.code}</p>
                         <p className="text-green-400 text-xs">
                           {appliedCoupon.type === 'percentage'
-                            ? `%${appliedCoupon.value} İndirim`
-                            : `₺${appliedCoupon.value} İndirim`}
+                            ? `%${appliedCoupon.value} ${t('checkout.discount')}`
+                            : `${formatPrice(appliedCoupon.value, i18n.language)} ${t('checkout.discount')}`}
                         </p>
                       </div>
                     </div>
@@ -575,7 +579,7 @@ export default function CheckoutPage() {
                       onClick={() => setAppliedCoupon(null)}
                       className="text-green-400 hover:text-green-300 text-sm underline"
                     >
-                      Kaldır
+                      {t('checkout.removeCoupon')}
                     </button>
                   </div>
                 )}
@@ -587,22 +591,22 @@ export default function CheckoutPage() {
               {/* Totals */}
               <div className="space-y-3 mb-6 pt-4 border-t border-white border-opacity-10">
                 <div className="flex justify-between text-gray-400">
-                  <span>Ara Toplam</span>
-                  <span>₺{subtotal.toFixed(2)}</span>
+                  <span>{t('checkout.subtotal')}</span>
+                  <span>{formatPrice(subtotal, i18n.language)}</span>
                 </div>
                 {discount > 0 && (
                   <div className="flex justify-between text-green-500">
-                    <span>İndirim</span>
-                    <span>-₺{discount.toFixed(2)}</span>
+                    <span>{t('checkout.discount')}</span>
+                    <span>-{formatPrice(discount, i18n.language)}</span>
                   </div>
                 )}
                 <div className="flex justify-between text-gray-400">
-                  <span>Kargo</span>
-                  <span>{shipping === 0 ? 'Ücretsiz' : `₺${shipping.toFixed(2)}`}</span>
+                  <span>{t('cart.shipping')}</span>
+                  <span>{shipping === 0 ? t('checkout.shippingFree') : formatPrice(shipping, i18n.language)}</span>
                 </div>
                 <div className="flex justify-between text-white font-bold text-lg pt-3 border-t border-white border-opacity-10">
-                  <span>Toplam</span>
-                  <span className="text-mea-gold">₺{total.toFixed(2)}</span>
+                  <span>{t('cart.total')}</span>
+                  <span className="text-mea-gold">{formatPrice(total, i18n.language)}</span>
                 </div>
               </div>
 
@@ -611,15 +615,15 @@ export default function CheckoutPage() {
                 disabled={loading}
                 className="btn-primary w-full py-4 text-lg"
               >
-                {loading ? 'İşleniyor...' : 'Siparişi Tamamla'}
+                {loading ? t('checkout.processing') : t('checkout.completeOrder')}
               </button>
 
               <p className="text-gray-400 text-xs text-center mt-4">
-                Siparişinizi tamamlayarak{' '}
+                {t('checkout.privacyAgreement')}{' '}
                 <a href="/privacy" className="text-mea-gold hover:underline">
-                  Gizlilik Politikası
+                  {t('checkout.privacyPolicy')}
                 </a>
-                &apos;nı kabul etmiş olursunuz.
+                {t('checkout.privacyAccept')}
               </p>
             </motion.div>
           </div>
