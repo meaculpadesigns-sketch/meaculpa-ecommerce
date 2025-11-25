@@ -62,12 +62,26 @@ export async function authenticateAdmin(username: string, password: string): Pro
         }));
 
         // Sign in to Firebase Auth anonymously to enable Storage uploads
-        try {
-          await signInAnonymously(auth);
-          console.log('✅ Admin signed in to Firebase Auth for storage access');
-        } catch (firebaseError) {
-          console.error('⚠️ Firebase Auth sign-in failed:', firebaseError);
-          // Continue anyway - admin session is still valid for page access
+        // Try multiple times with delay for Chrome compatibility
+        let signInSuccess = false;
+        for (let attempt = 0; attempt < 3; attempt++) {
+          try {
+            await signInAnonymously(auth);
+            console.log('✅ Admin signed in to Firebase Auth for storage access');
+            signInSuccess = true;
+            break;
+          } catch (firebaseError: any) {
+            console.error(`⚠️ Firebase Auth sign-in attempt ${attempt + 1} failed:`, firebaseError?.message);
+            if (attempt < 2) {
+              // Wait before retry
+              await new Promise(resolve => setTimeout(resolve, 500));
+            }
+          }
+        }
+
+        if (!signInSuccess) {
+          console.error('⚠️ All Firebase Auth sign-in attempts failed. Storage uploads may not work.');
+          alert('Uyarı: Firebase Auth başarısız oldu. Görseller yüklenemeyebilir. Lütfen sayfayı yenileyip tekrar deneyin.');
         }
       }
       return true;
