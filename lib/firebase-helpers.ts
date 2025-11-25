@@ -13,7 +13,7 @@ import {
   Timestamp,
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
-import { db, storage } from './firebase';
+import { db, storage, auth } from './firebase';
 import { Product, Order, User, Creation, DesignRequest, Message, Coupon, Review, Story } from '@/types';
 
 // Products
@@ -359,15 +359,29 @@ export async function uploadFile(file: File, path: string): Promise<string> {
   try {
     console.log('🔵 Starting upload:', { fileName: file.name, path, fileSize: file.size });
     console.log('🔵 Storage instance:', storage);
+    console.log('🔵 Current user:', auth.currentUser?.uid);
 
     if (!storage) {
       throw new Error('Storage is not initialized');
     }
 
+    // Check if user is authenticated
+    if (!auth.currentUser) {
+      throw new Error('User must be authenticated to upload files');
+    }
+
     const storageRef = ref(storage, path);
     console.log('🔵 Storage ref created:', storageRef.toString());
 
-    await uploadBytes(storageRef, file);
+    // Add metadata with custom token
+    const metadata = {
+      customMetadata: {
+        uploadedBy: auth.currentUser.uid,
+        uploadedAt: new Date().toISOString(),
+      },
+    };
+
+    await uploadBytes(storageRef, file, metadata);
     console.log('✅ Upload complete, getting download URL...');
 
     const url = await getDownloadURL(storageRef);
