@@ -67,6 +67,9 @@ export default function Navbar() {
     { name: t('nav.carnivals'), href: '/carnivals' },
     { name: t('nav.designRequest'), href: '/design-request' },
     { name: t('nav.tryOn'), href: '/try-on' },
+    { name: t('nav.contact'), href: '/contact' },
+    { name: t('nav.faq'), href: '/faq' },
+    { name: t('nav.orderTracking'), href: '/order-tracking' },
   ];
 
   return (
@@ -97,7 +100,7 @@ export default function Navbar() {
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-1">
-              {navItems.slice(0, 5).map((item) => (
+              {navItems.slice(0, 7).map((item) => (
                 <div
                   key={item.href}
                   className="relative"
@@ -248,7 +251,7 @@ export default function Navbar() {
         <div className="hidden lg:block border-t border-white border-opacity-10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-center space-x-6 h-12">
-              {navItems.slice(5).map((item) => (
+              {navItems.slice(7).map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
