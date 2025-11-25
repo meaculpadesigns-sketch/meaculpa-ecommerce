@@ -154,7 +154,7 @@ export default function AdminSettingsPage() {
                   type="text"
                   value={generalSettings.siteName}
                   onChange={(e) => setGeneralSettings({ ...generalSettings, siteName: e.target.value })}
-                  className="input-field w-full"
+                  className="admin-input w-full"
                 />
               </div>
               <div>
@@ -165,7 +165,7 @@ export default function AdminSettingsPage() {
                   type="text"
                   value={generalSettings.siteUrl}
                   onChange={(e) => setGeneralSettings({ ...generalSettings, siteUrl: e.target.value })}
-                  className="input-field w-full"
+                  className="admin-input w-full"
                 />
               </div>
               <div>
@@ -175,7 +175,7 @@ export default function AdminSettingsPage() {
                 <select
                   value={generalSettings.defaultLanguage}
                   onChange={(e) => setGeneralSettings({ ...generalSettings, defaultLanguage: e.target.value })}
-                  className="input-field w-full"
+                  className="admin-input w-full"
                 >
                   <option value="tr">Türkçe</option>
                   <option value="en">English</option>
@@ -251,7 +251,7 @@ export default function AdminSettingsPage() {
                   type="email"
                   value={contactSettings.email}
                   onChange={(e) => setContactSettings({ ...contactSettings, email: e.target.value })}
-                  className="input-field w-full"
+                  className="admin-input w-full"
                 />
               </div>
               <div>
@@ -263,7 +263,7 @@ export default function AdminSettingsPage() {
                   type="tel"
                   value={contactSettings.phone}
                   onChange={(e) => setContactSettings({ ...contactSettings, phone: e.target.value })}
-                  className="input-field w-full"
+                  className="admin-input w-full"
                 />
               </div>
               <div>
@@ -275,7 +275,7 @@ export default function AdminSettingsPage() {
                   type="text"
                   value={contactSettings.address}
                   onChange={(e) => setContactSettings({ ...contactSettings, address: e.target.value })}
-                  className="input-field w-full"
+                  className="admin-input w-full"
                 />
               </div>
               <div>
@@ -284,7 +284,7 @@ export default function AdminSettingsPage() {
                   type="text"
                   value={contactSettings.instagram}
                   onChange={(e) => setContactSettings({ ...contactSettings, instagram: e.target.value })}
-                  className="input-field w-full"
+                  className="admin-input w-full"
                 />
               </div>
               <div>
@@ -295,7 +295,7 @@ export default function AdminSettingsPage() {
                   type="text"
                   value={contactSettings.workingHoursTR}
                   onChange={(e) => setContactSettings({ ...contactSettings, workingHoursTR: e.target.value })}
-                  className="input-field w-full"
+                  className="admin-input w-full"
                 />
               </div>
               <div>
@@ -306,7 +306,7 @@ export default function AdminSettingsPage() {
                   type="text"
                   value={contactSettings.workingHoursEN}
                   onChange={(e) => setContactSettings({ ...contactSettings, workingHoursEN: e.target.value })}
-                  className="input-field w-full"
+                  className="admin-input w-full"
                 />
               </div>
               <button className="btn-primary flex items-center gap-2 w-full md:w-auto">
@@ -336,7 +336,7 @@ export default function AdminSettingsPage() {
                   type="number"
                   value={shippingSettings.freeShippingThreshold}
                   onChange={(e) => setShippingSettings({ ...shippingSettings, freeShippingThreshold: Number(e.target.value) })}
-                  className="input-field w-full"
+                  className="admin-input w-full"
                 />
               </div>
               <div>
@@ -347,7 +347,7 @@ export default function AdminSettingsPage() {
                   type="number"
                   value={shippingSettings.domesticShippingFee}
                   onChange={(e) => setShippingSettings({ ...shippingSettings, domesticShippingFee: Number(e.target.value) })}
-                  className="input-field w-full"
+                  className="admin-input w-full"
                 />
               </div>
               <div>
@@ -358,7 +358,7 @@ export default function AdminSettingsPage() {
                   type="text"
                   value={shippingSettings.estimatedDeliveryDays}
                   onChange={(e) => setShippingSettings({ ...shippingSettings, estimatedDeliveryDays: e.target.value })}
-                  className="input-field w-full"
+                  className="admin-input w-full"
                 />
               </div>
               <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
@@ -408,7 +408,7 @@ export default function AdminSettingsPage() {
                 <select
                   value={paymentSettings.currency}
                   onChange={(e) => setPaymentSettings({ ...paymentSettings, currency: e.target.value })}
-                  className="input-field w-full"
+                  className="admin-input w-full"
                 >
                   <option value="TRY">TRY (₺)</option>
                   <option value="USD">USD ($)</option>
@@ -423,7 +423,7 @@ export default function AdminSettingsPage() {
                   type="number"
                   value={paymentSettings.taxRate}
                   onChange={(e) => setPaymentSettings({ ...paymentSettings, taxRate: Number(e.target.value) })}
-                  className="input-field w-full"
+                  className="admin-input w-full"
                 />
               </div>
               <div className="space-y-3">

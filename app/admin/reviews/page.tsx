@@ -193,7 +193,7 @@ export default function AdminReviewsPage() {
                 placeholder={isTurkish ? 'Ara...' : 'Search...'}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="input-field pl-10 w-full"
+                className="admin-input pl-10 w-full"
               />
             </div>
             <div className="flex items-center gap-2">
@@ -201,7 +201,7 @@ export default function AdminReviewsPage() {
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value as any)}
-                className="input-field"
+                className="admin-input"
               >
                 <option value="all">{isTurkish ? 'Tüm Durumlar' : 'All Statuses'}</option>
                 <option value="pending">{isTurkish ? 'Bekleyen' : 'Pending'}</option>

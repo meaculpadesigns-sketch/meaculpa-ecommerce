@@ -167,7 +167,7 @@ export default function AdminOrdersPage() {
                 placeholder="Sipariş numarası, müşteri adı veya e-posta ile ara..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="input-field pl-10"
+                className="admin-input pl-10"
               />
             </div>
 
@@ -176,7 +176,7 @@ export default function AdminOrdersPage() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value as OrderStatus | 'all')}
-                className="input-field pl-10"
+                className="admin-input pl-10"
               >
                 <option value="all">Tüm Durumlar</option>
                 <option value="pending">Beklemede</option>

@@ -283,7 +283,7 @@ export default function AdminFabricLinksPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="input-field"
+                    className="admin-input"
                     placeholder="Örn: İpek Saten Kumaş"
                     required
                   />
@@ -300,7 +300,7 @@ export default function AdminFabricLinksPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, supplier: e.target.value })
                       }
-                      className="input-field"
+                      className="admin-input"
                       placeholder="Tedarikçi adı"
                       required
                     />
@@ -316,7 +316,7 @@ export default function AdminFabricLinksPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, color: e.target.value })
                       }
-                      className="input-field"
+                      className="admin-input"
                       placeholder="Renk"
                       required
                     />
@@ -334,7 +334,7 @@ export default function AdminFabricLinksPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, material: e.target.value })
                       }
-                      className="input-field"
+                      className="admin-input"
                       placeholder="Örn: %100 İpek"
                       required
                     />
@@ -350,7 +350,7 @@ export default function AdminFabricLinksPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, price: Number(e.target.value) })
                       }
-                      className="input-field"
+                      className="admin-input"
                       placeholder="0"
                       min="0"
                       step="0.01"
@@ -367,7 +367,7 @@ export default function AdminFabricLinksPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, description: e.target.value })
                     }
-                    className="input-field"
+                    className="admin-input"
                     rows={3}
                     placeholder="Kumaş hakkında notlar..."
                     required
@@ -384,7 +384,7 @@ export default function AdminFabricLinksPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, url: e.target.value })
                     }
-                    className="input-field"
+                    className="admin-input"
                     placeholder="https://..."
                     required
                   />

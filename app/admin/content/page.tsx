@@ -216,7 +216,7 @@ export default function AdminContentPage() {
                 <label className="block text-white mb-2">
                   {isTurkish ? 'Site Başlığı' : 'Site Title'}
                 </label>
-                <input type="text" defaultValue="Mea Culpa" className="input-field w-full" />
+                <input type="text" defaultValue="Mea Culpa" className="admin-input w-full" />
               </div>
               <div>
                 <label className="block text-white mb-2">
@@ -224,7 +224,7 @@ export default function AdminContentPage() {
                 </label>
                 <textarea
                   defaultValue="Doğu'nun ilhamıyla, modern yaşamın içinde. Her karar bir yolculuktur."
-                  className="input-field w-full"
+                  className="admin-input w-full"
                   rows={3}
                 />
               </div>
@@ -235,19 +235,19 @@ export default function AdminContentPage() {
                 <input
                   type="text"
                   defaultValue="kimono, set, tasarım, el işi, moda, organik kumaş, el boyaması"
-                  className="input-field w-full"
+                  className="admin-input w-full"
                 />
               </div>
               <div>
                 <label className="block text-white mb-2">Google Analytics ID</label>
-                <input type="text" placeholder="G-XXXXXXXXXX" className="input-field w-full" />
+                <input type="text" placeholder="G-XXXXXXXXXX" className="admin-input w-full" />
               </div>
               <div>
                 <label className="block text-white mb-2">Google Search Console</label>
                 <input
                   type="text"
                   placeholder="meta content..."
-                  className="input-field w-full"
+                  className="admin-input w-full"
                 />
               </div>
               <button className="btn-primary flex items-center gap-2">
@@ -307,7 +307,7 @@ export default function AdminContentPage() {
                     type="text"
                     value={editingPage.title}
                     onChange={(e) => setEditingPage({ ...editingPage, title: e.target.value })}
-                    className="input-field w-full"
+                    className="admin-input w-full"
                   />
                 </div>
                 <div>
@@ -316,7 +316,7 @@ export default function AdminContentPage() {
                     type="text"
                     value={editingPage.metaTitle}
                     onChange={(e) => setEditingPage({ ...editingPage, metaTitle: e.target.value })}
-                    className="input-field w-full"
+                    className="admin-input w-full"
                   />
                 </div>
                 <div>
@@ -324,7 +324,7 @@ export default function AdminContentPage() {
                   <textarea
                     value={editingPage.metaDescription}
                     onChange={(e) => setEditingPage({ ...editingPage, metaDescription: e.target.value })}
-                    className="input-field w-full"
+                    className="admin-input w-full"
                     rows={3}
                   />
                 </div>

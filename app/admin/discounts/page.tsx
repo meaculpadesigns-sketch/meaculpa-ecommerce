@@ -190,7 +190,7 @@ export default function AdminDiscountsPage() {
               placeholder="Ürün ara..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="input-field"
+              className="admin-input"
             />
             <button
               onClick={applyBulkDiscount}
@@ -206,7 +206,7 @@ export default function AdminDiscountsPage() {
             <select
               value={discountType}
               onChange={(e) => setDiscountType(e.target.value as 'percentage' | 'fixed')}
-              className="input-field"
+              className="admin-input"
             >
               <option value="percentage">Yüzdesel İndirim</option>
               <option value="fixed">Sabit Fiyat</option>
@@ -217,7 +217,7 @@ export default function AdminDiscountsPage() {
               value={discountValue}
               onChange={(e) => setDiscountValue(Number(e.target.value))}
               placeholder={discountType === 'percentage' ? 'İndirim % (örn: 20)' : 'Yeni fiyat (örn: 999)'}
-              className="input-field"
+              className="admin-input"
               min="0"
               max={discountType === 'percentage' ? 100 : undefined}
             />
@@ -344,7 +344,7 @@ export default function AdminDiscountsPage() {
                   <select
                     value={discountType}
                     onChange={(e) => setDiscountType(e.target.value as 'percentage' | 'fixed')}
-                    className="input-field"
+                    className="admin-input"
                   >
                     <option value="percentage">Yüzdesel İndirim</option>
                     <option value="fixed">Sabit Fiyat</option>
@@ -359,7 +359,7 @@ export default function AdminDiscountsPage() {
                     type="number"
                     value={discountValue}
                     onChange={(e) => setDiscountValue(Number(e.target.value))}
-                    className="input-field"
+                    className="admin-input"
                     placeholder={discountType === 'percentage' ? '20' : '999'}
                     min="0"
                     max={discountType === 'percentage' ? 100 : undefined}

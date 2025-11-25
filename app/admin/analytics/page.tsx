@@ -184,7 +184,7 @@ export default function AdminAnalyticsPage() {
             <select
               value={timeRange}
               onChange={(e) => setTimeRange(e.target.value as any)}
-              className="input-field"
+              className="admin-input"
             >
               <option value="7d">{isTurkish ? 'Son 7 Gün' : 'Last 7 Days'}</option>
               <option value="30d">{isTurkish ? 'Son 30 Gün' : 'Last 30 Days'}</option>

@@ -568,7 +568,7 @@ export default function AdminProducts() {
                         type="text"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="input-field"
+                        className="admin-input"
                         required
                       />
                     </div>
@@ -580,7 +580,7 @@ export default function AdminProducts() {
                         type="text"
                         value={formData.nameEn}
                         onChange={(e) => setFormData({ ...formData, nameEn: e.target.value })}
-                        className="input-field"
+                        className="admin-input"
                         required
                       />
                     </div>
@@ -596,7 +596,7 @@ export default function AdminProducts() {
                           const newCategory = e.target.value as 'kimono' | 'set';
                           setFormData({ ...formData, category: newCategory, subcategory: undefined, thirdLevelCategory: undefined });
                         }}
-                        className="input-field"
+                        className="admin-input"
                         required
                       >
                         <option value="kimono">Kimono</option>
@@ -610,7 +610,7 @@ export default function AdminProducts() {
                         onChange={(e) => {
                           setFormData({ ...formData, subcategory: e.target.value as any, thirdLevelCategory: undefined });
                         }}
-                        className="input-field"
+                        className="admin-input"
                       >
                         <option value="">Seçiniz</option>
                         {(formData.category === 'kimono' ? kimonoSubcategories : setSecondLevelCategories).map((sub) => (
@@ -626,7 +626,7 @@ export default function AdminProducts() {
                         <select
                           value={formData.thirdLevelCategory || ''}
                           onChange={(e) => setFormData({ ...formData, thirdLevelCategory: e.target.value as any })}
-                          className="input-field"
+                          className="admin-input"
                         >
                           <option value="">Seçiniz</option>
                           {getThirdLevelCategories(formData.subcategory as 'kreasyonlar' | 'setler').map((third) => (
@@ -647,7 +647,7 @@ export default function AdminProducts() {
                     <select
                       value={formData.collection || ''}
                       onChange={(e) => setFormData({ ...formData, collection: e.target.value })}
-                      className="input-field"
+                      className="admin-input"
                     >
                       <option value="">Seçiniz</option>
                       {creations.map((creation) => (
@@ -678,7 +678,7 @@ export default function AdminProducts() {
                             priceEUR: convertCurrency(tryPrice, 'EUR'),
                           });
                         }}
-                        className="input-field"
+                        className="admin-input"
                         required
                       />
                     </div>
@@ -689,7 +689,7 @@ export default function AdminProducts() {
                         step="0.01"
                         value={formData.priceUSD}
                         onChange={(e) => setFormData({ ...formData, priceUSD: parseFloat(e.target.value) })}
-                        className="input-field bg-gray-700"
+                        className="admin-input bg-gray-700"
                         placeholder="Otomatik"
                       />
                       <p className="text-xs text-gray-400 mt-1">TL fiyat girilince otomatik hesaplanır</p>
@@ -701,7 +701,7 @@ export default function AdminProducts() {
                         step="0.01"
                         value={formData.priceEUR}
                         onChange={(e) => setFormData({ ...formData, priceEUR: parseFloat(e.target.value) })}
-                        className="input-field bg-gray-700"
+                        className="admin-input bg-gray-700"
                         placeholder="Otomatik"
                       />
                       <p className="text-xs text-gray-400 mt-1">TL fiyat girilince otomatik hesaplanır</p>
@@ -718,7 +718,7 @@ export default function AdminProducts() {
                       step="0.01"
                       value={formData.oldPrice}
                       onChange={(e) => setFormData({ ...formData, oldPrice: parseFloat(e.target.value) })}
-                      className="input-field"
+                      className="admin-input"
                       placeholder="Opsiyonel"
                     />
                   </div>
@@ -732,7 +732,7 @@ export default function AdminProducts() {
                       <textarea
                         value={formData.description}
                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                        className="input-field"
+                        className="admin-input"
                         rows={3}
                         required
                       />
@@ -744,7 +744,7 @@ export default function AdminProducts() {
                       <textarea
                         value={formData.descriptionEn}
                         onChange={(e) => setFormData({ ...formData, descriptionEn: e.target.value })}
-                        className="input-field"
+                        className="admin-input"
                         rows={3}
                         required
                       />
@@ -760,7 +760,7 @@ export default function AdminProducts() {
                       <textarea
                         value={formData.story}
                         onChange={(e) => setFormData({ ...formData, story: e.target.value })}
-                        className="input-field"
+                        className="admin-input"
                         rows={3}
                       />
                     </div>
@@ -771,7 +771,7 @@ export default function AdminProducts() {
                       <textarea
                         value={formData.storyEn}
                         onChange={(e) => setFormData({ ...formData, storyEn: e.target.value })}
-                        className="input-field"
+                        className="admin-input"
                         rows={3}
                       />
                     </div>
@@ -798,7 +798,7 @@ export default function AdminProducts() {
                             value={size.size}
                             onChange={(e) => updateSize(index, 'size', e.target.value)}
                             placeholder="Beden (S, M, L, vb.)"
-                            className="input-field flex-1"
+                            className="admin-input flex-1"
                           />
                           <label className="flex items-center gap-2 text-gray-900">
                             <input
@@ -847,7 +847,7 @@ export default function AdminProducts() {
                         value={formData.estimatedDelivery}
                         onChange={(e) => setFormData({ ...formData, estimatedDelivery: e.target.value })}
                         placeholder="Örn: 3-5 gün"
-                        className="input-field"
+                        className="admin-input"
                       />
                     </div>
                   </div>

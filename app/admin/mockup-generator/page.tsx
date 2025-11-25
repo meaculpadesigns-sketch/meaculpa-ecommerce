@@ -178,7 +178,7 @@ export default function AdminMockupGeneratorPage() {
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder="Mock-up'ın nasıl olmasını istediğinizi detaylı olarak açıklayın. Örneğin: 'Bu kimononun mockupını oluştur, arka plan minimalist beyaz olsun, ürün ortada ve hafif gölgeli görünsün'"
-                className="input-field"
+                className="admin-input"
                 rows={8}
               />
 

@@ -261,7 +261,7 @@ export default function AdminCreationsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="input-field"
+                    className="admin-input"
                     placeholder="Örn: Yazlık Koleksiyon 2024"
                     required
                   />
@@ -276,7 +276,7 @@ export default function AdminCreationsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, description: e.target.value })
                     }
-                    className="input-field"
+                    className="admin-input"
                     rows={3}
                     placeholder="Kısa açıklama..."
                     required
@@ -292,7 +292,7 @@ export default function AdminCreationsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, story: e.target.value })
                     }
-                    className="input-field"
+                    className="admin-input"
                     rows={4}
                     placeholder="Bu koleksiyonun hikayesi..."
                   />
@@ -310,7 +310,7 @@ export default function AdminCreationsPage() {
                         season: e.target.value as any,
                       })
                     }
-                    className="input-field"
+                    className="admin-input"
                     required
                   >
                     <option value="all">Tüm Sezonlar</option>

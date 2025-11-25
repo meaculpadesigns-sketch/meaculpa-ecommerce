@@ -277,7 +277,7 @@ export default function AdminCarnivalsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="input-field"
+                    className="admin-input"
                     required
                   />
                 </div>
@@ -294,7 +294,7 @@ export default function AdminCarnivalsPage() {
                         setFormData({ ...formData, date: e.target.value })
                       }
                       placeholder="15-20 Haziran 2024"
-                      className="input-field"
+                      className="admin-input"
                       required
                     />
                   </div>
@@ -310,7 +310,7 @@ export default function AdminCarnivalsPage() {
                         setFormData({ ...formData, location: e.target.value })
                       }
                       placeholder="İstanbul, Türkiye"
-                      className="input-field"
+                      className="admin-input"
                       required
                     />
                   </div>
@@ -325,7 +325,7 @@ export default function AdminCarnivalsPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, description: e.target.value })
                     }
-                    className="input-field"
+                    className="admin-input"
                     rows={4}
                     required
                   />
@@ -343,7 +343,7 @@ export default function AdminCarnivalsPage() {
                         status: e.target.value as 'upcoming' | 'past',
                       })
                     }
-                    className="input-field"
+                    className="admin-input"
                     required
                   >
                     <option value="upcoming">Yakında</option>

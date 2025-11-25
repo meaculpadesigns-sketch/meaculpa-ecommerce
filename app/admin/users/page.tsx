@@ -186,7 +186,7 @@ export default function AdminUsersPage() {
                 placeholder="Kullanıcı ara (email, isim)..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="input-field pl-10"
+                className="admin-input pl-10"
               />
             </div>
 
@@ -336,7 +336,7 @@ export default function AdminUsersPage() {
                     onChange={(e) =>
                       setCouponData({ ...couponData, code: e.target.value.toUpperCase() })
                     }
-                    className="input-field"
+                    className="admin-input"
                     placeholder="MEAVIP20"
                   />
                 </div>
@@ -351,7 +351,7 @@ export default function AdminUsersPage() {
                     onChange={(e) =>
                       setCouponData({ ...couponData, discount: Number(e.target.value) })
                     }
-                    className="input-field"
+                    className="admin-input"
                     min="0"
                     max="100"
                     placeholder="20"
@@ -368,7 +368,7 @@ export default function AdminUsersPage() {
                     onChange={(e) =>
                       setCouponData({ ...couponData, expiryDate: e.target.value })
                     }
-                    className="input-field"
+                    className="admin-input"
                   />
                 </div>
 

@@ -192,14 +192,14 @@ export default function AdminMessagesPage() {
                 placeholder="Mesaj ara..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="input-field pl-10"
+                className="admin-input pl-10"
               />
             </div>
 
             <select
               value={filterType}
               onChange={(e) => setFilterType(e.target.value as any)}
-              className="input-field"
+              className="admin-input"
             >
               <option value="all">Tüm Tipler</option>
               <option value="contact">İletişim</option>
@@ -211,7 +211,7 @@ export default function AdminMessagesPage() {
             <select
               value={filterRead}
               onChange={(e) => setFilterRead(e.target.value as any)}
-              className="input-field"
+              className="admin-input"
             >
               <option value="all">Tümü</option>
               <option value="unread">Okunmamış</option>
