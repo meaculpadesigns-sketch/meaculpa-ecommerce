@@ -208,14 +208,17 @@ export interface Review {
   productId: string;
   userId: string;
   userName: string;
+  name: string;
   rating: number;
   comment: string;
+  commentEn?: string;
   images?: string[];
   verified: boolean;
   helpful: number;
   createdAt: Date;
   status?: 'pending' | 'approved' | 'rejected';
   isVisible?: boolean;
+  isApproved?: boolean;
 }
 
 export interface Story {
