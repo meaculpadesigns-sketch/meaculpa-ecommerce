@@ -29,12 +29,54 @@ export default function AdminMockupGeneratorPage() {
       }
     }
 
-    setImages([...images, ...files]);
-
+    // Compress images before adding
     files.forEach(file => {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setImagePreviews(prev => [...prev, e.target?.result as string]);
+        const img = new Image();
+        img.onload = () => {
+          // Compress image
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+
+          // Resize if too large (max 1200px width)
+          const maxWidth = 1200;
+          if (width > maxWidth) {
+            height = (height * maxWidth) / width;
+            width = maxWidth;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx?.drawImage(img, 0, 0, width, height);
+
+          // Convert to blob with compression
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                // Create compressed file
+                const compressedFile = new File([blob], file.name, {
+                  type: 'image/jpeg',
+                  lastModified: Date.now(),
+                });
+
+                setImages(prev => [...prev, compressedFile]);
+
+                // Create preview
+                const previewReader = new FileReader();
+                previewReader.onload = (e) => {
+                  setImagePreviews(prev => [...prev, e.target?.result as string]);
+                };
+                previewReader.readAsDataURL(compressedFile);
+              }
+            },
+            'image/jpeg',
+            0.8
+          );
+        };
+        img.src = e.target?.result as string;
       };
       reader.readAsDataURL(file);
     });
