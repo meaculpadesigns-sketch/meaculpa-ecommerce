@@ -121,41 +121,17 @@ export default function Navbar() {
                       className="absolute top-full left-0 pt-8 pb-32 z-50"
                     >
                       {item.href.includes('kimono') ? (
-                        // Kimono: 2-2-1 ters piramit düzeni
-                        <div className="glass rounded-xl border border-white border-opacity-10 shadow-xl p-6 w-96">
-                          <div className="grid grid-cols-2 gap-3 mb-3">
-                            {kimonoSubcategories.slice(0, 2).map((sub) => (
-                              <Link
-                                key={sub.key}
-                                href={`/products?category=kimono&subcategory=${sub.key}`}
-                                className="block px-4 py-3 text-gray-300 hover:bg-white hover:bg-opacity-10 hover:text-white transition-colors rounded-lg"
-                              >
-                                <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? sub.name : sub.nameEn}</div>
-                              </Link>
-                            ))}
-                          </div>
-                          <div className="grid grid-cols-2 gap-3 mb-3">
-                            {kimonoSubcategories.slice(2, 4).map((sub) => (
-                              <Link
-                                key={sub.key}
-                                href={`/products?category=kimono&subcategory=${sub.key}`}
-                                className="block px-4 py-3 text-gray-300 hover:bg-white hover:bg-opacity-10 hover:text-white transition-colors rounded-lg"
-                              >
-                                <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? sub.name : sub.nameEn}</div>
-                              </Link>
-                            ))}
-                          </div>
-                          <div className="flex justify-center">
-                            {kimonoSubcategories.slice(4, 5).map((sub) => (
-                              <Link
-                                key={sub.key}
-                                href={`/products?category=kimono&subcategory=${sub.key}`}
-                                className="block px-4 py-3 text-gray-300 hover:bg-white hover:bg-opacity-10 hover:text-white transition-colors rounded-lg"
-                              >
-                                <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? sub.name : sub.nameEn}</div>
-                              </Link>
-                            ))}
-                          </div>
+                        // Kimono: Tek sütun liste
+                        <div className="glass rounded-xl border border-white border-opacity-10 shadow-xl overflow-hidden min-w-[280px]">
+                          {kimonoSubcategories.map((sub) => (
+                            <Link
+                              key={sub.key}
+                              href={`/products?category=kimono&subcategory=${sub.key}`}
+                              className="block px-6 py-3 text-gray-300 hover:bg-white hover:bg-opacity-10 hover:text-white transition-colors border-b border-white border-opacity-5 last:border-0"
+                            >
+                              <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? sub.name : sub.nameEn}</div>
+                            </Link>
+                          ))}
                         </div>
                       ) : (
                         // Setler: 2. seviye yan yana, 3. seviye aşağı açılır
