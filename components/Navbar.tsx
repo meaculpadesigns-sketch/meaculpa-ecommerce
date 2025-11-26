@@ -67,9 +67,6 @@ export default function Navbar() {
     { name: t('nav.carnivals'), href: '/carnivals' },
     { name: t('nav.designRequest'), href: '/design-request' },
     { name: t('nav.tryOn'), href: '/try-on' },
-    { name: t('nav.contact'), href: '/contact' },
-    { name: t('nav.faq'), href: '/faq' },
-    { name: t('nav.orderTracking'), href: '/order-tracking' },
   ];
 
   return (
@@ -161,7 +158,7 @@ export default function Navbar() {
                           </div>
                         </div>
                       ) : (
-                        // Setler: 2. seviye yan yana, 3. seviye sağa açılır
+                        // Setler: 2. seviye yan yana, 3. seviye aşağı açılır
                         <div className="glass rounded-xl border border-white border-opacity-10 shadow-xl overflow-visible min-w-[400px]">
                           <div className="grid grid-cols-2 divide-x divide-white divide-opacity-10">
                             {setSecondLevelCategories.map((secondLevel) => (
@@ -169,8 +166,8 @@ export default function Navbar() {
                                 <div className="px-8 py-4 text-gray-300 hover:bg-white hover:bg-opacity-5 transition-colors cursor-pointer">
                                   <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? secondLevel.name : secondLevel.nameEn}</div>
                                 </div>
-                                {/* 3. seviye sağa açılan menü */}
-                                <div className="absolute left-full top-0 ml-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all z-50">
+                                {/* 3. seviye aşağı açılan menü */}
+                                <div className="absolute top-full left-0 mt-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all z-50">
                                   <div className="glass rounded-xl border border-white border-opacity-10 shadow-xl overflow-hidden w-64">
                                     {getThirdLevelCategories(secondLevel.key as 'kreasyonlar' | 'setler').map((third) => (
                                       <Link

@@ -28,7 +28,9 @@
       "Bash(git -C \"c:\\Users\\user\\Desktop\\meaculpa\" diff bba4c0f^..bba4c0f app/admin/products/page.tsx)",
       "Bash(del nul)",
       "Bash(npx tsc:*)",
-      "Bash(test:*)"
+      "Bash(test:*)",
+      "Bash(gh run:*)",
+      "Bash(git reset:*)"
     ],
     "deny": [],
     "ask": []

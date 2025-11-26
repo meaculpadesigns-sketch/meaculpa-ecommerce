@@ -120,7 +120,26 @@ function ProductsContent() {
     if (searchQuery) {
       return i18n.language === 'tr' ? `"${searchQuery}" için arama sonuçları` : `Search results for "${searchQuery}"`;
     }
+    if (thirdLevel) {
+      // 3. seviye kategori ismi
+      const thirdLevelCat = getThirdLevelCategories(subcategory as 'kreasyonlar' | 'setler').find(c => c.key === thirdLevel);
+      if (thirdLevelCat) {
+        return i18n.language === 'tr' ? thirdLevelCat.name : thirdLevelCat.nameEn;
+      }
+    }
     if (subcategory) {
+      // 2. seviye kategori ismi
+      if (category === 'set') {
+        const secondLevelCat = setSecondLevelCategories.find(c => c.key === subcategory);
+        if (secondLevelCat) {
+          return i18n.language === 'tr' ? secondLevelCat.name : secondLevelCat.nameEn;
+        }
+      } else if (category === 'kimono') {
+        const kimonoCat = kimonoSubcategories.find(c => c.key === subcategory);
+        if (kimonoCat) {
+          return i18n.language === 'tr' ? kimonoCat.name : kimonoCat.nameEn;
+        }
+      }
       return t(`categories.${subcategory}`);
     }
     if (category) {
