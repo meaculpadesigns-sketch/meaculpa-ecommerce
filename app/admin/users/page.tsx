@@ -227,7 +227,7 @@ export default function AdminUsersPage() {
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-mea-gold bg-opacity-20 flex items-center justify-center">
                           <span className="text-mea-gold font-bold">
-                            {user.firstName?.[0] || user.email[0].toUpperCase()}
+                            {(user.firstName && user.firstName[0]) || (user.email && user.email[0]?.toUpperCase()) || '?'}
                           </span>
                         </div>
                         <div>
@@ -315,7 +315,7 @@ export default function AdminUsersPage() {
 
         {/* Coupon Modal */}
         {showCouponModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 backdrop-blur-sm p-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-md p-4">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
