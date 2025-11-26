@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     // Get all uploaded images (limit to 3 images to avoid 413 error)
     const images: File[] = [];
     const MAX_IMAGES = 3;
-    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB per image
+    const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB per image
 
     for (let i = 0; i < MAX_IMAGES; i++) {
       const image = formData.get(`image${i}`) as File;
@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
         // Check file size
         if (image.size > MAX_FILE_SIZE) {
           return NextResponse.json(
-            { error: `Görsel ${i + 1} çok büyük. Maksimum 5MB olmalı.` },
+            { error: `Görsel ${i + 1} çok büyük. Maksimum 10MB olmalı.` },
             { status: 400 }
           );
         }

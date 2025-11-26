@@ -14,7 +14,7 @@ export default function AdminMockupGeneratorPage() {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     const MAX_IMAGES = 3;
-    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+    const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
     if (files.length + images.length > MAX_IMAGES) {
       alert(`Maksimum ${MAX_IMAGES} fotoğraf yükleyebilirsiniz`);
@@ -24,7 +24,7 @@ export default function AdminMockupGeneratorPage() {
     // Check file sizes
     for (const file of files) {
       if (file.size > MAX_FILE_SIZE) {
-        alert(`"${file.name}" çok büyük. Maksimum dosya boyutu 5MB olmalı.`);
+        alert(`"${file.name}" çok büyük. Maksimum dosya boyutu 10MB olmalı.`);
         return;
       }
     }
@@ -126,7 +126,7 @@ export default function AdminMockupGeneratorPage() {
                 Fotoğraflar ({images.length}/3)
               </h3>
               <p className="text-sm text-gray-400 mb-4">
-                Maksimum 3 fotoğraf, her biri 5MB'dan küçük olmalı
+                Maksimum 3 fotoğraf, her biri 10MB'a kadar
               </p>
 
               <div className="grid grid-cols-3 gap-4 mb-4">
@@ -170,7 +170,7 @@ export default function AdminMockupGeneratorPage() {
                   <p className="text-gray-400 text-sm text-center">
                     Tasarımlarınızın fotoğraflarını sürükleyin veya tıklayarak seçin
                     <br />
-                    (Maksimum 3 fotoğraf, her biri 5MB'dan küçük)
+                    (Maksimum 3 fotoğraf, her biri 10MB'a kadar)
                   </p>
                   <input
                     type="file"
