@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+const sharp = require('sharp');
 
 export async function POST(request: NextRequest) {
   try {
@@ -40,15 +41,26 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Convert images to base64
+    // Compress and convert images to base64
     const imageParts = await Promise.all(
       images.map(async (image) => {
         const bytes = await image.arrayBuffer();
-        const base64 = Buffer.from(bytes).toString('base64');
+
+        // Compress image using sharp (max 1200px width, quality 80)
+        const compressedBuffer = await sharp(Buffer.from(bytes))
+          .resize(1200, null, {
+            fit: 'inside',
+            withoutEnlargement: true
+          })
+          .jpeg({ quality: 80 })
+          .toBuffer();
+
+        const base64 = compressedBuffer.toString('base64');
+
         return {
           inlineData: {
             data: base64,
-            mimeType: image.type,
+            mimeType: 'image/jpeg',
           },
         };
       })
@@ -72,10 +84,8 @@ Arka plan, ışıklandırma, kompozisyon ve sunum önerilerini belirt.
     const response = await result.response;
     const mockupDescription = response.text();
 
-    // Convert first image to base64 for preview
-    const firstImageBytes = await images[0].arrayBuffer();
-    const firstImageBase64 = Buffer.from(firstImageBytes).toString('base64');
-    const previewUrl = `data:${images[0].type};base64,${firstImageBase64}`;
+    // Use the first compressed image as preview
+    const previewUrl = `data:image/jpeg;base64,${imageParts[0].inlineData.data}`;
 
     // For now, return the AI description
     // In production, you would use this description to generate actual mockup
