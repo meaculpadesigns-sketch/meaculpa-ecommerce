@@ -239,11 +239,12 @@ export default function AddressesPage() {
 
         {/* Modal */}
         {isModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-75 backdrop-blur-md p-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md p-4" style={{ backgroundColor: 'rgba(75, 85, 99, 0.75)' }}>
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-gray-800 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-700"
+              className="rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              style={{ backgroundColor: '#374151', border: '1px solid #4B5563' }}
             >
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-white">
