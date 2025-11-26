@@ -13,9 +13,20 @@ export default function AdminMockupGeneratorPage() {
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-    if (files.length + images.length > 10) {
-      alert('Maksimum 10 fotoğraf yükleyebilirsiniz');
+    const MAX_IMAGES = 3;
+    const MAX_FILE_SIZE = 1.5 * 1024 * 1024; // 1.5MB
+
+    if (files.length + images.length > MAX_IMAGES) {
+      alert(`Maksimum ${MAX_IMAGES} fotoğraf yükleyebilirsiniz`);
       return;
+    }
+
+    // Check file sizes
+    for (const file of files) {
+      if (file.size > MAX_FILE_SIZE) {
+        alert(`"${file.name}" çok büyük. Maksimum dosya boyutu 1.5MB olmalı.`);
+        return;
+      }
     }
 
     setImages([...images, ...files]);
@@ -112,8 +123,11 @@ export default function AdminMockupGeneratorPage() {
             {/* Image Upload */}
             <div className="glass rounded-2xl p-6">
               <h3 className="text-xl font-semibold text-white mb-4">
-                Fotoğraflar ({images.length}/10)
+                Fotoğraflar ({images.length}/3)
               </h3>
+              <p className="text-sm text-gray-400 mb-4">
+                Maksimum 3 fotoğraf, her biri 1.5MB'dan küçük olmalı
+              </p>
 
               <div className="grid grid-cols-3 gap-4 mb-4">
                 {imagePreviews.map((preview, index) => (
@@ -132,7 +146,7 @@ export default function AdminMockupGeneratorPage() {
                   </div>
                 ))}
 
-                {images.length < 10 && (
+                {images.length < 3 && (
                   <label className="aspect-square rounded-lg border-2 border-dashed border-gray-600 hover:border-mea-gold transition-colors cursor-pointer flex flex-col items-center justify-center">
                     <Plus size={32} className="text-gray-600 mb-2" />
                     <span className="text-xs text-gray-600">Ekle</span>
@@ -156,7 +170,7 @@ export default function AdminMockupGeneratorPage() {
                   <p className="text-gray-400 text-sm text-center">
                     Tasarımlarınızın fotoğraflarını sürükleyin veya tıklayarak seçin
                     <br />
-                    (Maksimum 10 fotoğraf)
+                    (Maksimum 3 fotoğraf, her biri 1.5MB'dan küçük)
                   </p>
                   <input
                     type="file"

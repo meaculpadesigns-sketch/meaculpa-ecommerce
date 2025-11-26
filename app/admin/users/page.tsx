@@ -315,11 +315,11 @@ export default function AdminUsersPage() {
 
         {/* Coupon Modal */}
         {showCouponModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-md p-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-75 backdrop-blur-md p-4">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="glass rounded-2xl p-8 max-w-md w-full"
+              className="bg-gray-800 rounded-2xl p-8 max-w-md w-full border border-gray-700"
             >
               <h2 className="text-2xl font-bold text-white mb-6">
                 {selectedUser ? `${selectedUser.firstName} için Kupon Oluştur` : 'Toplu Kupon Oluştur'}

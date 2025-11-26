@@ -14,11 +14,23 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const prompt = formData.get('prompt') as string;
 
-    // Get all uploaded images
+    // Get all uploaded images (limit to 3 images to avoid 413 error)
     const images: File[] = [];
-    for (let i = 0; i < 10; i++) {
+    const MAX_IMAGES = 3;
+    const MAX_FILE_SIZE = 1.5 * 1024 * 1024; // 1.5MB per image
+
+    for (let i = 0; i < MAX_IMAGES; i++) {
       const image = formData.get(`image${i}`) as File;
-      if (image) images.push(image);
+      if (image) {
+        // Check file size
+        if (image.size > MAX_FILE_SIZE) {
+          return NextResponse.json(
+            { error: `Görsel ${i + 1} çok büyük. Maksimum 1.5MB olmalı.` },
+            { status: 400 }
+          );
+        }
+        images.push(image);
+      }
     }
 
     if (!prompt || images.length === 0) {

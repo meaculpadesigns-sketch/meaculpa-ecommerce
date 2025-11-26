@@ -4,13 +4,17 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Upload, Camera, Sparkles, AlertCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { getProducts } from '@/lib/firebase-helpers';
+import { Product } from '@/types';
 
 export default function TryOnPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [userImage, setUserImage] = useState<string | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<string | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loadingProducts, setLoadingProducts] = useState(true);
 
   useEffect(() => {
     document.body.className = 'bg-light text-dark-page';
@@ -19,11 +23,22 @@ export default function TryOnPage() {
     };
   }, []);
 
-  // Sample products for try-on
-  const products = [
-    { id: '1', name: t('tryOn.product1'), image: '/images/kimono-1.jpg' },
-    { id: '2', name: t('tryOn.product3'), image: '/images/set-1.jpg' },
-  ];
+  useEffect(() => {
+    // Load real products from Firebase
+    const loadProducts = async () => {
+      try {
+        const allProducts = await getProducts();
+        // Get first 12 products with images
+        const productsWithImages = allProducts.filter(p => p.images && p.images.length > 0).slice(0, 12);
+        setProducts(productsWithImages);
+      } catch (error) {
+        console.error('Error loading products:', error);
+      } finally {
+        setLoadingProducts(false);
+      }
+    };
+    loadProducts();
+  }, []);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -144,23 +159,38 @@ export default function TryOnPage() {
               <h2 className="text-2xl font-bold text-white mb-4">
                 2. {t('tryOn.step2Title')}
               </h2>
-              <div className="grid grid-cols-3 gap-3">
-                {products.map((product) => (
-                  <button
-                    key={product.id}
-                    onClick={() => setSelectedProduct(product.id)}
-                    className={`aspect-square bg-zinc-800 rounded-lg overflow-hidden border-2 transition-all ${
-                      selectedProduct === product.id
-                        ? 'border-mea-gold scale-105'
-                        : 'border-transparent hover:border-gray-600'
-                    }`}
-                  >
-                    <div className="w-full h-full flex items-center justify-center text-white text-xs p-2 text-center">
-                      {product.name}
-                    </div>
-                  </button>
-                ))}
-              </div>
+              {loadingProducts ? (
+                <div className="text-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-4 border-mea-gold border-t-transparent mx-auto"></div>
+                  <p className="text-gray-400 mt-2">{t('common.loading')}</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-3 gap-3 max-h-[400px] overflow-y-auto">
+                  {products.map((product) => (
+                    <button
+                      key={product.id}
+                      onClick={() => setSelectedProduct(product.id)}
+                      className={`aspect-square bg-zinc-800 rounded-lg overflow-hidden border-2 transition-all ${
+                        selectedProduct === product.id
+                          ? 'border-mea-gold scale-105'
+                          : 'border-transparent hover:border-gray-600'
+                      }`}
+                    >
+                      {product.images && product.images[0] ? (
+                        <img
+                          src={product.images[0]}
+                          alt={i18n.language === 'tr' ? product.name : product.nameEn}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-white text-xs p-2 text-center">
+                          {i18n.language === 'tr' ? product.name : product.nameEn}
+                        </div>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Try On Button */}
