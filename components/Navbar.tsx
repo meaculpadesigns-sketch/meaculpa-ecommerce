@@ -88,15 +88,11 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            {/* Brand Logo Icon */}
-            <Link href="/" className="flex items-center">
-              <Image
-                src="/images/logo_icon.png"
-                alt="MEA CULPA"
-                width={40}
-                height={40}
-                className="h-10 w-auto object-contain"
-              />
+            {/* Brand Name */}
+            <Link href="/" className="flex items-center gap-2">
+              <span className="text-2xl font-bold tracking-wider" style={{ color: '#94593b' }}>
+                MEA CULPA
+              </span>
             </Link>
 
             {/* Desktop Navigation */}

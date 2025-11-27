@@ -28,6 +28,8 @@ export default function TryOnPage() {
     const loadProducts = async () => {
       try {
         const allProducts = await getProducts();
+        console.log('🔥 Tüm ürünler:', allProducts.length);
+
         // Filter kimono and set products with images, don't limit to 12
         const productsWithImages = allProducts.filter(p =>
           (p.category === 'kimono' || p.category === 'set') &&
@@ -35,6 +37,11 @@ export default function TryOnPage() {
           p.images.length > 0 &&
           !p.hidden // Exclude hidden products
         );
+
+        console.log('🔥 Sanal deneme için ürünler:', productsWithImages.length);
+        console.log('🔥 Kimono:', productsWithImages.filter(p => p.category === 'kimono').length);
+        console.log('🔥 Set:', productsWithImages.filter(p => p.category === 'set').length);
+
         setProducts(productsWithImages);
       } catch (error) {
         console.error('Error loading products:', error);

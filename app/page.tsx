@@ -120,26 +120,18 @@ export default function Home() {
             {/* Large Logo */}
             <div className="mb-8 flex justify-center">
               <Image
-                src="/images/logo_no_bg.png"
+                src="/images/logonew.png"
                 alt="MEA CULPA Logo"
-                width={600}
-                height={450}
-                className="w-auto h-48 md:h-56 lg:h-64 object-contain"
+                width={800}
+                height={600}
+                className="w-auto h-64 md:h-72 lg:h-80 object-contain"
                 priority
               />
             </div>
 
-            {/* Logo Text Image */}
-            <div className="mb-6 flex justify-center">
-              <Image
-                src="/images/logo_text.png"
-                alt="MEA CULPA"
-                width={800}
-                height={200}
-                className="w-auto h-16 md:h-20 lg:h-24 object-contain"
-                priority
-              />
-            </div>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6" style={{ color: '#94593b' }}>
+              MEA CULPA
+            </h1>
             <p className="text-xl md:text-2xl lg:text-3xl text-gray-300 mb-4">
               {t('hero.slogan1')}
             </p>
