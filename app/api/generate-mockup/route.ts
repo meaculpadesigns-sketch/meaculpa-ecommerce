@@ -63,10 +63,11 @@ export async function POST(request: NextRequest) {
     ]);
 
     // Return the generated mockup
+    const resultData = result.data as any;
     return NextResponse.json({
       success: true,
       description: `Mock-up oluşturuldu: ${prompt}`,
-      imageUrl: result.data[0], // Hugging Face returns image URL or base64
+      imageUrl: resultData[0], // Hugging Face returns image URL or base64
       message: 'Mock-up başarıyla oluşturuldu.',
     });
 

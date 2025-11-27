@@ -42,9 +42,10 @@ export async function POST(request: NextRequest) {
     ]);
 
     // Return the result
+    const resultData = result.data as any;
     return NextResponse.json({
       success: true,
-      resultImage: result.data[0], // Hugging Face returns the try-on result image
+      resultImage: resultData[0], // Hugging Face returns the try-on result image
       message: 'Sanal deneme başarıyla tamamlandı',
     });
 
