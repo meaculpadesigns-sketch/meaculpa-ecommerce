@@ -20,6 +20,7 @@ import {
 import { kimonoSubcategories, setSecondLevelCategories, getThirdLevelCategories } from '@/constants/categories';
 import { convertCurrency } from '@/lib/currency';
 import { collection, getDocs } from 'firebase/firestore';
+import AdminBackButton from '@/components/AdminBackButton';
 
 export default function AdminProducts() {
   const { loading: authLoading, isAdmin } = useAdminAuth();
@@ -318,6 +319,8 @@ export default function AdminProducts() {
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-7xl mx-auto">
+        <AdminBackButton />
+
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
