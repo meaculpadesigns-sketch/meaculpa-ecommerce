@@ -54,9 +54,14 @@ export async function POST(request: NextRequest) {
 
     const base64Image = `data:image/jpeg;base64,${compressedBuffer.toString('base64')}`;
 
-    // Connect to Hugging Face IDM-VTON model
+    // Connect to Hugging Face IDM-VTON model with authentication
     console.log('🤗 Connecting to Hugging Face IDM-VTON...');
-    const app = await client("yisol/IDM-VTON");
+    const hfToken = process.env.HUGGINGFACE_API_TOKEN;
+    console.log('🔑 HF Token exists:', !!hfToken);
+
+    const app = await client("yisol/IDM-VTON", {
+      hf_token: hfToken
+    });
     console.log('✅ Connected to Hugging Face');
 
     // Use a default model image or white background for mockup

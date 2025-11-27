@@ -33,9 +33,14 @@ export async function POST(request: NextRequest) {
     const garmentImage = product.images[0];
     console.log('👕 Garment image URL:', garmentImage);
 
-    // Connect to Hugging Face IDM-VTON model
+    // Connect to Hugging Face IDM-VTON model with authentication
     console.log('🤗 Connecting to Hugging Face IDM-VTON...');
-    const app = await client("yisol/IDM-VTON");
+    const hfToken = process.env.HUGGINGFACE_API_TOKEN;
+    console.log('🔑 HF Token exists:', !!hfToken);
+
+    const app = await client("yisol/IDM-VTON", {
+      hf_token: hfToken
+    });
     console.log('✅ Connected to Hugging Face');
 
     // Call the try-on API
