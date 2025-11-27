@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { client } from '@gradio/client';
+import { getProducts } from '@/lib/firebase-helpers';
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,73 +13,45 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
+    // Get product details from Firebase
+    const products = await getProducts();
+    const product = products.find(p => p.id === productId);
+
+    if (!product || !product.images || product.images.length === 0) {
       return NextResponse.json(
-        { error: 'Gemini API key not configured' },
-        { status: 500 }
+        { error: 'Product not found or has no images' },
+        { status: 404 }
       );
     }
 
-    // Call Gemini API for image generation
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contents: [
-            {
-              parts: [
-                {
-                  text: `You are a virtual try-on AI assistant. The user has uploaded their photo and wants to see how product ${productId} would look on them. Generate a realistic visualization of the person wearing this product. Focus on accurate fitting, proper sizing, and natural appearance. The product should blend seamlessly with the person's body and posture.`,
-                },
-                {
-                  inline_data: {
-                    mime_type: 'image/jpeg',
-                    data: userImage.split(',')[1], // Remove data:image/jpeg;base64, prefix
-                  },
-                },
-              ],
-            },
-          ],
-          generationConfig: {
-            temperature: 0.4,
-            topK: 32,
-            topP: 1,
-            maxOutputTokens: 4096,
-          },
-        }),
-      }
-    );
+    // Get the first product image (garment image)
+    const garmentImage = product.images[0];
 
-    if (!response.ok) {
-      const error = await response.text();
-      console.error('Gemini API error:', error);
-      return NextResponse.json(
-        { error: 'Failed to process image' },
-        { status: 500 }
-      );
-    }
+    // Connect to Hugging Face IDM-VTON model
+    const app = await client("yisol/IDM-VTON");
 
-    const data = await response.json();
+    // Call the try-on API
+    const result = await app.predict("/tryon", [
+      userImage,      // User's photo (base64 with data:image prefix)
+      garmentImage,   // Product/garment image URL
+      "High quality virtual try-on, professional photography", // Description
+      true,           // Auto-mask (automatically detect garment area)
+      true,           // Auto-crop
+      30,             // Denoise steps (quality setting)
+      42              // Seed (for reproducibility)
+    ]);
 
-    // Extract the generated text/image from Gemini response
-    const resultText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-
-    // For now, return a mock result
-    // In production, you would process the Gemini response properly
+    // Return the result
     return NextResponse.json({
       success: true,
-      resultImage: userImage, // Mock: return same image
-      message: resultText || 'Try-on completed successfully',
+      resultImage: result.data[0], // Hugging Face returns the try-on result image
+      message: 'Sanal deneme başarıyla tamamlandı',
     });
-  } catch (error) {
+
+  } catch (error: any) {
     console.error('Try-on API error:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Sanal deneme sırasında hata oluştu: ' + error.message },
       { status: 500 }
     );
   }

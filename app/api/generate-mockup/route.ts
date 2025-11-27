@@ -1,21 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { client } from '@gradio/client';
 const sharp = require('sharp');
 
 export async function POST(request: NextRequest) {
   try {
-    // Check if API key exists
-    if (!process.env.GEMINI_API_KEY) {
-      return NextResponse.json(
-        { error: 'Gemini API key yapılandırılmamış. Lütfen .env.local dosyasına GEMINI_API_KEY ekleyin.' },
-        { status: 500 }
-      );
-    }
-
     const formData = await request.formData();
     const prompt = formData.get('prompt') as string;
 
-    // Get all uploaded images (limit to 3 images to avoid 413 error)
+    // Get uploaded images (for IDM-VTON we need product image)
     const images: File[] = [];
     const MAX_IMAGES = 3;
     const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB per image
@@ -23,7 +15,6 @@ export async function POST(request: NextRequest) {
     for (let i = 0; i < MAX_IMAGES; i++) {
       const image = formData.get(`image${i}`) as File;
       if (image) {
-        // Check file size
         if (image.size > MAX_FILE_SIZE) {
           return NextResponse.json(
             { error: `Görsel ${i + 1} çok büyük. Maksimum 10MB olmalı.` },
@@ -41,59 +32,42 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Compress and convert images to base64
-    const imageParts = await Promise.all(
-      images.map(async (image) => {
-        const bytes = await image.arrayBuffer();
+    // Convert first image to base64
+    const firstImage = images[0];
+    const bytes = await firstImage.arrayBuffer();
 
-        // Compress image using sharp (max 1200px width, quality 80)
-        const compressedBuffer = await sharp(Buffer.from(bytes))
-          .resize(1200, null, {
-            fit: 'inside',
-            withoutEnlargement: true
-          })
-          .jpeg({ quality: 80 })
-          .toBuffer();
-
-        const base64 = compressedBuffer.toString('base64');
-
-        return {
-          inlineData: {
-            data: base64,
-            mimeType: 'image/jpeg',
-          },
-        };
+    // Compress image using sharp
+    const compressedBuffer = await sharp(Buffer.from(bytes))
+      .resize(1024, null, {
+        fit: 'inside',
+        withoutEnlargement: true
       })
-    );
+      .jpeg({ quality: 85 })
+      .toBuffer();
 
-    // Initialize Gemini AI
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+    const base64Image = `data:image/jpeg;base64,${compressedBuffer.toString('base64')}`;
 
-    const enhancedPrompt = `
-Sen bir profesyonel ürün fotoğrafçısı ve mockup tasarımcısısın.
-Yüklenen ürün fotoğraflarını analiz et ve şu isteğe göre mockup oluştur:
+    // Connect to Hugging Face IDM-VTON model
+    const app = await client("yisol/IDM-VTON");
 
-${prompt}
+    // Use a default model image or white background for mockup
+    // For mockup, we'll use the product image directly with prompt description
+    const result = await app.predict("/tryon", [
+      base64Image,  // Product image (will be used as garment)
+      base64Image,  // Using same image as base (in production use model image)
+      prompt,       // Description prompt
+      true,         // Auto-mask
+      true,         // Auto-crop
+      30,           // Denoise steps
+      42            // Seed
+    ]);
 
-Lütfen ürünün mockup'ını nasıl oluşturacağını detaylı olarak açıkla.
-Arka plan, ışıklandırma, kompozisyon ve sunum önerilerini belirt.
-`;
-
-    const result = await model.generateContent([enhancedPrompt, ...imageParts]);
-    const response = await result.response;
-    const mockupDescription = response.text();
-
-    // Use the first compressed image as preview
-    const previewUrl = `data:image/jpeg;base64,${imageParts[0].inlineData.data}`;
-
-    // For now, return the AI description
-    // In production, you would use this description to generate actual mockup
+    // Return the generated mockup
     return NextResponse.json({
       success: true,
-      description: mockupDescription,
-      imageUrl: previewUrl,
-      message: 'Mock-up önerisi oluşturuldu. Gerçek mockup için görsel işleme servisi entegre edilmeli.',
+      description: `Mock-up oluşturuldu: ${prompt}`,
+      imageUrl: result.data[0], // Hugging Face returns image URL or base64
+      message: 'Mock-up başarıyla oluşturuldu.',
     });
 
   } catch (error: any) {
