@@ -100,7 +100,11 @@ export default function TryOnPage() {
 
     setLoading(true);
     try {
-      // Call Gemini API for virtual try-on
+      console.log('🎯 Try-on başlatılıyor...');
+      console.log('📦 Product ID:', selectedProduct);
+      console.log('🖼️ User image size:', userImage?.length, 'characters');
+
+      // Call Hugging Face API for virtual try-on
       const response = await fetch('/api/try-on', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -110,10 +114,29 @@ export default function TryOnPage() {
         }),
       });
 
+      console.log('📡 Response status:', response.status);
+      console.log('📡 Response ok:', response.ok);
+
       const data = await response.json();
+      console.log('📦 Response data:', data);
+
+      if (!response.ok) {
+        console.error('❌ Server error:', data);
+        console.error('❌ Error details:', {
+          error: data.error,
+          details: data.details,
+          errorName: data.errorName,
+          errorCode: data.errorCode,
+          hint: data.hint
+        });
+        alert(`${data.error}\n\nDetay: ${data.details}\n\n${data.hint}`);
+        return;
+      }
+
       setResult(data.resultImage);
+      console.log('✅ Try-on başarılı!');
     } catch (error) {
-      console.error('Error during try-on:', error);
+      console.error('❌ Client-side error during try-on:', error);
       alert(t('common.error'));
     } finally {
       setLoading(false);
