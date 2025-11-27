@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
 
     // Initialize Gemini AI
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro-vision' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
 
     const enhancedPrompt = `
 Sen bir profesyonel ürün fotoğrafçısı ve mockup tasarımcısısın.
