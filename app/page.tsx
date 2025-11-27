@@ -35,8 +35,10 @@ export default function Home() {
     async function fetchProducts() {
       try {
         const products = await getProducts();
-        setKimonoProducts(products.filter(p => p.category === 'kimono').slice(0, 6));
-        setSetProducts(products.filter(p => p.category === 'set').slice(0, 6));
+        // Filter out hidden products
+        const visibleProducts = products.filter(p => !p.hidden);
+        setKimonoProducts(visibleProducts.filter(p => p.category === 'kimono').slice(0, 6));
+        setSetProducts(visibleProducts.filter(p => p.category === 'set').slice(0, 6));
       } catch (error) {
         console.error('Error fetching products:', error);
       } finally {
@@ -127,9 +129,17 @@ export default function Home() {
               />
             </div>
 
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6">
-              MEA CULPA
-            </h1>
+            {/* Logo Text Image */}
+            <div className="mb-6 flex justify-center">
+              <Image
+                src="/images/logo_text.png"
+                alt="MEA CULPA"
+                width={800}
+                height={200}
+                className="w-auto h-16 md:h-20 lg:h-24 object-contain"
+                priority
+              />
+            </div>
             <p className="text-xl md:text-2xl lg:text-3xl text-gray-300 mb-4">
               {t('hero.slogan1')}
             </p>

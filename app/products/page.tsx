@@ -40,10 +40,12 @@ function ProductsContent() {
       try {
         setLoading(true);
         const data = await getProducts();
-        console.log('📦 Fetched products from Firebase:', data);
-        console.log('📦 Number of products:', data.length);
-        console.log('📦 Product categories:', data.map(p => ({ id: p.id, category: p.category, subcategory: p.subcategory })));
-        setProducts(data);
+        // Filter out hidden products
+        const visibleProducts = data.filter(p => !p.hidden);
+        console.log('📦 Fetched products from Firebase:', visibleProducts);
+        console.log('📦 Number of visible products:', visibleProducts.length);
+        console.log('📦 Product categories:', visibleProducts.map(p => ({ id: p.id, category: p.category, subcategory: p.subcategory })));
+        setProducts(visibleProducts);
       } catch (error) {
         console.error('❌ Error fetching products:', error);
       } finally {

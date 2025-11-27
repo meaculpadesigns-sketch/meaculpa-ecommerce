@@ -45,12 +45,14 @@ export default function AdminProducts() {
     collection: '',
     images: [] as string[],
     fabricImages: [] as string[],
+    whiteBackgroundImages: [] as string[],
     description: '',
     descriptionEn: '',
     story: '',
     storyEn: '',
     sizes: [] as Size[],
     inStock: true,
+    hidden: false,
     featured: false,
     estimatedDelivery: '',
     seoTitle: '',
@@ -109,7 +111,7 @@ export default function AdminProducts() {
     }
   };
 
-  const handleImageUpload = async (files: FileList | null, type: 'product' | 'fabric') => {
+  const handleImageUpload = async (files: FileList | null, type: 'product' | 'fabric' | 'whiteBg') => {
     if (!files) return;
 
     setUploadingImages(true);
@@ -127,10 +129,15 @@ export default function AdminProducts() {
           ...prev,
           images: [...prev.images, ...urls],
         }));
-      } else {
+      } else if (type === 'fabric') {
         setFormData((prev) => ({
           ...prev,
           fabricImages: [...prev.fabricImages, ...urls],
+        }));
+      } else if (type === 'whiteBg') {
+        setFormData((prev) => ({
+          ...prev,
+          whiteBackgroundImages: [...prev.whiteBackgroundImages, ...urls],
         }));
       }
     } catch (error) {
@@ -193,12 +200,14 @@ export default function AdminProducts() {
       collection: product.collection || '',
       images: product.images,
       fabricImages: product.fabricImages || [],
+      whiteBackgroundImages: product.whiteBackgroundImages || [],
       description: product.description,
       descriptionEn: product.descriptionEn,
       story: product.story || '',
       storyEn: product.storyEn || '',
       sizes: product.sizes,
       inStock: product.inStock,
+      hidden: product.hidden || false,
       featured: product.featured,
       estimatedDelivery: product.estimatedDelivery || '',
       seoTitle: product.seoTitle || '',
@@ -221,12 +230,21 @@ export default function AdminProducts() {
     }
   };
 
-  const toggleVisibility = async (product: Product) => {
+  const toggleSoldOut = async (product: Product) => {
     try {
       await updateProduct(product.id, { inStock: !product.inStock });
       await loadProducts();
     } catch (error) {
-      console.error('Error toggling visibility:', error);
+      console.error('Error toggling sold out:', error);
+    }
+  };
+
+  const toggleHidden = async (product: Product) => {
+    try {
+      await updateProduct(product.id, { hidden: !product.hidden });
+      await loadProducts();
+    } catch (error) {
+      console.error('Error toggling hidden:', error);
     }
   };
 
@@ -245,12 +263,14 @@ export default function AdminProducts() {
       collection: '',
       images: [],
       fabricImages: [],
+      whiteBackgroundImages: [],
       description: '',
       descriptionEn: '',
       story: '',
       storyEn: '',
       sizes: [],
       inStock: true,
+      hidden: false,
       featured: false,
       estimatedDelivery: '',
       seoTitle: '',
@@ -398,27 +418,45 @@ export default function AdminProducts() {
                       )}
                     </td>
                     <td className="px-6 py-4">
-                      <span
-                        className={`px-3 py-1 rounded-full text-sm ${
-                          product.inStock
-                            ? 'bg-green-500 bg-opacity-20 text-green-500'
-                            : 'bg-red-500 bg-opacity-20 text-red-500'
-                        }`}
-                      >
-                        {product.inStock ? 'Stokta' : 'Tükendi'}
-                      </span>
+                      <div className="flex flex-col gap-1">
+                        <span
+                          className={`px-3 py-1 rounded-full text-sm ${
+                            product.inStock
+                              ? 'bg-green-500 bg-opacity-20 text-green-500'
+                              : 'bg-red-500 bg-opacity-20 text-red-500'
+                          }`}
+                        >
+                          {product.inStock ? 'Stokta' : 'Tükendi'}
+                        </span>
+                        {product.hidden && (
+                          <span className="px-3 py-1 rounded-full text-sm bg-gray-500 bg-opacity-20 text-gray-500">
+                            Gizli
+                          </span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center justify-end gap-2">
                         <button
-                          onClick={() => toggleVisibility(product)}
+                          onClick={() => toggleSoldOut(product)}
                           className="p-2 hover:bg-white hover:bg-opacity-10 rounded-lg transition-colors"
                           title={product.inStock ? 'Tükendi İşaretle' : 'Stokta İşaretle'}
                         >
                           {product.inStock ? (
-                            <EyeOff size={18} className="text-gray-400" />
+                            <EyeOff size={18} className="text-yellow-400" />
                           ) : (
+                            <Eye size={18} className="text-green-400" />
+                          )}
+                        </button>
+                        <button
+                          onClick={() => toggleHidden(product)}
+                          className="p-2 hover:bg-white hover:bg-opacity-10 rounded-lg transition-colors"
+                          title={product.hidden ? 'Göster' : 'Gizle'}
+                        >
+                          {product.hidden ? (
                             <Eye size={18} className="text-gray-400" />
+                          ) : (
+                            <EyeOff size={18} className="text-red-400" />
                           )}
                         </button>
                         <button
@@ -553,6 +591,48 @@ export default function AdminProducts() {
                         accept="image/*"
                         className="hidden"
                         onChange={(e) => handleImageUpload(e.target.files, 'fabric')}
+                        disabled={uploadingImages}
+                      />
+                    </label>
+                  </div>
+
+                  {/* White Background Images */}
+                  <div>
+                    <label className="block text-white font-medium mb-2">
+                      Beyaz Arka Planlı Görseller (Mankensiz)
+                    </label>
+                    <div className="flex flex-wrap gap-4 mb-4">
+                      {formData.whiteBackgroundImages.map((url, index) => (
+                        <div key={index} className="relative w-32 h-32">
+                          <img
+                            src={url}
+                            alt={`White BG ${index + 1}`}
+                            className="w-full h-full bg-zinc-800 rounded-lg object-cover"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setFormData((prev) => ({
+                                ...prev,
+                                whiteBackgroundImages: prev.whiteBackgroundImages.filter((_, i) => i !== index),
+                              }));
+                            }}
+                            className="absolute -top-2 -right-2 p-1 bg-red-500 rounded-full"
+                          >
+                            <X size={16} className="text-white" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                    <label className="btn-secondary cursor-pointer inline-block">
+                      <Upload size={20} className="inline mr-2" />
+                      {uploadingImages ? 'Yükleniyor...' : 'Beyaz Arka Plan Görseli Yükle'}
+                      <input
+                        type="file"
+                        multiple
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => handleImageUpload(e.target.files, 'whiteBg')}
                         disabled={uploadingImages}
                       />
                     </label>

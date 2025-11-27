@@ -59,7 +59,7 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
 
             {/* Sold Out Badge */}
             {!product.inStock && (
-              <div className="absolute top-4 left-4 bg-gray-900 text-white px-4 py-2 rounded-full text-sm font-semibold border-2 border-white">
+              <div className="absolute top-4 left-4 bg-white text-black px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
                 {i18n.language === 'tr' ? 'Tükendi' : 'Sold Out'}
               </div>
             )}
@@ -107,7 +107,7 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
               </span>
             )}
             {!product.inStock && (
-              <span className="bg-gray-900 text-white px-4 py-2 rounded-full text-sm font-semibold border-2 border-white">
+              <span className="bg-white text-black px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
                 {i18n.language === 'tr' ? 'Tükendi' : 'Sold Out'}
               </span>
             )}
@@ -172,7 +172,7 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
 
             {/* Sold Out Badge */}
             {!product.inStock && (
-              <div className="absolute top-4 left-4 bg-gray-900 text-white px-4 py-2 rounded-full text-sm font-semibold border-2 border-white">
+              <div className="absolute top-4 left-4 bg-white text-black px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
                 {i18n.language === 'tr' ? 'Tükendi' : 'Sold Out'}
               </div>
             )}

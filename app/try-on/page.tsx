@@ -24,12 +24,17 @@ export default function TryOnPage() {
   }, []);
 
   useEffect(() => {
-    // Load real products from Firebase
+    // Load ALL products from kimono and set categories
     const loadProducts = async () => {
       try {
         const allProducts = await getProducts();
-        // Get first 12 products with images
-        const productsWithImages = allProducts.filter(p => p.images && p.images.length > 0).slice(0, 12);
+        // Filter kimono and set products with images, don't limit to 12
+        const productsWithImages = allProducts.filter(p =>
+          (p.category === 'kimono' || p.category === 'set') &&
+          p.images &&
+          p.images.length > 0 &&
+          !p.hidden // Exclude hidden products
+        );
         setProducts(productsWithImages);
       } catch (error) {
         console.error('Error loading products:', error);
@@ -194,30 +199,47 @@ export default function TryOnPage() {
                   <p className="text-gray-400 mt-2">{t('common.loading')}</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-3 gap-3 max-h-[400px] overflow-y-auto">
-                  {products.map((product) => (
-                    <button
-                      key={product.id}
-                      onClick={() => setSelectedProduct(product.id)}
-                      className={`aspect-square bg-zinc-800 rounded-lg overflow-hidden border-2 transition-all ${
-                        selectedProduct === product.id
-                          ? 'border-mea-gold scale-105'
-                          : 'border-transparent hover:border-gray-600'
-                      }`}
-                    >
-                      {product.images && product.images[0] ? (
-                        <img
-                          src={product.images[0]}
-                          alt={i18n.language === 'tr' ? product.name : product.nameEn}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-white text-xs p-2 text-center">
-                          {i18n.language === 'tr' ? product.name : product.nameEn}
-                        </div>
-                      )}
-                    </button>
-                  ))}
+                <div className="space-y-4">
+                  <select
+                    value={selectedProduct || ''}
+                    onChange={(e) => setSelectedProduct(e.target.value)}
+                    className="w-full px-4 py-3 glass rounded-lg text-white bg-zinc-800 border border-gray-600 focus:border-mea-gold focus:outline-none"
+                  >
+                    <option value="" disabled>
+                      {i18n.language === 'tr' ? 'Ürün seçiniz...' : 'Select a product...'}
+                    </option>
+                    {products.map((product) => (
+                      <option key={product.id} value={product.id}>
+                        {i18n.language === 'tr' ? product.name : product.nameEn} ({product.category === 'kimono' ? 'Kimono' : 'Set'})
+                      </option>
+                    ))}
+                  </select>
+
+                  {/* Show selected product preview */}
+                  {selectedProduct && (
+                    <div className="mt-4">
+                      {(() => {
+                        const selected = products.find(p => p.id === selectedProduct);
+                        return selected ? (
+                          <div className="flex items-center gap-4 p-4 bg-zinc-800 rounded-lg border-2 border-mea-gold">
+                            <img
+                              src={selected.images[0]}
+                              alt={i18n.language === 'tr' ? selected.name : selected.nameEn}
+                              className="w-24 h-24 object-cover rounded-lg"
+                            />
+                            <div>
+                              <p className="text-white font-semibold">
+                                {i18n.language === 'tr' ? selected.name : selected.nameEn}
+                              </p>
+                              <p className="text-gray-400 text-sm">
+                                {selected.category === 'kimono' ? 'Kimono' : 'Set'}
+                              </p>
+                            </div>
+                          </div>
+                        ) : null;
+                      })()}
+                    </div>
+                  )}
                 </div>
               )}
             </div>

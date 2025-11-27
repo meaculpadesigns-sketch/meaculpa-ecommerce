@@ -30,6 +30,8 @@ export interface Product {
   collection?: string; // New: for grouping products into collections
   images: string[];
   fabricImages?: string[];
+  whiteBackgroundImages?: string[]; // Beyaz arka planlı mankensiz ürün görselleri
+  hidden?: boolean; // Ürünü tamamen gizle (vitrinlerde görünmez)
   description: string;
   descriptionEn: string;
   story?: string;
