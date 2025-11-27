@@ -51,8 +51,17 @@ export async function POST(request: NextRequest) {
 
   } catch (error: any) {
     console.error('Try-on API error:', error);
+    console.error('Error details:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name
+    });
     return NextResponse.json(
-      { error: 'Sanal deneme sırasında hata oluştu: ' + error.message },
+      {
+        error: 'Sanal deneme sırasında hata oluştu',
+        details: error.message,
+        hint: 'Hugging Face modeli yükleniyor veya meşgul olabilir. Lütfen 30 saniye sonra tekrar deneyin.'
+      },
       { status: 500 }
     );
   }
