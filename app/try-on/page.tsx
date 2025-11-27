@@ -55,9 +55,9 @@ export default function TryOnPage() {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Check file size (max 2MB)
-      if (file.size > 2 * 1024 * 1024) {
-        alert(i18n.language === 'tr' ? 'Görsel çok büyük. Maksimum 2MB olmalı.' : 'Image too large. Maximum 2MB.');
+      // Check file size (max 10MB)
+      if (file.size > 10 * 1024 * 1024) {
+        alert(i18n.language === 'tr' ? 'Görsel çok büyük. Maksimum 10MB olmalı.' : 'Image too large. Maximum 10MB.');
         return;
       }
 
