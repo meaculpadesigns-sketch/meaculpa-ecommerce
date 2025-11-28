@@ -60,8 +60,8 @@ export async function POST(request: NextRequest) {
     console.log('🔑 HF Token exists:', !!hfToken);
 
     const app = await client("yisol/IDM-VTON", {
-      hf_token: hfToken
-    });
+      hf_token: hfToken as string
+    } as any);
     console.log('✅ Connected to Hugging Face');
 
     // Use a default model image or white background for mockup
