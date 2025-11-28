@@ -45,7 +45,7 @@ export default function CustomizePage() {
   const [specialRequests, setSpecialRequests] = useState('');
 
   // Standard sizes
-  const STANDARD_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+  const STANDARD_SIZES = ['S', 'M', 'L', 'XL'];
 
   // Individual order state
   const [gender, setGender] = useState<Gender>('male');

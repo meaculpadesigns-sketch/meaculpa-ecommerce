@@ -30,7 +30,8 @@
       "Bash(npx tsc:*)",
       "Bash(test:*)",
       "Bash(gh run:*)",
-      "Bash(git reset:*)"
+      "Bash(git reset:*)",
+      "Bash(npx vercel env add:*)"
     ],
     "deny": [],
     "ask": []
