@@ -1,13 +1,218 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Ruler } from 'lucide-react';
+import { Ruler, Plus, Trash2, Edit, X } from 'lucide-react';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 import { useAdminAuth } from '@/lib/use-admin-auth';
-import { STANDARD_SIZE_CHARTS } from '@/lib/standard-size-charts';
+import { STANDARD_SIZE_CHARTS, SizeChart, SizeChartRow } from '@/lib/standard-size-charts';
 import AdminBackButton from '@/components/AdminBackButton';
 
 export default function AdminSizeChartsPage() {
   const { loading: authLoading, isAdmin } = useAdminAuth();
+  const [customCharts, setCustomCharts] = useState<SizeChart[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [editingChart, setEditingChart] = useState<SizeChart | null>(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    nameEn: '',
+    category: 'set' as 'set' | 'kimono',
+    subCategory: 'kadin' as 'kadin' | 'erkek' | 'krop' | 'uzun' | 'kisa' | undefined,
+    rows: [
+      { beden: 'S', pijamaBoyu: '', gomlekBoyu: '', kolBoyu: '' },
+      { beden: 'M', pijamaBoyu: '', gomlekBoyu: '', kolBoyu: '' },
+      { beden: 'L', pijamaBoyu: '', gomlekBoyu: '', kolBoyu: '' },
+      { beden: 'XL', pijamaBoyu: '', gomlekBoyu: '', kolBoyu: '' },
+    ] as SizeChartRow[],
+  });
+
+  useEffect(() => {
+    if (!authLoading && isAdmin) {
+      fetchCustomCharts();
+    }
+  }, [authLoading, isAdmin]);
+
+  const fetchCustomCharts = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, 'sizeCharts'));
+      const chartsData = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        createdAt: doc.data().createdAt?.toDate(),
+      })) as SizeChart[];
+      setCustomCharts(chartsData.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
+    } catch (error) {
+      console.error('Error fetching size charts:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const chartData = {
+        name: formData.name,
+        nameEn: formData.nameEn,
+        category: formData.category,
+        subCategory: formData.subCategory,
+        rows: formData.rows,
+        createdAt: editingChart?.createdAt || new Date(),
+      };
+
+      if (editingChart) {
+        await updateDoc(doc(db, 'sizeCharts', editingChart.id), chartData);
+        alert('Beden tablosu güncellendi!');
+      } else {
+        await addDoc(collection(db, 'sizeCharts'), chartData);
+        alert('Beden tablosu oluşturuldu!');
+      }
+
+      await fetchCustomCharts();
+      closeModal();
+    } catch (error) {
+      console.error('Error saving size chart:', error);
+      alert('Beden tablosu kaydedilirken hata oluştu');
+    }
+  };
+
+  const deleteChart = async (id: string) => {
+    if (!confirm('Bu beden tablosunu silmek istediğinizden emin misiniz?')) return;
+
+    try {
+      await deleteDoc(doc(db, 'sizeCharts', id));
+      await fetchCustomCharts();
+      alert('Beden tablosu silindi!');
+    } catch (error) {
+      console.error('Error deleting size chart:', error);
+      alert('Beden tablosu silinirken hata oluştu');
+    }
+  };
+
+  const openModal = (chart?: SizeChart) => {
+    if (chart) {
+      setEditingChart(chart);
+      setFormData({
+        name: chart.name,
+        nameEn: chart.nameEn,
+        category: chart.category,
+        subCategory: chart.subCategory,
+        rows: chart.rows,
+      });
+    } else {
+      setEditingChart(null);
+      setFormData({
+        name: '',
+        nameEn: '',
+        category: 'set',
+        subCategory: 'kadin',
+        rows: [
+          { beden: 'S', pijamaBoyu: '', gomlekBoyu: '', kolBoyu: '' },
+          { beden: 'M', pijamaBoyu: '', gomlekBoyu: '', kolBoyu: '' },
+          { beden: 'L', pijamaBoyu: '', gomlekBoyu: '', kolBoyu: '' },
+          { beden: 'XL', pijamaBoyu: '', gomlekBoyu: '', kolBoyu: '' },
+        ],
+      });
+    }
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setEditingChart(null);
+  };
+
+  const addRow = () => {
+    const newRow: SizeChartRow = { beden: '' };
+    if (formData.category === 'set') {
+      if (formData.subCategory !== 'krop') {
+        newRow.pijamaBoyu = '';
+      }
+      newRow.gomlekBoyu = '';
+      newRow.kolBoyu = '';
+    } else {
+      newRow.kimonoBoyu = '';
+      newRow.kolBoyu = '';
+    }
+    setFormData({
+      ...formData,
+      rows: [...formData.rows, newRow],
+    });
+  };
+
+  const removeRow = (index: number) => {
+    setFormData({
+      ...formData,
+      rows: formData.rows.filter((_, i) => i !== index),
+    });
+  };
+
+  const updateRow = (index: number, field: keyof SizeChartRow, value: string) => {
+    const newRows = [...formData.rows];
+    newRows[index] = { ...newRows[index], [field]: value };
+    setFormData({ ...formData, rows: newRows });
+  };
+
+  const renderTableHeaders = (category: 'set' | 'kimono', subCategory?: string) => {
+    if (category === 'kimono') {
+      return (
+        <>
+          <th className="text-left text-gray-400 font-medium pb-3 px-2">Beden</th>
+          <th className="text-left text-gray-400 font-medium pb-3 px-2">Kimono Boyu</th>
+          <th className="text-left text-gray-400 font-medium pb-3 px-2">Kol Boyu</th>
+        </>
+      );
+    } else if (subCategory === 'krop') {
+      return (
+        <>
+          <th className="text-left text-gray-400 font-medium pb-3 px-2">Beden</th>
+          <th className="text-left text-gray-400 font-medium pb-3 px-2">Gömlek Boyu</th>
+          <th className="text-left text-gray-400 font-medium pb-3 px-2">Kol Boyu</th>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <th className="text-left text-gray-400 font-medium pb-3 px-2">Beden</th>
+          <th className="text-left text-gray-400 font-medium pb-3 px-2">Pijama Boyu</th>
+          <th className="text-left text-gray-400 font-medium pb-3 px-2">Gömlek Boyu</th>
+          <th className="text-left text-gray-400 font-medium pb-3 px-2">Kol Boyu</th>
+        </>
+      );
+    }
+  };
+
+  const renderTableRow = (row: SizeChartRow, category: 'set' | 'kimono', subCategory?: string) => {
+    if (category === 'kimono') {
+      return (
+        <>
+          <td className="py-3 px-2 text-white font-semibold">{row.beden}</td>
+          <td className="py-3 px-2 text-gray-300">{row.kimonoBoyu}</td>
+          <td className="py-3 px-2 text-gray-300">{row.kolBoyu}</td>
+        </>
+      );
+    } else if (subCategory === 'krop') {
+      return (
+        <>
+          <td className="py-3 px-2 text-white font-semibold">{row.beden}</td>
+          <td className="py-3 px-2 text-gray-300">{row.gomlekBoyu}</td>
+          <td className="py-3 px-2 text-gray-300">{row.kolBoyu}</td>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <td className="py-3 px-2 text-white font-semibold">{row.beden}</td>
+          <td className="py-3 px-2 text-gray-300">{row.pijamaBoyu}</td>
+          <td className="py-3 px-2 text-gray-300">{row.gomlekBoyu}</td>
+          <td className="py-3 px-2 text-gray-300">{row.kolBoyu}</td>
+        </>
+      );
+    }
+  };
 
   if (authLoading) {
     return (
@@ -21,26 +226,36 @@ export default function AdminSizeChartsPage() {
     return null;
   }
 
+  const allCharts = [...STANDARD_SIZE_CHARTS.map((chart, idx) => ({ ...chart, id: `standard-${idx}`, createdAt: new Date() })), ...customCharts];
+
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-7xl mx-auto">
         <AdminBackButton />
 
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Beden Tabloları</h1>
-          <p className="text-gray-400">Standart beden tabloları</p>
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-4xl font-bold text-white mb-2">Beden Tabloları</h1>
+            <p className="text-gray-400">Ürünler için beden tabloları oluşturun ve yönetin</p>
+          </div>
+          <button
+            onClick={() => openModal()}
+            className="btn-primary flex items-center gap-2"
+          >
+            <Plus size={20} />
+            Yeni Beden Tablosu
+          </button>
         </div>
 
         {/* Size Charts List */}
         <div className="space-y-6">
-          {STANDARD_SIZE_CHARTS.map((chart, index) => {
-            const isKimono = chart.category === 'kimono';
-            const isKrop = chart.subCategory === 'krop';
+          {allCharts.map((chart, index) => {
+            const isStandard = chart.id.startsWith('standard-');
 
             return (
               <motion.div
-                key={index}
+                key={chart.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
@@ -67,8 +282,32 @@ export default function AdminSizeChartsPage() {
                            chart.subCategory === 'uzun' ? 'Uzun' : 'Kısa'}
                         </span>
                       )}
+                      {isStandard && (
+                        <span className="px-3 py-1 bg-green-500 bg-opacity-20 text-green-400 text-xs rounded-full">
+                          Standart
+                        </span>
+                      )}
                     </div>
                   </div>
+
+                  {!isStandard && (
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => openModal(chart)}
+                        className="p-2 bg-blue-500 bg-opacity-20 text-blue-400 rounded-lg hover:bg-opacity-30 transition-colors"
+                        title="Düzenle"
+                      >
+                        <Edit size={20} />
+                      </button>
+                      <button
+                        onClick={() => deleteChart(chart.id)}
+                        className="p-2 bg-red-500 bg-opacity-20 text-red-400 rounded-lg hover:bg-opacity-30 transition-colors"
+                        title="Sil"
+                      >
+                        <Trash2 size={20} />
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 {/* Size Chart Table */}
@@ -76,37 +315,13 @@ export default function AdminSizeChartsPage() {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-white border-opacity-10">
-                        <th className="text-left text-gray-400 font-medium pb-3 px-2">Beden</th>
-                        {!isKimono && !isKrop && (
-                          <th className="text-left text-gray-400 font-medium pb-3 px-2">Pijama Boyu</th>
-                        )}
-                        {!isKimono && (
-                          <th className="text-left text-gray-400 font-medium pb-3 px-2">
-                            {isKrop ? 'Gömlek Boyu' : 'Gömlek Boyu'}
-                          </th>
-                        )}
-                        {isKimono && (
-                          <th className="text-left text-gray-400 font-medium pb-3 px-2">Kimono Boyu</th>
-                        )}
-                        <th className="text-left text-gray-400 font-medium pb-3 px-2">Kol Boyu</th>
+                        {renderTableHeaders(chart.category, chart.subCategory)}
                       </tr>
                     </thead>
                     <tbody>
                       {chart.rows.map((row, i) => (
                         <tr key={i} className="border-b border-white border-opacity-5">
-                          <td className="py-3 px-2 text-white font-semibold">{row.beden}</td>
-                          {!isKimono && !isKrop && row.pijamaBoyu && (
-                            <td className="py-3 px-2 text-gray-300">{row.pijamaBoyu}</td>
-                          )}
-                          {!isKimono && row.gomlekBoyu && (
-                            <td className="py-3 px-2 text-gray-300">{row.gomlekBoyu}</td>
-                          )}
-                          {isKimono && row.kimonoBoyu && (
-                            <td className="py-3 px-2 text-gray-300">{row.kimonoBoyu}</td>
-                          )}
-                          {row.kolBoyu && (
-                            <td className="py-3 px-2 text-gray-300">{row.kolBoyu}</td>
-                          )}
+                          {renderTableRow(row, chart.category, chart.subCategory)}
                         </tr>
                       ))}
                     </tbody>
@@ -117,11 +332,216 @@ export default function AdminSizeChartsPage() {
           })}
         </div>
 
-        <div className="mt-8 p-4 bg-blue-500 bg-opacity-10 rounded-lg border border-blue-500 border-opacity-20">
-          <p className="text-blue-300 text-sm">
-            ℹ️ Bu beden tabloları standart tablolardır ve değiştirilemez. Ürünler bu tablolara göre üretilmektedir.
-          </p>
-        </div>
+        {/* Create/Edit Modal */}
+        {showModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 backdrop-blur-sm p-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="bg-white rounded-2xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-gray-900">
+                  {editingChart ? 'Beden Tablosunu Düzenle' : 'Yeni Beden Tablosu Oluştur'}
+                </h2>
+                <button
+                  onClick={closeModal}
+                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <X size={24} className="text-gray-600" />
+                </button>
+              </div>
+
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Basic Info */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Tablo Adı (Türkçe)
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Tablo Adı (İngilizce)
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.nameEn}
+                      onChange={(e) => setFormData({ ...formData, nameEn: e.target.value })}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Kategori
+                    </label>
+                    <select
+                      value={formData.category}
+                      onChange={(e) => setFormData({ ...formData, category: e.target.value as 'set' | 'kimono' })}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="set">Set</option>
+                      <option value="kimono">Kimono</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Alt Kategori
+                    </label>
+                    <select
+                      value={formData.subCategory}
+                      onChange={(e) => setFormData({ ...formData, subCategory: e.target.value as any })}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      {formData.category === 'set' ? (
+                        <>
+                          <option value="kadin">Kadın</option>
+                          <option value="erkek">Erkek</option>
+                          <option value="krop">Krop</option>
+                        </>
+                      ) : (
+                        <>
+                          <option value="uzun">Uzun</option>
+                          <option value="kisa">Kısa</option>
+                        </>
+                      )}
+                    </select>
+                  </div>
+                </div>
+
+                {/* Sizes Table */}
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Beden Ölçüleri
+                    </label>
+                    <button
+                      type="button"
+                      onClick={addRow}
+                      className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm"
+                    >
+                      + Satır Ekle
+                    </button>
+                  </div>
+                  <div className="overflow-x-auto border border-gray-300 rounded-lg">
+                    <table className="w-full">
+                      <thead className="bg-gray-50">
+                        <tr>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase">Beden</th>
+                          {formData.category === 'set' && formData.subCategory !== 'krop' && (
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase">Pijama Boyu (cm)</th>
+                          )}
+                          {formData.category === 'set' && (
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase">Gömlek Boyu (cm)</th>
+                          )}
+                          {formData.category === 'kimono' && (
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase">Kimono Boyu (cm)</th>
+                          )}
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase">Kol Boyu (cm)</th>
+                          <th className="px-4 py-3"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {formData.rows.map((row, index) => (
+                          <tr key={index} className="border-t border-gray-200">
+                            <td className="px-4 py-3">
+                              <input
+                                type="text"
+                                value={row.beden}
+                                onChange={(e) => updateRow(index, 'beden', e.target.value)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                                placeholder="S"
+                              />
+                            </td>
+                            {formData.category === 'set' && formData.subCategory !== 'krop' && (
+                              <td className="px-4 py-3">
+                                <input
+                                  type="text"
+                                  value={row.pijamaBoyu || ''}
+                                  onChange={(e) => updateRow(index, 'pijamaBoyu', e.target.value)}
+                                  className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                                  placeholder="95cm"
+                                />
+                              </td>
+                            )}
+                            {formData.category === 'set' && (
+                              <td className="px-4 py-3">
+                                <input
+                                  type="text"
+                                  value={row.gomlekBoyu || ''}
+                                  onChange={(e) => updateRow(index, 'gomlekBoyu', e.target.value)}
+                                  className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                                  placeholder="60cm"
+                                />
+                              </td>
+                            )}
+                            {formData.category === 'kimono' && (
+                              <td className="px-4 py-3">
+                                <input
+                                  type="text"
+                                  value={row.kimonoBoyu || ''}
+                                  onChange={(e) => updateRow(index, 'kimonoBoyu', e.target.value)}
+                                  className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                                  placeholder="115cm"
+                                />
+                              </td>
+                            )}
+                            <td className="px-4 py-3">
+                              <input
+                                type="text"
+                                value={row.kolBoyu || ''}
+                                onChange={(e) => updateRow(index, 'kolBoyu', e.target.value)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                                placeholder="35cm"
+                              />
+                            </td>
+                            <td className="px-4 py-3">
+                              <button
+                                type="button"
+                                onClick={() => removeRow(index)}
+                                className="text-red-500 hover:text-red-700"
+                              >
+                                <Trash2 size={18} />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Submit */}
+                <div className="flex gap-4">
+                  <button
+                    type="submit"
+                    className="flex-1 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium"
+                  >
+                    {editingChart ? 'Güncelle' : 'Oluştur'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={closeModal}
+                    className="flex-1 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium"
+                  >
+                    İptal
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
       </div>
     </div>
   );
