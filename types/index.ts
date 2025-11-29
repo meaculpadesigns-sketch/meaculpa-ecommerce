@@ -292,4 +292,5 @@ export interface CategoryInfo {
   seoTitleEn?: string;
   seoDescription?: string;
   seoDescriptionEn?: string;
+  thirdLevel?: boolean; // Indicates if this category has third level subcategories
 }

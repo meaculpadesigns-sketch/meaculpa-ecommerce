@@ -79,6 +79,7 @@ export const setSecondLevelCategories: CategoryInfo[] = [
     descriptionEn: 'Our special design creations. Each tells a unique story.',
     slogan: 'Zamana dokunan hikayeler.',
     sloganEn: 'Stories that touch time.',
+    thirdLevel: true, // Has third level subcategories
   },
   {
     key: 'setler',
@@ -88,6 +89,7 @@ export const setSecondLevelCategories: CategoryInfo[] = [
     descriptionEn: 'Our special design sets. Harmonious and elegant combinations.',
     slogan: 'Zarafet ve konfor bir arada.',
     sloganEn: 'Elegance and comfort together.',
+    thirdLevel: true, // Has third level subcategories
   },
 ];
 
