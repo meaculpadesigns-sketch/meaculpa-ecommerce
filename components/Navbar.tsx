@@ -261,9 +261,9 @@ export default function Navbar() {
                               {i18n.language === 'tr' ? sub.name : sub.nameEn}
                             </Link>
                             {/* Third Level Categories */}
-                            {sub.thirdLevel && getThirdLevelCategories(sub.key).length > 0 && (
+                            {sub.thirdLevel && (sub.key === 'kreasyonlar' || sub.key === 'setler') && getThirdLevelCategories(sub.key as 'kreasyonlar' | 'setler').length > 0 && (
                               <div className="pl-4 pb-2">
-                                {getThirdLevelCategories(sub.key).map((third) => (
+                                {getThirdLevelCategories(sub.key as 'kreasyonlar' | 'setler').map((third) => (
                                   <Link
                                     key={third.key}
                                     href={`${item.href}&subcategory=${sub.key}&thirdLevel=${third.key}`}
