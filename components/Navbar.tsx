@@ -252,14 +252,30 @@ export default function Navbar() {
                     {item.hasDropdown && item.subcategories && (
                       <div className="pl-4 pb-2">
                         {item.subcategories.map((sub) => (
-                          <Link
-                            key={sub.key}
-                            href={`${item.href}&subcategory=${sub.key}`}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className="block text-lg text-gray-300 py-2 hover:text-mea-gold transition-colors"
-                          >
-                            {i18n.language === 'tr' ? sub.name : sub.nameEn}
-                          </Link>
+                          <div key={sub.key}>
+                            <Link
+                              href={`${item.href}&subcategory=${sub.key}`}
+                              onClick={() => !sub.thirdLevel && setIsMobileMenuOpen(false)}
+                              className="block text-lg text-gray-300 py-2 hover:text-mea-gold transition-colors"
+                            >
+                              {i18n.language === 'tr' ? sub.name : sub.nameEn}
+                            </Link>
+                            {/* Third Level Categories */}
+                            {sub.thirdLevel && getThirdLevelCategories(sub.key).length > 0 && (
+                              <div className="pl-4 pb-2">
+                                {getThirdLevelCategories(sub.key).map((third) => (
+                                  <Link
+                                    key={third.key}
+                                    href={`${item.href}&subcategory=${sub.key}&thirdLevel=${third.key}`}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="block text-base text-gray-400 py-1.5 hover:text-mea-gold transition-colors"
+                                  >
+                                    {i18n.language === 'tr' ? third.name : third.nameEn}
+                                  </Link>
+                                ))}
+                              </div>
+                            )}
+                          </div>
                         ))}
                       </div>
                     )}
