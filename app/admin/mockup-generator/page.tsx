@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Upload, Wand2, Download, X, Plus, Trash2 } from 'lucide-react';
+import AdminBackButton from '@/components/AdminBackButton';
 
 export default function AdminMockupGeneratorPage() {
   const [images, setImages] = useState<File[]>([]);
@@ -150,6 +151,8 @@ export default function AdminMockupGeneratorPage() {
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-6xl mx-auto">
+        <AdminBackButton />
+
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">
             AI Mock-up Oluşturucu

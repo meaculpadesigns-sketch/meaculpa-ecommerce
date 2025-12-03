@@ -15,6 +15,7 @@ import {
   Save,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import AdminBackButton from '@/components/AdminBackButton';
 
 export default function AdminSettingsPage() {
   const { t, i18n } = useTranslation();
@@ -64,6 +65,8 @@ export default function AdminSettingsPage() {
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-7xl mx-auto">
+        <AdminBackButton />
+
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">

@@ -20,7 +20,7 @@ interface Card {
 }
 
 export default function CardsPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [cards, setCards] = useState<Card[]>([]);
@@ -161,7 +161,7 @@ export default function CardsPage() {
       await updateUser(user.id, { cards: updatedCards });
       setCards(updatedCards);
       closeModal();
-      alert(t('profile.saved'));
+      alert(i18n.language === 'tr' ? 'Kartınız başarıyla kaydedildi!' : 'Your card has been saved successfully!');
     } catch (error) {
       console.error('Error saving card:', error);
       alert(t('common.error'));

@@ -14,6 +14,7 @@ import {
   Plus,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import AdminBackButton from '@/components/AdminBackButton';
 
 interface ContentPage {
   id: string;
@@ -80,6 +81,8 @@ export default function AdminContentPage() {
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-7xl mx-auto">
+        <AdminBackButton />
+
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">

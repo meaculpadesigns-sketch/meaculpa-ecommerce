@@ -6,6 +6,7 @@ import { Ticket, Plus, Trash2, Edit, Copy, Check, X, Users, User } from 'lucide-
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, where } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Coupon } from '@/types';
+import AdminBackButton from '@/components/AdminBackButton';
 
 export default function AdminCouponsPage() {
   const [coupons, setCoupons] = useState<Coupon[]>([]);
@@ -65,19 +66,31 @@ export default function AdminCouponsPage() {
     e.preventDefault();
 
     try {
-      const couponData = {
+      const couponData: any = {
         code: formData.code.toUpperCase(),
         type: formData.type,
         value: Number(formData.value),
-        minPurchase: formData.minPurchase > 0 ? Number(formData.minPurchase) : undefined,
-        maxDiscount: formData.maxDiscount > 0 ? Number(formData.maxDiscount) : undefined,
-        expiresAt: formData.expiresAt ? new Date(formData.expiresAt) : undefined,
-        usageLimit: formData.usageLimit > 0 ? Number(formData.usageLimit) : undefined,
-        userSpecific: formData.userSpecific || undefined,
         active: formData.active,
         usedCount: editingCoupon?.usedCount || 0,
         createdAt: editingCoupon?.createdAt || new Date(),
       };
+
+      // Only add optional fields if they have values
+      if (formData.minPurchase > 0) {
+        couponData.minPurchase = Number(formData.minPurchase);
+      }
+      if (formData.maxDiscount > 0) {
+        couponData.maxDiscount = Number(formData.maxDiscount);
+      }
+      if (formData.expiresAt) {
+        couponData.expiresAt = new Date(formData.expiresAt);
+      }
+      if (formData.userSpecific) {
+        couponData.userSpecific = formData.userSpecific;
+      } else if (formData.usageLimit > 0) {
+        // Only add usageLimit if it's not user-specific
+        couponData.usageLimit = Number(formData.usageLimit);
+      }
 
       if (editingCoupon) {
         await updateDoc(doc(db, 'coupons', editingCoupon.id), couponData);
@@ -188,6 +201,8 @@ export default function AdminCouponsPage() {
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-7xl mx-auto">
+        <AdminBackButton />
+
         <div className="mb-8 flex items-center justify-between">
           <div>
             <h1 className="text-4xl font-bold text-white mb-2">Kupon Kodları Yönetimi</h1>

@@ -6,6 +6,7 @@ import { Star, ThumbsUp, ThumbsDown, Eye, EyeOff, Trash2, Search, Filter } from 
 import { useTranslation } from 'react-i18next';
 import { getAllReviews, updateReview, deleteReview as deleteReviewFromDb, getProducts } from '@/lib/firebase-helpers';
 import { Review, Product } from '@/types';
+import AdminBackButton from '@/components/AdminBackButton';
 
 interface AdminReview extends Review {
   productName: string;
@@ -135,6 +136,8 @@ export default function AdminReviewsPage() {
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-7xl mx-auto">
+        <AdminBackButton />
+
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">

@@ -15,6 +15,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { getAllOrders, getAllUsers, getProducts } from '@/lib/firebase-helpers';
 import { Order, Product } from '@/types';
+import AdminBackButton from '@/components/AdminBackButton';
 
 export default function AdminAnalyticsPage() {
   const { t, i18n } = useTranslation();
@@ -167,6 +168,8 @@ export default function AdminAnalyticsPage() {
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-7xl mx-auto">
+        <AdminBackButton />
+
         {/* Header */}
         <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>

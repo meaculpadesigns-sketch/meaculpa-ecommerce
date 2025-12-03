@@ -6,6 +6,7 @@ import { Users, Search, Gift, Mail, Phone, Calendar, Shield } from 'lucide-react
 import { collection, getDocs, updateDoc, doc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { User, UserCoupon } from '@/types';
+import AdminBackButton from '@/components/AdminBackButton';
 
 export default function AdminUsersPage() {
   const [users, setUsers] = useState<User[]>([]);
@@ -145,6 +146,8 @@ export default function AdminUsersPage() {
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-7xl mx-auto">
+        <AdminBackButton />
+
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">Kullanıcı Yönetimi</h1>
           <p className="text-gray-400">Kayıtlı kullanıcıları görüntüleyin ve kupon oluşturun</p>

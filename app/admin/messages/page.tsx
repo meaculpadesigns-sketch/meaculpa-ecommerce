@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Mail, MessageSquare, Phone, Instagram, Trash2, Eye, Search, Filter } from 'lucide-react';
 import { collection, getDocs, updateDoc, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import AdminBackButton from '@/components/AdminBackButton';
 
 interface Message {
   id: string;
@@ -153,6 +154,8 @@ export default function AdminMessagesPage() {
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-7xl mx-auto">
+        <AdminBackButton />
+
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">Mesajlar</h1>
           <p className="text-gray-400">Müşteri mesajlarını görüntüleyin ve yanıtlayın</p>

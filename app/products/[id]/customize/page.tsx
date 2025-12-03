@@ -868,6 +868,23 @@ export default function CustomizePage() {
                     </button>
                   </div>
                 </div>
+
+                {/* Total Price */}
+                <div className="glass rounded-lg p-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-300 font-medium">
+                      {i18n.language === 'tr' ? 'Toplam Fiyat:' : 'Total Price:'}
+                    </span>
+                    <span className="text-2xl font-bold text-white">
+                      {formatPrice(currentPrice * quantity, i18n.language)}
+                    </span>
+                  </div>
+                  {quantity > 1 && (
+                    <p className="text-gray-400 text-sm mt-2">
+                      {formatPrice(currentPrice, i18n.language)} × {quantity}
+                    </p>
+                  )}
+                </div>
               </div>
             ) : (
               /* Family Order Form */

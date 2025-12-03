@@ -7,6 +7,7 @@ import { collection, getDocs, updateDoc, doc, query, orderBy } from 'firebase/fi
 import { db } from '@/lib/firebase';
 import { Order } from '@/types';
 import Link from 'next/link';
+import AdminBackButton from '@/components/AdminBackButton';
 
 type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
 
@@ -118,6 +119,8 @@ export default function AdminOrdersPage() {
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-7xl mx-auto">
+        <AdminBackButton />
+
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">Sipariş Yönetimi</h1>
           <p className="text-gray-400">Tüm siparişleri görüntüleyin ve yönetin</p>

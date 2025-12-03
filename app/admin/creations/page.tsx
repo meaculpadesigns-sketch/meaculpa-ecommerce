@@ -7,6 +7,7 @@ import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase
 import { db } from '@/lib/firebase';
 import { uploadFile } from '@/lib/firebase-helpers';
 import { Creation } from '@/types';
+import AdminBackButton from '@/components/AdminBackButton';
 
 export default function AdminCreationsPage() {
   const [creations, setCreations] = useState<Creation[]>([]);
@@ -136,6 +137,8 @@ export default function AdminCreationsPage() {
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-7xl mx-auto">
+        <AdminBackButton />
+
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-4xl font-bold text-white mb-2">

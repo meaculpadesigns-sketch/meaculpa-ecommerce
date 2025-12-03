@@ -6,6 +6,7 @@ import { Plus, Edit, Trash2, Calendar, MapPin, Save, X } from 'lucide-react';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { uploadFile } from '@/lib/firebase-helpers';
+import AdminBackButton from '@/components/AdminBackButton';
 
 interface Carnival {
   id: string;
@@ -145,6 +146,8 @@ export default function AdminCarnivalsPage() {
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-7xl mx-auto">
+        <AdminBackButton />
+
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-4xl font-bold text-white mb-2">

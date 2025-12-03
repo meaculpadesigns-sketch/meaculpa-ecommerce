@@ -42,7 +42,7 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold text-black mb-6">{t('about.ourStory')}</h2>
           <div className="space-y-4 text-gray-700 leading-relaxed">
             <p>
-              <span className="text-mea-gold font-semibold">Mea Culpa</span>, {t('about.storyPara1')}
+              <span className="text-black font-semibold">Mea Culpa</span>, {t('about.storyPara1')}
             </p>
             <p>
               {t('about.storyPara2')}
