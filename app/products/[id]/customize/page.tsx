@@ -122,11 +122,16 @@ export default function CustomizePage() {
         const productData = await getProductById(id as string);
         if (productData) {
           setProduct(productData);
-          // Set default order type based on category
+          // Set default order type based on category and subcategory
           if (productData.category === 'kimono') {
             setOrderType('individual');
           } else if (productData.category === 'set') {
-            setOrderType('family');
+            // Special case: Family Sets (Aile Setleri) default to 'family', others default to 'individual'
+            if (productData.subcategory === 'aile-setleri') {
+              setOrderType('family');
+            } else {
+              setOrderType('individual');
+            }
           }
         }
       } catch (error) {
