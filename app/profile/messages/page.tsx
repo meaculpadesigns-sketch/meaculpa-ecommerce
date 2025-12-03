@@ -49,15 +49,21 @@ export default function MessagesPage() {
 
     setSending(true);
     try {
-      await createMessage({
-        type: 'support',
+      const messageData = {
+        type: 'support' as const,
         name: currentUser.name || currentUser.email,
         email: currentUser.email,
         phone: currentUser.phone || '',
         message: message.trim(),
         read: false,
         createdAt: new Date(),
-      });
+      };
+
+      console.log('📧 Sending message with data:', messageData);
+
+      const messageId = await createMessage(messageData);
+
+      console.log('✅ Message sent successfully with ID:', messageId);
 
       // Add message to local state for immediate feedback
       setMessages([...messages, {
@@ -67,10 +73,10 @@ export default function MessagesPage() {
       }]);
 
       setMessage('');
-      alert(t('profile.messageSent') || 'Mesajınız gönderildi!');
+      alert(t('profile.messageSent') || 'Mesajınız gönderildi! Admin panelinde "Destek" filtresinde görünecek.');
     } catch (error) {
-      console.error('Error sending message:', error);
-      alert(t('common.error') || 'Mesaj gönderilirken bir hata oluştu.');
+      console.error('❌ Error sending message:', error);
+      alert(t('common.error') || 'Mesaj gönderilirken bir hata oluştu: ' + (error as Error).message);
     } finally {
       setSending(false);
     }
