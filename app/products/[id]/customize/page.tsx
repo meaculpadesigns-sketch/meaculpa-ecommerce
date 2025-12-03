@@ -161,15 +161,25 @@ export default function CustomizePage() {
 
   // Auto-fill measurements from size charts
   useEffect(() => {
-    if (!size || !product) return;
+    if (!size || !product) {
+      console.log('Auto-fill skipped: size =', size, 'product =', !!product);
+      return;
+    }
+
+    console.log('Auto-fill triggered: size =', size, 'category =', product.category, 'gender =', gender);
 
     if (product.category === 'kimono') {
       const chart = kimonoType === 'uzun' ? UZUN_KIMONO_SIZE_CHART : KISA_KIMONO_SIZE_CHART;
       const sizeRow = chart.rows.find(row => row.beden === size);
 
+      console.log('Kimono chart:', chart.name, 'sizeRow:', sizeRow);
+
       if (sizeRow) {
-        setShirtLength(sizeRow.kimonoBoyu?.replace('cm', '') || '');
-        setSleeveLength(sizeRow.kolBoyu?.replace('cm', '') || '');
+        const kimonoBoy = sizeRow.kimonoBoyu?.replace('cm', '') || '';
+        const kolBoy = sizeRow.kolBoyu?.replace('cm', '') || '';
+        console.log('Setting kimono measurements:', { kimonoBoy, kolBoy });
+        setShirtLength(kimonoBoy);
+        setSleeveLength(kolBoy);
         setPajamaLength('');
       }
     } else if (product.category === 'set') {
@@ -184,19 +194,30 @@ export default function CustomizePage() {
 
       const sizeRow = chart.rows.find(row => row.beden === size);
 
+      console.log('Set chart:', chart.name, 'sizeRow:', sizeRow);
+
       if (sizeRow) {
         if (setItemSelection === 'shirt-only') {
-          setShirtLength(sizeRow.gomlekBoyu?.replace('cm', '') || '');
-          setSleeveLength(sizeRow.kolBoyu?.replace('cm', '') || '');
+          const gomlekBoy = sizeRow.gomlekBoyu?.replace('cm', '') || '';
+          const kolBoy = sizeRow.kolBoyu?.replace('cm', '') || '';
+          console.log('Setting shirt-only measurements:', { gomlekBoy, kolBoy });
+          setShirtLength(gomlekBoy);
+          setSleeveLength(kolBoy);
           setPajamaLength('');
         } else if (setItemSelection === 'pajama-only') {
+          const pijamaBoy = sizeRow.pijamaBoyu?.replace('cm', '') || '';
+          console.log('Setting pajama-only measurements:', { pijamaBoy });
           setShirtLength('');
           setSleeveLength('');
-          setPajamaLength(sizeRow.pijamaBoyu?.replace('cm', '') || '');
+          setPajamaLength(pijamaBoy);
         } else {
-          setShirtLength(sizeRow.gomlekBoyu?.replace('cm', '') || '');
-          setSleeveLength(sizeRow.kolBoyu?.replace('cm', '') || '');
-          setPajamaLength(sizeRow.pijamaBoyu?.replace('cm', '') || '');
+          const gomlekBoy = sizeRow.gomlekBoyu?.replace('cm', '') || '';
+          const kolBoy = sizeRow.kolBoyu?.replace('cm', '') || '';
+          const pijamaBoy = sizeRow.pijamaBoyu?.replace('cm', '') || '';
+          console.log('Setting full set measurements:', { gomlekBoy, kolBoy, pijamaBoy });
+          setShirtLength(gomlekBoy);
+          setSleeveLength(kolBoy);
+          setPajamaLength(pijamaBoy);
         }
       }
     }
