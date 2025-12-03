@@ -122,15 +122,19 @@ export default function CustomizePage() {
         const productData = await getProductById(id as string);
         if (productData) {
           setProduct(productData);
-          // Set default order type based on category and subcategory
+          // Set default order type and checkbox state based on category and subcategory
           if (productData.category === 'kimono') {
+            // Kimono: default to individual, checkbox unchecked
             setOrderType('individual');
+            setShowFamilyOrder(false);
           } else if (productData.category === 'set') {
             // Special case: Family Sets (Aile Setleri) default to 'family', others default to 'individual'
             if (productData.subcategory === 'aile-setleri') {
               setOrderType('family');
+              setShowFamilyOrder(true); // For Aile Setleri, checkbox starts checked (family mode)
             } else {
               setOrderType('individual');
+              setShowFamilyOrder(false); // For normal sets, checkbox starts unchecked
             }
           }
         }
@@ -612,33 +616,41 @@ export default function CustomizePage() {
                 </label>
               </div>
             ) : (
-              /* Set: Button selection (Family first, Individual second) */
+              /* Set: Checkbox for family/individual order based on subcategory */
               <div className="mb-8">
-                <label className="block text-white font-semibold mb-3">
-                  {i18n.language === 'tr' ? 'Sipariş Tipi' : 'Order Type'}
-                </label>
-                <div className="grid grid-cols-2 gap-4">
-                  <button
-                    onClick={() => setOrderType('family')}
-                    className={`p-4 rounded-xl transition-all ${
-                      orderType === 'family'
-                        ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                        : 'text-gray-400 hover:text-gray-300'
-                    }`}
-                  >
-                    {i18n.language === 'tr' ? 'Aile' : 'Family'}
-                  </button>
-                  <button
-                    onClick={() => setOrderType('individual')}
-                    className={`p-4 rounded-xl transition-all ${
-                      orderType === 'individual'
-                        ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                        : 'text-gray-400 hover:text-gray-300'
-                    }`}
-                  >
-                    {i18n.language === 'tr' ? 'Bireysel' : 'Individual'}
-                  </button>
-                </div>
+                {product.subcategory === 'aile-setleri' ? (
+                  /* Aile Setleri: Checkbox for individual order (opposite) */
+                  <label className="flex items-center gap-3 text-white cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={!showFamilyOrder}
+                      onChange={(e) => {
+                        setShowFamilyOrder(!e.target.checked);
+                        setOrderType(e.target.checked ? 'individual' : 'family');
+                      }}
+                      className="w-5 h-5 rounded border-gray-600 text-mea-gold focus:ring-mea-gold focus:ring-offset-0"
+                    />
+                    <span className="font-semibold">
+                      {i18n.language === 'tr' ? 'Bireysel sipariş vermek istiyorum' : 'I want to order individually'}
+                    </span>
+                  </label>
+                ) : (
+                  /* Normal Sets: Checkbox for family order */
+                  <label className="flex items-center gap-3 text-white cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={showFamilyOrder}
+                      onChange={(e) => {
+                        setShowFamilyOrder(e.target.checked);
+                        setOrderType(e.target.checked ? 'family' : 'individual');
+                      }}
+                      className="w-5 h-5 rounded border-gray-600 text-mea-gold focus:ring-mea-gold focus:ring-offset-0"
+                    />
+                    <span className="font-semibold">
+                      {i18n.language === 'tr' ? 'Ailece sipariş vermek istiyorum' : 'I want to order for family'}
+                    </span>
+                  </label>
+                )}
               </div>
             )}
 
