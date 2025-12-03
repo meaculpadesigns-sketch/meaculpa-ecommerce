@@ -122,8 +122,8 @@ export default function CustomizePage() {
         const productData = await getProductById(id as string);
         if (productData) {
           setProduct(productData);
-          // Set default order type and checkbox state based on category and subcategory
-          console.log('🔍 Product category:', productData.category, 'subcategory:', productData.subcategory);
+          // Set default order type and checkbox state based on category and thirdLevelCategory
+          console.log('🔍 Product category:', productData.category, 'subcategory:', productData.subcategory, 'thirdLevel:', productData.thirdLevelCategory);
 
           if (productData.category === 'kimono') {
             // Kimono: default to individual, checkbox unchecked
@@ -132,8 +132,9 @@ export default function CustomizePage() {
             setShowFamilyOrder(false);
           } else if (productData.category === 'set') {
             // Special case: Family Sets (Aile Setleri) default to 'family', others default to 'individual'
-            if (productData.subcategory === 'aile-setleri') {
-              console.log('✅ Aile Setleri - Setting to family');
+            // Check thirdLevelCategory for 'family-sets' OR subcategory for legacy 'aile-setleri'
+            if (productData.thirdLevelCategory === 'family-sets' || productData.subcategory === 'aile-setleri') {
+              console.log('✅ Aile Setleri (Family Sets) - Setting to family');
               setOrderType('family');
               setShowFamilyOrder(true); // For Aile Setleri, checkbox starts checked (family mode)
             } else {
@@ -621,9 +622,9 @@ export default function CustomizePage() {
                 </label>
               </div>
             ) : (
-              /* Set: Checkbox for family/individual order based on subcategory */
+              /* Set: Checkbox for family/individual order based on thirdLevelCategory */
               <div className="mb-8">
-                {product.subcategory === 'aile-setleri' ? (
+                {(product.thirdLevelCategory === 'family-sets' || product.subcategory === 'aile-setleri') ? (
                   /* Aile Setleri: Checkbox for individual order (opposite) */
                   <label className="flex items-center gap-3 text-white cursor-pointer">
                     <input
