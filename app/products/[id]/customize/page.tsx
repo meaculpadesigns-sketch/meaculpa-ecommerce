@@ -123,16 +123,21 @@ export default function CustomizePage() {
         if (productData) {
           setProduct(productData);
           // Set default order type and checkbox state based on category and subcategory
+          console.log('🔍 Product category:', productData.category, 'subcategory:', productData.subcategory);
+
           if (productData.category === 'kimono') {
             // Kimono: default to individual, checkbox unchecked
+            console.log('✅ Kimono - Setting to individual');
             setOrderType('individual');
             setShowFamilyOrder(false);
           } else if (productData.category === 'set') {
             // Special case: Family Sets (Aile Setleri) default to 'family', others default to 'individual'
             if (productData.subcategory === 'aile-setleri') {
+              console.log('✅ Aile Setleri - Setting to family');
               setOrderType('family');
               setShowFamilyOrder(true); // For Aile Setleri, checkbox starts checked (family mode)
             } else {
+              console.log('✅ Normal Set - Setting to individual');
               setOrderType('individual');
               setShowFamilyOrder(false); // For normal sets, checkbox starts unchecked
             }
