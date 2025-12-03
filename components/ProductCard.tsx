@@ -77,7 +77,7 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
           <div className="flex items-start justify-between mb-4">
             <div>
               <Link href={`/products/${product.id}`}>
-                <h3 className="text-2xl font-semibold text-white hover:text-mea-gold transition-colors">
+                <h3 className="text-2xl font-semibold text-black hover:text-gray-700 transition-colors">
                   {name}
                 </h3>
               </Link>
@@ -96,7 +96,7 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
 
           <div className="flex items-center gap-4 mb-4">
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-bold text-mea-gold">{formatPrice(product.price, i18n.language)}</span>
+              <span className="text-3xl font-bold text-black">{formatPrice(product.price, i18n.language)}</span>
               {product.oldPrice && (
                 <span className="text-gray-500 line-through">{formatPrice(product.oldPrice, i18n.language)}</span>
               )}

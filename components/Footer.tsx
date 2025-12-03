@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
-import { Instagram, Facebook, Twitter } from 'lucide-react';
+import { Instagram, Facebook, Twitter, MessageCircle } from 'lucide-react';
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -37,6 +37,11 @@ export default function Footer() {
       name: 'Instagram',
       icon: Instagram,
       href: 'https://www.instagram.com/meaculpadesigns',
+    },
+    {
+      name: 'WhatsApp',
+      icon: MessageCircle,
+      href: 'https://wa.me/905075620802',
     },
     {
       name: 'Facebook',

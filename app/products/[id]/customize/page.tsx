@@ -9,6 +9,13 @@ import { Product } from '@/types';
 import { getProductById } from '@/lib/firebase-helpers';
 import { formatPrice } from '@/lib/currency';
 import { useCart } from '@/lib/cart-context';
+import {
+  KADIN_SET_SIZE_CHART,
+  ERKEK_SET_SIZE_CHART,
+  KROP_GOMLEK_SIZE_CHART,
+  UZUN_KIMONO_SIZE_CHART,
+  KISA_KIMONO_SIZE_CHART,
+} from '@/lib/standard-size-charts';
 
 type OrderType = 'individual' | 'family';
 type Gender = 'male' | 'female';
@@ -54,6 +61,12 @@ export default function CustomizePage() {
   const [sleeveLength, setSleeveLength] = useState('');
   const [pajamaLength, setPajamaLength] = useState('');
 
+  // New states for kimono/set options
+  const [kimonoType, setKimonoType] = useState<'uzun' | 'kisa'>('uzun');
+  const [setItemSelection, setSetItemSelection] = useState<'full' | 'shirt-only' | 'pajama-only'>('full');
+  const [isCropShirt, setIsCropShirt] = useState(false);
+  const [showFamilyOrder, setShowFamilyOrder] = useState(false);
+
   // Family order state
   const [childCount, setChildCount] = useState(0);
   const [parent1, setParent1] = useState<ParentInfo>({
@@ -71,6 +84,27 @@ export default function CustomizePage() {
     pajamaLength: '',
   });
   const [children, setChildren] = useState<ChildInfo[]>([]);
+
+  // Calculate current price based on product category and selection
+  const getCurrentPrice = () => {
+    if (!product) return 0;
+
+    // For set category, check if single item is selected
+    if (product.category === 'set' && setItemSelection !== 'full') {
+      if (setItemSelection === 'shirt-only') {
+        // Use admin-defined shirt price or default to half the set price
+        return product.setPricing?.shirtOnly || product.price / 2;
+      } else if (setItemSelection === 'pajama-only') {
+        // Use admin-defined pajama price or default to half the set price
+        return product.setPricing?.pajamaOnly || product.price / 2;
+      }
+    }
+
+    // Default: return full product price
+    return product.price;
+  };
+
+  const currentPrice = getCurrentPrice();
 
   useEffect(() => {
     document.body.className = 'bg-home text-dark-page';
@@ -125,6 +159,49 @@ export default function CustomizePage() {
     }
   }, [childCount, orderType]);
 
+  // Auto-fill measurements from size charts
+  useEffect(() => {
+    if (!size || !product) return;
+
+    if (product.category === 'kimono') {
+      const chart = kimonoType === 'uzun' ? UZUN_KIMONO_SIZE_CHART : KISA_KIMONO_SIZE_CHART;
+      const sizeRow = chart.rows.find(row => row.beden === size);
+
+      if (sizeRow) {
+        setShirtLength(sizeRow.kimonoBoyu?.replace('cm', '') || '');
+        setSleeveLength(sizeRow.kolBoyu?.replace('cm', '') || '');
+        setPajamaLength('');
+      }
+    } else if (product.category === 'set') {
+      let chart;
+      if (isCropShirt && gender === 'female') {
+        chart = KROP_GOMLEK_SIZE_CHART;
+      } else if (gender === 'male') {
+        chart = ERKEK_SET_SIZE_CHART;
+      } else {
+        chart = KADIN_SET_SIZE_CHART;
+      }
+
+      const sizeRow = chart.rows.find(row => row.beden === size);
+
+      if (sizeRow) {
+        if (setItemSelection === 'shirt-only') {
+          setShirtLength(sizeRow.gomlekBoyu?.replace('cm', '') || '');
+          setSleeveLength(sizeRow.kolBoyu?.replace('cm', '') || '');
+          setPajamaLength('');
+        } else if (setItemSelection === 'pajama-only') {
+          setShirtLength('');
+          setSleeveLength('');
+          setPajamaLength(sizeRow.pijamaBoyu?.replace('cm', '') || '');
+        } else {
+          setShirtLength(sizeRow.gomlekBoyu?.replace('cm', '') || '');
+          setSleeveLength(sizeRow.kolBoyu?.replace('cm', '') || '');
+          setPajamaLength(sizeRow.pijamaBoyu?.replace('cm', '') || '');
+        }
+      }
+    }
+  }, [size, gender, kimonoType, product, isCropShirt, setItemSelection]);
+
   // Auto-calculate measurements for a child
   const calculateChildMeasurements = (age: string, height: string, weight: string) => {
     if (!age || !height || !weight) return null;
@@ -171,6 +248,11 @@ export default function CustomizePage() {
   const handleAddToCart = () => {
     if (!product) return;
 
+    // Create product object with adjusted price for single item selection
+    const productWithPrice = product.category === 'set' && setItemSelection !== 'full'
+      ? { ...product, price: currentPrice }
+      : product;
+
     if (orderType === 'individual') {
       // Validate individual order
       if (!size) {
@@ -178,11 +260,36 @@ export default function CustomizePage() {
         return;
       }
 
+      // Build special requests with item selection info
+      let finalSpecialRequests = specialRequests || '';
+      if (product.category === 'set' && setItemSelection !== 'full') {
+        const itemNote = setItemSelection === 'shirt-only'
+          ? (i18n.language === 'tr' ? 'Sadece Gömlek' : 'Shirt Only')
+          : (i18n.language === 'tr' ? 'Sadece Pijama' : 'Pajama Only');
+        finalSpecialRequests = finalSpecialRequests
+          ? `${itemNote} - ${finalSpecialRequests}`
+          : itemNote;
+      }
+      if (product.category === 'set' && isCropShirt && gender === 'female') {
+        const cropNote = i18n.language === 'tr' ? 'Krop Gömlek' : 'Crop Shirt';
+        finalSpecialRequests = finalSpecialRequests
+          ? `${cropNote} - ${finalSpecialRequests}`
+          : cropNote;
+      }
+      if (product.category === 'kimono' && kimonoType) {
+        const typeNote = kimonoType === 'uzun'
+          ? (i18n.language === 'tr' ? 'Uzun Kimono' : 'Long Kimono')
+          : (i18n.language === 'tr' ? 'Kısa Kimono' : 'Short Kimono');
+        finalSpecialRequests = finalSpecialRequests
+          ? `${typeNote} - ${finalSpecialRequests}`
+          : typeNote;
+      }
+
       addToCart(
-        product,
+        productWithPrice,
         size,
         quantity,
-        specialRequests || undefined,
+        finalSpecialRequests || undefined,
         false,
         undefined,
         {
@@ -231,7 +338,7 @@ export default function CustomizePage() {
           ? `${parent1.gender === 'male' ? 'Erkek' : 'Kadın'}${specialRequests ? ' - ' + specialRequests : ''}`
           : `${parent1.gender === 'male' ? 'Male' : 'Female'}${specialRequests ? ' - ' + specialRequests : ''}`;
       addToCart(
-        product,
+        productWithPrice,
         parent1.size,
         1,
         parent1Label,
@@ -250,7 +357,7 @@ export default function CustomizePage() {
           ? `${parent2.gender === 'male' ? 'Erkek' : 'Kadın'}${specialRequests ? ' - ' + specialRequests : ''}`
           : `${parent2.gender === 'male' ? 'Male' : 'Female'}${specialRequests ? ' - ' + specialRequests : ''}`;
       addToCart(
-        product,
+        productWithPrice,
         parent2.size,
         1,
         parent2Label,
@@ -270,7 +377,7 @@ export default function CustomizePage() {
             ? `Çocuk ${index + 1} (${child.gender === 'male' ? 'Erkek' : 'Kız'}, ${child.age} yaş)${specialRequests ? ' - ' + specialRequests : ''}`
             : `Child ${index + 1} (${child.gender === 'male' ? 'Boy' : 'Girl'}, ${child.age} years old)${specialRequests ? ' - ' + specialRequests : ''}`;
         addToCart(
-          product,
+          productWithPrice,
           'Özel Ölçü',
           1,
           childLabel,
@@ -328,7 +435,13 @@ export default function CustomizePage() {
           {/* Left: Product Image */}
           <div className="glass rounded-2xl p-8">
             <div className="relative aspect-[3/4] bg-zinc-800 rounded-xl overflow-hidden mb-6">
-              {product.fabricImages && product.fabricImages.length > 0 ? (
+              {product.whiteBackgroundImages && product.whiteBackgroundImages.length > 0 ? (
+                <img
+                  src={product.whiteBackgroundImages[0]}
+                  alt={name}
+                  className="w-full h-full object-cover"
+                />
+              ) : product.fabricImages && product.fabricImages.length > 0 ? (
                 <img
                   src={product.fabricImages[0]}
                   alt={name}
@@ -348,10 +461,10 @@ export default function CustomizePage() {
             </div>
 
             <h2 className="text-3xl font-bold text-white mb-4">{name}</h2>
-            <p className="text-gray-300 mb-4">{description}</p>
-            <div className="text-4xl font-bold text-mea-gold">
-              {formatPrice(product.price, i18n.language)}
-            </div>
+            <div
+              className="text-gray-300 mb-4 formatted-description"
+              dangerouslySetInnerHTML={{ __html: description }}
+            />
           </div>
 
           {/* Right: Customization Form */}
@@ -361,62 +474,54 @@ export default function CustomizePage() {
             </h3>
 
             {/* Order Type Selection */}
-            <div className="mb-8">
-              <label className="block text-white font-semibold mb-3">
-                {i18n.language === 'tr' ? 'Sipariş Tipi' : 'Order Type'}
-              </label>
-              <div className="grid grid-cols-2 gap-4">
-                {/* For Set: Family first, Individual second */}
-                {/* For Kimono: Individual first, Family second */}
-                {isSetProduct ? (
-                  <>
-                    <button
-                      onClick={() => setOrderType('family')}
-                      className={`p-4 rounded-xl transition-all ${
-                        orderType === 'family'
-                          ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                          : 'text-gray-400 hover:text-gray-300'
-                      }`}
-                    >
-                      {i18n.language === 'tr' ? 'Aile' : 'Family'}
-                    </button>
-                    <button
-                      onClick={() => setOrderType('individual')}
-                      className={`p-4 rounded-xl transition-all ${
-                        orderType === 'individual'
-                          ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                          : 'text-gray-400 hover:text-gray-300'
-                      }`}
-                    >
-                      {i18n.language === 'tr' ? 'Bireysel' : 'Individual'}
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      onClick={() => setOrderType('individual')}
-                      className={`p-4 rounded-xl transition-all ${
-                        orderType === 'individual'
-                          ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                          : 'text-gray-400 hover:text-gray-300'
-                      }`}
-                    >
-                      {i18n.language === 'tr' ? 'Bireysel' : 'Individual'}
-                    </button>
-                    <button
-                      onClick={() => setOrderType('family')}
-                      className={`p-4 rounded-xl transition-all ${
-                        orderType === 'family'
-                          ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                          : 'text-gray-400 hover:text-gray-300'
-                      }`}
-                    >
-                      {i18n.language === 'tr' ? 'Aile' : 'Family'}
-                    </button>
-                  </>
-                )}
+            {product.category === 'kimono' ? (
+              /* Kimono: Checkbox for family order */
+              <div className="mb-8">
+                <label className="flex items-center gap-3 text-white cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={showFamilyOrder}
+                    onChange={(e) => {
+                      setShowFamilyOrder(e.target.checked);
+                      setOrderType(e.target.checked ? 'family' : 'individual');
+                    }}
+                    className="w-5 h-5 rounded border-gray-600 text-mea-gold focus:ring-mea-gold focus:ring-offset-0"
+                  />
+                  <span className="font-semibold">
+                    {i18n.language === 'tr' ? 'Ailece sipariş vermek istiyorum' : 'I want to order for family'}
+                  </span>
+                </label>
               </div>
-            </div>
+            ) : (
+              /* Set: Button selection (Family first, Individual second) */
+              <div className="mb-8">
+                <label className="block text-white font-semibold mb-3">
+                  {i18n.language === 'tr' ? 'Sipariş Tipi' : 'Order Type'}
+                </label>
+                <div className="grid grid-cols-2 gap-4">
+                  <button
+                    onClick={() => setOrderType('family')}
+                    className={`p-4 rounded-xl transition-all ${
+                      orderType === 'family'
+                        ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                        : 'text-gray-400 hover:text-gray-300'
+                    }`}
+                  >
+                    {i18n.language === 'tr' ? 'Aile' : 'Family'}
+                  </button>
+                  <button
+                    onClick={() => setOrderType('individual')}
+                    className={`p-4 rounded-xl transition-all ${
+                      orderType === 'individual'
+                        ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                        : 'text-gray-400 hover:text-gray-300'
+                    }`}
+                  >
+                    {i18n.language === 'tr' ? 'Bireysel' : 'Individual'}
+                  </button>
+                </div>
+              </div>
+            )}
 
             {orderType === 'individual' ? (
               /* Individual Order Form */
@@ -450,6 +555,103 @@ export default function CustomizePage() {
                   </div>
                 </div>
 
+                {/* Kimono Type Selection - Only for Kimono category */}
+                {product.category === 'kimono' && (
+                  <div>
+                    <label className="block text-white font-semibold mb-3">
+                      {i18n.language === 'tr' ? 'Kimono Türü' : 'Kimono Type'}
+                    </label>
+                    <div className="grid grid-cols-2 gap-3">
+                      <button
+                        onClick={() => setKimonoType('uzun')}
+                        className={`p-3 rounded-lg transition-all ${
+                          kimonoType === 'uzun'
+                            ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                            : 'text-gray-400 hover:text-gray-300'
+                        }`}
+                      >
+                        {i18n.language === 'tr' ? 'Uzun Kimono' : 'Long Kimono'}
+                      </button>
+                      <button
+                        onClick={() => setKimonoType('kisa')}
+                        className={`p-3 rounded-lg transition-all ${
+                          kimonoType === 'kisa'
+                            ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                            : 'text-gray-400 hover:text-gray-300'
+                        }`}
+                      >
+                        {i18n.language === 'tr' ? 'Kısa Kimono' : 'Short Kimono'}
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Crop Shirt Option - Only for Set category and Female gender */}
+                {product.category === 'set' && gender === 'female' && (
+                  <div>
+                    <label className="flex items-center gap-3 text-white cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={isCropShirt}
+                        onChange={(e) => setIsCropShirt(e.target.checked)}
+                        className="w-5 h-5 rounded border-gray-600 text-mea-gold focus:ring-mea-gold focus:ring-offset-0"
+                      />
+                      <span className="font-semibold">
+                        {i18n.language === 'tr' ? 'Krop gömlek istiyorum' : 'I want crop shirt'}
+                      </span>
+                    </label>
+                  </div>
+                )}
+
+                {/* Set Item Selection - Only for Set category */}
+                {product.category === 'set' && (
+                  <div className="space-y-3">
+                    <label className="flex items-center gap-3 text-white cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={setItemSelection !== 'full'}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setSetItemSelection('shirt-only');
+                          } else {
+                            setSetItemSelection('full');
+                          }
+                        }}
+                        className="w-5 h-5 rounded border-gray-600 text-mea-gold focus:ring-mea-gold focus:ring-offset-0"
+                      />
+                      <span className="font-semibold">
+                        {i18n.language === 'tr' ? 'Tek parça almak istiyorum' : 'I want single item'}
+                      </span>
+                    </label>
+
+                    {/* Radio buttons for single item selection */}
+                    {setItemSelection !== 'full' && (
+                      <div className="ml-8 space-y-2">
+                        <label className="flex items-center gap-3 text-gray-300 cursor-pointer">
+                          <input
+                            type="radio"
+                            name="setItem"
+                            checked={setItemSelection === 'shirt-only'}
+                            onChange={() => setSetItemSelection('shirt-only')}
+                            className="w-4 h-4 border-gray-600 text-mea-gold focus:ring-mea-gold focus:ring-offset-0"
+                          />
+                          <span>{i18n.language === 'tr' ? 'Sadece Gömlek' : 'Shirt Only'}</span>
+                        </label>
+                        <label className="flex items-center gap-3 text-gray-300 cursor-pointer">
+                          <input
+                            type="radio"
+                            name="setItem"
+                            checked={setItemSelection === 'pajama-only'}
+                            onChange={() => setSetItemSelection('pajama-only')}
+                            className="w-4 h-4 border-gray-600 text-mea-gold focus:ring-mea-gold focus:ring-offset-0"
+                          />
+                          <span>{i18n.language === 'tr' ? 'Sadece Pijama' : 'Pajama Only'}</span>
+                        </label>
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 {/* Size Selection */}
                 <div>
                   <label className="block text-white font-semibold mb-3">
@@ -478,42 +680,56 @@ export default function CustomizePage() {
                     {i18n.language === 'tr' ? 'Özel Ölçüler (Opsiyonel)' : 'Custom Measurements (Optional)'}
                   </h4>
                   <div className="grid grid-cols-3 gap-4">
-                    <div>
-                      <label className="block text-gray-300 text-sm mb-2">
-                        {i18n.language === 'tr' ? 'Gömlek Boyu (cm)' : 'Shirt Length (cm)'}
-                      </label>
-                      <input
-                        type="number"
-                        value={shirtLength}
-                        onChange={(e) => setShirtLength(e.target.value)}
-                        className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
-                        placeholder="cm"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-300 text-sm mb-2">
-                        {i18n.language === 'tr' ? 'Kol Boyu (cm)' : 'Sleeve Length (cm)'}
-                      </label>
-                      <input
-                        type="number"
-                        value={sleeveLength}
-                        onChange={(e) => setSleeveLength(e.target.value)}
-                        className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
-                        placeholder="cm"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-300 text-sm mb-2">
-                        {i18n.language === 'tr' ? 'Pijama Boyu (cm)' : 'Pajama Length (cm)'}
-                      </label>
-                      <input
-                        type="number"
-                        value={pajamaLength}
-                        onChange={(e) => setPajamaLength(e.target.value)}
-                        className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
-                        placeholder="cm"
-                      />
-                    </div>
+                    {/* First field - Kimono Boyu OR Gömlek Boyu */}
+                    {(product.category === 'set' ? setItemSelection !== 'pajama-only' : true) && (
+                      <div>
+                        <label className="block text-gray-300 text-sm mb-2">
+                          {product.category === 'kimono'
+                            ? (i18n.language === 'tr' ? 'Kimono Boyu (cm)' : 'Kimono Length (cm)')
+                            : (i18n.language === 'tr' ? 'Gömlek Boyu (cm)' : 'Shirt Length (cm)')
+                          }
+                        </label>
+                        <input
+                          type="number"
+                          value={shirtLength}
+                          onChange={(e) => setShirtLength(e.target.value)}
+                          className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
+                          placeholder="cm"
+                        />
+                      </div>
+                    )}
+
+                    {/* Second field - Kol Boyu (always shown except for pajama-only) */}
+                    {(product.category === 'set' ? setItemSelection !== 'pajama-only' : true) && (
+                      <div>
+                        <label className="block text-gray-300 text-sm mb-2">
+                          {i18n.language === 'tr' ? 'Kol Boyu (cm)' : 'Sleeve Length (cm)'}
+                        </label>
+                        <input
+                          type="number"
+                          value={sleeveLength}
+                          onChange={(e) => setSleeveLength(e.target.value)}
+                          className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
+                          placeholder="cm"
+                        />
+                      </div>
+                    )}
+
+                    {/* Third field - Pijama Boyu (only for set, not for shirt-only) */}
+                    {product.category === 'set' && setItemSelection !== 'shirt-only' && (
+                      <div>
+                        <label className="block text-gray-300 text-sm mb-2">
+                          {i18n.language === 'tr' ? 'Pijama Boyu (cm)' : 'Pajama Length (cm)'}
+                        </label>
+                        <input
+                          type="number"
+                          value={pajamaLength}
+                          onChange={(e) => setPajamaLength(e.target.value)}
+                          className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
+                          placeholder="cm"
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -893,6 +1109,28 @@ export default function CustomizePage() {
                 )}
               </div>
             )}
+
+            {/* Price Display */}
+            <div className="mt-8 p-6 glass rounded-xl border-2 border-mea-gold border-opacity-30">
+              <div className="flex justify-between items-center">
+                <span className="text-white font-semibold text-lg">
+                  {i18n.language === 'tr' ? 'Fiyat' : 'Price'}
+                </span>
+                <div className="text-right">
+                  <div className="text-3xl font-bold text-mea-gold">
+                    ₺{currentPrice.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </div>
+                  {product.category === 'set' && setItemSelection !== 'full' && (
+                    <div className="text-xs text-gray-400 mt-1">
+                      {setItemSelection === 'shirt-only'
+                        ? (i18n.language === 'tr' ? 'Sadece Gömlek' : 'Shirt Only')
+                        : (i18n.language === 'tr' ? 'Sadece Pijama' : 'Pajama Only')
+                      }
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
 
             {/* Special Requests */}
             <div className="mt-8">

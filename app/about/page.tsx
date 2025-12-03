@@ -24,10 +24,10 @@ export default function AboutPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+          <h1 className="text-5xl md:text-6xl font-bold text-black mb-6">
             {t('about.title')}
           </h1>
-          <p className="text-xl text-gray-300 leading-relaxed">
+          <p className="text-xl text-gray-700 leading-relaxed">
             {t('about.subtitle')}
           </p>
         </motion.div>
@@ -39,8 +39,8 @@ export default function AboutPage() {
           transition={{ delay: 0.1 }}
           className="glass rounded-2xl p-8 mb-12"
         >
-          <h2 className="text-3xl font-bold text-white mb-6">{t('about.ourStory')}</h2>
-          <div className="space-y-4 text-gray-300 leading-relaxed">
+          <h2 className="text-3xl font-bold text-black mb-6">{t('about.ourStory')}</h2>
+          <div className="space-y-4 text-gray-700 leading-relaxed">
             <p>
               <span className="text-mea-gold font-semibold">Mea Culpa</span>, {t('about.storyPara1')}
             </p>
@@ -65,9 +65,9 @@ export default function AboutPage() {
               <div className="p-3 bg-mea-gold rounded-xl">
                 <Heart className="text-black" size={24} />
               </div>
-              <h3 className="text-xl font-bold text-white">{t('about.valueHandmade')}</h3>
+              <h3 className="text-xl font-bold text-black">{t('about.valueHandmade')}</h3>
             </div>
-            <p className="text-gray-300">
+            <p className="text-gray-700">
               {t('about.valueHandmadeDesc')}
             </p>
           </div>
@@ -77,9 +77,9 @@ export default function AboutPage() {
               <div className="p-3 bg-mea-gold rounded-xl">
                 <Award className="text-black" size={24} />
               </div>
-              <h3 className="text-xl font-bold text-white">{t('about.valueQuality')}</h3>
+              <h3 className="text-xl font-bold text-black">{t('about.valueQuality')}</h3>
             </div>
-            <p className="text-gray-300">
+            <p className="text-gray-700">
               {t('about.valueQualityDesc')}
             </p>
           </div>
@@ -89,9 +89,9 @@ export default function AboutPage() {
               <div className="p-3 bg-mea-gold rounded-xl">
                 <Users className="text-black" size={24} />
               </div>
-              <h3 className="text-xl font-bold text-white">{t('about.valueCommunity')}</h3>
+              <h3 className="text-xl font-bold text-black">{t('about.valueCommunity')}</h3>
             </div>
-            <p className="text-gray-300">
+            <p className="text-gray-700">
               {t('about.valueCommunityDesc')}
             </p>
           </div>
@@ -101,9 +101,9 @@ export default function AboutPage() {
               <div className="p-3 bg-mea-gold rounded-xl">
                 <Globe className="text-black" size={24} />
               </div>
-              <h3 className="text-xl font-bold text-white">{t('about.valueSustainability')}</h3>
+              <h3 className="text-xl font-bold text-black">{t('about.valueSustainability')}</h3>
             </div>
-            <p className="text-gray-300">
+            <p className="text-gray-700">
               {t('about.valueSustainabilityDesc')}
             </p>
           </div>
@@ -116,11 +116,11 @@ export default function AboutPage() {
           transition={{ delay: 0.3 }}
           className="glass rounded-2xl p-8 mb-12"
         >
-          <h2 className="text-3xl font-bold text-white mb-6">{t('about.mission')}</h2>
-          <p className="text-gray-300 leading-relaxed mb-4">
+          <h2 className="text-3xl font-bold text-black mb-6">{t('about.mission')}</h2>
+          <p className="text-gray-700 leading-relaxed mb-4">
             {t('about.missionPara1')}
           </p>
-          <p className="text-gray-300 leading-relaxed">
+          <p className="text-gray-700 leading-relaxed">
             {t('about.missionPara2')}
           </p>
         </motion.div>
@@ -132,10 +132,10 @@ export default function AboutPage() {
           transition={{ delay: 0.4 }}
           className="text-center"
         >
-          <p className="text-2xl font-semibold text-white mb-4">
+          <p className="text-2xl font-semibold text-black mb-4">
             &quot;{t('about.quote')}&quot;
           </p>
-          <p className="text-gray-400">
+          <p className="text-gray-600">
             {t('about.welcome')}
           </p>
         </motion.div>

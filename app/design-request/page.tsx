@@ -104,7 +104,7 @@ export default function DesignRequestPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-12 text-center"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-black mb-4">
             {t('designRequest.title')}
           </h1>
           <p className="text-gray-400 text-lg">
@@ -121,7 +121,7 @@ export default function DesignRequestPage() {
         >
           {/* Request Type Selection */}
           <div className="glass rounded-2xl p-6">
-            <h2 className="text-2xl font-bold text-white mb-6">
+            <h2 className="text-2xl font-bold text-black mb-6">
               {t('designRequest.selectType')}
             </h2>
             <div className="grid grid-cols-2 gap-4">
@@ -131,7 +131,7 @@ export default function DesignRequestPage() {
                 className={`p-6 rounded-xl flex flex-col items-center gap-3 transition-all ${
                   requestType === 'text'
                     ? 'bg-mea-gold text-black'
-                    : 'glass text-white hover:bg-white hover:bg-opacity-10'
+                    : 'glass text-black hover:bg-white hover:bg-opacity-10'
                 }`}
               >
                 <FileText size={40} />
@@ -147,7 +147,7 @@ export default function DesignRequestPage() {
                 className={`p-6 rounded-xl flex flex-col items-center gap-3 transition-all ${
                   requestType === 'image'
                     ? 'bg-mea-gold text-black'
-                    : 'glass text-white hover:bg-white hover:bg-opacity-10'
+                    : 'glass text-black hover:bg-white hover:bg-opacity-10'
                 }`}
               >
                 <ImageIcon size={40} />
@@ -161,7 +161,7 @@ export default function DesignRequestPage() {
 
           {/* Contact Info */}
           <div className="glass rounded-2xl p-6">
-            <h2 className="text-2xl font-bold text-white mb-6">
+            <h2 className="text-2xl font-bold text-black mb-6">
               {t('designRequest.contactInfo')}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -187,7 +187,7 @@ export default function DesignRequestPage() {
           {/* Request Content */}
           {requestType === 'text' ? (
             <div className="glass rounded-2xl p-6">
-              <h2 className="text-2xl font-bold text-white mb-6">
+              <h2 className="text-2xl font-bold text-black mb-6">
                 {t('designRequest.designDescription')}
               </h2>
               <textarea
@@ -204,7 +204,7 @@ export default function DesignRequestPage() {
             </div>
           ) : (
             <div className="glass rounded-2xl p-6">
-              <h2 className="text-2xl font-bold text-white mb-6">
+              <h2 className="text-2xl font-bold text-black mb-6">
                 {t('designRequest.uploadTitle')}
               </h2>
 
@@ -216,7 +216,7 @@ export default function DesignRequestPage() {
                       <button
                         type="button"
                         onClick={() => setImages(images.filter((_, i) => i !== index))}
-                        className="absolute -top-2 -right-2 p-1 bg-red-500 rounded-full text-white"
+                        className="absolute -top-2 -right-2 p-1 bg-red-500 rounded-full text-black"
                       >
                         ×
                       </button>
@@ -241,7 +241,7 @@ export default function DesignRequestPage() {
 
               {/* Optional Description */}
               <div className="mt-6">
-                <label className="block text-white font-medium mb-2">
+                <label className="block text-black font-medium mb-2">
                   {t('designRequest.additionalDesc')}
                 </label>
                 <textarea
@@ -257,10 +257,10 @@ export default function DesignRequestPage() {
 
           {/* Info Box */}
           <div className="glass rounded-2xl p-6 bg-mea-gold bg-opacity-10">
-            <h3 className="text-white font-semibold mb-3">
+            <h3 className="text-black font-semibold mb-3">
               {t('designRequest.processTitle')}
             </h3>
-            <ul className="text-gray-300 space-y-2 text-sm">
+            <ul className="text-gray-700 space-y-2 text-sm">
               <li>✓ {t('designRequest.processStep1')}</li>
               <li>✓ {t('designRequest.processStep2')}</li>
               <li>✓ {t('designRequest.processStep3')}</li>

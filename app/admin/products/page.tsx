@@ -56,6 +56,10 @@ export default function AdminProducts() {
     hidden: false,
     featured: false,
     estimatedDelivery: '',
+    deliveryDays: undefined as number | undefined,
+    careInstructions: undefined as { type: 'standard' | 'custom'; customText?: string } | undefined,
+    kimonoType: undefined as 'uzun' | 'kisa' | undefined,
+    setPricing: undefined as { shirtOnly?: number; pajamaOnly?: number } | undefined,
     seoTitle: '',
     seoTitleEn: '',
     seoDescription: '',
@@ -211,6 +215,10 @@ export default function AdminProducts() {
       hidden: product.hidden || false,
       featured: product.featured,
       estimatedDelivery: product.estimatedDelivery || '',
+      deliveryDays: product.deliveryDays,
+      careInstructions: product.careInstructions,
+      kimonoType: product.kimonoType,
+      setPricing: product.setPricing,
       seoTitle: product.seoTitle || '',
       seoTitleEn: product.seoTitleEn || '',
       seoDescription: product.seoDescription || '',
@@ -274,6 +282,10 @@ export default function AdminProducts() {
       hidden: false,
       featured: false,
       estimatedDelivery: '',
+      deliveryDays: undefined,
+      careInstructions: undefined,
+      kimonoType: undefined,
+      setPricing: undefined,
       seoTitle: '',
       seoTitleEn: '',
       seoDescription: '',
@@ -933,6 +945,121 @@ export default function AdminProducts() {
                         className="admin-input"
                       />
                     </div>
+
+                    {/* Teslimat Süresi (Gün) */}
+                    <div>
+                      <label className="block text-white font-medium mb-2">
+                        Teslimat Süresi (Gün)
+                      </label>
+                      <input
+                        type="number"
+                        value={formData.deliveryDays || ''}
+                        onChange={(e) => setFormData({ ...formData, deliveryDays: e.target.value ? parseInt(e.target.value) : undefined })}
+                        placeholder="Örn: 7"
+                        className="admin-input"
+                      />
+                    </div>
+
+                    {/* Bakım Talimatları */}
+                    <div>
+                      <label className="block text-white font-medium mb-2">
+                        Bakım Talimatları
+                      </label>
+                      <div className="space-y-2">
+                        <label className="flex items-center gap-2 text-gray-300">
+                          <input
+                            type="radio"
+                            name="careType"
+                            checked={!formData.careInstructions || formData.careInstructions?.type === 'standard'}
+                            onChange={() => setFormData({ ...formData, careInstructions: { type: 'standard' } })}
+                          />
+                          30 derecede yıkayınız. Ütü sıcaklığı orta.
+                        </label>
+                        <label className="flex items-center gap-2 text-gray-300">
+                          <input
+                            type="radio"
+                            name="careType"
+                            checked={formData.careInstructions?.type === 'custom'}
+                            onChange={() => setFormData({ ...formData, careInstructions: { type: 'custom', customText: '' } })}
+                          />
+                          Özel talimat gir
+                        </label>
+                        {formData.careInstructions?.type === 'custom' && (
+                          <textarea
+                            value={formData.careInstructions.customText || ''}
+                            onChange={(e) => setFormData({
+                              ...formData,
+                              careInstructions: { type: 'custom', customText: e.target.value }
+                            })}
+                            placeholder="Özel bakım talimatlarını buraya yazın..."
+                            className="admin-input mt-2"
+                            rows={3}
+                          />
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Kimono Türü - Sadece kimono kategorisi için */}
+                    {formData.category === 'kimono' && (
+                      <div>
+                        <label className="block text-white font-medium mb-2">
+                          Kimono Türü
+                        </label>
+                        <select
+                          value={formData.kimonoType || ''}
+                          onChange={(e) => setFormData({ ...formData, kimonoType: e.target.value as 'uzun' | 'kisa' | undefined || undefined })}
+                          className="admin-input"
+                        >
+                          <option value="">Seçiniz</option>
+                          <option value="uzun">Uzun Kimono</option>
+                          <option value="kisa">Kısa Kimono</option>
+                        </select>
+                      </div>
+                    )}
+
+                    {/* Set Parça Fiyatlandırması - Sadece set kategorisi için */}
+                    {formData.category === 'set' && (
+                      <div>
+                        <label className="block text-white font-medium mb-2">
+                          Set Parça Fiyatlandırması (Opsiyonel)
+                        </label>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <input
+                              type="number"
+                              value={formData.setPricing?.shirtOnly || ''}
+                              onChange={(e) => setFormData({
+                                ...formData,
+                                setPricing: {
+                                  ...formData.setPricing,
+                                  shirtOnly: e.target.value ? parseFloat(e.target.value) : undefined
+                                }
+                              })}
+                              placeholder="Sadece Gömlek Fiyatı"
+                              className="admin-input"
+                            />
+                          </div>
+                          <div>
+                            <input
+                              type="number"
+                              value={formData.setPricing?.pajamaOnly || ''}
+                              onChange={(e) => setFormData({
+                                ...formData,
+                                setPricing: {
+                                  ...formData.setPricing,
+                                  pajamaOnly: e.target.value ? parseFloat(e.target.value) : undefined
+                                }
+                              })}
+                              placeholder="Sadece Pijama Fiyatı"
+                              className="admin-input"
+                            />
+                          </div>
+                        </div>
+                        <p className="text-xs text-gray-400 mt-1">
+                          Boş bırakılırsa set fiyatının yarısı kullanılır
+                        </p>
+                      </div>
+                    )}
                   </div>
 
                   {/* Submit Buttons */}

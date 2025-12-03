@@ -59,8 +59,8 @@ export default function ContactPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h1 className="text-5xl font-bold text-white mb-4">{t('contact.title')}</h1>
-          <p className="text-xl text-gray-400">
+          <h1 className="text-5xl font-bold text-black mb-4">{t('contact.title')}</h1>
+          <p className="text-xl text-gray-700">
             {t('contact.subtitle')}
           </p>
         </motion.div>
@@ -73,7 +73,7 @@ export default function ContactPage() {
             transition={{ delay: 0.1 }}
           >
             <div className="glass rounded-2xl p-8">
-              <h2 className="text-2xl font-bold text-white mb-6">
+              <h2 className="text-2xl font-bold text-black mb-6">
                 {t('contact.sendMessage')}
               </h2>
 
@@ -87,7 +87,7 @@ export default function ContactPage() {
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-white mb-2">{t('contact.name')} *</label>
+                  <label className="block text-black mb-2">{t('contact.name')} *</label>
                   <input
                     type="text"
                     value={formData.name}
@@ -98,7 +98,7 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white mb-2">{t('contact.email')} *</label>
+                  <label className="block text-black mb-2">{t('contact.email')} *</label>
                   <input
                     type="email"
                     value={formData.email}
@@ -109,7 +109,7 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white mb-2">{t('contact.phone')}</label>
+                  <label className="block text-black mb-2">{t('contact.phone')}</label>
                   <input
                     type="tel"
                     value={formData.phone}
@@ -119,7 +119,7 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white mb-2">{t('contact.message')} *</label>
+                  <label className="block text-black mb-2">{t('contact.message')} *</label>
                   <textarea
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -265,10 +265,10 @@ export default function ContactPage() {
           transition={{ delay: 0.3 }}
           className="mt-12 text-center glass rounded-2xl p-8"
         >
-          <h3 className="text-2xl font-bold text-white mb-4">
+          <h3 className="text-2xl font-bold text-black mb-4">
             {t('contact.instantHelp')}
           </h3>
-          <p className="text-gray-300 mb-6">
+          <p className="text-gray-700 mb-6">
             {t('contact.instantHelpDesc')}
           </p>
           <a

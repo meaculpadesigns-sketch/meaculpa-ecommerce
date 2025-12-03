@@ -170,3 +170,61 @@ html {
 .animate-pulse {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+
+/* Formatted product descriptions (with HTML from admin) */
+.formatted-description {
+  line-height: 1.8;
+}
+
+.formatted-description h1,
+.formatted-description h2,
+.formatted-description h3 {
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #000;
+}
+
+.formatted-description h1 {
+  font-size: 1.875rem;
+}
+
+.formatted-description h2 {
+  font-size: 1.5rem;
+}
+
+.formatted-description h3 {
+  font-size: 1.25rem;
+}
+
+.formatted-description p {
+  margin-bottom: 1rem;
+}
+
+.formatted-description ul,
+.formatted-description ol {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.formatted-description li {
+  margin-bottom: 0.5rem;
+}
+
+.formatted-description strong {
+  font-weight: 600;
+  color: #000;
+}
+
+.formatted-description em {
+  font-style: italic;
+}
+
+.formatted-description a {
+  color: #C89A3F;
+  text-decoration: underline;
+}
+
+.formatted-description a:hover {
+  color: #E0B86B;
+}

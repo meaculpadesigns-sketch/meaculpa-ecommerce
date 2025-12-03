@@ -274,14 +274,6 @@ export default function ProductDetailPage() {
               <ShoppingCart size={24} />
               {t('products.addToCart')}
             </button>
-
-            {/* Description Section - On the right side after cart button */}
-            <div className="mt-8 pt-8 border-t border-gray-700">
-              <h3 className="text-xl font-bold text-white mb-4">
-                {i18n.language === 'tr' ? 'Ürün Açıklaması' : 'Product Description'}
-              </h3>
-              <p className="text-gray-300 leading-relaxed">{description}</p>
-            </div>
           </motion.div>
         </div>
 

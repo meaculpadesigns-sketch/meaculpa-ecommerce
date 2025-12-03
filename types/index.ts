@@ -42,6 +42,16 @@ export interface Product {
   createdAt: Date;
   updatedAt: Date;
   estimatedDelivery?: string;
+  deliveryDays?: number; // Teslimat süresi (gün)
+  careInstructions?: {
+    type: 'standard' | 'custom';
+    customText?: string; // type='custom' ise
+  };
+  kimonoType?: 'uzun' | 'kisa'; // Sadece kimono kategorisi için
+  setPricing?: {
+    shirtOnly?: number; // Sadece gömlek fiyatı (opsiyonel)
+    pajamaOnly?: number; // Sadece pijama fiyatı (opsiyonel)
+  };
   seoTitle?: string;
   seoTitleEn?: string;
   seoDescription?: string;

@@ -84,7 +84,7 @@ export default function CartPage() {
                       <div className="flex items-start justify-between mb-2">
                         <div>
                           <Link href={`/products/${item.productId}`}>
-                            <h3 className="text-xl font-semibold text-white hover:text-mea-gold transition-colors">
+                            <h3 className="text-xl font-semibold text-black hover:text-gray-700 transition-colors">
                               {name}
                             </h3>
                           </Link>
@@ -189,10 +189,10 @@ export default function CartPage() {
 
                 <div className="pt-4 border-t border-white border-opacity-10">
                   <div className="flex items-center justify-between">
-                    <span className="text-white font-semibold text-lg">
+                    <span className="text-black font-semibold text-lg">
                       {t('cart.total')}
                     </span>
-                    <span className="text-2xl font-bold text-mea-gold">
+                    <span className="text-2xl font-bold text-black">
                       ₺{total.toFixed(2)}
                     </span>
                   </div>
