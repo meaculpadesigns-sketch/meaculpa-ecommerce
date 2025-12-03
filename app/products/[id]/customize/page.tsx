@@ -67,6 +67,9 @@ export default function CustomizePage() {
   const [isCropShirt, setIsCropShirt] = useState(false);
   const [showFamilyOrder, setShowFamilyOrder] = useState(false);
 
+  // Image gallery state
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   // Family order state
   const [childCount, setChildCount] = useState(0);
   const [parent1, setParent1] = useState<ParentInfo>({
@@ -533,33 +536,73 @@ export default function CustomizePage() {
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Left: Product Image */}
+          {/* Left: Product Image Gallery */}
           <div className="glass rounded-2xl p-8">
+            {/* Main Image Display */}
             <div className="relative aspect-[3/4] bg-zinc-800 rounded-xl overflow-hidden mb-6">
-              {product.whiteBackgroundImages && product.whiteBackgroundImages.length > 0 ? (
-                <img
-                  src={product.whiteBackgroundImages[0]}
-                  alt={name}
-                  className="w-full h-full object-cover"
-                />
-              ) : product.fabricImages && product.fabricImages.length > 0 ? (
-                <img
-                  src={product.fabricImages[0]}
-                  alt={name}
-                  className="w-full h-full object-cover"
-                />
-              ) : product.images && product.images.length > 0 ? (
-                <img
-                  src={product.images[0]}
-                  alt={name}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center text-white">
-                  {t('home.productView')}
-                </div>
-              )}
+              {(() => {
+                // Priority: whiteBackgroundImages > fabricImages > images
+                const imageArray = product.whiteBackgroundImages && product.whiteBackgroundImages.length > 0
+                  ? product.whiteBackgroundImages
+                  : product.fabricImages && product.fabricImages.length > 0
+                  ? product.fabricImages
+                  : product.images && product.images.length > 0
+                  ? product.images
+                  : [];
+
+                if (imageArray.length > 0) {
+                  return (
+                    <img
+                      src={imageArray[currentImageIndex]}
+                      alt={`${name} - ${currentImageIndex + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  );
+                } else {
+                  return (
+                    <div className="w-full h-full flex items-center justify-center text-white">
+                      {t('home.productView')}
+                    </div>
+                  );
+                }
+              })()}
             </div>
+
+            {/* Thumbnail Gallery */}
+            {(() => {
+              const imageArray = product.whiteBackgroundImages && product.whiteBackgroundImages.length > 0
+                ? product.whiteBackgroundImages
+                : product.fabricImages && product.fabricImages.length > 0
+                ? product.fabricImages
+                : product.images && product.images.length > 0
+                ? product.images
+                : [];
+
+              if (imageArray.length > 1) {
+                return (
+                  <div className="grid grid-cols-4 gap-3 mb-6">
+                    {imageArray.map((img, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setCurrentImageIndex(idx)}
+                        className={`relative aspect-square bg-zinc-800 rounded-lg overflow-hidden transition-all ${
+                          currentImageIndex === idx
+                            ? 'ring-2 ring-mea-gold'
+                            : 'opacity-60 hover:opacity-100'
+                        }`}
+                      >
+                        <img
+                          src={img}
+                          alt={`${name} thumbnail ${idx + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                );
+              }
+              return null;
+            })()}
 
             <h2 className="text-3xl font-bold text-white mb-4">{name}</h2>
             <div className="mb-4 formatted-description">
