@@ -223,6 +223,86 @@ export default function CustomizePage() {
     }
   }, [size, gender, kimonoType, product, isCropShirt, setItemSelection]);
 
+  // Auto-fill measurements for Parent 1
+  useEffect(() => {
+    if (!parent1.size || !product || orderType !== 'family') return;
+
+    console.log('Auto-fill Parent 1: size =', parent1.size, 'gender =', parent1.gender);
+
+    if (product.category === 'kimono') {
+      const chart = kimonoType === 'uzun' ? UZUN_KIMONO_SIZE_CHART : KISA_KIMONO_SIZE_CHART;
+      const sizeRow = chart.rows.find(row => row.beden === parent1.size);
+
+      if (sizeRow) {
+        const kimonoBoy = sizeRow.kimonoBoyu?.replace('cm', '') || '';
+        const kolBoy = sizeRow.kolBoyu?.replace('cm', '') || '';
+        console.log('Setting Parent 1 kimono measurements:', { kimonoBoy, kolBoy });
+        setParent1({
+          ...parent1,
+          shirtLength: kimonoBoy,
+          sleeveLength: kolBoy,
+          pajamaLength: '',
+        });
+      }
+    } else if (product.category === 'set') {
+      const chart = parent1.gender === 'male' ? ERKEK_SET_SIZE_CHART : KADIN_SET_SIZE_CHART;
+      const sizeRow = chart.rows.find(row => row.beden === parent1.size);
+
+      if (sizeRow) {
+        const gomlekBoy = sizeRow.gomlekBoyu?.replace('cm', '') || '';
+        const kolBoy = sizeRow.kolBoyu?.replace('cm', '') || '';
+        const pijamaBoy = sizeRow.pijamaBoyu?.replace('cm', '') || '';
+        console.log('Setting Parent 1 set measurements:', { gomlekBoy, kolBoy, pijamaBoy });
+        setParent1({
+          ...parent1,
+          shirtLength: gomlekBoy,
+          sleeveLength: kolBoy,
+          pajamaLength: pijamaBoy,
+        });
+      }
+    }
+  }, [parent1.size, parent1.gender, product, orderType, kimonoType]);
+
+  // Auto-fill measurements for Parent 2
+  useEffect(() => {
+    if (!parent2.size || !product || orderType !== 'family') return;
+
+    console.log('Auto-fill Parent 2: size =', parent2.size, 'gender =', parent2.gender);
+
+    if (product.category === 'kimono') {
+      const chart = kimonoType === 'uzun' ? UZUN_KIMONO_SIZE_CHART : KISA_KIMONO_SIZE_CHART;
+      const sizeRow = chart.rows.find(row => row.beden === parent2.size);
+
+      if (sizeRow) {
+        const kimonoBoy = sizeRow.kimonoBoyu?.replace('cm', '') || '';
+        const kolBoy = sizeRow.kolBoyu?.replace('cm', '') || '';
+        console.log('Setting Parent 2 kimono measurements:', { kimonoBoy, kolBoy });
+        setParent2({
+          ...parent2,
+          shirtLength: kimonoBoy,
+          sleeveLength: kolBoy,
+          pajamaLength: '',
+        });
+      }
+    } else if (product.category === 'set') {
+      const chart = parent2.gender === 'male' ? ERKEK_SET_SIZE_CHART : KADIN_SET_SIZE_CHART;
+      const sizeRow = chart.rows.find(row => row.beden === parent2.size);
+
+      if (sizeRow) {
+        const gomlekBoy = sizeRow.gomlekBoyu?.replace('cm', '') || '';
+        const kolBoy = sizeRow.kolBoyu?.replace('cm', '') || '';
+        const pijamaBoy = sizeRow.pijamaBoyu?.replace('cm', '') || '';
+        console.log('Setting Parent 2 set measurements:', { gomlekBoy, kolBoy, pijamaBoy });
+        setParent2({
+          ...parent2,
+          shirtLength: gomlekBoy,
+          sleeveLength: kolBoy,
+          pajamaLength: pijamaBoy,
+        });
+      }
+    }
+  }, [parent2.size, parent2.gender, product, orderType, kimonoType]);
+
   // Auto-calculate measurements for a child
   const calculateChildMeasurements = (age: string, height: string, weight: string) => {
     if (!age || !height || !weight) return null;
@@ -482,10 +562,9 @@ export default function CustomizePage() {
             </div>
 
             <h2 className="text-3xl font-bold text-white mb-4">{name}</h2>
-            <div
-              className="mb-4 formatted-description"
-              dangerouslySetInnerHTML={{ __html: description }}
-            />
+            <div className="mb-4 formatted-description">
+              {description}
+            </div>
           </div>
 
           {/* Right: Customization Form */}
