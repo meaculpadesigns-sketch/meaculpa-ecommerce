@@ -603,10 +603,10 @@ export default function CustomizePage() {
                 <label className="flex items-center gap-3 text-white cursor-pointer">
                   <input
                     type="checkbox"
-                    checked={showFamilyOrder}
+                    checked={orderType === 'family'}
                     onChange={(e) => {
-                      setShowFamilyOrder(e.target.checked);
                       setOrderType(e.target.checked ? 'family' : 'individual');
+                      setShowFamilyOrder(e.target.checked);
                     }}
                     className="w-5 h-5 rounded border-gray-600 text-mea-gold focus:ring-mea-gold focus:ring-offset-0"
                   />
@@ -623,10 +623,10 @@ export default function CustomizePage() {
                   <label className="flex items-center gap-3 text-white cursor-pointer">
                     <input
                       type="checkbox"
-                      checked={!showFamilyOrder}
+                      checked={orderType === 'individual'}
                       onChange={(e) => {
-                        setShowFamilyOrder(!e.target.checked);
                         setOrderType(e.target.checked ? 'individual' : 'family');
+                        setShowFamilyOrder(!e.target.checked);
                       }}
                       className="w-5 h-5 rounded border-gray-600 text-mea-gold focus:ring-mea-gold focus:ring-offset-0"
                     />
@@ -639,10 +639,10 @@ export default function CustomizePage() {
                   <label className="flex items-center gap-3 text-white cursor-pointer">
                     <input
                       type="checkbox"
-                      checked={showFamilyOrder}
+                      checked={orderType === 'family'}
                       onChange={(e) => {
-                        setShowFamilyOrder(e.target.checked);
                         setOrderType(e.target.checked ? 'family' : 'individual');
+                        setShowFamilyOrder(e.target.checked);
                       }}
                       className="w-5 h-5 rounded border-gray-600 text-mea-gold focus:ring-mea-gold focus:ring-offset-0"
                     />
