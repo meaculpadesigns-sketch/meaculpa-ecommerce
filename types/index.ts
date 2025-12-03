@@ -206,7 +206,7 @@ export interface Coupon {
 
 export interface Message {
   id: string;
-  type: 'contact' | 'live-chat' | 'design-request';
+  type: 'contact' | 'live-chat' | 'design-request' | 'support' | 'order' | 'other';
   name: string;
   email: string;
   phone?: string;

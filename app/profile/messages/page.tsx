@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
-import { getUserById } from '@/lib/firebase-helpers';
+import { getUserById, createMessage } from '@/lib/firebase-helpers';
 import { motion } from 'framer-motion';
 import { Send, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -14,8 +14,10 @@ export default function MessagesPage() {
   const { t } = useTranslation();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
+  const [sending, setSending] = useState(false);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<any[]>([]);
+  const [currentUser, setCurrentUser] = useState<any>(null);
 
   useEffect(() => {
     document.body.className = 'bg-home text-dark-page';
@@ -30,8 +32,9 @@ export default function MessagesPage() {
         const userData = await getUserById(authUser.uid);
         if (!userData) {
           router.push('/login');
+        } else {
+          setCurrentUser(userData);
         }
-        // TODO: Load messages from Firebase
       } else {
         router.push('/login');
       }
@@ -41,12 +44,36 @@ export default function MessagesPage() {
     return () => unsubscribe();
   }, [router]);
 
-  const handleSendMessage = () => {
-    if (!message.trim()) return;
+  const handleSendMessage = async () => {
+    if (!message.trim() || !currentUser) return;
 
-    // TODO: Send message to Firebase
-    console.log('Sending message:', message);
-    setMessage('');
+    setSending(true);
+    try {
+      await createMessage({
+        type: 'support',
+        name: currentUser.name || currentUser.email,
+        email: currentUser.email,
+        phone: currentUser.phone || '',
+        message: message.trim(),
+        read: false,
+        createdAt: new Date(),
+      });
+
+      // Add message to local state for immediate feedback
+      setMessages([...messages, {
+        text: message.trim(),
+        timestamp: new Date(),
+        isAdmin: false,
+      }]);
+
+      setMessage('');
+      alert(t('profile.messageSent') || 'Mesajınız gönderildi!');
+    } catch (error) {
+      console.error('Error sending message:', error);
+      alert(t('common.error') || 'Mesaj gönderilirken bir hata oluştu.');
+    } finally {
+      setSending(false);
+    }
   };
 
   if (loading) {
@@ -112,13 +139,14 @@ export default function MessagesPage() {
               type="text"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+              onKeyPress={(e) => e.key === 'Enter' && !sending && handleSendMessage()}
               placeholder={t('profile.typeMessage')}
               className="flex-1 input-field"
+              disabled={sending}
             />
             <button
               onClick={handleSendMessage}
-              disabled={!message.trim()}
+              disabled={!message.trim() || sending}
               className="btn-primary px-6 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Send size={20} />
