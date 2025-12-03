@@ -538,50 +538,22 @@ export default function CustomizePage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Left: Product Image Gallery */}
           <div className="glass rounded-2xl p-8">
-            {/* Main Image Display */}
-            <div className="relative aspect-[3/4] bg-zinc-800 rounded-xl overflow-hidden mb-6">
-              {(() => {
-                // Priority: whiteBackgroundImages > fabricImages > images
-                const imageArray = product.whiteBackgroundImages && product.whiteBackgroundImages.length > 0
-                  ? product.whiteBackgroundImages
-                  : product.fabricImages && product.fabricImages.length > 0
-                  ? product.fabricImages
-                  : product.images && product.images.length > 0
-                  ? product.images
-                  : [];
+            {/* Only show white background images */}
+            {product.whiteBackgroundImages && product.whiteBackgroundImages.length > 0 && (
+              <>
+                {/* Main Image Display */}
+                <div className="relative aspect-[3/4] bg-zinc-800 rounded-xl overflow-hidden mb-6">
+                  <img
+                    src={product.whiteBackgroundImages[currentImageIndex]}
+                    alt={`${name} - ${currentImageIndex + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
 
-                if (imageArray.length > 0) {
-                  return (
-                    <img
-                      src={imageArray[currentImageIndex]}
-                      alt={`${name} - ${currentImageIndex + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  );
-                } else {
-                  return (
-                    <div className="w-full h-full flex items-center justify-center text-white">
-                      {t('home.productView')}
-                    </div>
-                  );
-                }
-              })()}
-            </div>
-
-            {/* Thumbnail Gallery */}
-            {(() => {
-              const imageArray = product.whiteBackgroundImages && product.whiteBackgroundImages.length > 0
-                ? product.whiteBackgroundImages
-                : product.fabricImages && product.fabricImages.length > 0
-                ? product.fabricImages
-                : product.images && product.images.length > 0
-                ? product.images
-                : [];
-
-              if (imageArray.length > 1) {
-                return (
+                {/* Thumbnail Gallery - Only show if more than 1 image */}
+                {product.whiteBackgroundImages.length > 1 && (
                   <div className="grid grid-cols-4 gap-3 mb-6">
-                    {imageArray.map((img, idx) => (
+                    {product.whiteBackgroundImages.map((img, idx) => (
                       <button
                         key={idx}
                         onClick={() => setCurrentImageIndex(idx)}
@@ -599,10 +571,9 @@ export default function CustomizePage() {
                       </button>
                     ))}
                   </div>
-                );
-              }
-              return null;
-            })()}
+                )}
+              </>
+            )}
 
             <h2 className="text-3xl font-bold text-white mb-4">{name}</h2>
             <div className="mb-4 formatted-description">
