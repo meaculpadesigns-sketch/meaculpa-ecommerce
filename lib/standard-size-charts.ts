@@ -18,6 +18,8 @@ export interface SizeChart {
   subCategory?: 'kadin' | 'erkek' | 'krop' | 'uzun' | 'kisa';
   rows: SizeChartRow[];
   createdAt: Date;
+  isStandard?: boolean;
+  standardId?: string;
 }
 
 // Kadın Set Beden Tablosu

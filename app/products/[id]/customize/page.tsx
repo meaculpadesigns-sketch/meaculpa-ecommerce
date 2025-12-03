@@ -462,7 +462,7 @@ export default function CustomizePage() {
 
             <h2 className="text-3xl font-bold text-white mb-4">{name}</h2>
             <div
-              className="text-gray-300 mb-4 formatted-description"
+              className="mb-4 formatted-description"
               dangerouslySetInnerHTML={{ __html: description }}
             />
           </div>
@@ -1113,11 +1113,11 @@ export default function CustomizePage() {
             {/* Price Display */}
             <div className="mt-8 p-6 glass rounded-xl border-2 border-mea-gold border-opacity-30">
               <div className="flex justify-between items-center">
-                <span className="text-white font-semibold text-lg">
+                <span className="text-black font-semibold text-lg">
                   {i18n.language === 'tr' ? 'Fiyat' : 'Price'}
                 </span>
                 <div className="text-right">
-                  <div className="text-3xl font-bold text-mea-gold">
+                  <div className="text-3xl font-bold text-black">
                     ₺{currentPrice.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </div>
                   {product.category === 'set' && setItemSelection !== 'full' && (
@@ -1162,6 +1162,154 @@ export default function CustomizePage() {
               </Link>
             </div>
           </div>
+        </div>
+
+        {/* Size Charts Display */}
+        <div className="mt-12 space-y-8">
+          {product.category === 'kimono' ? (
+            <>
+              {/* Uzun Kimono Beden Tablosu */}
+              <div className="glass rounded-2xl p-8">
+                <h3 className="text-2xl font-bold text-white mb-6">
+                  {i18n.language === 'tr' ? 'Uzun Kimono Beden Tablosu' : 'Long Kimono Size Chart'}
+                </h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-white">
+                    <thead>
+                      <tr className="border-b border-white border-opacity-20">
+                        <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Beden' : 'Size'}</th>
+                        <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Kimono Boyu' : 'Kimono Length'}</th>
+                        <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Kol Boyu' : 'Sleeve Length'}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {UZUN_KIMONO_SIZE_CHART.rows.map((row, idx) => (
+                        <tr key={idx} className="border-b border-white border-opacity-10">
+                          <td className="py-3 px-4 font-semibold">{row.beden}</td>
+                          <td className="py-3 px-4 text-gray-300">{row.kimonoBoyu}</td>
+                          <td className="py-3 px-4 text-gray-300">{row.kolBoyu}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Kısa Kimono Beden Tablosu */}
+              <div className="glass rounded-2xl p-8">
+                <h3 className="text-2xl font-bold text-white mb-6">
+                  {i18n.language === 'tr' ? 'Kısa Kimono Beden Tablosu' : 'Short Kimono Size Chart'}
+                </h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-white">
+                    <thead>
+                      <tr className="border-b border-white border-opacity-20">
+                        <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Beden' : 'Size'}</th>
+                        <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Kimono Boyu' : 'Kimono Length'}</th>
+                        <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Kol Boyu' : 'Sleeve Length'}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {KISA_KIMONO_SIZE_CHART.rows.map((row, idx) => (
+                        <tr key={idx} className="border-b border-white border-opacity-10">
+                          <td className="py-3 px-4 font-semibold">{row.beden}</td>
+                          <td className="py-3 px-4 text-gray-300">{row.kimonoBoyu}</td>
+                          <td className="py-3 px-4 text-gray-300">{row.kolBoyu}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Kadın Set Beden Tablosu */}
+              <div className="glass rounded-2xl p-8">
+                <h3 className="text-2xl font-bold text-white mb-6">
+                  {i18n.language === 'tr' ? 'Kadın Set Beden Tablosu' : 'Women Set Size Chart'}
+                </h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-white">
+                    <thead>
+                      <tr className="border-b border-white border-opacity-20">
+                        <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Beden' : 'Size'}</th>
+                        <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Pijama Boyu' : 'Pajama Length'}</th>
+                        <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Gömlek Boyu' : 'Shirt Length'}</th>
+                        <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Kol Boyu' : 'Sleeve Length'}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {KADIN_SET_SIZE_CHART.rows.map((row, idx) => (
+                        <tr key={idx} className="border-b border-white border-opacity-10">
+                          <td className="py-3 px-4 font-semibold">{row.beden}</td>
+                          <td className="py-3 px-4 text-gray-300">{row.pijamaBoyu}</td>
+                          <td className="py-3 px-4 text-gray-300">{row.gomlekBoyu}</td>
+                          <td className="py-3 px-4 text-gray-300">{row.kolBoyu}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Erkek Set Beden Tablosu */}
+              <div className="glass rounded-2xl p-8">
+                <h3 className="text-2xl font-bold text-white mb-6">
+                  {i18n.language === 'tr' ? 'Erkek Set Beden Tablosu' : 'Men Set Size Chart'}
+                </h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-white">
+                    <thead>
+                      <tr className="border-b border-white border-opacity-20">
+                        <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Beden' : 'Size'}</th>
+                        <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Pijama Boyu' : 'Pajama Length'}</th>
+                        <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Gömlek Boyu' : 'Shirt Length'}</th>
+                        <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Kol Boyu' : 'Sleeve Length'}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {ERKEK_SET_SIZE_CHART.rows.map((row, idx) => (
+                        <tr key={idx} className="border-b border-white border-opacity-10">
+                          <td className="py-3 px-4 font-semibold">{row.beden}</td>
+                          <td className="py-3 px-4 text-gray-300">{row.pijamaBoyu}</td>
+                          <td className="py-3 px-4 text-gray-300">{row.gomlekBoyu}</td>
+                          <td className="py-3 px-4 text-gray-300">{row.kolBoyu}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Krop Gömlek Beden Tablosu */}
+              <div className="glass rounded-2xl p-8">
+                <h3 className="text-2xl font-bold text-white mb-6">
+                  {i18n.language === 'tr' ? 'Krop Gömlek Beden Tablosu' : 'Crop Shirt Size Chart'}
+                </h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-white">
+                    <thead>
+                      <tr className="border-b border-white border-opacity-20">
+                        <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Beden' : 'Size'}</th>
+                        <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Gömlek Boyu' : 'Shirt Length'}</th>
+                        <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Kol Boyu' : 'Sleeve Length'}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {KROP_GOMLEK_SIZE_CHART.rows.map((row, idx) => (
+                        <tr key={idx} className="border-b border-white border-opacity-10">
+                          <td className="py-3 px-4 font-semibold">{row.beden}</td>
+                          <td className="py-3 px-4 text-gray-300">{row.gomlekBoyu}</td>
+                          <td className="py-3 px-4 text-gray-300">{row.kolBoyu}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

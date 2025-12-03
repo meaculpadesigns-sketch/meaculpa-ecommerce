@@ -241,7 +241,7 @@ export default function ProductDetailPage() {
 
               {/* Price */}
               <div className="flex items-baseline gap-4 mb-4">
-                <span className="text-4xl font-bold text-mea-gold">{formatPrice(product.price, i18n.language)}</span>
+                <span className="text-4xl font-bold text-black">{formatPrice(product.price, i18n.language)}</span>
                 {product.oldPrice && (
                   <span className="text-2xl text-gray-500 line-through">{formatPrice(product.oldPrice, i18n.language)}</span>
                 )}
@@ -287,14 +287,14 @@ export default function ProductDetailPage() {
           <h2 className="text-3xl font-bold text-white mb-6">{t('products.details')}</h2>
           <div className="glass rounded-2xl p-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Fabric Info */}
-              {product.fabricImages && product.fabricImages.length > 0 && (
+              {/* Delivery Days */}
+              {product.deliveryDays && (
                 <div>
-                  <h3 className="text-white font-semibold mb-2">{t('products.fabricInfo')}</h3>
+                  <h3 className="text-white font-semibold mb-2">
+                    {i18n.language === 'tr' ? 'Teslimat Süresi' : 'Delivery Time'}
+                  </h3>
                   <p className="text-gray-400">
-                    {i18n.language === 'tr'
-                      ? 'Yüksek kaliteli kumaştan üretilmiştir.'
-                      : 'Made from high quality fabric.'}
+                    {product.deliveryDays} {i18n.language === 'tr' ? 'gün' : 'days'}
                   </p>
                 </div>
               )}
@@ -303,27 +303,13 @@ export default function ProductDetailPage() {
               <div>
                 <h3 className="text-white font-semibold mb-2">{t('products.careInstructions')}</h3>
                 <p className="text-gray-400">
-                  {i18n.language === 'tr'
+                  {product.careInstructions?.type === 'custom' && product.careInstructions?.customText
+                    ? product.careInstructions.customText
+                    : i18n.language === 'tr'
                     ? '30 derecede yıkayınız. Ütü sıcaklığı orta.'
                     : 'Wash at 30 degrees. Iron at medium temperature.'}
                 </p>
               </div>
-
-              {/* Size Guide */}
-              <div>
-                <h3 className="text-white font-semibold mb-2">{t('products.sizeGuide')}</h3>
-                <p className="text-gray-400">
-                  {t('products.availableSizes')}: {product.sizes.map(s => s.size).join(', ')}
-                </p>
-              </div>
-
-              {/* Delivery Info */}
-              {product.estimatedDelivery && (
-                <div>
-                  <h3 className="text-white font-semibold mb-2">{t('products.deliveryInfo')}</h3>
-                  <p className="text-gray-400">{product.estimatedDelivery}</p>
-                </div>
-              )}
             </div>
           </div>
         </motion.div>

@@ -61,9 +61,24 @@ export default function AdminSizeChartsPage() {
         subCategory: formData.subCategory,
         rows: formData.rows,
         createdAt: editingChart?.createdAt || new Date(),
+        isStandard: editingChart?.id.startsWith('standard-') || false,
+        standardId: editingChart?.id.startsWith('standard-') ? editingChart.id : undefined,
       };
 
-      if (editingChart) {
+      if (editingChart && editingChart.id.startsWith('standard-')) {
+        // For standard charts, check if an override exists
+        const querySnapshot = await getDocs(collection(db, 'sizeCharts'));
+        const existingOverride = querySnapshot.docs.find(doc =>
+          doc.data().standardId === editingChart.id
+        );
+
+        if (existingOverride) {
+          await updateDoc(existingOverride.ref, chartData);
+        } else {
+          await addDoc(collection(db, 'sizeCharts'), chartData);
+        }
+        alert('Standart beden tablosu güncellendi!');
+      } else if (editingChart && !editingChart.id.startsWith('standard-')) {
         await updateDoc(doc(db, 'sizeCharts', editingChart.id), chartData);
         alert('Beden tablosu güncellendi!');
       } else {
@@ -226,7 +241,12 @@ export default function AdminSizeChartsPage() {
     return null;
   }
 
-  const allCharts = [...STANDARD_SIZE_CHARTS.map((chart, idx) => ({ ...chart, id: `standard-${idx}`, createdAt: new Date() })), ...customCharts];
+  // Merge standard charts with custom overrides
+  const allCharts = STANDARD_SIZE_CHARTS.map((chart, idx) => {
+    const standardId = `standard-${idx}`;
+    const override = customCharts.find(c => c.standardId === standardId);
+    return override || { ...chart, id: standardId, createdAt: new Date() };
+  }).concat(customCharts.filter(c => !c.standardId));
 
   return (
     <div className="min-h-screen py-20 px-4">
@@ -290,15 +310,15 @@ export default function AdminSizeChartsPage() {
                     </div>
                   </div>
 
-                  {!isStandard && (
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => openModal(chart)}
-                        className="p-2 bg-blue-500 bg-opacity-20 text-blue-400 rounded-lg hover:bg-opacity-30 transition-colors"
-                        title="Düzenle"
-                      >
-                        <Edit size={20} />
-                      </button>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => openModal(chart)}
+                      className="p-2 bg-blue-500 bg-opacity-20 text-blue-400 rounded-lg hover:bg-opacity-30 transition-colors"
+                      title="Düzenle"
+                    >
+                      <Edit size={20} />
+                    </button>
+                    {!isStandard && (
                       <button
                         onClick={() => deleteChart(chart.id)}
                         className="p-2 bg-red-500 bg-opacity-20 text-red-400 rounded-lg hover:bg-opacity-30 transition-colors"
@@ -306,8 +326,8 @@ export default function AdminSizeChartsPage() {
                       >
                         <Trash2 size={20} />
                       </button>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
 
                 {/* Size Chart Table */}
