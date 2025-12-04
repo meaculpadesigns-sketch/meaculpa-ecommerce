@@ -35,13 +35,13 @@ if (typeof window !== 'undefined') {
 
 export function formatPrice(priceInTRY: number, language: string = 'tr'): string {
   if (language === 'en') {
-    // Show in USD for English
+    // Show in USD for English with comma separator
     const priceInUSD = priceInTRY / EXCHANGE_RATES.USD;
-    return `$${priceInUSD.toFixed(2)}`;
+    return `$${priceInUSD.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   }
 
-  // Default to TRY for Turkish
-  return `₺${priceInTRY.toFixed(2)}`;
+  // Default to TRY for Turkish with dot separator (21.000,00 format)
+  return `₺${priceInTRY.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
 export function getCurrencySymbol(language: string = 'tr'): string {
