@@ -19,6 +19,7 @@ import {
   Link as LinkIcon,
   Ticket,
   Ruler,
+  FileEdit,
 } from 'lucide-react';
 
 export default function AdminDashboard() {
@@ -59,11 +60,18 @@ export default function AdminDashboard() {
       color: 'from-green-500 to-emerald-500',
     },
     {
+      title: 'Blog Yönetimi',
+      description: 'Blog yazıları, kategoriler ve yorumlar',
+      icon: FileEdit,
+      href: '/admin/blog',
+      color: 'from-purple-500 to-pink-500',
+    },
+    {
       title: 'Festivaller & Etkinlikler',
       description: 'Etkinlik ekle, düzenle, yönet',
       icon: Calendar,
       href: '/admin/carnivals',
-      color: 'from-purple-500 to-pink-500',
+      color: 'from-fuchsia-500 to-purple-500',
     },
     {
       title: 'Kullanıcılar',
