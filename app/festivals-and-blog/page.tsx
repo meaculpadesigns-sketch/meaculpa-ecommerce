@@ -6,13 +6,17 @@ import { Calendar, MapPin, Users, FileText } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
 import { getPublishedBlogPosts } from '@/lib/blog-helpers';
-import { BlogPost } from '@/types';
+import { BlogPost, Carnival } from '@/types';
+import { collection, getDocs, orderBy, query } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 export default function FestivalsAndBlogPage() {
   const { t, i18n } = useTranslation();
   const [activeTab, setActiveTab] = useState<'festivals' | 'blog'>('festivals');
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [carnivals, setCarnivals] = useState<Carnival[]>([]);
   const [loadingBlog, setLoadingBlog] = useState(false);
+  const [loadingCarnivals, setLoadingCarnivals] = useState(false);
 
   useEffect(() => {
     document.body.className = 'bg-light text-dark-page';
@@ -24,6 +28,8 @@ export default function FestivalsAndBlogPage() {
   useEffect(() => {
     if (activeTab === 'blog' && blogPosts.length === 0) {
       fetchBlogPosts();
+    } else if (activeTab === 'festivals' && carnivals.length === 0) {
+      fetchCarnivals();
     }
   }, [activeTab]);
 
@@ -39,6 +45,24 @@ export default function FestivalsAndBlogPage() {
     }
   };
 
+  const fetchCarnivals = async () => {
+    try {
+      setLoadingCarnivals(true);
+      const carnivalsRef = collection(db, 'carnivals');
+      const q = query(carnivalsRef, orderBy('createdAt', 'desc'));
+      const snapshot = await getDocs(q);
+      const data = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Carnival[];
+      setCarnivals(data);
+    } catch (error) {
+      console.error('Error fetching carnivals:', error);
+    } finally {
+      setLoadingCarnivals(false);
+    }
+  };
+
   const formatDate = (date: Date | undefined) => {
     if (!date) return '';
     return new Date(date).toLocaleDateString(i18n.language === 'tr' ? 'tr-TR' : 'en-US', {
@@ -47,27 +71,6 @@ export default function FestivalsAndBlogPage() {
       year: 'numeric',
     });
   };
-
-  const carnivals = [
-    {
-      id: '1',
-      name: t('carnivals.event1Name'),
-      date: t('carnivals.event1Date'),
-      location: t('carnivals.event1Location'),
-      description: t('carnivals.event1Desc'),
-      image: '/images/carnival-1.jpg',
-      status: 'upcoming',
-    },
-    {
-      id: '2',
-      name: t('carnivals.event2Name'),
-      date: t('carnivals.event2Date'),
-      location: t('carnivals.event2Location'),
-      description: t('carnivals.event2Desc'),
-      image: '/images/carnival-2.jpg',
-      status: 'upcoming',
-    },
-  ];
 
   return (
     <div className="min-h-screen py-20 px-4">
@@ -118,8 +121,16 @@ export default function FestivalsAndBlogPage() {
         {/* Festivals Tab */}
         {activeTab === 'festivals' && (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {carnivals.map((carnival, index) => (
+            {loadingCarnivals ? (
+              <div className="text-center py-20">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-mea-gold mx-auto"></div>
+                <p className="text-gray-400 mt-4">
+                  {i18n.language === 'tr' ? 'Yükleniyor...' : 'Loading...'}
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {carnivals.map((carnival, index) => (
                 <motion.div
                   key={carnival.id}
                   initial={{ opacity: 0, y: 20 }}
@@ -127,45 +138,46 @@ export default function FestivalsAndBlogPage() {
                   transition={{ delay: index * 0.1 }}
                   className="glass rounded-2xl overflow-hidden"
                 >
-                  <div className="aspect-video bg-zinc-800 flex items-center justify-center">
-                    <p className="text-white">{t('carnivals.eventImage')}</p>
-                  </div>
+                  {carnival.image ? (
+                    <div className="aspect-video bg-zinc-800">
+                      <img
+                        src={carnival.image}
+                        alt={i18n.language === 'tr' ? carnival.name : carnival.nameEn}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="aspect-video bg-zinc-800 flex items-center justify-center">
+                      <p className="text-white">{t('carnivals.eventImage')}</p>
+                    </div>
+                  )}
 
                   <div className="p-6">
-                    <div className="mb-4">
-                      <span className="px-3 py-1 rounded-full bg-mea-gold bg-opacity-20 text-mea-gold text-sm font-medium">
-                        {carnival.status === 'upcoming' ? t('carnivals.upcoming') : t('carnivals.past')}
-                      </span>
-                    </div>
-
                     <h3 className="text-2xl font-bold text-white mb-3">
-                      {carnival.name}
+                      {i18n.language === 'tr' ? carnival.name : carnival.nameEn}
                     </h3>
 
                     <div className="space-y-2 mb-4">
                       <div className="flex items-center gap-2 text-gray-400">
                         <Calendar size={18} />
-                        <span>{carnival.date}</span>
+                        <span>{i18n.language === 'tr' ? carnival.date : carnival.dateEn}</span>
                       </div>
                       <div className="flex items-center gap-2 text-gray-400">
                         <MapPin size={18} />
-                        <span>{carnival.location}</span>
+                        <span>{i18n.language === 'tr' ? carnival.location : carnival.locationEn}</span>
                       </div>
                     </div>
 
                     <p className="text-gray-300 mb-6">
-                      {carnival.description}
+                      {i18n.language === 'tr' ? carnival.description : carnival.descriptionEn}
                     </p>
-
-                    <button className="btn-primary w-full">
-                      {t('carnivals.viewDetails')}
-                    </button>
                   </div>
                 </motion.div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
 
-            {carnivals.length === 0 && (
+            {!loadingCarnivals && carnivals.length === 0 && (
               <div className="text-center py-20">
                 <Users className="mx-auto mb-6 text-gray-400" size={80} />
                 <h2 className="text-2xl font-bold text-white mb-4">
