@@ -31,7 +31,17 @@
       "Bash(test:*)",
       "Bash(gh run:*)",
       "Bash(git reset:*)",
-      "Bash(npx vercel env add:*)"
+      "Bash(npx vercel env add:*)",
+      "Bash(findstr:*)",
+      "Bash(powershell -Command \"Add-Type -AssemblyName System.IO.Compression.FileSystem; [System.IO.Compression.ZipFile]::ExtractToDirectory(''web sayfası.docx'', ''temp_docx'')\")",
+      "Bash(powershell -Command \"Get-Content ''c:\\Users\\user\\Desktop\\meaculpa\\temp_docx\\word\\document.xml'' | Select-String -Pattern ''Biz Kimiz|About Us|Mea Culpa'' -Context 5,5\")",
+      "Bash(powershell -Command \"Get-Content ''c:\\Users\\user\\Desktop\\meaculpa\\temp_docx\\word\\document.xml'' | Select-String -Pattern ''ENGLISH|English Version|OUR VISION|OUR VALUES'' -Context 3,50\")",
+      "Bash(powershell -Command \"$content = Get-Content ''c:\\Users\\user\\Desktop\\meaculpa\\temp_docx\\word\\document.xml'' -Raw; if($content -match ''(?s)ENGLISH.*?(?=Turkish|$)''){$matches[0].Substring(0, [Math]::Min(5000, $matches[0].Length))} else {''ENGLISH section not found''}\")",
+      "Bash(dir)",
+      "Bash(npm audit fix:*)",
+      "Bash(dir:*)",
+      "Bash(powershell -Command \"Move-Item -Path ''app\\carnivals'' -Destination ''app\\festivals-and-blog''\")",
+      "Bash(powershell -Command:*)"
     ],
     "deny": [],
     "ask": []

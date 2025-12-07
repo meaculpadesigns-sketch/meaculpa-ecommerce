@@ -304,3 +304,97 @@ export interface CategoryInfo {
   seoDescriptionEn?: string;
   thirdLevel?: boolean; // Indicates if this category has third level subcategories
 }
+
+export interface BlogPost {
+  id: string;
+
+  // Content
+  title: string;
+  titleEn: string;
+  slug: string; // URL-friendly: "mea-culpa-hikayesi"
+  content: string; // Rich HTML
+  contentEn: string;
+  excerpt: string; // Short summary
+  excerptEn: string;
+
+  // Taxonomy
+  categoryId: string;
+  categoryName: string;
+  categoryNameEn: string;
+  tags: string[];
+
+  // Media
+  featuredImage: string;
+  images: string[]; // Additional images
+
+  // Publishing
+  status: 'draft' | 'published' | 'scheduled';
+  publishedAt?: Date;
+  scheduledFor?: Date; // For scheduled publishing
+
+  // Metadata
+  author: string; // Admin username
+  authorId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  views: number;
+  readTime: number; // Estimated minutes
+
+  // Features
+  featured: boolean; // Show on homepage
+  allowComments: boolean;
+
+  // SEO
+  seoTitle?: string;
+  seoTitleEn?: string;
+  seoDescription?: string;
+  seoDescriptionEn?: string;
+  seoKeywords?: string[];
+}
+
+export interface BlogCategory {
+  id: string;
+  name: string;
+  nameEn: string;
+  slug: string;
+  description: string;
+  descriptionEn: string;
+  icon?: string; // Lucide icon name
+  color?: string;
+  order: number;
+  postCount: number;
+  createdAt: Date;
+}
+
+export interface BlogComment {
+  id: string;
+  postId: string;
+  postTitle: string;
+
+  userId: string;
+  userName: string;
+  userEmail: string;
+  userAvatar?: string;
+
+  content: string;
+  status: 'pending' | 'approved' | 'rejected';
+
+  parentCommentId?: string; // For nested replies
+
+  createdAt: Date;
+  updatedAt?: Date;
+}
+
+export interface Carnival {
+  id: string;
+  name: string;
+  nameEn: string;
+  location: string;
+  locationEn: string;
+  date: string;
+  dateEn: string;
+  description: string;
+  descriptionEn: string;
+  image: string;
+  createdAt: Date;
+}

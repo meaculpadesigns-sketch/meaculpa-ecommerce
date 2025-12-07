@@ -64,7 +64,7 @@ export default function Navbar() {
     },
     { name: t('nav.corporate'), href: '/corporate' },
     { name: t('nav.aboutUs'), href: '/about' },
-    { name: t('nav.carnivals'), href: '/carnivals' },
+    { name: t('nav.festivalsAndBlog'), href: '/festivals-and-blog' },
     { name: t('nav.designRequest'), href: '/design-request' },
     { name: t('nav.tryOn'), href: '/try-on' },
   ];
