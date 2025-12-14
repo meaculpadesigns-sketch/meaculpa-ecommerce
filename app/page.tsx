@@ -147,7 +147,7 @@ export default function Home() {
           transition={{ repeat: Infinity, duration: 2 }}
           className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
         >
-          <ChevronDown className="text-gray-700 dark:text-white" size={32} />
+          <ChevronDown className="text-black dark:text-white" size={32} />
         </motion.div>
       </section>
 
@@ -205,7 +205,7 @@ export default function Home() {
               </div>
             </div>
           ) : (
-            <div className="text-center py-20 text-gray-700 dark:text-gray-400">
+            <div className="text-center py-20 text-gray-900 dark:text-gray-300">
               {i18n.language === 'tr'
                 ? 'Henüz ürün eklenmedi'
                 : 'No products added yet'}
@@ -246,7 +246,7 @@ export default function Home() {
               <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
                 {t('nav.set')}
               </h2>
-              <p className="text-gray-700 dark:text-gray-400 text-lg">
+              <p className="text-gray-900 dark:text-gray-300 text-lg">
                 {i18n.language === 'tr'
                   ? 'Şık ve rahat set kombinleri'
                   : 'Stylish and comfortable set combinations'}
@@ -292,7 +292,7 @@ export default function Home() {
               </div>
             </div>
           ) : (
-            <div className="text-center py-20 text-gray-700 dark:text-gray-400">
+            <div className="text-center py-20 text-gray-900 dark:text-gray-300">
               {i18n.language === 'tr'
                 ? 'Henüz ürün eklenmedi'
                 : 'No products added yet'}
