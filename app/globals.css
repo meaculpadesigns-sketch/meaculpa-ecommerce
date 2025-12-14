@@ -3,110 +3,118 @@
 @tailwind utilities;
 
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
+  --background: #ffffff;
+  --foreground: #000000;
+  --mea-gold: #D4AF37;
+  --mea-beige: #F5E6D3;
+  --mea-pearl: #F8F6F0;
+  --mea-earth: #8B7355;
 }
 
 .dark {
   --background: #000000;
   --foreground: #ffffff;
-}
-
-.light {
-  --background: #ffffff;
-  --foreground: #000000;
+  --mea-gold: #D4AF37;
+  --mea-beige: #ffffff;
+  --mea-pearl: #F8F6F0;
+  --mea-earth: #8B7355;
 }
 
 @layer base {
   body {
-    @apply text-foreground;
+    @apply bg-background text-foreground;
     font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     min-height: 100vh;
-  }
-
-  /* Background gradients for each page */
-  body.bg-home {
-    background: linear-gradient(135deg, #C89A3F 0%, #E0B86B 100%);
-  }
-
-  body.bg-products {
-    background: linear-gradient(135deg, #FB9802 0%, #FDB447 100%);
-  }
-
-  body.bg-about {
-    background: linear-gradient(135deg, #CF5C09 0%, #E87835 100%);
-  }
-
-  body.bg-contact {
-    background: linear-gradient(135deg, #6B909E 0%, #8BAAB5 100%);
-  }
-
-  body.bg-light {
-    background: linear-gradient(135deg, #EDDDC8 0%, #F5EDE1 100%);
-  }
-
-  /* Dark text for light backgrounds */
-  body.text-dark-page {
-    color: #1a1a1a;
-  }
-
-  body.text-dark-page h1,
-  body.text-dark-page h2,
-  body.text-dark-page h3,
-  body.text-dark-page h4,
-  body.text-dark-page h5,
-  body.text-dark-page h6 {
-    color: #000000;
-  }
-
-  body.text-dark-page .text-white {
-    color: #1a1a1a !important;
-  }
-
-  body.text-dark-page .text-gray-300,
-  body.text-dark-page .text-gray-400 {
-    color: #4a4a4a !important;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
 @layer components {
   /* Apple-like button */
   .btn-primary {
-    @apply bg-white text-black px-6 py-3 rounded-full font-medium hover:bg-opacity-90 transition-all duration-300;
+    @apply px-6 py-3 rounded-full font-medium transition-all duration-300;
+    background-color: var(--mea-beige);
+    color: #000000;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.9;
   }
 
   .btn-secondary {
-    @apply border border-white text-white px-6 py-3 rounded-full font-medium hover:bg-white hover:text-black transition-all duration-300;
+    @apply px-6 py-3 rounded-full font-medium transition-all duration-300;
+    border: 1px solid var(--foreground);
+    color: var(--foreground);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--foreground);
+    color: var(--background);
   }
 
   /* Apple-like nav */
   .nav-link {
-    @apply text-sm text-gray-300 hover:text-white transition-colors duration-200;
+    @apply text-sm transition-colors duration-200;
+    color: var(--foreground);
+    opacity: 0.7;
+  }
+
+  .nav-link:hover {
+    opacity: 1;
   }
 
   /* Product card */
   .product-card {
-    @apply bg-zinc-900 rounded-2xl overflow-hidden hover:scale-105 transition-transform duration-300 cursor-pointer;
+    @apply rounded-2xl overflow-hidden hover:scale-105 transition-all duration-300 cursor-pointer border;
   }
 
-  /* Input fields - Site geneli için gri arka plan */
+  .dark .product-card {
+    @apply bg-zinc-900 border-zinc-800;
+  }
+
+  :root .product-card {
+    @apply bg-white border-gray-200 shadow-md;
+  }
+
+  /* Input fields - Theme aware */
   .input-field {
-    @apply w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-3 text-black placeholder-gray-500 focus:outline-none focus:border-mea-gold transition-colors;
+    @apply w-full rounded-lg px-4 py-3 focus:outline-none transition-colors;
+    background-color: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--foreground);
   }
 
-  /* Admin panel için beyaz yazı */
+  .dark .input-field {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .input-field:focus {
+    border-color: var(--mea-gold);
+  }
+
+  .input-field::placeholder {
+    opacity: 0.5;
+  }
+
+  /* Admin panel inputs */
   .admin-input {
     @apply w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-300 focus:outline-none focus:border-mea-gold transition-colors;
   }
 
-  /* Glass effect */
+  /* Glass effect - Theme aware */
   .glass {
-    @apply bg-white bg-opacity-10 backdrop-blur-lg border border-white border-opacity-20;
+    @apply backdrop-blur-lg border transition-all;
   }
 
-  /* Glass effect for light backgrounds */
-  body.text-dark-page .glass {
-    @apply bg-black bg-opacity-5 backdrop-blur-lg border border-black border-opacity-10;
+  :root .glass {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .dark .glass {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.1);
   }
 
   /* Scroll snap for creations */
@@ -134,21 +142,34 @@
   }
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar - Theme aware */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
-::-webkit-scrollbar-track {
+:root ::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+:root ::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border-radius: 4px;
+}
+
+:root ::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0;
+}
+
+.dark ::-webkit-scrollbar-track {
   background: #1a1a1a;
 }
 
-::-webkit-scrollbar-thumb {
+.dark ::-webkit-scrollbar-thumb {
   background: #404040;
   border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb:hover {
+.dark ::-webkit-scrollbar-thumb:hover {
   background: #606060;
 }
 

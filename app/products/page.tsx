@@ -27,13 +27,6 @@ function ProductsContent() {
   const [showFilters, setShowFilters] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    document.body.className = 'bg-home text-dark-page';
-    return () => {
-      document.body.className = '';
-    };
-  }, []);
-
   // Fetch products from Firebase
   useEffect(() => {
     async function fetchProducts() {

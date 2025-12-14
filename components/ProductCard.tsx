@@ -94,24 +94,14 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
             </button>
           </div>
 
-          <div className="flex items-center gap-4 mb-4">
-            <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-bold text-black">{formatPrice(product.price, i18n.language)}</span>
-              {product.oldPrice && (
-                <span className="text-gray-500 line-through">{formatPrice(product.oldPrice, i18n.language)}</span>
-              )}
-            </div>
-            {product.inStock && product.oldPrice && (
-              <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm">
-                {Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}% {t('products.discount')}
-              </span>
-            )}
-            {!product.inStock && (
+          {/* Price section hidden per user request - only show on customize page */}
+          {!product.inStock && (
+            <div className="mb-4">
               <span className="bg-white text-black px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
                 {i18n.language === 'tr' ? 'Tükendi' : 'Sold Out'}
               </span>
-            )}
-          </div>
+            </div>
+          )}
 
           <div className="flex flex-wrap gap-2 mb-4">
             {product.sizes.map((size) => (

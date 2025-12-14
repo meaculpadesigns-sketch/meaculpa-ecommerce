@@ -9,13 +9,6 @@ export default function AboutPage() {
   const { t } = useTranslation();
   const [openSection, setOpenSection] = useState<string | null>(null);
 
-  useEffect(() => {
-    document.body.className = 'bg-products';
-    return () => {
-      document.body.className = '';
-    };
-  }, []);
-
   const toggleSection = (section: string) => {
     setOpenSection(openSection === section ? null : section);
   };

@@ -23,12 +23,6 @@ export default function ProductDetailPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
 
-  useEffect(() => {
-    document.body.className = 'bg-home text-dark-page';
-    return () => {
-      document.body.className = '';
-    };
-  }, []);
 
   useEffect(() => {
     loadProduct();
@@ -239,25 +233,9 @@ export default function ProductDetailPage() {
                 </button>
               </div>
 
-              {/* Price */}
-              <div className="flex items-baseline gap-4 mb-4">
-                <span className="text-4xl font-bold text-black">{formatPrice(product.price, i18n.language)}</span>
-                {product.oldPrice && (
-                  <span className="text-2xl text-gray-500 line-through">{formatPrice(product.oldPrice, i18n.language)}</span>
-                )}
-              </div>
+              {/* Price hidden per user request - only show on customize page */}
 
-              {/* Rating */}
-              <div className="flex items-center gap-2 mb-4">
-                <div className="flex">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={20} className="text-mea-gold" fill="currentColor" />
-                  ))}
-                </div>
-                <span className="text-gray-400">(0 değerlendirme)</span>
-              </div>
-
-              {/* Story Section - After price, before size selection */}
+              {/* Story Section */}
               {story && (
                 <div className="glass rounded-xl p-6 mt-4">
                   <h3 className="text-xl font-bold text-white mb-3">{t('products.story')}</h3>
@@ -266,13 +244,13 @@ export default function ProductDetailPage() {
               )}
             </div>
 
-            {/* Add to Cart Button */}
+            {/* Next Button - Navigate to customize page */}
             <button
               onClick={handleCustomizeProduct}
               className="btn-primary w-full text-lg py-4 flex items-center justify-center gap-2 mt-6"
             >
               <ShoppingCart size={24} />
-              {t('products.addToCart')}
+              {i18n.language === 'tr' ? 'İleri' : 'Next'}
             </button>
           </motion.div>
         </div>

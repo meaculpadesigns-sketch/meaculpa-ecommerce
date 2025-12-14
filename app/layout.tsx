@@ -69,7 +69,7 @@ export default function RootLayout({
       <body className="antialiased">
         <I18nProvider>
           <CartProvider>
-            <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+            <ThemeProvider attribute="class" defaultTheme="light" enableSystem={true} storageKey="mea-culpa-theme">
               <div className="min-h-screen flex flex-col">
                 <Navbar />
                 <main className="flex-grow">

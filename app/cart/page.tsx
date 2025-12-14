@@ -77,7 +77,19 @@ export default function CartPage() {
                 >
                   <div className="flex flex-col md:flex-row gap-6">
                     {/* Product Image */}
-                    <div className="w-full md:w-32 h-32 bg-zinc-800 rounded-xl flex-shrink-0" />
+                    <div className="w-full md:w-32 h-32 bg-zinc-800 rounded-xl flex-shrink-0 overflow-hidden">
+                      {item.product.images && item.product.images.length > 0 ? (
+                        <img
+                          src={item.product.images[0]}
+                          alt={name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-gray-400">
+                          No Image
+                        </div>
+                      )}
+                    </div>
 
                     {/* Product Info */}
                     <div className="flex-grow">

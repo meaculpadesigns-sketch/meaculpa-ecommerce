@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import { useCart } from '@/lib/cart-context';
+import { useTheme } from 'next-themes';
 import {
   ShoppingCart,
   User,
@@ -12,7 +13,9 @@ import {
   X,
   Search,
   Globe,
-  ChevronDown
+  ChevronDown,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { kimonoSubcategories, setSecondLevelCategories, getThirdLevelCategories } from '@/constants/categories';
@@ -20,6 +23,7 @@ import { kimonoSubcategories, setSecondLevelCategories, getThirdLevelCategories 
 export default function Navbar() {
   const { t, i18n } = useTranslation();
   const { getCartCount } = useCart();
+  const { theme, setTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -53,8 +57,7 @@ export default function Navbar() {
     {
       name: t('nav.kimono'),
       href: '/products?category=kimono',
-      hasDropdown: true,
-      subcategories: kimonoSubcategories
+      hasDropdown: false
     },
     {
       name: t('nav.set'),
@@ -77,20 +80,18 @@ export default function Navbar() {
         transition={{ duration: 0.5 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'glass border-b border-white border-opacity-10'
-            : 'bg-black bg-opacity-40 backdrop-blur-md'
+            ? 'glass border-b'
+            : 'backdrop-blur-md'
         }`}
         style={{
-          background: isScrolled
-            ? undefined
-            : 'linear-gradient(135deg, rgba(163, 120, 48, 0.3) 0%, rgba(192, 148, 85, 0.3) 100%)'
+          borderColor: isScrolled ? 'rgba(var(--foreground-rgb, 0, 0, 0), 0.1)' : undefined
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Brand Name */}
             <Link href="/" className="flex items-center">
-              <span className="text-2xl font-bold tracking-wider whitespace-nowrap" style={{ color: '#94593b' }}>
+              <span className="text-2xl font-bold tracking-wider whitespace-nowrap text-mea-gold">
                 MEA CULPA
               </span>
             </Link>
@@ -174,7 +175,7 @@ export default function Navbar() {
                 onClick={() => setSearchOpen(true)}
                 className="text-gray-300 hover:text-white transition-colors"
               >
-                <Search size={20} />
+                <Search size={18} />
               </button>
 
               {/* Language Switcher */}
@@ -182,10 +183,19 @@ export default function Navbar() {
                 onClick={toggleLanguage}
                 className="flex items-center space-x-1 text-gray-300 hover:text-white transition-colors"
               >
-                <Globe size={20} />
+                <Globe size={18} />
                 <span className="text-sm font-medium">
                   {i18n.language.toUpperCase()}
                 </span>
+              </button>
+
+              {/* Theme Toggle */}
+              <button
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className="text-gray-300 hover:text-white transition-colors"
+                aria-label="Toggle theme"
+              >
+                {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
               </button>
 
               {/* Cart */}
@@ -193,7 +203,7 @@ export default function Navbar() {
                 href="/cart"
                 className="relative text-gray-300 hover:text-white transition-colors"
               >
-                <ShoppingCart size={20} />
+                <ShoppingCart size={18} />
                 {cartCount > 0 && (
                   <span className="absolute -top-2 -right-2 bg-mea-gold text-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                     {cartCount}
@@ -206,7 +216,7 @@ export default function Navbar() {
                 href="/profile"
                 className="text-gray-300 hover:text-white transition-colors"
               >
-                <User size={20} />
+                <User size={18} />
               </Link>
 
               {/* Mobile Menu Button */}

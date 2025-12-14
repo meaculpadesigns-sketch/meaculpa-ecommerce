@@ -25,13 +25,6 @@ export default function Home() {
   const setScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    document.body.className = 'bg-home text-dark-page';
-    return () => {
-      document.body.className = '';
-    };
-  }, []);
-
-  useEffect(() => {
     async function fetchProducts() {
       try {
         const products = await getProducts();
@@ -132,11 +125,8 @@ export default function Home() {
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6" style={{ color: '#94593b' }}>
               MEA CULPA
             </h1>
-            <p className="text-xl md:text-2xl lg:text-3xl text-gray-300 mb-4">
+            <p className="text-xl md:text-2xl lg:text-3xl text-gray-300 mb-12">
               {t('hero.slogan1')}
-            </p>
-            <p className="text-lg md:text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-              {t('hero.slogan3')}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -162,9 +152,9 @@ export default function Home() {
       </section>
 
       {/* Kimono Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-12">
+      <section className="py-20">
+        <div>
+          <div className="flex items-center justify-between mb-12 px-4 max-w-7xl mx-auto">
             <div>
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
                 {t('nav.kimono')}
@@ -249,9 +239,9 @@ export default function Home() {
       </section>
 
       {/* Set Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-12">
+      <section className="py-20">
+        <div>
+          <div className="flex items-center justify-between mb-12 px-4 max-w-7xl mx-auto">
             <div>
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
                 {t('nav.set')}

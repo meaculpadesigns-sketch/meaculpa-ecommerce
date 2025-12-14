@@ -169,8 +169,8 @@ export default function Footer() {
               <div className="flex items-center gap-2">
                 {/* Visa */}
                 <div className="bg-white px-3 py-2 rounded flex items-center justify-center">
-                  <svg className="h-5 w-auto" viewBox="0 0 48 16" fill="none">
-                    <path d="M18.5 2.5L16 13.5h3l2.5-11h-3zm8.5 0l-4 11h3l.7-2h4l.3 2h3.5l-3-11h-4.5zm.5 3l1 5h-2.5l1.5-5zM11 2.5L7.5 10 7 7.5 6 3c-.2-.5-.5-.5-1-.5H0l.5.5c1 .2 2 .5 3 1l2.5 9.5h3L14 2.5h-3zm19 0c-.8 0-1.5.5-1.5 1.2 0 1.3 3 1.3 3 3.8 0 2.5-3.5 2.5-4.5 1.5l-.5 2c1 .5 2 .5 3 .5 2.5 0 4.5-1.2 4.5-3.5 0-1.5-3-1.5-3-3 0-1 2.5-1 3.5 0l.5-2c-1-.5-2-.5-3-.5z" fill="#1434CB"/>
+                  <svg className="h-5 w-auto" viewBox="0 0 48 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <text x="0" y="12" fontFamily="Arial, sans-serif" fontSize="14" fontWeight="bold" fill="#1434CB" letterSpacing="1">VISA</text>
                   </svg>
                 </div>
                 {/* Mastercard */}

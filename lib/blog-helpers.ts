@@ -58,8 +58,7 @@ export async function getPublishedBlogPosts() {
     orderBy('publishedAt', 'desc')
   );
   const snapshot = await getDocs(q);
-  const now = new Date();
-  return snapshot.docs
+  const posts = snapshot.docs
     .map((doc) => {
       const data = doc.data();
       return {
@@ -71,11 +70,8 @@ export async function getPublishedBlogPosts() {
         scheduledFor: data.scheduledFor?.toDate?.() || null,
       } as BlogPost;
     })
-    .filter(
-      (post) =>
-        post.status === 'published' &&
-        (!post.scheduledFor || post.scheduledFor <= now)
-    );
+    .filter((post) => post.status === 'published');
+  return posts;
 }
 
 export async function getBlogPostBySlug(slug: string) {
