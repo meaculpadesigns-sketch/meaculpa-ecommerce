@@ -123,12 +123,12 @@ export default function Navbar() {
                     >
                       {item.href.includes('kimono') ? (
                         // Kimono: Tek sütun liste
-                        <div className="glass rounded-xl border border-white border-opacity-10 shadow-xl overflow-hidden min-w-[280px]">
+                        <div className="glass rounded-xl border border-black dark:border-white border-opacity-10 dark:border-opacity-10 shadow-xl overflow-hidden min-w-[280px]">
                           {kimonoSubcategories.map((sub) => (
                             <Link
                               key={sub.key}
                               href={`/products?category=kimono&subcategory=${sub.key}`}
-                              className="block px-6 py-3 text-gray-300 hover:bg-white hover:bg-opacity-10 hover:text-white transition-colors border-b border-white border-opacity-5 last:border-0"
+                              className="block px-6 py-3 text-gray-700 dark:text-gray-300 hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-10 hover:text-black dark:hover:text-white transition-colors border-b border-black dark:border-white border-opacity-5 dark:border-opacity-5 last:border-0"
                             >
                               <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? sub.name : sub.nameEn}</div>
                             </Link>
@@ -136,21 +136,21 @@ export default function Navbar() {
                         </div>
                       ) : (
                         // Setler: 2. seviye yan yana, 3. seviye aşağı açılır
-                        <div className="glass rounded-xl border border-white border-opacity-10 shadow-xl overflow-visible min-w-[400px]">
-                          <div className="grid grid-cols-2 divide-x divide-white divide-opacity-10">
+                        <div className="glass rounded-xl border border-black dark:border-white border-opacity-10 dark:border-opacity-10 shadow-xl overflow-visible min-w-[400px]">
+                          <div className="grid grid-cols-2 divide-x divide-black dark:divide-white divide-opacity-10 dark:divide-opacity-10">
                             {setSecondLevelCategories.map((secondLevel) => (
                               <div key={secondLevel.key} className="relative group">
-                                <div className="px-8 py-4 text-gray-300 hover:bg-white hover:bg-opacity-5 transition-colors cursor-pointer">
+                                <div className="px-8 py-4 text-gray-700 dark:text-gray-300 hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-5 transition-colors cursor-pointer">
                                   <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? secondLevel.name : secondLevel.nameEn}</div>
                                 </div>
                                 {/* 3. seviye aşağı açılan menü */}
                                 <div className="absolute top-full left-0 mt-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all z-50">
-                                  <div className="glass rounded-xl border border-white border-opacity-10 shadow-xl overflow-hidden w-64">
+                                  <div className="glass rounded-xl border border-black dark:border-white border-opacity-10 dark:border-opacity-10 shadow-xl overflow-hidden w-64">
                                     {getThirdLevelCategories(secondLevel.key as 'kreasyonlar' | 'setler').map((third) => (
                                       <Link
                                         key={third.key}
                                         href={`/products?category=set&subcategory=${secondLevel.key}&thirdLevel=${third.key}`}
-                                        className="block px-5 py-3 text-gray-300 hover:bg-white hover:bg-opacity-10 hover:text-white transition-colors border-b border-white border-opacity-5 last:border-0"
+                                        className="block px-5 py-3 text-gray-700 dark:text-gray-300 hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-10 hover:text-black dark:hover:text-white transition-colors border-b border-black dark:border-white border-opacity-5 dark:border-opacity-5 last:border-0"
                                       >
                                         <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? third.name : third.nameEn}</div>
                                       </Link>
@@ -173,7 +173,7 @@ export default function Navbar() {
               {/* Search Icon */}
               <button
                 onClick={() => setSearchOpen(true)}
-                className="text-gray-300 hover:text-white transition-colors"
+                className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
               >
                 <Search size={18} />
               </button>
@@ -181,7 +181,7 @@ export default function Navbar() {
               {/* Language Switcher */}
               <button
                 onClick={toggleLanguage}
-                className="flex items-center space-x-1 text-gray-300 hover:text-white transition-colors"
+                className="flex items-center space-x-1 text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
               >
                 <Globe size={18} />
                 <span className="text-sm font-medium">
@@ -192,7 +192,7 @@ export default function Navbar() {
               {/* Theme Toggle */}
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="text-gray-300 hover:text-white transition-colors"
+                className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
                 aria-label="Toggle theme"
               >
                 {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
@@ -201,7 +201,7 @@ export default function Navbar() {
               {/* Cart */}
               <Link
                 href="/cart"
-                className="relative text-gray-300 hover:text-white transition-colors"
+                className="relative text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
               >
                 <ShoppingCart size={18} />
                 {cartCount > 0 && (
@@ -214,7 +214,7 @@ export default function Navbar() {
               {/* User Account */}
               <Link
                 href="/profile"
-                className="text-gray-300 hover:text-white transition-colors"
+                className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
               >
                 <User size={18} />
               </Link>
@@ -222,7 +222,7 @@ export default function Navbar() {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="lg:hidden text-gray-300 hover:text-white transition-colors"
+                className="lg:hidden text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
               >
                 {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -248,7 +248,7 @@ export default function Navbar() {
                     <Link
                       href={item.href}
                       onClick={() => !item.hasDropdown && setIsMobileMenuOpen(false)}
-                      className="text-2xl text-white font-medium py-4 border-b border-white border-opacity-10 hover:text-mea-gold transition-colors block"
+                      className="text-2xl text-black dark:text-white font-medium py-4 border-b border-black dark:border-white border-opacity-10 dark:border-opacity-10 hover:text-mea-gold transition-colors block"
                     >
                       {item.name}
                     </Link>
@@ -259,7 +259,7 @@ export default function Navbar() {
                             <Link
                               href={`${item.href}&subcategory=${sub.key}`}
                               onClick={() => !sub.thirdLevel && setIsMobileMenuOpen(false)}
-                              className="block text-lg text-gray-300 py-2 hover:text-mea-gold transition-colors"
+                              className="block text-lg text-gray-700 dark:text-gray-300 py-2 hover:text-mea-gold transition-colors"
                             >
                               {i18n.language === 'tr' ? sub.name : sub.nameEn}
                             </Link>
@@ -271,7 +271,7 @@ export default function Navbar() {
                                     key={third.key}
                                     href={`${item.href}&subcategory=${sub.key}&thirdLevel=${third.key}`}
                                     onClick={() => setIsMobileMenuOpen(false)}
-                                    className="block text-base text-gray-400 py-1.5 hover:text-mea-gold transition-colors"
+                                    className="block text-base text-gray-600 dark:text-gray-400 py-1.5 hover:text-mea-gold transition-colors"
                                   >
                                     {i18n.language === 'tr' ? third.name : third.nameEn}
                                   </Link>
@@ -331,7 +331,7 @@ export default function Navbar() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={t('common.search') + '...'}
-                  className="flex-1 px-6 py-4 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-mea-gold"
+                  className="flex-1 px-6 py-4 bg-black dark:bg-white bg-opacity-5 dark:bg-opacity-10 border border-black dark:border-white border-opacity-20 dark:border-opacity-20 rounded-xl text-black dark:text-white placeholder-gray-600 dark:placeholder-gray-400 focus:outline-none focus:border-mea-gold"
                   autoFocus
                 />
                 <button
@@ -341,7 +341,7 @@ export default function Navbar() {
                   {t('common.search')}
                 </button>
               </form>
-              <p className="text-gray-400 text-sm mt-4">
+              <p className="text-gray-600 dark:text-gray-400 text-sm mt-4">
                 {i18n.language === 'tr'
                   ? 'Ürün adı veya açıklama ile arayın'
                   : 'Search by product name or description'}

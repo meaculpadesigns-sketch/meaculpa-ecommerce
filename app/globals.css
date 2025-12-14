@@ -56,6 +56,13 @@
   .nav-link {
     @apply text-sm transition-colors duration-200;
     color: var(--foreground);
+  }
+
+  :root .nav-link {
+    opacity: 0.85;
+  }
+
+  .dark .nav-link {
     opacity: 0.7;
   }
 
