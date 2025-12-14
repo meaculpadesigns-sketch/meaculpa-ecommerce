@@ -239,7 +239,7 @@ export default function ProductDetailPage() {
               {story && (
                 <div className="glass rounded-xl p-6 mt-4">
                   <h3 className="text-xl font-bold text-black dark:text-white mb-3">{t('products.story')}</h3>
-                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">{story}</p>
+                  <p className="text-gray-900 dark:text-gray-300 leading-relaxed whitespace-pre-line">{story}</p>
                 </div>
               )}
             </div>

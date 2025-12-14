@@ -53,7 +53,7 @@ export default function ContactPage() {
           className="text-center mb-12"
         >
           <h1 className="text-5xl font-bold text-black mb-4">{t('contact.title')}</h1>
-          <p className="text-xl text-gray-700">
+          <p className="text-xl text-gray-900 dark:text-gray-300">
             {t('contact.subtitle')}
           </p>
         </motion.div>
@@ -220,14 +220,14 @@ export default function ContactPage() {
               <h3 className="text-xl font-bold text-gray-900 mb-4">
                 {t('contact.workingHours')}
               </h3>
-              <div className="space-y-3 text-gray-700">
+              <div className="space-y-3 text-gray-900 dark:text-gray-300">
                 <div className="flex justify-between">
                   <span>{t('contact.mondayFriday')}</span>
-                  <span className="text-gray-900 font-semibold">09:00 - 18:00</span>
+                  <span className="text-gray-900 dark:text-white font-semibold">09:00 - 18:00</span>
                 </div>
                 <div className="flex justify-between">
                   <span>{t('contact.saturday')}</span>
-                  <span className="text-gray-900 font-semibold">10:00 - 16:00</span>
+                  <span className="text-gray-900 dark:text-white font-semibold">10:00 - 16:00</span>
                 </div>
                 <div className="flex justify-between">
                   <span>{t('contact.sunday')}</span>
@@ -241,7 +241,7 @@ export default function ContactPage() {
               <h3 className="text-xl font-bold text-gray-900 mb-3">
                 {t('contact.faqTitle')}
               </h3>
-              <p className="text-gray-700 mb-4">
+              <p className="text-gray-900 dark:text-gray-300 mb-4">
                 {t('contact.faqDesc')}
               </p>
               <a href="/faq" className="btn-secondary inline-block">
@@ -261,7 +261,7 @@ export default function ContactPage() {
           <h3 className="text-2xl font-bold text-black mb-4">
             {t('contact.instantHelp')}
           </h3>
-          <p className="text-gray-700 mb-6">
+          <p className="text-gray-900 dark:text-gray-300 mb-6">
             {t('contact.instantHelpDesc')}
           </p>
           <a
