@@ -67,7 +67,7 @@ export default function Testimonials() {
           <h2 className="text-4xl font-bold text-black dark:text-white mb-4">
             {t('home.customerReviews')}
           </h2>
-          <p className="text-gray-700 dark:text-gray-400 text-lg">
+          <p className="text-gray-900 dark:text-gray-300 text-lg">
             {t('home.customerReviewsDesc')}
           </p>
         </motion.div>
@@ -99,7 +99,7 @@ export default function Testimonials() {
               </div>
 
               {/* Comment */}
-              <p className="text-gray-700 dark:text-gray-300 mb-6 relative z-10 leading-relaxed">
+              <p className="text-gray-900 dark:text-gray-300 mb-6 relative z-10 leading-relaxed">
                 "{i18n.language === 'tr' ? review.comment : (review.commentEn || review.comment)}"
               </p>
 
@@ -119,7 +119,7 @@ export default function Testimonials() {
           viewport={{ once: true }}
           className="text-center mt-12"
         >
-          <p className="text-gray-700 dark:text-gray-400 mb-4">
+          <p className="text-gray-900 dark:text-gray-300 mb-4">
             {i18n.language === 'tr'
               ? 'Deneyiminizi bizimle paylaşmak ister misiniz?'
               : 'Would you like to share your experience with us?'}

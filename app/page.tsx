@@ -125,7 +125,7 @@ export default function Home() {
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6" style={{ color: '#94593b' }}>
               MEA CULPA
             </h1>
-            <p className="text-xl md:text-2xl lg:text-3xl text-gray-700 dark:text-gray-300 mb-12">
+            <p className="text-xl md:text-2xl lg:text-3xl text-gray-900 dark:text-gray-300 mb-12">
               {t('hero.slogan1')}
             </p>
 
@@ -159,7 +159,7 @@ export default function Home() {
               <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
                 {t('nav.kimono')}
               </h2>
-              <p className="text-gray-700 dark:text-gray-400 text-lg">
+              <p className="text-gray-900 dark:text-gray-300 text-lg">
                 {i18n.language === 'tr'
                   ? 'Özgün tasarımlarımızla tanışın'
                   : 'Discover our unique designs'}
@@ -337,10 +337,10 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-8">
               {t('home.ourStory')}
             </h2>
-            <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed mb-6">
+            <p className="text-gray-900 dark:text-gray-300 text-lg leading-relaxed mb-6">
               {t('home.storyText1')}
             </p>
-            <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed mb-8">
+            <p className="text-gray-900 dark:text-gray-300 text-lg leading-relaxed mb-8">
               {t('home.storyText2')}
             </p>
             <Link href="/about" className="btn-primary">

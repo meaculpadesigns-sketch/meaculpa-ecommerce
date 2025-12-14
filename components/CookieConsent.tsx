@@ -45,7 +45,7 @@ export default function CookieConsent() {
                     <h3 className="text-black dark:text-white font-semibold mb-2">
                       {t('footer.cookies')}
                     </h3>
-                    <p className="text-gray-700 dark:text-gray-300 text-sm max-w-2xl">
+                    <p className="text-gray-900 dark:text-gray-300 text-sm max-w-2xl">
                       Web sitemizde en iyi deneyimi sunabilmek için çerezler kullanıyoruz.
                       Çerezleri kullanarak tercihlerinizi hatırlar, site performansını
                       iyileştiririz. Daha fazla bilgi için{' '}

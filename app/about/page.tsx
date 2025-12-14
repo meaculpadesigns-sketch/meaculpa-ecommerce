@@ -25,7 +25,7 @@ export default function AboutPage() {
           <h1 className="text-5xl md:text-6xl font-bold text-black mb-6">
             {t('about.title')}
           </h1>
-          <p className="text-xl text-gray-700 leading-relaxed">
+          <p className="text-xl text-gray-900 dark:text-gray-300 leading-relaxed">
             {t('about.subtitle')}
           </p>
         </motion.div>
@@ -38,7 +38,7 @@ export default function AboutPage() {
           className="glass rounded-2xl p-8 mb-12"
         >
           <h2 className="text-3xl font-bold text-black mb-6">{t('about.ourStory')}</h2>
-          <div className="space-y-4 text-gray-700 leading-relaxed">
+          <div className="space-y-4 text-gray-900 dark:text-gray-300 leading-relaxed">
             <p>{t('about.storyPara1')}</p>
             <p>{t('about.storyPara2')}</p>
             <p>{t('about.storyPara3')}</p>
@@ -63,7 +63,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-xl font-bold text-black">{t('about.valueHonesty')}</h3>
             </div>
-            <p className="text-gray-700">
+            <p className="text-gray-900 dark:text-gray-300">
               {t('about.valueHonestyDesc')}
             </p>
           </div>
@@ -76,7 +76,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-xl font-bold text-black">{t('about.valueSustainability')}</h3>
             </div>
-            <p className="text-gray-700">
+            <p className="text-gray-900 dark:text-gray-300">
               {t('about.valueSustainabilityDesc')}
             </p>
           </div>
@@ -89,7 +89,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-xl font-bold text-black">{t('about.valueUniqueness')}</h3>
             </div>
-            <p className="text-gray-700">
+            <p className="text-gray-900 dark:text-gray-300">
               {t('about.valueUniquenessDesc')}
             </p>
           </div>
@@ -102,7 +102,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-xl font-bold text-black">{t('about.valueArt')}</h3>
             </div>
-            <p className="text-gray-700">
+            <p className="text-gray-900 dark:text-gray-300">
               {t('about.valueArtDesc')}
             </p>
           </div>
@@ -115,7 +115,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-xl font-bold text-black">{t('about.valueAwareness')}</h3>
             </div>
-            <p className="text-gray-700">
+            <p className="text-gray-900 dark:text-gray-300">
               {t('about.valueAwarenessDesc')}
             </p>
           </div>
@@ -128,7 +128,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-xl font-bold text-black">{t('about.valueSocialBenefit')}</h3>
             </div>
-            <p className="text-gray-700">
+            <p className="text-gray-900 dark:text-gray-300">
               {t('about.valueSocialBenefitDesc')}
             </p>
           </div>
@@ -142,10 +142,10 @@ export default function AboutPage() {
           className="glass rounded-2xl p-8 mb-12"
         >
           <h2 className="text-3xl font-bold text-black mb-6">{t('about.vision')}</h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
+          <p className="text-gray-900 dark:text-gray-300 leading-relaxed mb-4">
             {t('about.visionPara1')}
           </p>
-          <p className="text-gray-700 leading-relaxed">
+          <p className="text-gray-900 dark:text-gray-300 leading-relaxed">
             {t('about.visionPara2')}
           </p>
         </motion.div>
@@ -158,7 +158,7 @@ export default function AboutPage() {
           className="glass rounded-2xl p-8 mb-12"
         >
           <h2 className="text-3xl font-bold text-black mb-6">{t('about.manifesto')}</h2>
-          <div className="space-y-4 text-gray-700 leading-relaxed">
+          <div className="space-y-4 text-gray-900 dark:text-gray-300 leading-relaxed">
             <p>{t('about.manifestoPara1')}</p>
             <p>{t('about.manifestoPara2')}</p>
             <p>{t('about.manifestoPara3')}</p>
@@ -193,7 +193,7 @@ export default function AboutPage() {
                 />
               </button>
               {openSection === 'sustainability' && (
-                <div className="px-6 pb-6 space-y-3 text-gray-700 leading-relaxed">
+                <div className="px-6 pb-6 space-y-3 text-gray-900 dark:text-gray-300 leading-relaxed">
                   <p>{t('about.sustainabilityPara1')}</p>
                   <p>{t('about.sustainabilityPara2')}</p>
                   <p>{t('about.sustainabilityPara3')}</p>
@@ -217,7 +217,7 @@ export default function AboutPage() {
                 />
               </button>
               {openSection === 'artist' && (
-                <div className="px-6 pb-6 space-y-3 text-gray-700 leading-relaxed">
+                <div className="px-6 pb-6 space-y-3 text-gray-900 dark:text-gray-300 leading-relaxed">
                   <p>{t('about.artistPara1')}</p>
                   <p>{t('about.artistPara2')}</p>
                   <p>{t('about.artistPara3')}</p>
@@ -241,7 +241,7 @@ export default function AboutPage() {
                 />
               </button>
               {openSection === 'fabrics' && (
-                <div className="px-6 pb-6 space-y-3 text-gray-700 leading-relaxed">
+                <div className="px-6 pb-6 space-y-3 text-gray-900 dark:text-gray-300 leading-relaxed">
                   <p>{t('about.fabricsPara1')}</p>
                   <ul className="space-y-2 my-4">
                     <li className="flex items-start gap-2">
