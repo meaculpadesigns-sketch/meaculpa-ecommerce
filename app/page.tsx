@@ -334,13 +334,13 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
+            <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-8">
               {t('home.ourStory')}
             </h2>
-            <p className="text-gray-300 text-lg leading-relaxed mb-6">
+            <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed mb-6">
               {t('home.storyText1')}
             </p>
-            <p className="text-gray-300 text-lg leading-relaxed mb-8">
+            <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed mb-8">
               {t('home.storyText2')}
             </p>
             <Link href="/about" className="btn-primary">

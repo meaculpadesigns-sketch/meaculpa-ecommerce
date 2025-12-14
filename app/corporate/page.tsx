@@ -23,10 +23,10 @@ export default function CorporatePage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
             {t('corporate.title')}
           </h1>
-          <p className="text-xl text-gray-400">
+          <p className="text-xl text-gray-700 dark:text-gray-400">
             {t('corporate.subtitle')}
           </p>
         </motion.div>
@@ -43,9 +43,9 @@ export default function CorporatePage() {
               <div className="p-3 bg-mea-gold rounded-xl">
                 <Gift className="text-black" size={32} />
               </div>
-              <h2 className="text-2xl font-bold text-white">{t('corporate.giftsTitle')}</h2>
+              <h2 className="text-2xl font-bold text-black dark:text-white">{t('corporate.giftsTitle')}</h2>
             </div>
-            <p className="text-gray-300 leading-relaxed">
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
               {t('corporate.giftsDesc')}
             </p>
           </motion.div>
@@ -60,11 +60,11 @@ export default function CorporatePage() {
               <div className="p-3 bg-mea-gold rounded-xl">
                 <Users className="text-black" size={32} />
               </div>
-              <h2 className="text-2xl font-bold text-white">
+              <h2 className="text-2xl font-bold text-black dark:text-white">
                 {i18n.language === 'tr' ? 'Toplu Tasarım' : 'Bulk Design'}
               </h2>
             </div>
-            <p className="text-gray-300 leading-relaxed">
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
               {t('corporate.bulkDesc')}
             </p>
           </motion.div>
@@ -77,10 +77,10 @@ export default function CorporatePage() {
           transition={{ delay: 0.7 }}
           className="glass rounded-2xl p-8 text-center"
         >
-          <h2 className="text-3xl font-bold text-white mb-4">
+          <h2 className="text-3xl font-bold text-black dark:text-white mb-4">
             {t('corporate.ctaTitle')}
           </h2>
-          <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+          <p className="text-gray-700 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
             {t('corporate.ctaDesc')}
           </p>
 
