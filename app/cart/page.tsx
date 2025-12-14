@@ -26,11 +26,11 @@ export default function CartPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
         >
-          <ShoppingBag className="mx-auto mb-6 text-gray-400" size={80} />
-          <h2 className="text-3xl font-bold text-white mb-4">
+          <ShoppingBag className="mx-auto mb-6 text-gray-700 dark:text-gray-400" size={80} />
+          <h2 className="text-3xl font-bold text-black dark:text-white mb-4">
             {t('cart.empty')}
           </h2>
-          <p className="text-gray-400 mb-8">
+          <p className="text-gray-700 dark:text-gray-400 mb-8">
             Sepetinize ürün ekleyerek alışverişe başlayın
           </p>
           <Link href="/products" className="btn-primary">
@@ -53,10 +53,10 @@ export default function CartPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
+          <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-2">
             {t('cart.title')}
           </h1>
-          <p className="text-gray-400">
+          <p className="text-gray-700 dark:text-gray-400">
             {cart.length} ürün sepetinizde
           </p>
         </motion.div>
@@ -85,7 +85,7 @@ export default function CartPage() {
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-400">
+                        <div className="w-full h-full flex items-center justify-center text-gray-700 dark:text-gray-400">
                           No Image
                         </div>
                       )}
@@ -96,11 +96,11 @@ export default function CartPage() {
                       <div className="flex items-start justify-between mb-2">
                         <div>
                           <Link href={`/products/${item.productId}`}>
-                            <h3 className="text-xl font-semibold text-black hover:text-gray-700 transition-colors">
+                            <h3 className="text-xl font-semibold text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
                               {name}
                             </h3>
                           </Link>
-                          <p className="text-gray-400 text-sm mt-1">
+                          <p className="text-gray-700 dark:text-gray-400 text-sm mt-1">
                             Beden: {item.size}
                           </p>
                         </div>
@@ -115,8 +115,8 @@ export default function CartPage() {
                       {/* Special Requests */}
                       {item.specialRequests && (
                         <div className="mb-3 p-3 bg-zinc-800 rounded-lg">
-                          <p className="text-gray-400 text-sm mb-1">Özel İstekler:</p>
-                          <p className="text-white text-sm">{item.specialRequests}</p>
+                          <p className="text-gray-700 dark:text-gray-400 text-sm mb-1">Özel İstekler:</p>
+                          <p className="text-black dark:text-white text-sm">{item.specialRequests}</p>
                         </div>
                       )}
 
@@ -125,7 +125,7 @@ export default function CartPage() {
                         <div className="mb-3 p-3 bg-mea-gold bg-opacity-20 rounded-lg">
                           <p className="text-mea-gold text-sm mb-1">🎁 Hediye Paketi</p>
                           {item.giftMessage && (
-                            <p className="text-white text-sm">{item.giftMessage}</p>
+                            <p className="text-black dark:text-white text-sm">{item.giftMessage}</p>
                           )}
                         </div>
                       )}
@@ -137,24 +137,24 @@ export default function CartPage() {
                             onClick={() => updateQuantity(item.productId, item.size, item.quantity - 1)}
                             className="p-2 glass rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors"
                           >
-                            <Minus size={16} className="text-white" />
+                            <Minus size={16} className="text-black dark:text-white" />
                           </button>
-                          <span className="text-white font-medium w-8 text-center">
+                          <span className="text-black dark:text-white font-medium w-8 text-center">
                             {item.quantity}
                           </span>
                           <button
                             onClick={() => updateQuantity(item.productId, item.size, item.quantity + 1)}
                             className="p-2 glass rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors"
                           >
-                            <Plus size={16} className="text-white" />
+                            <Plus size={16} className="text-black dark:text-white" />
                           </button>
                         </div>
 
                         <div className="text-right">
-                          <p className="text-2xl font-bold text-white">
+                          <p className="text-2xl font-bold text-black dark:text-white">
                             ₺{(item.product.price * item.quantity).toFixed(2)}
                           </p>
-                          <p className="text-gray-400 text-sm">
+                          <p className="text-gray-700 dark:text-gray-400 text-sm">
                             ₺{item.product.price} x {item.quantity}
                           </p>
                         </div>
@@ -174,19 +174,19 @@ export default function CartPage() {
               transition={{ delay: 0.3 }}
               className="glass rounded-2xl p-6 sticky top-24"
             >
-              <h2 className="text-2xl font-bold text-white mb-6">
+              <h2 className="text-2xl font-bold text-black dark:text-white mb-6">
                 Sipariş Özeti
               </h2>
 
               <div className="space-y-4 mb-6">
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-400">{t('cart.subtotal')}</span>
-                  <span className="text-white font-medium">₺{subtotal.toFixed(2)}</span>
+                  <span className="text-gray-700 dark:text-gray-400">{t('cart.subtotal')}</span>
+                  <span className="text-black dark:text-white font-medium">₺{subtotal.toFixed(2)}</span>
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-400">{t('cart.shipping')}</span>
-                  <span className="text-white font-medium">
+                  <span className="text-gray-700 dark:text-gray-400">{t('cart.shipping')}</span>
+                  <span className="text-black dark:text-white font-medium">
                     {shipping === 0 ? 'Ücretsiz' : `₺${shipping.toFixed(2)}`}
                   </span>
                 </div>
@@ -225,7 +225,7 @@ export default function CartPage() {
 
               {/* Trust Badges */}
               <div className="mt-6 pt-6 border-t border-white border-opacity-10">
-                <div className="space-y-3 text-sm text-gray-400">
+                <div className="space-y-3 text-sm text-gray-700 dark:text-gray-400">
                   <div className="flex items-center gap-2">
                     <span>✓</span>
                     <span>Güvenli Ödeme</span>
