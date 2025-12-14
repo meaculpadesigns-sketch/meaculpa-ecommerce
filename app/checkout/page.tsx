@@ -235,8 +235,8 @@ export default function CheckoutPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-4xl font-bold text-white mb-2">{t('checkout.title')}</h1>
-          <p className="text-gray-400">{t('checkout.subtitle')}</p>
+          <h1 className="text-4xl font-bold text-black dark:text-white mb-2">{t('checkout.title')}</h1>
+          <p className="text-gray-700 dark:text-gray-400">{t('checkout.subtitle')}</p>
         </motion.div>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -249,13 +249,13 @@ export default function CheckoutPage() {
                 animate={{ opacity: 1, y: 0 }}
                 className="glass rounded-2xl p-6"
               >
-                <h2 className="text-2xl font-bold text-white mb-4">{t('checkout.memberInfo')}</h2>
+                <h2 className="text-2xl font-bold text-black dark:text-white mb-4">{t('checkout.memberInfo')}</h2>
                 <div className="flex gap-4 mb-6">
                   <button
                     type="button"
                     onClick={() => setIsGuest(true)}
                     className={`flex-1 py-3 rounded-lg font-medium ${
-                      isGuest ? 'bg-mea-gold text-black' : 'glass text-white'
+                      isGuest ? 'bg-mea-gold text-black' : 'glass text-black dark:text-white'
                     }`}
                   >
                     {t('checkout.guestCheckout')}
@@ -263,7 +263,7 @@ export default function CheckoutPage() {
                   <button
                     type="button"
                     onClick={() => router.push('/login')}
-                    className="flex-1 py-3 rounded-lg glass text-white font-medium"
+                    className="flex-1 py-3 rounded-lg glass text-black dark:text-white font-medium"
                   >
                     {t('checkout.memberLogin')}
                   </button>
@@ -315,7 +315,7 @@ export default function CheckoutPage() {
               transition={{ delay: 0.1 }}
               className="glass rounded-2xl p-6"
             >
-              <h2 className="text-2xl font-bold text-white mb-4">{t('checkout.shippingAddress')}</h2>
+              <h2 className="text-2xl font-bold text-black dark:text-white mb-4">{t('checkout.shippingAddress')}</h2>
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <input
@@ -389,13 +389,13 @@ export default function CheckoutPage() {
               transition={{ delay: 0.2 }}
               className="glass rounded-2xl p-6"
             >
-              <h2 className="text-2xl font-bold text-white mb-4">{t('checkout.paymentMethod')}</h2>
+              <h2 className="text-2xl font-bold text-black dark:text-white mb-4">{t('checkout.paymentMethod')}</h2>
               <div className="grid grid-cols-3 gap-4 mb-6">
                 <button
                   type="button"
                   onClick={() => setPaymentMethod('card')}
                   className={`p-4 rounded-xl flex flex-col items-center gap-2 ${
-                    paymentMethod === 'card' ? 'bg-mea-gold text-black' : 'glass text-white'
+                    paymentMethod === 'card' ? 'bg-mea-gold text-black' : 'glass text-black dark:text-white'
                   }`}
                 >
                   <CreditCard size={32} />
@@ -405,7 +405,7 @@ export default function CheckoutPage() {
                   type="button"
                   onClick={() => setPaymentMethod('crypto')}
                   className={`p-4 rounded-xl flex flex-col items-center gap-2 ${
-                    paymentMethod === 'crypto' ? 'bg-mea-gold text-black' : 'glass text-white'
+                    paymentMethod === 'crypto' ? 'bg-mea-gold text-black' : 'glass text-black dark:text-white'
                   }`}
                 >
                   <Wallet size={32} />
@@ -415,7 +415,7 @@ export default function CheckoutPage() {
                   type="button"
                   onClick={() => setPaymentMethod('googlepay')}
                   className={`p-4 rounded-xl flex flex-col items-center gap-2 ${
-                    paymentMethod === 'googlepay' ? 'bg-mea-gold text-black' : 'glass text-white'
+                    paymentMethod === 'googlepay' ? 'bg-mea-gold text-black' : 'glass text-black dark:text-white'
                   }`}
                 >
                   <CheckCircle size={32} />
@@ -432,8 +432,8 @@ export default function CheckoutPage() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                       </svg>
                       <div>
-                        <p className="text-white text-sm font-medium">{t('checkout.securePayment')}</p>
-                        <p className="text-gray-400 text-xs">{t('checkout.sslEncryption')}</p>
+                        <p className="text-black dark:text-white text-sm font-medium">{t('checkout.securePayment')}</p>
+                        <p className="text-gray-700 dark:text-gray-400 text-xs">{t('checkout.sslEncryption')}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
@@ -482,7 +482,7 @@ export default function CheckoutPage() {
 
                   {/* Powered by iyzico */}
                   <div className="flex items-center justify-center gap-2 p-3 bg-white bg-opacity-5 rounded-lg">
-                    <span className="text-gray-400 text-xs">{t('checkout.poweredBy')}</span>
+                    <span className="text-gray-700 dark:text-gray-400 text-xs">{t('checkout.poweredBy')}</span>
                     <div className="bg-white px-3 py-1.5 rounded">
                       <span className="text-[#1d3557] font-bold text-sm">iyzico</span>
                     </div>
@@ -516,7 +516,7 @@ export default function CheckoutPage() {
               transition={{ delay: 0.3 }}
               className="glass rounded-2xl p-6 sticky top-24"
             >
-              <h2 className="text-2xl font-bold text-white mb-6">{t('checkout.orderSummary')}</h2>
+              <h2 className="text-2xl font-bold text-black dark:text-white mb-6">{t('checkout.orderSummary')}</h2>
 
               {/* Cart Items */}
               <div className="space-y-4 mb-6 max-h-60 overflow-y-auto">
@@ -526,10 +526,10 @@ export default function CheckoutPage() {
                     <div key={`${item.productId}-${item.size}`} className="flex gap-3">
                       <div className="w-16 h-16 bg-zinc-800 rounded-lg flex-shrink-0" />
                       <div className="flex-grow">
-                        <p className="text-white text-sm font-medium line-clamp-1">
+                        <p className="text-black dark:text-white text-sm font-medium line-clamp-1">
                           {itemName}
                         </p>
-                        <p className="text-gray-400 text-xs">
+                        <p className="text-gray-700 dark:text-gray-400 text-xs">
                           {item.size} × {item.quantity}
                         </p>
                         <p className="text-mea-gold text-sm font-medium">
@@ -543,7 +543,7 @@ export default function CheckoutPage() {
 
               {/* Coupon Code */}
               <div className="mb-6 pb-4 border-b border-white border-opacity-10">
-                <label className="block text-white font-medium mb-2">{t('checkout.couponCode')}</label>
+                <label className="block text-black dark:text-white font-medium mb-2">{t('checkout.couponCode')}</label>
                 {!appliedCoupon ? (
                   <div className="flex gap-2">
                     <input
@@ -590,7 +590,7 @@ export default function CheckoutPage() {
 
               {/* Totals */}
               <div className="space-y-3 mb-6 pt-4 border-t border-white border-opacity-10">
-                <div className="flex justify-between text-gray-400">
+                <div className="flex justify-between text-gray-700 dark:text-gray-400">
                   <span>{t('checkout.subtotal')}</span>
                   <span>{formatPrice(subtotal, i18n.language)}</span>
                 </div>
@@ -600,11 +600,11 @@ export default function CheckoutPage() {
                     <span>-{formatPrice(discount, i18n.language)}</span>
                   </div>
                 )}
-                <div className="flex justify-between text-gray-400">
+                <div className="flex justify-between text-gray-700 dark:text-gray-400">
                   <span>{t('cart.shipping')}</span>
                   <span>{shipping === 0 ? t('checkout.shippingFree') : formatPrice(shipping, i18n.language)}</span>
                 </div>
-                <div className="flex justify-between text-white font-bold text-lg pt-3 border-t border-white border-opacity-10">
+                <div className="flex justify-between text-black dark:text-white font-bold text-lg pt-3 border-t border-white border-opacity-10">
                   <span>{t('cart.total')}</span>
                   <span className="text-mea-gold">{formatPrice(total, i18n.language)}</span>
                 </div>
@@ -618,7 +618,7 @@ export default function CheckoutPage() {
                 {loading ? t('checkout.processing') : t('checkout.completeOrder')}
               </button>
 
-              <p className="text-gray-400 text-xs text-center mt-4">
+              <p className="text-gray-700 dark:text-gray-400 text-xs text-center mt-4">
                 {t('checkout.privacyAgreement')}{' '}
                 <a href="/privacy" className="text-mea-gold hover:underline">
                   {t('checkout.privacyPolicy')}
