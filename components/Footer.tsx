@@ -62,7 +62,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <h2 className="text-2xl font-bold text-black dark:text-white mb-4">MEA CULPA</h2>
-            <p className="text-gray-700 dark:text-gray-400 text-sm mb-4 max-w-md">
+            <p className="text-gray-900 dark:text-gray-300 text-sm mb-4 max-w-md">
               {t('footer.brandDescription')}
             </p>
             <div className="flex space-x-4">
@@ -72,7 +72,7 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-700 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
+                  className="text-gray-900 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
                   aria-label={social.name}
                 >
                   <social.icon size={20} />
@@ -91,7 +91,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-700 dark:text-gray-400 text-sm hover:text-black dark:hover:text-white transition-colors"
+                    className="text-gray-900 dark:text-gray-300 text-sm hover:text-black dark:hover:text-white transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -110,7 +110,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-700 dark:text-gray-400 text-sm hover:text-black dark:hover:text-white transition-colors"
+                    className="text-gray-900 dark:text-gray-300 text-sm hover:text-black dark:hover:text-white transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -127,7 +127,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-700 dark:text-gray-400 text-sm hover:text-black dark:hover:text-white transition-colors"
+                    className="text-gray-900 dark:text-gray-300 text-sm hover:text-black dark:hover:text-white transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -144,21 +144,21 @@ export default function Footer() {
             <div className="flex flex-wrap justify-center gap-4 text-sm">
               <Link
                 href="/distance-sales-agreement"
-                className="text-gray-700 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
+                className="text-gray-900 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
               >
                 {t('footer.distanceSales')}
               </Link>
               <span className="text-gray-500 dark:text-gray-600">•</span>
               <Link
                 href="/privacy"
-                className="text-gray-700 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
+                className="text-gray-900 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
               >
                 {t('footer.privacy')}
               </Link>
               <span className="text-gray-500 dark:text-gray-600">•</span>
               <Link
                 href="/returns"
-                className="text-gray-700 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
+                className="text-gray-900 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
               >
                 {t('footer.returns')}
               </Link>
@@ -191,7 +191,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <div className="mt-6 text-center">
-            <p className="text-gray-700 dark:text-gray-400 text-sm">
+            <p className="text-gray-900 dark:text-gray-300 text-sm">
               &copy; {new Date().getFullYear()} Mea Culpa. {t('footer.copyright')}
             </p>
           </div>

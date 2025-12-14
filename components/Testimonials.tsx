@@ -106,7 +106,7 @@ export default function Testimonials() {
               {/* Author */}
               <div className="border-t border-white border-opacity-10 pt-4">
                 <p className="text-black dark:text-white font-semibold">{review.name}</p>
-                <p className="text-gray-700 dark:text-gray-400 text-sm">{t('home.customer')}</p>
+                <p className="text-gray-900 dark:text-gray-300 text-sm">{t('home.customer')}</p>
               </div>
             </motion.div>
           ))}
