@@ -125,7 +125,7 @@ export default function Home() {
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6" style={{ color: '#94593b' }}>
               MEA CULPA
             </h1>
-            <p className="text-xl md:text-2xl lg:text-3xl text-gray-300 mb-12">
+            <p className="text-xl md:text-2xl lg:text-3xl text-gray-700 dark:text-gray-300 mb-12">
               {t('hero.slogan1')}
             </p>
 
@@ -147,7 +147,7 @@ export default function Home() {
           transition={{ repeat: Infinity, duration: 2 }}
           className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
         >
-          <ChevronDown className="text-white" size={32} />
+          <ChevronDown className="text-gray-700 dark:text-white" size={32} />
         </motion.div>
       </section>
 
@@ -156,10 +156,10 @@ export default function Home() {
         <div>
           <div className="flex items-center justify-between mb-12 px-4 max-w-7xl mx-auto">
             <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
                 {t('nav.kimono')}
               </h2>
-              <p className="text-gray-400 text-lg">
+              <p className="text-gray-700 dark:text-gray-400 text-lg">
                 {i18n.language === 'tr'
                   ? 'Özgün tasarımlarımızla tanışın'
                   : 'Discover our unique designs'}
@@ -168,17 +168,17 @@ export default function Home() {
             <div className="hidden md:flex items-center gap-4">
               <button
                 onClick={() => scrollCarousel(kimonoScrollRef, 'left')}
-                className="p-3 glass rounded-full hover:bg-white hover:bg-opacity-20 transition-colors"
+                className="p-3 glass rounded-full hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-20 transition-colors"
                 aria-label="Previous"
               >
-                <ChevronLeft size={24} className="text-white" />
+                <ChevronLeft size={24} className="text-black dark:text-white" />
               </button>
               <button
                 onClick={() => scrollCarousel(kimonoScrollRef, 'right')}
-                className="p-3 glass rounded-full hover:bg-white hover:bg-opacity-20 transition-colors"
+                className="p-3 glass rounded-full hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-20 transition-colors"
                 aria-label="Next"
               >
-                <ChevronRight size={24} className="text-white" />
+                <ChevronRight size={24} className="text-black dark:text-white" />
               </button>
               <Link
                 href="/products?category=kimono"
@@ -191,7 +191,7 @@ export default function Home() {
           </div>
 
           {loading ? (
-            <div className="text-center py-20 text-white">
+            <div className="text-center py-20 text-black dark:text-white">
               {t('common.loading')}
             </div>
           ) : kimonoProducts.length > 0 ? (
@@ -205,20 +205,20 @@ export default function Home() {
               </div>
             </div>
           ) : (
-            <div className="text-center py-20 text-gray-400">
+            <div className="text-center py-20 text-gray-700 dark:text-gray-400">
               {i18n.language === 'tr'
                 ? 'Henüz ürün eklenmedi'
                 : 'No products added yet'}
             </div>
           )}
 
-          <div className="flex md:hidden items-center gap-2 mt-8">
+          <div className="flex md:hidden items-center gap-2 mt-8 px-4">
             <button
               onClick={() => scrollCarousel(kimonoScrollRef, 'left')}
               className="p-3 glass rounded-full"
               aria-label="Previous"
             >
-              <ChevronLeft size={20} className="text-white" />
+              <ChevronLeft size={20} className="text-black dark:text-white" />
             </button>
             <Link
               href="/products?category=kimono"
@@ -232,7 +232,7 @@ export default function Home() {
               className="p-3 glass rounded-full"
               aria-label="Next"
             >
-              <ChevronRight size={20} className="text-white" />
+              <ChevronRight size={20} className="text-black dark:text-white" />
             </button>
           </div>
         </div>
@@ -243,10 +243,10 @@ export default function Home() {
         <div>
           <div className="flex items-center justify-between mb-12 px-4 max-w-7xl mx-auto">
             <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
                 {t('nav.set')}
               </h2>
-              <p className="text-gray-400 text-lg">
+              <p className="text-gray-700 dark:text-gray-400 text-lg">
                 {i18n.language === 'tr'
                   ? 'Şık ve rahat set kombinleri'
                   : 'Stylish and comfortable set combinations'}
@@ -255,17 +255,17 @@ export default function Home() {
             <div className="hidden md:flex items-center gap-4">
               <button
                 onClick={() => scrollCarousel(setScrollRef, 'left')}
-                className="p-3 glass rounded-full hover:bg-white hover:bg-opacity-20 transition-colors"
+                className="p-3 glass rounded-full hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-20 transition-colors"
                 aria-label="Previous"
               >
-                <ChevronLeft size={24} className="text-white" />
+                <ChevronLeft size={24} className="text-black dark:text-white" />
               </button>
               <button
                 onClick={() => scrollCarousel(setScrollRef, 'right')}
-                className="p-3 glass rounded-full hover:bg-white hover:bg-opacity-20 transition-colors"
+                className="p-3 glass rounded-full hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-20 transition-colors"
                 aria-label="Next"
               >
-                <ChevronRight size={24} className="text-white" />
+                <ChevronRight size={24} className="text-black dark:text-white" />
               </button>
               <Link
                 href="/products?category=set"
@@ -278,7 +278,7 @@ export default function Home() {
           </div>
 
           {loading ? (
-            <div className="text-center py-20 text-white">
+            <div className="text-center py-20 text-black dark:text-white">
               {t('common.loading')}
             </div>
           ) : setProducts.length > 0 ? (
@@ -292,20 +292,20 @@ export default function Home() {
               </div>
             </div>
           ) : (
-            <div className="text-center py-20 text-gray-400">
+            <div className="text-center py-20 text-gray-700 dark:text-gray-400">
               {i18n.language === 'tr'
                 ? 'Henüz ürün eklenmedi'
                 : 'No products added yet'}
             </div>
           )}
 
-          <div className="flex md:hidden items-center gap-2 mt-8">
+          <div className="flex md:hidden items-center gap-2 mt-8 px-4">
             <button
               onClick={() => scrollCarousel(setScrollRef, 'left')}
               className="p-3 glass rounded-full"
               aria-label="Previous"
             >
-              <ChevronLeft size={20} className="text-white" />
+              <ChevronLeft size={20} className="text-black dark:text-white" />
             </button>
             <Link
               href="/products?category=set"
@@ -319,7 +319,7 @@ export default function Home() {
               className="p-3 glass rounded-full"
               aria-label="Next"
             >
-              <ChevronRight size={20} className="text-white" />
+              <ChevronRight size={20} className="text-black dark:text-white" />
             </button>
           </div>
         </div>

@@ -95,7 +95,7 @@ export default function ProductDetailPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-white text-xl">Yükleniyor...</div>
+        <div className="animate-pulse text-black dark:text-white text-xl">Yükleniyor...</div>
       </div>
     );
   }
@@ -116,12 +116,12 @@ export default function ProductDetailPage() {
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Breadcrumb */}
-        <div className="mb-8 flex items-center gap-2 text-sm text-gray-400">
-          <Link href="/" className="hover:text-white transition-colors">Ana Sayfa</Link>
+        <div className="mb-8 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+          <Link href="/" className="hover:text-black dark:hover:text-white transition-colors">Ana Sayfa</Link>
           <span>/</span>
-          <Link href="/products" className="hover:text-white transition-colors">Ürünler</Link>
+          <Link href="/products" className="hover:text-black dark:hover:text-white transition-colors">Ürünler</Link>
           <span>/</span>
-          <span className="text-white">{name}</span>
+          <span className="text-black dark:text-white">{name}</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -140,7 +140,7 @@ export default function ProductDetailPage() {
                   className="w-full h-full object-cover transition-transform duration-500 group-hover/zoom:scale-125"
                 />
               ) : (
-                <div className="absolute inset-0 flex items-center justify-center text-white text-lg">
+                <div className="absolute inset-0 flex items-center justify-center text-black dark:text-white text-lg">
                   Ürün Görseli {currentImageIndex + 1}
                 </div>
               )}
@@ -150,15 +150,15 @@ export default function ProductDetailPage() {
                 <>
                   <button
                     onClick={prevImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 p-2 glass rounded-full hover:bg-white hover:bg-opacity-20 transition-all"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 p-2 glass rounded-full hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-20 transition-all"
                   >
-                    <ChevronLeft className="text-white" size={24} />
+                    <ChevronLeft className="text-black dark:text-white" size={24} />
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 p-2 glass rounded-full hover:bg-white hover:bg-opacity-20 transition-all"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 p-2 glass rounded-full hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-20 transition-all"
                   >
-                    <ChevronRight className="text-white" size={24} />
+                    <ChevronRight className="text-black dark:text-white" size={24} />
                   </button>
                 </>
               )}
@@ -222,11 +222,11 @@ export default function ProductDetailPage() {
             {/* Title and Favorite */}
             <div>
               <div className="flex items-start justify-between mb-4">
-                <h1 className="text-4xl font-bold text-white">{name}</h1>
+                <h1 className="text-4xl font-bold text-black dark:text-white">{name}</h1>
                 <button
                   onClick={handleToggleFavorite}
                   className={`p-3 rounded-full ${
-                    isFavorite ? 'bg-red-500 text-white' : 'glass hover:bg-white hover:bg-opacity-10'
+                    isFavorite ? 'bg-red-500 text-white' : 'glass hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-10'
                   } transition-all`}
                 >
                   <Heart size={24} fill={isFavorite ? 'currentColor' : 'none'} />
@@ -238,8 +238,8 @@ export default function ProductDetailPage() {
               {/* Story Section */}
               {story && (
                 <div className="glass rounded-xl p-6 mt-4">
-                  <h3 className="text-xl font-bold text-white mb-3">{t('products.story')}</h3>
-                  <p className="text-gray-300 leading-relaxed whitespace-pre-line">{story}</p>
+                  <h3 className="text-xl font-bold text-black dark:text-white mb-3">{t('products.story')}</h3>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">{story}</p>
                 </div>
               )}
             </div>
@@ -262,16 +262,16 @@ export default function ProductDetailPage() {
           transition={{ delay: 0.4 }}
           className="mt-12"
         >
-          <h2 className="text-3xl font-bold text-white mb-6">{t('products.details')}</h2>
+          <h2 className="text-3xl font-bold text-black dark:text-white mb-6">{t('products.details')}</h2>
           <div className="glass rounded-2xl p-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Delivery Days */}
               {product.deliveryDays && (
                 <div>
-                  <h3 className="text-white font-semibold mb-2">
+                  <h3 className="text-black dark:text-white font-semibold mb-2">
                     {i18n.language === 'tr' ? 'Teslimat Süresi' : 'Delivery Time'}
                   </h3>
-                  <p className="text-gray-400">
+                  <p className="text-gray-700 dark:text-gray-400">
                     {product.deliveryDays} {i18n.language === 'tr' ? 'gün' : 'days'}
                   </p>
                 </div>
@@ -279,8 +279,8 @@ export default function ProductDetailPage() {
 
               {/* Care Instructions */}
               <div>
-                <h3 className="text-white font-semibold mb-2">{t('products.careInstructions')}</h3>
-                <p className="text-gray-400">
+                <h3 className="text-black dark:text-white font-semibold mb-2">{t('products.careInstructions')}</h3>
+                <p className="text-gray-700 dark:text-gray-400">
                   {product.careInstructions?.type === 'custom' && product.careInstructions?.customText
                     ? product.careInstructions.customText
                     : i18n.language === 'tr'
