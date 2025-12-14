@@ -96,7 +96,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
   };
 
   if (!editor) {
-    return <div className="text-gray-400">Editor yükleniyor...</div>;
+    return <div className="text-gray-700 dark:text-gray-400">Editor yükleniyor...</div>;
   }
 
   return (
@@ -108,7 +108,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
           type="button"
           onClick={() => editor.chain().focus().undo().run()}
           disabled={!editor.can().undo()}
-          className="p-2 hover:bg-white hover:bg-opacity-10 rounded disabled:opacity-30 disabled:cursor-not-allowed text-gray-300"
+          className="p-2 hover:bg-white hover:bg-opacity-10 rounded disabled:opacity-30 disabled:cursor-not-allowed text-gray-700 dark:text-gray-300"
         >
           <Undo size={18} />
         </button>
@@ -116,7 +116,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
           type="button"
           onClick={() => editor.chain().focus().redo().run()}
           disabled={!editor.can().redo()}
-          className="p-2 hover:bg-white hover:bg-opacity-10 rounded disabled:opacity-30 disabled:cursor-not-allowed text-gray-300"
+          className="p-2 hover:bg-white hover:bg-opacity-10 rounded disabled:opacity-30 disabled:cursor-not-allowed text-gray-700 dark:text-gray-300"
         >
           <Redo size={18} />
         </button>
@@ -128,7 +128,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
           type="button"
           onClick={() => editor.chain().focus().toggleBold().run()}
           className={`p-2 hover:bg-white hover:bg-opacity-10 rounded ${
-            editor.isActive('bold') ? 'bg-mea-gold bg-opacity-20 text-mea-gold' : 'text-gray-300'
+            editor.isActive('bold') ? 'bg-mea-gold bg-opacity-20 text-mea-gold' : 'text-gray-700 dark:text-gray-300'
           }`}
         >
           <Bold size={18} />
@@ -137,7 +137,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
           type="button"
           onClick={() => editor.chain().focus().toggleItalic().run()}
           className={`p-2 hover:bg-white hover:bg-opacity-10 rounded ${
-            editor.isActive('italic') ? 'bg-mea-gold bg-opacity-20 text-mea-gold' : 'text-gray-300'
+            editor.isActive('italic') ? 'bg-mea-gold bg-opacity-20 text-mea-gold' : 'text-gray-700 dark:text-gray-300'
           }`}
         >
           <Italic size={18} />
@@ -146,7 +146,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
           type="button"
           onClick={() => editor.chain().focus().toggleStrike().run()}
           className={`p-2 hover:bg-white hover:bg-opacity-10 rounded ${
-            editor.isActive('strike') ? 'bg-mea-gold bg-opacity-20 text-mea-gold' : 'text-gray-300'
+            editor.isActive('strike') ? 'bg-mea-gold bg-opacity-20 text-mea-gold' : 'text-gray-700 dark:text-gray-300'
           }`}
         >
           <Strikethrough size={18} />
@@ -155,7 +155,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
           type="button"
           onClick={() => editor.chain().focus().toggleCode().run()}
           className={`p-2 hover:bg-white hover:bg-opacity-10 rounded ${
-            editor.isActive('code') ? 'bg-mea-gold bg-opacity-20 text-mea-gold' : 'text-gray-300'
+            editor.isActive('code') ? 'bg-mea-gold bg-opacity-20 text-mea-gold' : 'text-gray-700 dark:text-gray-300'
           }`}
         >
           <Code size={18} />
@@ -170,7 +170,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
           className={`p-2 hover:bg-white hover:bg-opacity-10 rounded ${
             editor.isActive('heading', { level: 1 })
               ? 'bg-mea-gold bg-opacity-20 text-mea-gold'
-              : 'text-gray-300'
+              : 'text-gray-700 dark:text-gray-300'
           }`}
         >
           <Heading1 size={18} />
@@ -181,7 +181,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
           className={`p-2 hover:bg-white hover:bg-opacity-10 rounded ${
             editor.isActive('heading', { level: 2 })
               ? 'bg-mea-gold bg-opacity-20 text-mea-gold'
-              : 'text-gray-300'
+              : 'text-gray-700 dark:text-gray-300'
           }`}
         >
           <Heading2 size={18} />
@@ -192,7 +192,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
           className={`p-2 hover:bg-white hover:bg-opacity-10 rounded ${
             editor.isActive('heading', { level: 3 })
               ? 'bg-mea-gold bg-opacity-20 text-mea-gold'
-              : 'text-gray-300'
+              : 'text-gray-700 dark:text-gray-300'
           }`}
         >
           <Heading3 size={18} />
@@ -207,7 +207,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
           className={`p-2 hover:bg-white hover:bg-opacity-10 rounded ${
             editor.isActive('bulletList')
               ? 'bg-mea-gold bg-opacity-20 text-mea-gold'
-              : 'text-gray-300'
+              : 'text-gray-700 dark:text-gray-300'
           }`}
         >
           <List size={18} />
@@ -218,7 +218,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
           className={`p-2 hover:bg-white hover:bg-opacity-10 rounded ${
             editor.isActive('orderedList')
               ? 'bg-mea-gold bg-opacity-20 text-mea-gold'
-              : 'text-gray-300'
+              : 'text-gray-700 dark:text-gray-300'
           }`}
         >
           <ListOrdered size={18} />
@@ -233,7 +233,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
           className={`p-2 hover:bg-white hover:bg-opacity-10 rounded ${
             editor.isActive('blockquote')
               ? 'bg-mea-gold bg-opacity-20 text-mea-gold'
-              : 'text-gray-300'
+              : 'text-gray-700 dark:text-gray-300'
           }`}
         >
           <Quote size={18} />
@@ -243,7 +243,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
         <button
           type="button"
           onClick={() => editor.chain().focus().setHorizontalRule().run()}
-          className="p-2 hover:bg-white hover:bg-opacity-10 rounded text-gray-300"
+          className="p-2 hover:bg-white hover:bg-opacity-10 rounded text-gray-700 dark:text-gray-300"
         >
           <Minus size={18} />
         </button>
@@ -255,7 +255,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
           type="button"
           onClick={handleImageUpload}
           disabled={uploading}
-          className="p-2 hover:bg-white hover:bg-opacity-10 rounded text-gray-300 disabled:opacity-30"
+          className="p-2 hover:bg-white hover:bg-opacity-10 rounded text-gray-700 dark:text-gray-300 disabled:opacity-30"
         >
           <ImageIcon size={18} />
         </button>
@@ -263,7 +263,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
           type="button"
           onClick={handleAddLink}
           className={`p-2 hover:bg-white hover:bg-opacity-10 rounded ${
-            editor.isActive('link') ? 'bg-mea-gold bg-opacity-20 text-mea-gold' : 'text-gray-300'
+            editor.isActive('link') ? 'bg-mea-gold bg-opacity-20 text-mea-gold' : 'text-gray-700 dark:text-gray-300'
           }`}
         >
           <LinkIcon size={18} />
@@ -277,7 +277,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
 
       {uploading && (
         <div className="p-3 border-t border-white border-opacity-10">
-          <p className="text-sm text-gray-400">Görsel yükleniyor...</p>
+          <p className="text-sm text-gray-700 dark:text-gray-400">Görsel yükleniyor...</p>
         </div>
       )}
     </div>

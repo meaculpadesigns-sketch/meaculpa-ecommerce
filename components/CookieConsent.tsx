@@ -42,10 +42,10 @@ export default function CookieConsent() {
                 <div className="flex items-start gap-4">
                   <Cookie className="text-mea-gold flex-shrink-0 mt-1" size={24} />
                   <div>
-                    <h3 className="text-white font-semibold mb-2">
+                    <h3 className="text-black dark:text-white font-semibold mb-2">
                       {t('footer.cookies')}
                     </h3>
-                    <p className="text-gray-300 text-sm max-w-2xl">
+                    <p className="text-gray-700 dark:text-gray-300 text-sm max-w-2xl">
                       Web sitemizde en iyi deneyimi sunabilmek için çerezler kullanıyoruz.
                       Çerezleri kullanarak tercihlerinizi hatırlar, site performansını
                       iyileştiririz. Daha fazla bilgi için{' '}
@@ -60,7 +60,7 @@ export default function CookieConsent() {
                 <div className="flex items-center gap-3 flex-shrink-0">
                   <button
                     onClick={handleReject}
-                    className="px-6 py-2 rounded-full border border-white border-opacity-30 text-white hover:bg-white hover:bg-opacity-10 transition-all"
+                    className="px-6 py-2 rounded-full border border-black dark:border-white border-opacity-30 text-black dark:text-white hover:bg-white hover:bg-opacity-10 transition-all"
                   >
                     {t('footer.rejectCookies')}
                   </button>

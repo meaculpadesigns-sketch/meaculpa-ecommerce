@@ -52,7 +52,7 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
                 className="w-full h-full object-cover transition-transform duration-300 group-hover/image:scale-110"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-white">
+              <div className="w-full h-full flex items-center justify-center text-black dark:text-white">
                 {t('home.productView')}
               </div>
             )}
@@ -77,18 +77,18 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
           <div className="flex items-start justify-between mb-4">
             <div>
               <Link href={`/products/${product.id}`}>
-                <h3 className="text-2xl font-semibold text-black hover:text-gray-700 transition-colors">
+                <h3 className="text-2xl font-semibold text-black dark:text-black hover:text-gray-700 dark:hover:text-gray-700 transition-colors">
                   {name}
                 </h3>
               </Link>
-              {story && <p className="text-gray-400 mt-2 line-clamp-2">{story}</p>}
+              {story && <p className="text-gray-700 dark:text-gray-400 mt-2 line-clamp-2">{story}</p>}
             </div>
 
             <button
               onClick={handleAddToFavorites}
               className={`p-2 rounded-full ${
-                isFavorite ? 'text-red-500' : 'text-gray-400'
-              } hover:bg-white hover:bg-opacity-10 transition-all`}
+                isFavorite ? 'text-red-500' : 'text-gray-700 dark:text-gray-400'
+              } hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-10 transition-all`}
             >
               <Heart size={24} fill={isFavorite ? 'currentColor' : 'none'} />
             </button>
@@ -155,7 +155,7 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
                 className="w-full h-full object-cover transition-transform duration-300 group-hover/image:scale-110"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-white">
+              <div className="w-full h-full flex items-center justify-center text-black dark:text-white">
                 {t('home.productView')}
               </div>
             )}
@@ -181,7 +181,7 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
                 handleAddToFavorites();
               }}
               className={`absolute top-4 right-4 p-2 rounded-full bg-black bg-opacity-50 backdrop-blur-sm ${
-                isFavorite ? 'text-red-500' : 'text-white'
+                isFavorite ? 'text-red-500' : 'text-white dark:text-white'
               } hover:bg-opacity-70 transition-all`}
             >
               <Heart size={20} fill={isFavorite ? 'currentColor' : 'none'} />
@@ -267,8 +267,8 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
             className="glass rounded-2xl p-8 max-w-2xl w-full"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-2xl font-bold text-white mb-4">{name}</h3>
-            <p className="text-gray-300 leading-relaxed">
+            <h3 className="text-2xl font-bold text-black dark:text-white mb-4">{name}</h3>
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
               {i18n.language === 'tr' ? product.story : product.storyEn}
             </p>
             <button

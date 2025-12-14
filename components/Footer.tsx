@@ -56,13 +56,13 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="glass border-t border-white border-opacity-10 mt-20">
+    <footer className="glass border-t border-black dark:border-white border-opacity-10 dark:border-opacity-10 mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <h2 className="text-2xl font-bold text-white mb-4">MEA CULPA</h2>
-            <p className="text-gray-400 text-sm mb-4 max-w-md">
+            <h2 className="text-2xl font-bold text-black dark:text-white mb-4">MEA CULPA</h2>
+            <p className="text-gray-700 dark:text-gray-400 text-sm mb-4 max-w-md">
               {t('footer.brandDescription')}
             </p>
             <div className="flex space-x-4">
@@ -72,7 +72,7 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-700 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
                   aria-label={social.name}
                 >
                   <social.icon size={20} />
@@ -83,7 +83,7 @@ export default function Footer() {
 
           {/* Products */}
           <div>
-            <h3 className="text-white font-semibold mb-4">
+            <h3 className="text-black dark:text-white font-semibold mb-4">
               {t('nav.products')}
             </h3>
             <ul className="space-y-2">
@@ -91,7 +91,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 text-sm hover:text-white transition-colors"
+                    className="text-gray-700 dark:text-gray-400 text-sm hover:text-black dark:hover:text-white transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -102,7 +102,7 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h3 className="text-white font-semibold mb-4">
+            <h3 className="text-black dark:text-white font-semibold mb-4">
               {t('nav.corporate')}
             </h3>
             <ul className="space-y-2">
@@ -110,7 +110,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 text-sm hover:text-white transition-colors"
+                    className="text-gray-700 dark:text-gray-400 text-sm hover:text-black dark:hover:text-white transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -121,13 +121,13 @@ export default function Footer() {
 
           {/* Support */}
           <div>
-            <h3 className="text-white font-semibold mb-4">{t('footer.support')}</h3>
+            <h3 className="text-black dark:text-white font-semibold mb-4">{t('footer.support')}</h3>
             <ul className="space-y-2">
               {footerLinks.support.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 text-sm hover:text-white transition-colors"
+                    className="text-gray-700 dark:text-gray-400 text-sm hover:text-black dark:hover:text-white transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -138,27 +138,27 @@ export default function Footer() {
         </div>
 
         {/* Payment Methods & Legal */}
-        <div className="mt-12 pt-8 border-t border-white border-opacity-10">
+        <div className="mt-12 pt-8 border-t border-black dark:border-white border-opacity-10 dark:border-opacity-10">
           <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
             {/* Legal Links */}
             <div className="flex flex-wrap justify-center gap-4 text-sm">
               <Link
                 href="/distance-sales-agreement"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-700 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
               >
                 {t('footer.distanceSales')}
               </Link>
-              <span className="text-gray-600">•</span>
+              <span className="text-gray-500 dark:text-gray-600">•</span>
               <Link
                 href="/privacy"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-700 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
               >
                 {t('footer.privacy')}
               </Link>
-              <span className="text-gray-600">•</span>
+              <span className="text-gray-500 dark:text-gray-600">•</span>
               <Link
                 href="/returns"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-700 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
               >
                 {t('footer.returns')}
               </Link>
@@ -191,7 +191,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <div className="mt-6 text-center">
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-700 dark:text-gray-400 text-sm">
               &copy; {new Date().getFullYear()} Mea Culpa. {t('footer.copyright')}
             </p>
           </div>

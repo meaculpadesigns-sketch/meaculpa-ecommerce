@@ -58,16 +58,16 @@ export default function CreationSection({ creation, index }: CreationSectionProp
       >
         {/* Title and Description */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-black dark:text-white mb-6">
             {title}
           </h2>
-          <p className="text-xl md:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-4 max-w-3xl mx-auto">
             {description}
           </p>
 
           {/* Story Label */}
           <div className="inline-block mt-6">
-            <button className="glass px-6 py-3 rounded-full text-white hover:bg-white hover:bg-opacity-10 transition-all group">
+            <button className="glass px-6 py-3 rounded-full text-black dark:text-white hover:bg-white hover:bg-opacity-10 transition-all group">
               <span className="mr-2">{t('home.story')}</span>
               <ArrowRight className="inline group-hover:translate-x-1 transition-transform" size={20} />
             </button>
@@ -76,7 +76,7 @@ export default function CreationSection({ creation, index }: CreationSectionProp
 
         {/* Story Text */}
         <div className="max-w-3xl mx-auto mb-16">
-          <p className="text-gray-400 text-lg leading-relaxed text-center">
+          <p className="text-gray-700 dark:text-gray-400 text-lg leading-relaxed text-center">
             {story}
           </p>
         </div>
@@ -89,14 +89,14 @@ export default function CreationSection({ creation, index }: CreationSectionProp
             className="absolute left-0 top-1/2 -translate-y-1/2 z-10 glass p-3 rounded-full hover:bg-white hover:bg-opacity-20 transition-all"
             aria-label="Scroll left"
           >
-            <ChevronLeft className="text-white" size={24} />
+            <ChevronLeft className="text-black dark:text-white" size={24} />
           </button>
           <button
             onClick={() => scrollContainer('right')}
             className="absolute right-0 top-1/2 -translate-y-1/2 z-10 glass p-3 rounded-full hover:bg-white hover:bg-opacity-20 transition-all"
             aria-label="Scroll right"
           >
-            <ChevronRight className="text-white" size={24} />
+            <ChevronRight className="text-black dark:text-white" size={24} />
           </button>
 
           {/* Products Container */}
@@ -125,7 +125,7 @@ export default function CreationSection({ creation, index }: CreationSectionProp
                       </div>
 
                       {/* Product placeholder */}
-                      <div className="w-full h-full flex items-center justify-center text-white text-lg">
+                      <div className="w-full h-full flex items-center justify-center text-black dark:text-white text-lg">
                         {t('home.productView')}
                       </div>
 
@@ -135,7 +135,7 @@ export default function CreationSection({ creation, index }: CreationSectionProp
 
                     {/* Product Info */}
                     <div className="text-center">
-                      <h3 className="text-white text-xl font-semibold mb-2">
+                      <h3 className="text-black dark:text-white text-xl font-semibold mb-2">
                         {product.name}
                       </h3>
                       <p className="text-mea-gold text-lg font-medium">
