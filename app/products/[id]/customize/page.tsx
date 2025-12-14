@@ -517,7 +517,7 @@ export default function CustomizePage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-white text-2xl">{t('common.loading')}</div>
+        <div className="text-black dark:text-white text-2xl">{t('common.loading')}</div>
       </div>
     );
   }
@@ -525,7 +525,7 @@ export default function CustomizePage() {
   if (!product) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4">
-        <div className="text-white text-2xl">
+        <div className="text-black dark:text-white text-2xl">
           {i18n.language === 'tr' ? 'Ürün bulunamadı' : 'Product not found'}
         </div>
         <Link href="/products" className="btn-primary">
@@ -545,7 +545,7 @@ export default function CustomizePage() {
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Back Button */}
-        <Link href={`/products/${product.id}`} className="inline-flex items-center gap-2 text-white hover:text-mea-gold transition-colors mb-8">
+        <Link href={`/products/${product.id}`} className="inline-flex items-center gap-2 text-black dark:text-white hover:text-mea-gold transition-colors mb-8">
           <ArrowLeft size={20} />
           {i18n.language === 'tr' ? 'Ürüne Dön' : 'Back to Product'}
         </Link>
@@ -590,7 +590,7 @@ export default function CustomizePage() {
               </>
             )}
 
-            <h2 className="text-3xl font-bold text-white mb-4">{name}</h2>
+            <h2 className="text-3xl font-bold text-black dark:text-white mb-4">{name}</h2>
             <div className="mb-4 formatted-description">
               {description}
             </div>
@@ -598,7 +598,7 @@ export default function CustomizePage() {
 
           {/* Right: Customization Form */}
           <div className="glass rounded-2xl p-8">
-            <h3 className="text-2xl font-bold text-white mb-6">
+            <h3 className="text-2xl font-bold text-black dark:text-white mb-6">
               {i18n.language === 'tr' ? 'Sipariş Detayları' : 'Order Details'}
             </h3>
 
@@ -606,7 +606,7 @@ export default function CustomizePage() {
             {product.category === 'kimono' ? (
               /* Kimono: Checkbox for family order */
               <div className="mb-8">
-                <label className="flex items-center gap-3 text-white cursor-pointer">
+                <label className="flex items-center gap-3 text-black dark:text-white cursor-pointer">
                   <input
                     type="checkbox"
                     checked={orderType === 'family'}
@@ -626,7 +626,7 @@ export default function CustomizePage() {
               <div className="mb-8">
                 {(product.thirdLevelCategory === 'family-sets' || product.subcategory === 'aile-setleri') ? (
                   /* Aile Setleri: Checkbox for individual order (opposite) */
-                  <label className="flex items-center gap-3 text-white cursor-pointer">
+                  <label className="flex items-center gap-3 text-black dark:text-white cursor-pointer">
                     <input
                       type="checkbox"
                       checked={orderType === 'individual'}
@@ -642,7 +642,7 @@ export default function CustomizePage() {
                   </label>
                 ) : (
                   /* Normal Sets: Checkbox for family order */
-                  <label className="flex items-center gap-3 text-white cursor-pointer">
+                  <label className="flex items-center gap-3 text-black dark:text-white cursor-pointer">
                     <input
                       type="checkbox"
                       checked={orderType === 'family'}
@@ -665,7 +665,7 @@ export default function CustomizePage() {
               <div className="space-y-6">
                 {/* Gender Selection */}
                 <div>
-                  <label className="block text-white font-semibold mb-3">
+                  <label className="block text-black dark:text-white font-semibold mb-3">
                     {i18n.language === 'tr' ? 'Cinsiyet' : 'Gender'}
                   </label>
                   <div className="grid grid-cols-2 gap-3">
@@ -674,7 +674,7 @@ export default function CustomizePage() {
                       className={`p-3 rounded-lg transition-all ${
                         gender === 'male'
                           ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                          : 'text-gray-400 hover:text-gray-300'
+                          : 'text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
                       }`}
                     >
                       {i18n.language === 'tr' ? 'Erkek' : 'Male'}
@@ -684,7 +684,7 @@ export default function CustomizePage() {
                       className={`p-3 rounded-lg transition-all ${
                         gender === 'female'
                           ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                          : 'text-gray-400 hover:text-gray-300'
+                          : 'text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
                       }`}
                     >
                       {i18n.language === 'tr' ? 'Kadın' : 'Female'}
@@ -695,7 +695,7 @@ export default function CustomizePage() {
                 {/* Kimono Type Selection - Only for Kimono category */}
                 {product.category === 'kimono' && (
                   <div>
-                    <label className="block text-white font-semibold mb-3">
+                    <label className="block text-black dark:text-white font-semibold mb-3">
                       {i18n.language === 'tr' ? 'Kimono Türü' : 'Kimono Type'}
                     </label>
                     <div className="grid grid-cols-2 gap-3">
@@ -704,7 +704,7 @@ export default function CustomizePage() {
                         className={`p-3 rounded-lg transition-all ${
                           kimonoType === 'uzun'
                             ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                            : 'text-gray-400 hover:text-gray-300'
+                            : 'text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
                         }`}
                       >
                         {i18n.language === 'tr' ? 'Uzun Kimono' : 'Long Kimono'}
@@ -714,7 +714,7 @@ export default function CustomizePage() {
                         className={`p-3 rounded-lg transition-all ${
                           kimonoType === 'kisa'
                             ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                            : 'text-gray-400 hover:text-gray-300'
+                            : 'text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
                         }`}
                       >
                         {i18n.language === 'tr' ? 'Kısa Kimono' : 'Short Kimono'}
@@ -726,7 +726,7 @@ export default function CustomizePage() {
                 {/* Crop Shirt Option - Only for Set category and Female gender */}
                 {product.category === 'set' && gender === 'female' && (
                   <div>
-                    <label className="flex items-center gap-3 text-white cursor-pointer">
+                    <label className="flex items-center gap-3 text-black dark:text-white cursor-pointer">
                       <input
                         type="checkbox"
                         checked={isCropShirt}
@@ -743,7 +743,7 @@ export default function CustomizePage() {
                 {/* Set Item Selection - Only for Set category */}
                 {product.category === 'set' && (
                   <div className="space-y-3">
-                    <label className="flex items-center gap-3 text-white cursor-pointer">
+                    <label className="flex items-center gap-3 text-black dark:text-white cursor-pointer">
                       <input
                         type="checkbox"
                         checked={setItemSelection !== 'full'}
@@ -791,7 +791,7 @@ export default function CustomizePage() {
 
                 {/* Size Selection */}
                 <div>
-                  <label className="block text-white font-semibold mb-3">
+                  <label className="block text-black dark:text-white font-semibold mb-3">
                     {i18n.language === 'tr' ? 'Beden' : 'Size'}
                   </label>
                   <div className="grid grid-cols-3 gap-3">
@@ -872,7 +872,7 @@ export default function CustomizePage() {
 
                 {/* Quantity */}
                 <div>
-                  <label className="block text-white font-semibold mb-3">
+                  <label className="block text-black dark:text-white font-semibold mb-3">
                     {i18n.language === 'tr' ? 'Adet' : 'Quantity'}
                   </label>
                   <div className="flex items-center gap-4">
@@ -920,7 +920,7 @@ export default function CustomizePage() {
 
                 {/* Child Count Selection */}
                 <div>
-                  <label className="block text-white font-semibold mb-3">
+                  <label className="block text-black dark:text-white font-semibold mb-3">
                     {i18n.language === 'tr' ? 'Çocuk Sayısı' : 'Number of Children'}
                   </label>
                   <div className="flex items-center gap-4">
@@ -961,7 +961,7 @@ export default function CustomizePage() {
                         className={`p-3 rounded-lg transition-all ${
                           parent1.gender === 'male'
                             ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                            : 'text-gray-400 hover:text-gray-300'
+                            : 'text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
                         }`}
                       >
                         {i18n.language === 'tr' ? 'Erkek' : 'Male'}
@@ -971,7 +971,7 @@ export default function CustomizePage() {
                         className={`p-3 rounded-lg transition-all ${
                           parent1.gender === 'female'
                             ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                            : 'text-gray-400 hover:text-gray-300'
+                            : 'text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
                         }`}
                       >
                         {i18n.language === 'tr' ? 'Kadın' : 'Female'}
@@ -1055,7 +1055,7 @@ export default function CustomizePage() {
                         className={`p-3 rounded-lg transition-all ${
                           parent2.gender === 'male'
                             ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                            : 'text-gray-400 hover:text-gray-300'
+                            : 'text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
                         }`}
                       >
                         {i18n.language === 'tr' ? 'Erkek' : 'Male'}
@@ -1065,7 +1065,7 @@ export default function CustomizePage() {
                         className={`p-3 rounded-lg transition-all ${
                           parent2.gender === 'female'
                             ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                            : 'text-gray-400 hover:text-gray-300'
+                            : 'text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
                         }`}
                       >
                         {i18n.language === 'tr' ? 'Kadın' : 'Female'}
@@ -1153,7 +1153,7 @@ export default function CustomizePage() {
                           className={`p-3 rounded-lg transition-all ${
                             child.gender === 'male'
                               ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                              : 'text-gray-400 hover:text-gray-300'
+                              : 'text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
                           }`}
                         >
                           {i18n.language === 'tr' ? 'Erkek' : 'Boy'}
@@ -1163,7 +1163,7 @@ export default function CustomizePage() {
                           className={`p-3 rounded-lg transition-all ${
                             child.gender === 'female'
                               ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                              : 'text-gray-400 hover:text-gray-300'
+                              : 'text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
                           }`}
                         >
                           {i18n.language === 'tr' ? 'Kız' : 'Girl'}
@@ -1288,7 +1288,7 @@ export default function CustomizePage() {
 
             {/* Special Requests */}
             <div className="mt-8">
-              <label className="block text-white font-semibold mb-3">
+              <label className="block text-black dark:text-white font-semibold mb-3">
                 {i18n.language === 'tr' ? 'Özel İstekleriniz' : 'Special Requests'}
               </label>
               <textarea
@@ -1324,7 +1324,7 @@ export default function CustomizePage() {
             <>
               {/* Uzun Kimono Beden Tablosu */}
               <div className="glass rounded-2xl p-8">
-                <h3 className="text-2xl font-bold text-white mb-6">
+                <h3 className="text-2xl font-bold text-black dark:text-white mb-6">
                   {i18n.language === 'tr' ? 'Uzun Kimono Beden Tablosu' : 'Long Kimono Size Chart'}
                 </h3>
                 <div className="overflow-x-auto">
@@ -1351,7 +1351,7 @@ export default function CustomizePage() {
 
               {/* Kısa Kimono Beden Tablosu */}
               <div className="glass rounded-2xl p-8">
-                <h3 className="text-2xl font-bold text-white mb-6">
+                <h3 className="text-2xl font-bold text-black dark:text-white mb-6">
                   {i18n.language === 'tr' ? 'Kısa Kimono Beden Tablosu' : 'Short Kimono Size Chart'}
                 </h3>
                 <div className="overflow-x-auto">
@@ -1380,7 +1380,7 @@ export default function CustomizePage() {
             <>
               {/* Kadın Set Beden Tablosu */}
               <div className="glass rounded-2xl p-8">
-                <h3 className="text-2xl font-bold text-white mb-6">
+                <h3 className="text-2xl font-bold text-black dark:text-white mb-6">
                   {i18n.language === 'tr' ? 'Kadın Set Beden Tablosu' : 'Women Set Size Chart'}
                 </h3>
                 <div className="overflow-x-auto">
@@ -1409,7 +1409,7 @@ export default function CustomizePage() {
 
               {/* Erkek Set Beden Tablosu */}
               <div className="glass rounded-2xl p-8">
-                <h3 className="text-2xl font-bold text-white mb-6">
+                <h3 className="text-2xl font-bold text-black dark:text-white mb-6">
                   {i18n.language === 'tr' ? 'Erkek Set Beden Tablosu' : 'Men Set Size Chart'}
                 </h3>
                 <div className="overflow-x-auto">
@@ -1438,7 +1438,7 @@ export default function CustomizePage() {
 
               {/* Krop Gömlek Beden Tablosu */}
               <div className="glass rounded-2xl p-8">
-                <h3 className="text-2xl font-bold text-white mb-6">
+                <h3 className="text-2xl font-bold text-black dark:text-white mb-6">
                   {i18n.language === 'tr' ? 'Krop Gömlek Beden Tablosu' : 'Crop Shirt Size Chart'}
                 </h3>
                 <div className="overflow-x-auto">

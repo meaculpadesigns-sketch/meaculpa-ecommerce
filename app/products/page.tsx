@@ -146,7 +146,7 @@ function ProductsContent() {
   if (loading) {
     return (
       <div className="min-h-screen py-20 px-4 flex items-center justify-center">
-        <div className="text-white text-xl">{t('common.loading')}</div>
+        <div className="text-black dark:text-white text-xl">{t('common.loading')}</div>
       </div>
     );
   }
@@ -163,7 +163,7 @@ function ProductsContent() {
           >
             {getPageTitle()}
           </motion.h1>
-          <p className="text-gray-400">
+          <p className="text-gray-700 dark:text-gray-400">
             {filteredProducts.length} {t('products.productsFound')}
           </p>
         </div>
@@ -226,7 +226,7 @@ function ProductsContent() {
             exit={{ opacity: 0, height: 0 }}
             className="glass rounded-2xl p-6 mb-8"
           >
-            <h3 className="text-white font-semibold mb-4">{i18n.language === 'tr' ? 'Kategoriler' : 'Categories'}</h3>
+            <h3 className="text-black dark:text-white font-semibold mb-4">{i18n.language === 'tr' ? 'Kategoriler' : 'Categories'}</h3>
             <div className="flex flex-wrap gap-2">
               {category === 'kimono' && kimonoSubcategories.map((sub) => (
                 <Link
@@ -235,7 +235,7 @@ function ProductsContent() {
                   className={`px-4 py-2 rounded-lg text-sm ${
                     subcategory === sub.key
                       ? 'bg-mea-gold text-black font-medium'
-                      : 'glass text-gray-300 hover:bg-white hover:bg-opacity-10'
+                      : 'glass text-gray-700 dark:text-gray-300 hover:bg-white hover:bg-opacity-10'
                   }`}
                 >
                   {i18n.language === 'tr' ? sub.name : sub.nameEn}
@@ -248,7 +248,7 @@ function ProductsContent() {
                     className={`block px-4 py-2 rounded-lg text-sm ${
                       subcategory === second.key
                         ? 'bg-mea-gold text-black font-medium'
-                        : 'glass text-gray-300 hover:bg-white hover:bg-opacity-10'
+                        : 'glass text-gray-700 dark:text-gray-300 hover:bg-white hover:bg-opacity-10'
                     }`}
                   >
                     {i18n.language === 'tr' ? second.name : second.nameEn}
@@ -262,7 +262,7 @@ function ProductsContent() {
                           className={`px-3 py-1 rounded-lg text-xs ${
                             thirdLevel === third.key
                               ? 'bg-white text-black font-medium'
-                              : 'bg-white bg-opacity-10 text-gray-400 hover:bg-opacity-20'
+                              : 'bg-white bg-opacity-10 text-gray-700 dark:text-gray-400 hover:bg-opacity-20'
                           }`}
                         >
                           {i18n.language === 'tr' ? third.name : third.nameEn}
@@ -297,7 +297,7 @@ function ProductsContent() {
         {/* Empty State */}
         {filteredProducts.length === 0 && (
           <div className="text-center py-20">
-            <p className="text-gray-400 text-lg">
+            <p className="text-gray-700 dark:text-gray-400 text-lg">
               {t('products.noProductsFound')}
             </p>
           </div>
@@ -311,7 +311,7 @@ function LoadingFallback() {
   const { t } = useTranslation();
   return (
     <div className="min-h-screen py-20 px-4 flex items-center justify-center">
-      <div className="text-white text-center">
+      <div className="text-black dark:text-white text-center">
         <div className="animate-pulse mb-4">{t('common.loading')}</div>
       </div>
     </div>
