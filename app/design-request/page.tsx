@@ -107,7 +107,7 @@ export default function DesignRequestPage() {
           <h1 className="text-4xl md:text-5xl font-bold text-black mb-4">
             {t('designRequest.title')}
           </h1>
-          <p className="text-gray-400 text-lg">
+          <p className="text-black dark:text-white text-lg">
             {t('designRequest.subtitle')}
           </p>
         </motion.div>
@@ -198,7 +198,7 @@ export default function DesignRequestPage() {
                 rows={10}
                 required
               />
-              <p className="text-gray-400 text-sm mt-2">
+              <p className="text-black dark:text-white text-sm mt-2">
                 {t('designRequest.detailHelp')}
               </p>
             </div>
@@ -293,7 +293,7 @@ export default function DesignRequestPage() {
           transition={{ delay: 0.5 }}
           className="mt-8 text-center"
         >
-          <p className="text-gray-400">
+          <p className="text-black dark:text-white">
             {t('designRequest.trackPrevious')}{' '}
             <a href="/design-request/track" className="text-mea-gold hover:underline">
               {t('designRequest.trackLink')}
