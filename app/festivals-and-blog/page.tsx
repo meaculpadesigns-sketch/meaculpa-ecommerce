@@ -80,10 +80,10 @@ export default function FestivalsAndBlogPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-black mb-4">
             {i18n.language === 'tr' ? 'Festivaller ve Blog' : 'Festivals & Blog'}
           </h1>
-          <p className="text-xl text-gray-400">
+          <p className="text-xl text-black dark:text-white">
             {i18n.language === 'tr'
               ? 'Etkinliklerimizi keşfedin ve blog yazılarımızı okuyun'
               : 'Discover our events and read our blog posts'}
@@ -98,7 +98,7 @@ export default function FestivalsAndBlogPage() {
               className={`px-6 py-3 rounded-lg font-medium transition-all ${
                 activeTab === 'festivals'
                   ? 'bg-mea-gold text-black'
-                  : 'text-white hover:bg-white hover:bg-opacity-10'
+                  : 'text-black dark:text-white hover:bg-white hover:bg-opacity-10'
               }`}
             >
               <Calendar className="inline-block mr-2" size={20} />
@@ -109,7 +109,7 @@ export default function FestivalsAndBlogPage() {
               className={`px-6 py-3 rounded-lg font-medium transition-all ${
                 activeTab === 'blog'
                   ? 'bg-mea-gold text-black'
-                  : 'text-white hover:bg-white hover:bg-opacity-10'
+                  : 'text-black dark:text-white hover:bg-white hover:bg-opacity-10'
               }`}
             >
               <FileText className="inline-block mr-2" size={20} />
@@ -124,7 +124,7 @@ export default function FestivalsAndBlogPage() {
             {loadingCarnivals ? (
               <div className="text-center py-20">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-mea-gold mx-auto"></div>
-                <p className="text-gray-400 mt-4">
+                <p className="text-black dark:text-white mt-4">
                   {i18n.language === 'tr' ? 'Yükleniyor...' : 'Loading...'}
                 </p>
               </div>
@@ -148,27 +148,27 @@ export default function FestivalsAndBlogPage() {
                     </div>
                   ) : (
                     <div className="aspect-video bg-zinc-800 flex items-center justify-center">
-                      <p className="text-white">{t('carnivals.eventImage')}</p>
+                      <p className="text-black dark:text-white">{t('carnivals.eventImage')}</p>
                     </div>
                   )}
 
                   <div className="p-6">
-                    <h3 className="text-2xl font-bold text-white mb-3">
+                    <h3 className="text-2xl font-bold text-black dark:text-white mb-3">
                       {i18n.language === 'tr' ? carnival.name : carnival.nameEn}
                     </h3>
 
                     <div className="space-y-2 mb-4">
-                      <div className="flex items-center gap-2 text-gray-400">
+                      <div className="flex items-center gap-2 text-black dark:text-white">
                         <Calendar size={18} />
                         <span>{i18n.language === 'tr' ? carnival.date : carnival.dateEn}</span>
                       </div>
-                      <div className="flex items-center gap-2 text-gray-400">
+                      <div className="flex items-center gap-2 text-black dark:text-white">
                         <MapPin size={18} />
                         <span>{i18n.language === 'tr' ? carnival.location : carnival.locationEn}</span>
                       </div>
                     </div>
 
-                    <p className="text-gray-300 mb-6">
+                    <p className="text-black dark:text-white mb-6">
                       {i18n.language === 'tr' ? carnival.description : carnival.descriptionEn}
                     </p>
                   </div>
@@ -180,10 +180,10 @@ export default function FestivalsAndBlogPage() {
             {!loadingCarnivals && carnivals.length === 0 && (
               <div className="text-center py-20">
                 <Users className="mx-auto mb-6 text-gray-400" size={80} />
-                <h2 className="text-2xl font-bold text-white mb-4">
+                <h2 className="text-2xl font-bold text-black dark:text-white mb-4">
                   {t('carnivals.noEvents')}
                 </h2>
-                <p className="text-gray-400">
+                <p className="text-black dark:text-white">
                   {t('carnivals.noEventsDesc')}
                 </p>
               </div>
@@ -196,10 +196,10 @@ export default function FestivalsAndBlogPage() {
               transition={{ delay: 0.3 }}
               className="mt-12 glass rounded-2xl p-8 text-center"
             >
-              <h3 className="text-2xl font-bold text-white mb-4">
+              <h3 className="text-2xl font-bold text-black dark:text-white mb-4">
                 {t('carnivals.stayUpdatedTitle')}
               </h3>
-              <p className="text-gray-300 mb-6">
+              <p className="text-black dark:text-white mb-6">
                 {t('carnivals.stayUpdatedDesc')}
               </p>
               <a
@@ -220,17 +220,17 @@ export default function FestivalsAndBlogPage() {
             {loadingBlog ? (
               <div className="text-center py-20">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-mea-gold mx-auto"></div>
-                <p className="text-gray-400 mt-4">
+                <p className="text-black dark:text-white mt-4">
                   {i18n.language === 'tr' ? 'Yükleniyor...' : 'Loading...'}
                 </p>
               </div>
             ) : blogPosts.length === 0 ? (
               <div className="text-center py-20">
                 <FileText className="mx-auto mb-6 text-gray-400" size={80} />
-                <h2 className="text-2xl font-bold text-white mb-4">
+                <h2 className="text-2xl font-bold text-black dark:text-white mb-4">
                   {i18n.language === 'tr' ? 'Henüz Blog Yazısı Yok' : 'No Blog Posts Yet'}
                 </h2>
-                <p className="text-gray-400">
+                <p className="text-black dark:text-white">
                   {i18n.language === 'tr'
                     ? 'Yakında ilk blog yazılarımız yayınlanacak!'
                     : 'Our first blog posts will be published soon!'}
@@ -260,7 +260,7 @@ export default function FestivalsAndBlogPage() {
                       )}
 
                       <div className="p-6">
-                        <h3 className="text-xl font-bold text-white mb-3">
+                        <h3 className="text-xl font-bold text-black dark:text-white mb-3">
                           <Link
                             href={`/blog/${post.slug}`}
                             className="hover:text-mea-gold transition-colors"
@@ -269,11 +269,11 @@ export default function FestivalsAndBlogPage() {
                           </Link>
                         </h3>
 
-                        <p className="text-gray-300 mb-4 line-clamp-2">
+                        <p className="text-black dark:text-white mb-4 line-clamp-2">
                           {i18n.language === 'tr' ? post.excerpt : post.excerptEn}
                         </p>
 
-                        <div className="flex items-center gap-2 text-gray-400 text-sm mb-4">
+                        <div className="flex items-center gap-2 text-black dark:text-white text-sm mb-4">
                           <Calendar size={14} />
                           <span>{formatDate(post.publishedAt)}</span>
                         </div>
