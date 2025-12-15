@@ -674,7 +674,7 @@ export default function CustomizePage() {
                       className={`p-3 rounded-lg transition-all ${
                         gender === 'male'
                           ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                          : 'text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+                          : 'text-black dark:text-white hover:opacity-80'
                       }`}
                     >
                       {i18n.language === 'tr' ? 'Erkek' : 'Male'}
@@ -684,7 +684,7 @@ export default function CustomizePage() {
                       className={`p-3 rounded-lg transition-all ${
                         gender === 'female'
                           ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                          : 'text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+                          : 'text-black dark:text-white hover:opacity-80'
                       }`}
                     >
                       {i18n.language === 'tr' ? 'Kadın' : 'Female'}
@@ -704,7 +704,7 @@ export default function CustomizePage() {
                         className={`p-3 rounded-lg transition-all ${
                           kimonoType === 'uzun'
                             ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                            : 'text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+                            : 'text-black dark:text-white hover:opacity-80'
                         }`}
                       >
                         {i18n.language === 'tr' ? 'Uzun Kimono' : 'Long Kimono'}
@@ -714,7 +714,7 @@ export default function CustomizePage() {
                         className={`p-3 rounded-lg transition-all ${
                           kimonoType === 'kisa'
                             ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                            : 'text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+                            : 'text-black dark:text-white hover:opacity-80'
                         }`}
                       >
                         {i18n.language === 'tr' ? 'Kısa Kimono' : 'Short Kimono'}
@@ -764,7 +764,7 @@ export default function CustomizePage() {
                     {/* Radio buttons for single item selection */}
                     {setItemSelection !== 'full' && (
                       <div className="ml-8 space-y-2">
-                        <label className="flex items-center gap-3 text-gray-300 cursor-pointer">
+                        <label className="flex items-center gap-3 text-black dark:text-white cursor-pointer">
                           <input
                             type="radio"
                             name="setItem"
@@ -774,7 +774,7 @@ export default function CustomizePage() {
                           />
                           <span>{i18n.language === 'tr' ? 'Sadece Gömlek' : 'Shirt Only'}</span>
                         </label>
-                        <label className="flex items-center gap-3 text-gray-300 cursor-pointer">
+                        <label className="flex items-center gap-3 text-black dark:text-white cursor-pointer">
                           <input
                             type="radio"
                             name="setItem"
@@ -802,7 +802,7 @@ export default function CustomizePage() {
                         className={`p-3 rounded-lg transition-all ${
                           size === sizeOption
                             ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                            : 'text-gray-400 hover:text-gray-300 border border-gray-600'
+                            : 'text-black dark:text-white hover:text-black dark:text-white border border-gray-600'
                         }`}
                       >
                         {sizeOption}
@@ -820,7 +820,7 @@ export default function CustomizePage() {
                     {/* First field - Kimono Boyu OR Gömlek Boyu */}
                     {(product.category === 'set' ? setItemSelection !== 'pajama-only' : true) && (
                       <div>
-                        <label className="block text-gray-300 text-sm mb-2">
+                        <label className="block text-black dark:text-white text-sm mb-2">
                           {product.category === 'kimono'
                             ? (i18n.language === 'tr' ? 'Kimono Boyu (cm)' : 'Kimono Length (cm)')
                             : (i18n.language === 'tr' ? 'Gömlek Boyu (cm)' : 'Shirt Length (cm)')
@@ -839,7 +839,7 @@ export default function CustomizePage() {
                     {/* Second field - Kol Boyu (always shown except for pajama-only) */}
                     {(product.category === 'set' ? setItemSelection !== 'pajama-only' : true) && (
                       <div>
-                        <label className="block text-gray-300 text-sm mb-2">
+                        <label className="block text-black dark:text-white text-sm mb-2">
                           {i18n.language === 'tr' ? 'Kol Boyu (cm)' : 'Sleeve Length (cm)'}
                         </label>
                         <input
@@ -855,7 +855,7 @@ export default function CustomizePage() {
                     {/* Third field - Pijama Boyu (only for set, not for shirt-only) */}
                     {product.category === 'set' && setItemSelection !== 'shirt-only' && (
                       <div>
-                        <label className="block text-gray-300 text-sm mb-2">
+                        <label className="block text-black dark:text-white text-sm mb-2">
                           {i18n.language === 'tr' ? 'Pijama Boyu (cm)' : 'Pajama Length (cm)'}
                         </label>
                         <input
@@ -895,7 +895,7 @@ export default function CustomizePage() {
                 {/* Total Price */}
                 <div className="glass rounded-lg p-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-300 font-medium">
+                    <span className="text-black dark:text-white font-medium">
                       {i18n.language === 'tr' ? 'Toplam Fiyat:' : 'Total Price:'}
                     </span>
                     <span className="text-2xl font-bold text-white">
@@ -903,7 +903,7 @@ export default function CustomizePage() {
                     </span>
                   </div>
                   {quantity > 1 && (
-                    <p className="text-gray-400 text-sm mt-2">
+                    <p className="text-black dark:text-white text-sm mt-2">
                       {formatPrice(currentPrice, i18n.language)} × {quantity}
                     </p>
                   )}
@@ -912,7 +912,7 @@ export default function CustomizePage() {
             ) : (
               /* Family Order Form */
               <div className="space-y-8">
-                <p className="text-gray-300 text-sm">
+                <p className="text-black dark:text-white text-sm">
                   {i18n.language === 'tr'
                     ? 'Aile siparişi otomatik olarak 2 kişi içerir. İstediğiniz sayıda çocuk ekleyebilirsiniz. (14 yaş ve altı çocuk sayılır)'
                     : 'Family order automatically includes 2 people. You can add any number of children. (14 years old and under counts as child)'}
@@ -939,7 +939,7 @@ export default function CustomizePage() {
                       <Plus size={20} className="text-white" />
                     </button>
                   </div>
-                  <p className="text-gray-400 text-sm mt-2">
+                  <p className="text-black dark:text-white text-sm mt-2">
                     {i18n.language === 'tr' ? '0-10 arası çocuk ekleyebilirsiniz' : 'You can add 0-10 children'}
                   </p>
                 </div>
@@ -952,7 +952,7 @@ export default function CustomizePage() {
 
                   {/* Parent 1 Gender */}
                   <div>
-                    <label className="block text-gray-300 text-sm mb-2">
+                    <label className="block text-black dark:text-white text-sm mb-2">
                       {i18n.language === 'tr' ? 'Cinsiyet' : 'Gender'}
                     </label>
                     <div className="grid grid-cols-2 gap-3">
@@ -961,7 +961,7 @@ export default function CustomizePage() {
                         className={`p-3 rounded-lg transition-all ${
                           parent1.gender === 'male'
                             ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                            : 'text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+                            : 'text-black dark:text-white hover:opacity-80'
                         }`}
                       >
                         {i18n.language === 'tr' ? 'Erkek' : 'Male'}
@@ -971,7 +971,7 @@ export default function CustomizePage() {
                         className={`p-3 rounded-lg transition-all ${
                           parent1.gender === 'female'
                             ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                            : 'text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+                            : 'text-black dark:text-white hover:opacity-80'
                         }`}
                       >
                         {i18n.language === 'tr' ? 'Kadın' : 'Female'}
@@ -981,7 +981,7 @@ export default function CustomizePage() {
 
                   {/* Parent 1 Size */}
                   <div>
-                    <label className="block text-gray-300 text-sm mb-2">
+                    <label className="block text-black dark:text-white text-sm mb-2">
                       {i18n.language === 'tr' ? 'Beden' : 'Size'}
                     </label>
                     <div className="grid grid-cols-3 gap-2">
@@ -992,7 +992,7 @@ export default function CustomizePage() {
                           className={`p-2 rounded-lg transition-all text-sm ${
                             parent1.size === sizeOption
                               ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                              : 'text-gray-400 hover:text-gray-300 border border-gray-600'
+                              : 'text-black dark:text-white hover:text-black dark:text-white border border-gray-600'
                           }`}
                         >
                           {sizeOption}
@@ -1003,7 +1003,7 @@ export default function CustomizePage() {
 
                   {/* Parent 1 Measurements */}
                   <div>
-                    <label className="block text-gray-300 text-sm mb-2">
+                    <label className="block text-black dark:text-white text-sm mb-2">
                       {i18n.language === 'tr' ? 'Özel Ölçüler (Opsiyonel)' : 'Custom Measurements (Optional)'}
                     </label>
                     <div className="grid grid-cols-3 gap-3">
@@ -1046,7 +1046,7 @@ export default function CustomizePage() {
 
                   {/* Parent 2 Gender */}
                   <div>
-                    <label className="block text-gray-300 text-sm mb-2">
+                    <label className="block text-black dark:text-white text-sm mb-2">
                       {i18n.language === 'tr' ? 'Cinsiyet' : 'Gender'}
                     </label>
                     <div className="grid grid-cols-2 gap-3">
@@ -1055,7 +1055,7 @@ export default function CustomizePage() {
                         className={`p-3 rounded-lg transition-all ${
                           parent2.gender === 'male'
                             ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                            : 'text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+                            : 'text-black dark:text-white hover:opacity-80'
                         }`}
                       >
                         {i18n.language === 'tr' ? 'Erkek' : 'Male'}
@@ -1065,7 +1065,7 @@ export default function CustomizePage() {
                         className={`p-3 rounded-lg transition-all ${
                           parent2.gender === 'female'
                             ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                            : 'text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+                            : 'text-black dark:text-white hover:opacity-80'
                         }`}
                       >
                         {i18n.language === 'tr' ? 'Kadın' : 'Female'}
@@ -1075,7 +1075,7 @@ export default function CustomizePage() {
 
                   {/* Parent 2 Size */}
                   <div>
-                    <label className="block text-gray-300 text-sm mb-2">
+                    <label className="block text-black dark:text-white text-sm mb-2">
                       {i18n.language === 'tr' ? 'Beden' : 'Size'}
                     </label>
                     <div className="grid grid-cols-3 gap-2">
@@ -1086,7 +1086,7 @@ export default function CustomizePage() {
                           className={`p-2 rounded-lg transition-all text-sm ${
                             parent2.size === sizeOption
                               ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                              : 'text-gray-400 hover:text-gray-300 border border-gray-600'
+                              : 'text-black dark:text-white hover:text-black dark:text-white border border-gray-600'
                           }`}
                         >
                           {sizeOption}
@@ -1097,7 +1097,7 @@ export default function CustomizePage() {
 
                   {/* Parent 2 Measurements */}
                   <div>
-                    <label className="block text-gray-300 text-sm mb-2">
+                    <label className="block text-black dark:text-white text-sm mb-2">
                       {i18n.language === 'tr' ? 'Özel Ölçüler (Opsiyonel)' : 'Custom Measurements (Optional)'}
                     </label>
                     <div className="grid grid-cols-3 gap-3">
@@ -1137,14 +1137,14 @@ export default function CustomizePage() {
                   <div key={child.id} className="glass rounded-lg p-6 space-y-4 border-2 border-green-500 border-opacity-30">
                     <h4 className="text-white font-bold text-lg flex items-center gap-2">
                       {i18n.language === 'tr' ? `Çocuk ${index + 1}` : `Child ${index + 1}`}
-                      <span className="text-xs text-gray-400 font-normal ml-2">
+                      <span className="text-xs text-black dark:text-white font-normal ml-2">
                         {i18n.language === 'tr' ? '(14 yaş ve altı)' : '(14 years old and under)'}
                       </span>
                     </h4>
 
                     {/* Child Gender */}
                     <div>
-                      <label className="block text-gray-300 text-sm mb-2">
+                      <label className="block text-black dark:text-white text-sm mb-2">
                         {i18n.language === 'tr' ? 'Cinsiyet' : 'Gender'}
                       </label>
                       <div className="grid grid-cols-2 gap-3">
@@ -1153,7 +1153,7 @@ export default function CustomizePage() {
                           className={`p-3 rounded-lg transition-all ${
                             child.gender === 'male'
                               ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                              : 'text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+                              : 'text-black dark:text-white hover:opacity-80'
                           }`}
                         >
                           {i18n.language === 'tr' ? 'Erkek' : 'Boy'}
@@ -1163,7 +1163,7 @@ export default function CustomizePage() {
                           className={`p-3 rounded-lg transition-all ${
                             child.gender === 'female'
                               ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                              : 'text-gray-700 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+                              : 'text-black dark:text-white hover:opacity-80'
                           }`}
                         >
                           {i18n.language === 'tr' ? 'Kız' : 'Girl'}
@@ -1173,7 +1173,7 @@ export default function CustomizePage() {
 
                     {/* Child Info */}
                     <div>
-                      <label className="block text-gray-300 text-sm mb-2">
+                      <label className="block text-black dark:text-white text-sm mb-2">
                         {i18n.language === 'tr' ? 'Çocuk Bilgileri' : 'Child Information'}
                       </label>
                       <div className="grid grid-cols-3 gap-3">
@@ -1217,7 +1217,7 @@ export default function CustomizePage() {
                     {/* Child Measurements - Editable fields for algorithm results */}
                     {child.shirtLength && (
                       <div>
-                        <label className="block text-gray-300 text-sm mb-2">
+                        <label className="block text-black dark:text-white text-sm mb-2">
                           {i18n.language === 'tr' ? 'Hesaplanan Ölçüler (Düzenlenebilir)' : 'Calculated Measurements (Editable)'}
                         </label>
                         <div className="grid grid-cols-3 gap-3">
@@ -1255,7 +1255,7 @@ export default function CustomizePage() {
                 ))}
 
                 {childCount === 0 && (
-                  <div className="text-center py-4 text-gray-400 text-sm">
+                  <div className="text-center py-4 text-black dark:text-white text-sm">
                     {i18n.language === 'tr'
                       ? 'Çocuk eklenmedi. Yukarıdan çocuk sayısını seçebilirsiniz.'
                       : 'No children added. You can select the number of children above.'}
@@ -1275,7 +1275,7 @@ export default function CustomizePage() {
                     ₺{currentPrice.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </div>
                   {product.category === 'set' && setItemSelection !== 'full' && (
-                    <div className="text-xs text-gray-400 mt-1">
+                    <div className="text-xs text-black dark:text-white mt-1">
                       {setItemSelection === 'shirt-only'
                         ? (i18n.language === 'tr' ? 'Sadece Gömlek' : 'Shirt Only')
                         : (i18n.language === 'tr' ? 'Sadece Pijama' : 'Pajama Only')
@@ -1340,8 +1340,8 @@ export default function CustomizePage() {
                       {UZUN_KIMONO_SIZE_CHART.rows.map((row, idx) => (
                         <tr key={idx} className="border-b border-white border-opacity-10">
                           <td className="py-3 px-4 font-semibold">{row.beden}</td>
-                          <td className="py-3 px-4 text-gray-300">{row.kimonoBoyu}</td>
-                          <td className="py-3 px-4 text-gray-300">{row.kolBoyu}</td>
+                          <td className="py-3 px-4 text-black dark:text-white">{row.kimonoBoyu}</td>
+                          <td className="py-3 px-4 text-black dark:text-white">{row.kolBoyu}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -1367,8 +1367,8 @@ export default function CustomizePage() {
                       {KISA_KIMONO_SIZE_CHART.rows.map((row, idx) => (
                         <tr key={idx} className="border-b border-white border-opacity-10">
                           <td className="py-3 px-4 font-semibold">{row.beden}</td>
-                          <td className="py-3 px-4 text-gray-300">{row.kimonoBoyu}</td>
-                          <td className="py-3 px-4 text-gray-300">{row.kolBoyu}</td>
+                          <td className="py-3 px-4 text-black dark:text-white">{row.kimonoBoyu}</td>
+                          <td className="py-3 px-4 text-black dark:text-white">{row.kolBoyu}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -1397,9 +1397,9 @@ export default function CustomizePage() {
                       {KADIN_SET_SIZE_CHART.rows.map((row, idx) => (
                         <tr key={idx} className="border-b border-white border-opacity-10">
                           <td className="py-3 px-4 font-semibold">{row.beden}</td>
-                          <td className="py-3 px-4 text-gray-300">{row.pijamaBoyu}</td>
-                          <td className="py-3 px-4 text-gray-300">{row.gomlekBoyu}</td>
-                          <td className="py-3 px-4 text-gray-300">{row.kolBoyu}</td>
+                          <td className="py-3 px-4 text-black dark:text-white">{row.pijamaBoyu}</td>
+                          <td className="py-3 px-4 text-black dark:text-white">{row.gomlekBoyu}</td>
+                          <td className="py-3 px-4 text-black dark:text-white">{row.kolBoyu}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -1426,9 +1426,9 @@ export default function CustomizePage() {
                       {ERKEK_SET_SIZE_CHART.rows.map((row, idx) => (
                         <tr key={idx} className="border-b border-white border-opacity-10">
                           <td className="py-3 px-4 font-semibold">{row.beden}</td>
-                          <td className="py-3 px-4 text-gray-300">{row.pijamaBoyu}</td>
-                          <td className="py-3 px-4 text-gray-300">{row.gomlekBoyu}</td>
-                          <td className="py-3 px-4 text-gray-300">{row.kolBoyu}</td>
+                          <td className="py-3 px-4 text-black dark:text-white">{row.pijamaBoyu}</td>
+                          <td className="py-3 px-4 text-black dark:text-white">{row.gomlekBoyu}</td>
+                          <td className="py-3 px-4 text-black dark:text-white">{row.kolBoyu}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -1454,8 +1454,8 @@ export default function CustomizePage() {
                       {KROP_GOMLEK_SIZE_CHART.rows.map((row, idx) => (
                         <tr key={idx} className="border-b border-white border-opacity-10">
                           <td className="py-3 px-4 font-semibold">{row.beden}</td>
-                          <td className="py-3 px-4 text-gray-300">{row.gomlekBoyu}</td>
-                          <td className="py-3 px-4 text-gray-300">{row.kolBoyu}</td>
+                          <td className="py-3 px-4 text-black dark:text-white">{row.gomlekBoyu}</td>
+                          <td className="py-3 px-4 text-black dark:text-white">{row.kolBoyu}</td>
                         </tr>
                       ))}
                     </tbody>
