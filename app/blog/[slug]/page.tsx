@@ -131,7 +131,7 @@ export default function BlogDetailPage() {
       twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(
         title || ''
       )}`,
-      instagram: 'https://www.instagram.com/meaculpadesigns',
+      instagram: 'https://www.instagram.com/meaculpadesign/?igsh=MW8ybW9qdGJ6bTAyNw%3D%3D#',
     };
 
     window.open(shareUrls[platform], '_blank', 'width=600,height=400');

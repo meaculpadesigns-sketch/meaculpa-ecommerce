@@ -203,7 +203,7 @@ export default function FestivalsAndBlogPage() {
                 {t('carnivals.stayUpdatedDesc')}
               </p>
               <a
-                href="https://www.instagram.com/meaculpadesigns"
+                href="https://www.instagram.com/meaculpadesign/?igsh=MW8ybW9qdGJ6bTAyNw%3D%3D#"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary inline-block"

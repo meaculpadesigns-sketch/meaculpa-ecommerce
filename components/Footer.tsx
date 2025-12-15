@@ -36,7 +36,7 @@ export default function Footer() {
     {
       name: 'Instagram',
       icon: Instagram,
-      href: 'https://www.instagram.com/meaculpadesigns',
+      href: 'https://www.instagram.com/meaculpadesign/?igsh=MW8ybW9qdGJ6bTAyNw%3D%3D#',
     },
     {
       name: 'WhatsApp',
