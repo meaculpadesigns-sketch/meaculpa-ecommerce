@@ -153,11 +153,11 @@ export default function TryOnPage() {
         >
           <div className="inline-flex items-center gap-2 mb-4">
             <Sparkles className="text-mea-gold" size={32} />
-            <h1 className="text-4xl md:text-5xl font-bold text-white">
+            <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white">
               {t('tryOn.title')}
             </h1>
           </div>
-          <p className="text-gray-400 text-lg">
+          <p className="text-black dark:text-white text-lg">
             {t('tryOn.subtitle')}
           </p>
         </motion.div>
@@ -171,7 +171,7 @@ export default function TryOnPage() {
           >
             {/* Upload Photo */}
             <div className="glass rounded-2xl p-6">
-              <h2 className="text-2xl font-bold text-white mb-4">
+              <h2 className="text-2xl font-bold text-black dark:text-white mb-4">
                 1. {t('tryOn.step1Title')}
               </h2>
 
@@ -179,8 +179,8 @@ export default function TryOnPage() {
                 <label className="block cursor-pointer">
                   <div className="aspect-[3/4] border-2 border-dashed border-gray-600 rounded-xl flex flex-col items-center justify-center hover:border-mea-gold transition-colors">
                     <Upload className="text-gray-400 mb-4" size={48} />
-                    <p className="text-white font-medium mb-2">{t('tryOn.uploadPhoto')}</p>
-                    <p className="text-gray-400 text-sm">{t('tryOn.dragDrop')}</p>
+                    <p className="text-black dark:text-white font-medium mb-2">{t('tryOn.uploadPhoto')}</p>
+                    <p className="text-black dark:text-white text-sm">{t('tryOn.dragDrop')}</p>
                   </div>
                   <input
                     type="file"
@@ -192,7 +192,7 @@ export default function TryOnPage() {
               ) : (
                 <div className="relative aspect-[3/4] bg-zinc-800 rounded-xl overflow-hidden">
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <p className="text-white">{t('tryOn.uploadedPhoto')}</p>
+                    <p className="text-black dark:text-white">{t('tryOn.uploadedPhoto')}</p>
                   </div>
                   <button
                     onClick={() => setUserImage(null)}
@@ -220,20 +220,20 @@ export default function TryOnPage() {
 
             {/* Select Product */}
             <div className="glass rounded-2xl p-6">
-              <h2 className="text-2xl font-bold text-white mb-4">
+              <h2 className="text-2xl font-bold text-black dark:text-white mb-4">
                 2. {t('tryOn.step2Title')}
               </h2>
               {loadingProducts ? (
                 <div className="text-center py-8">
                   <div className="animate-spin rounded-full h-8 w-8 border-4 border-mea-gold border-t-transparent mx-auto"></div>
-                  <p className="text-gray-400 mt-2">{t('common.loading')}</p>
+                  <p className="text-black dark:text-white mt-2">{t('common.loading')}</p>
                 </div>
               ) : (
                 <div className="space-y-4">
                   <select
                     value={selectedProduct || ''}
                     onChange={(e) => setSelectedProduct(e.target.value)}
-                    className="w-full px-4 py-3 glass rounded-lg text-white bg-zinc-800 border border-gray-600 focus:border-mea-gold focus:outline-none"
+                    className="w-full px-4 py-3 glass rounded-lg text-black dark:text-white bg-zinc-800 border border-gray-600 focus:border-mea-gold focus:outline-none"
                   >
                     <option value="" disabled>
                       {i18n.language === 'tr' ? 'Ürün seçiniz...' : 'Select a product...'}
@@ -258,10 +258,10 @@ export default function TryOnPage() {
                               className="w-24 h-24 object-cover rounded-lg"
                             />
                             <div>
-                              <p className="text-white font-semibold">
+                              <p className="text-black dark:text-white font-semibold">
                                 {i18n.language === 'tr' ? selected.name : selected.nameEn}
                               </p>
-                              <p className="text-gray-400 text-sm">
+                              <p className="text-black dark:text-white text-sm">
                                 {selected.category === 'kimono' ? 'Kimono' : 'Set'}
                               </p>
                             </div>
@@ -300,21 +300,21 @@ export default function TryOnPage() {
             animate={{ opacity: 1, x: 0 }}
             className="glass rounded-2xl p-6"
           >
-            <h2 className="text-2xl font-bold text-white mb-4">
+            <h2 className="text-2xl font-bold text-black dark:text-white mb-4">
               3. {t('tryOn.step3Title')}
             </h2>
 
             {!result ? (
               <div className="aspect-[3/4] border-2 border-dashed border-gray-600 rounded-xl flex flex-col items-center justify-center">
                 <Camera className="text-gray-400 mb-4" size={48} />
-                <p className="text-gray-400 text-center px-4">
+                <p className="text-black dark:text-white text-center px-4">
                   {t('tryOn.noResult')}
                 </p>
               </div>
             ) : (
               <div className="space-y-4">
                 <div className="aspect-[3/4] bg-zinc-800 rounded-xl overflow-hidden">
-                  <div className="w-full h-full flex items-center justify-center text-white">
+                  <div className="w-full h-full flex items-center justify-center text-black dark:text-white">
                     {t('tryOn.tryOnResult')}
                   </div>
                 </div>
@@ -342,7 +342,7 @@ export default function TryOnPage() {
           transition={{ delay: 0.3 }}
           className="mt-12 glass rounded-2xl p-8"
         >
-          <h3 className="text-2xl font-bold text-white mb-4 text-center">
+          <h3 className="text-2xl font-bold text-black dark:text-white mb-4 text-center">
             {t('tryOn.howItWorksTitle')}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
@@ -350,8 +350,8 @@ export default function TryOnPage() {
               <div className="w-12 h-12 bg-mea-gold rounded-full flex items-center justify-center text-black font-bold text-xl mx-auto mb-3">
                 1
               </div>
-              <p className="text-white font-medium mb-2">{t('tryOn.howStep1Title')}</p>
-              <p className="text-gray-400 text-sm">
+              <p className="text-black dark:text-white font-medium mb-2">{t('tryOn.howStep1Title')}</p>
+              <p className="text-black dark:text-white text-sm">
                 {t('tryOn.howStep1Desc')}
               </p>
             </div>
@@ -359,8 +359,8 @@ export default function TryOnPage() {
               <div className="w-12 h-12 bg-mea-gold rounded-full flex items-center justify-center text-black font-bold text-xl mx-auto mb-3">
                 2
               </div>
-              <p className="text-white font-medium mb-2">{t('tryOn.howStep2Title')}</p>
-              <p className="text-gray-400 text-sm">
+              <p className="text-black dark:text-white font-medium mb-2">{t('tryOn.howStep2Title')}</p>
+              <p className="text-black dark:text-white text-sm">
                 {t('tryOn.howStep2Desc')}
               </p>
             </div>
@@ -368,8 +368,8 @@ export default function TryOnPage() {
               <div className="w-12 h-12 bg-mea-gold rounded-full flex items-center justify-center text-black font-bold text-xl mx-auto mb-3">
                 3
               </div>
-              <p className="text-white font-medium mb-2">{t('tryOn.howStep3Title')}</p>
-              <p className="text-gray-400 text-sm">
+              <p className="text-black dark:text-white font-medium mb-2">{t('tryOn.howStep3Title')}</p>
+              <p className="text-black dark:text-white text-sm">
                 {t('tryOn.howStep3Desc')}
               </p>
             </div>
@@ -383,7 +383,7 @@ export default function TryOnPage() {
           transition={{ delay: 0.5 }}
           className="mt-6 text-center"
         >
-          <p className="text-gray-400 text-sm">
+          <p className="text-black dark:text-white text-sm">
             🔒 {t('tryOn.privacyNote')}
           </p>
         </motion.div>
