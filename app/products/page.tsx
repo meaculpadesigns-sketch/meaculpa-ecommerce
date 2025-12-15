@@ -184,7 +184,7 @@ function ProductsContent() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="glass px-6 py-3 rounded-full bg-transparent text-white cursor-pointer"
+              className="glass px-6 py-3 rounded-full bg-transparent text-black dark:text-white cursor-pointer"
             >
               <option value="newest" className="bg-white text-black">{t('products.sortNewest')}</option>
               <option value="popular" className="bg-white text-black">{t('products.sortPopular')}</option>
