@@ -163,7 +163,7 @@ function ProductsContent() {
           >
             {getPageTitle()}
           </motion.h1>
-          <p className="text-gray-900 dark:text-gray-300">
+          <p className="text-black dark:text-white">
             {filteredProducts.length} {t('products.productsFound')}
           </p>
         </div>
@@ -235,7 +235,7 @@ function ProductsContent() {
                   className={`px-4 py-2 rounded-lg text-sm ${
                     subcategory === sub.key
                       ? 'bg-mea-gold text-black font-medium'
-                      : 'glass text-gray-900 dark:text-gray-300 hover:bg-white hover:bg-opacity-10'
+                      : 'glass text-black dark:text-white hover:bg-white hover:bg-opacity-10'
                   }`}
                 >
                   {i18n.language === 'tr' ? sub.name : sub.nameEn}
@@ -248,7 +248,7 @@ function ProductsContent() {
                     className={`block px-4 py-2 rounded-lg text-sm ${
                       subcategory === second.key
                         ? 'bg-mea-gold text-black font-medium'
-                        : 'glass text-gray-900 dark:text-gray-300 hover:bg-white hover:bg-opacity-10'
+                        : 'glass text-black dark:text-white hover:bg-white hover:bg-opacity-10'
                     }`}
                   >
                     {i18n.language === 'tr' ? second.name : second.nameEn}
@@ -262,7 +262,7 @@ function ProductsContent() {
                           className={`px-3 py-1 rounded-lg text-xs ${
                             thirdLevel === third.key
                               ? 'bg-white text-black font-medium'
-                              : 'bg-white bg-opacity-10 text-gray-900 dark:text-gray-300 hover:bg-opacity-20'
+                              : 'bg-white bg-opacity-10 text-black dark:text-white hover:bg-opacity-20'
                           }`}
                         >
                           {i18n.language === 'tr' ? third.name : third.nameEn}
@@ -297,7 +297,7 @@ function ProductsContent() {
         {/* Empty State */}
         {filteredProducts.length === 0 && (
           <div className="text-center py-20">
-            <p className="text-gray-900 dark:text-gray-300 text-lg">
+            <p className="text-black dark:text-white text-lg">
               {t('products.noProductsFound')}
             </p>
           </div>

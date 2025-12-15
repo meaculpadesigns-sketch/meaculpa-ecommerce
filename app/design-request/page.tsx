@@ -260,7 +260,7 @@ export default function DesignRequestPage() {
             <h3 className="text-black font-semibold mb-3">
               {t('designRequest.processTitle')}
             </h3>
-            <ul className="text-gray-900 dark:text-gray-300 space-y-2 text-sm">
+            <ul className="text-black dark:text-white space-y-2 text-sm">
               <li>✓ {t('designRequest.processStep1')}</li>
               <li>✓ {t('designRequest.processStep2')}</li>
               <li>✓ {t('designRequest.processStep3')}</li>

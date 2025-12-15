@@ -81,13 +81,13 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
                   {name}
                 </h3>
               </Link>
-              {story && <p className="text-gray-700 dark:text-gray-400 mt-2 line-clamp-2">{story}</p>}
+              {story && <p className="text-black dark:text-white mt-2 line-clamp-2">{story}</p>}
             </div>
 
             <button
               onClick={handleAddToFavorites}
               className={`p-2 rounded-full ${
-                isFavorite ? 'text-red-500' : 'text-gray-700 dark:text-gray-400'
+                isFavorite ? 'text-red-500' : 'text-black dark:text-white'
               } hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-10 transition-all`}
             >
               <Heart size={24} fill={isFavorite ? 'currentColor' : 'none'} />
@@ -268,7 +268,7 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className="text-2xl font-bold text-black dark:text-white mb-4">{name}</h3>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+            <p className="text-black dark:text-white leading-relaxed">
               {i18n.language === 'tr' ? product.story : product.storyEn}
             </p>
             <button

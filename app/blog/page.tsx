@@ -92,7 +92,7 @@ export default function BlogPage() {
           <h1 className="text-5xl md:text-6xl font-bold text-black mb-4">
             {t('nav.blog')}
           </h1>
-          <p className="text-xl text-gray-900 dark:text-gray-300">
+          <p className="text-xl text-black dark:text-white">
             {i18n.language === 'tr'
               ? 'Mea Culpa\'dan hikayeler, fikirler ve ilham'
               : 'Stories, ideas, and inspiration from Mea Culpa'}
@@ -147,7 +147,7 @@ export default function BlogPage() {
             <h2 className="text-2xl font-bold text-black mb-4">
               {i18n.language === 'tr' ? 'Blog Yazısı Bulunamadı' : 'No Blog Posts Found'}
             </h2>
-            <p className="text-gray-900 dark:text-gray-300">
+            <p className="text-black dark:text-white">
               {i18n.language === 'tr'
                 ? 'Arama kriterlerinize uygun blog yazısı bulunamadı'
                 : 'No blog posts match your search criteria'}
@@ -188,7 +188,7 @@ export default function BlogPage() {
                     </Link>
                   </h2>
 
-                  <p className="text-gray-900 dark:text-gray-300 text-lg mb-6">
+                  <p className="text-black dark:text-white text-lg mb-6">
                     {i18n.language === 'tr' ? featuredPost.excerpt : featuredPost.excerptEn}
                   </p>
 
@@ -247,7 +247,7 @@ export default function BlogPage() {
                       </Link>
                     </h3>
 
-                    <p className="text-gray-900 dark:text-gray-300 mb-4 line-clamp-3">
+                    <p className="text-black dark:text-white mb-4 line-clamp-3">
                       {i18n.language === 'tr' ? post.excerpt : post.excerptEn}
                     </p>
 

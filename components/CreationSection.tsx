@@ -61,7 +61,7 @@ export default function CreationSection({ creation, index }: CreationSectionProp
           <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-black dark:text-white mb-6">
             {title}
           </h2>
-          <p className="text-xl md:text-2xl text-gray-900 dark:text-gray-300 mb-4 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-black dark:text-white mb-4 max-w-3xl mx-auto">
             {description}
           </p>
 
@@ -76,7 +76,7 @@ export default function CreationSection({ creation, index }: CreationSectionProp
 
         {/* Story Text */}
         <div className="max-w-3xl mx-auto mb-16">
-          <p className="text-gray-900 dark:text-gray-300 text-lg leading-relaxed text-center">
+          <p className="text-black dark:text-white text-lg leading-relaxed text-center">
             {story}
           </p>
         </div>
