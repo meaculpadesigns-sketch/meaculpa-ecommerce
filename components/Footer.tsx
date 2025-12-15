@@ -16,7 +16,6 @@ export default function Footer() {
     company: [
       { name: t('nav.aboutUs'), href: '/about' },
       { name: t('nav.corporate'), href: '/corporate' },
-      { name: t('nav.carnivals'), href: '/carnivals' },
       { name: t('nav.contact'), href: '/contact' },
     ],
     support: [
