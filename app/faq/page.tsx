@@ -142,10 +142,10 @@ export default function FAQPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
             {t('faq.title')}
           </h1>
-          <p className="text-xl text-gray-400">
+          <p className="text-xl text-black dark:text-white">
             {t('faq.subtitle')}
           </p>
         </motion.div>
@@ -158,7 +158,7 @@ export default function FAQPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: catIndex * 0.1 }}
             >
-              <h2 className="text-2xl font-bold text-white mb-4">{t(`faq.${category.categoryKey}`)}</h2>
+              <h2 className="text-2xl font-bold text-black dark:text-white mb-4">{t(`faq.${category.categoryKey}`)}</h2>
               <div className="space-y-3">
                 {category.questions.map((faq, qIndex) => {
                   const index = catIndex * 100 + qIndex;
@@ -170,7 +170,7 @@ export default function FAQPage() {
                         onClick={() => setOpenIndex(isOpen ? null : index)}
                         className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-white hover:bg-opacity-5 transition-colors"
                       >
-                        <span className="text-white font-medium pr-4">{t(`faq.${faq.qKey}`)}</span>
+                        <span className="text-black dark:text-white font-medium pr-4">{t(`faq.${faq.qKey}`)}</span>
                         <ChevronDown
                           className={`text-mea-gold flex-shrink-0 transition-transform ${
                             isOpen ? 'rotate-180' : ''
@@ -187,7 +187,7 @@ export default function FAQPage() {
                             exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.3 }}
                           >
-                            <div className="px-6 pb-4 text-gray-300 leading-relaxed">
+                            <div className="px-6 pb-4 text-black dark:text-white leading-relaxed">
                               {t(`faq.${faq.aKey}`)}
                             </div>
                           </motion.div>
@@ -208,10 +208,10 @@ export default function FAQPage() {
           transition={{ delay: 0.5 }}
           className="mt-12 glass rounded-2xl p-8 text-center"
         >
-          <h3 className="text-2xl font-bold text-white mb-4">
+          <h3 className="text-2xl font-bold text-black dark:text-white mb-4">
             {t('faq.noAnswer')}
           </h3>
-          <p className="text-gray-400 mb-6">
+          <p className="text-black dark:text-white mb-6">
             {t('faq.noAnswerDesc')}
           </p>
           <a href="/contact" className="btn-primary inline-block">

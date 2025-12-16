@@ -95,10 +95,10 @@ export default function OrderTrackingPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-black dark:text-white mb-4">
             {t('orderTracking.title')}
           </h1>
-          <p className="text-gray-400 text-lg">
+          <p className="text-black dark:text-black dark:text-white text-lg">
             {t('orderTracking.subtitle')}
           </p>
         </motion.div>
@@ -112,7 +112,7 @@ export default function OrderTrackingPage() {
         >
           <form onSubmit={handleSearch} className="space-y-6">
             <div>
-              <label className="block text-white font-medium mb-2">
+              <label className="block text-black dark:text-black dark:text-white font-medium mb-2">
                 {t('orderTracking.orderNumber')}
               </label>
               <input
@@ -126,7 +126,7 @@ export default function OrderTrackingPage() {
             </div>
 
             <div>
-              <label className="block text-white font-medium mb-2">
+              <label className="block text-black dark:text-white font-medium mb-2">
                 {t('orderTracking.contactLabel')}
               </label>
               <input
@@ -171,7 +171,7 @@ export default function OrderTrackingPage() {
           >
             {/* Status Timeline */}
             <div className="glass rounded-2xl p-8">
-              <h2 className="text-2xl font-bold text-white mb-8">{t('orderTracking.statusTitle')}</h2>
+              <h2 className="text-2xl font-bold text-black dark:text-white mb-8">{t('orderTracking.statusTitle')}</h2>
 
               <div className="relative">
                 {/* Progress Line */}
@@ -196,14 +196,14 @@ export default function OrderTrackingPage() {
                           className={`w-16 h-16 rounded-full flex items-center justify-center mb-3 transition-all ${
                             isComplete
                               ? 'bg-mea-gold text-black'
-                              : 'bg-zinc-700 text-gray-400'
+                              : 'bg-zinc-700 text-black dark:text-white'
                           } ${isCurrent ? 'ring-4 ring-mea-gold ring-opacity-50' : ''}`}
                         >
                           <step.icon size={28} />
                         </div>
                         <p
                           className={`text-sm text-center ${
-                            isComplete ? 'text-white font-medium' : 'text-gray-400'
+                            isComplete ? 'text-black dark:text-white font-medium' : 'text-black dark:text-white'
                           }`}
                         >
                           {step.label}
@@ -219,10 +219,10 @@ export default function OrderTrackingPage() {
                 <div className="flex items-center gap-4">
                   {getStatusIcon(order.status)}
                   <div>
-                    <p className="text-white font-semibold text-lg">
+                    <p className="text-black dark:text-white font-semibold text-lg">
                       {getStatusText(order.status)}
                     </p>
-                    <p className="text-gray-400 text-sm">
+                    <p className="text-black dark:text-white text-sm">
                       {t('orderTracking.updated')} {new Date(order.updatedAt).toLocaleString('tr-TR')}
                     </p>
                   </div>
@@ -232,8 +232,8 @@ export default function OrderTrackingPage() {
               {/* Tracking Number */}
               {order.trackingNumber && (
                 <div className="mt-6 p-4 glass rounded-lg">
-                  <p className="text-gray-400 text-sm mb-1">{t('orderTracking.trackingNumber')}</p>
-                  <p className="text-white font-mono font-semibold text-lg">
+                  <p className="text-black dark:text-white text-sm mb-1">{t('orderTracking.trackingNumber')}</p>
+                  <p className="text-black dark:text-white font-mono font-semibold text-lg">
                     {order.trackingNumber}
                   </p>
                 </div>
@@ -242,7 +242,7 @@ export default function OrderTrackingPage() {
 
             {/* Order Items */}
             <div className="glass rounded-2xl p-8">
-              <h2 className="text-2xl font-bold text-white mb-6">{t('orderTracking.orderContent')}</h2>
+              <h2 className="text-2xl font-bold text-black dark:text-white mb-6">{t('orderTracking.orderContent')}</h2>
               <div className="space-y-4">
                 {order.items.map((item, index) => (
                   <div
@@ -251,8 +251,8 @@ export default function OrderTrackingPage() {
                   >
                     <div className="w-20 h-20 bg-zinc-700 rounded-lg flex-shrink-0" />
                     <div className="flex-grow">
-                      <p className="text-white font-medium">{item.product.name}</p>
-                      <p className="text-gray-400 text-sm">
+                      <p className="text-black dark:text-white font-medium">{item.product.name}</p>
+                      <p className="text-black dark:text-white text-sm">
                         {t('orderTracking.size')} {item.size} × {item.quantity}
                       </p>
                     </div>
@@ -266,7 +266,7 @@ export default function OrderTrackingPage() {
               {/* Total */}
               <div className="mt-6 pt-6 border-t border-white border-opacity-10">
                 <div className="flex justify-between items-center">
-                  <span className="text-white font-semibold text-lg">{t('orderTracking.total')}</span>
+                  <span className="text-black dark:text-white font-semibold text-lg">{t('orderTracking.total')}</span>
                   <span className="text-mea-gold font-bold text-2xl">
                     ₺{order.total.toFixed(2)}
                   </span>
@@ -276,9 +276,9 @@ export default function OrderTrackingPage() {
 
             {/* Delivery Address */}
             <div className="glass rounded-2xl p-8">
-              <h2 className="text-2xl font-bold text-white mb-6">{t('orderTracking.deliveryAddress')}</h2>
-              <div className="text-gray-300">
-                <p className="font-medium text-white mb-2">
+              <h2 className="text-2xl font-bold text-black dark:text-white mb-6">{t('orderTracking.deliveryAddress')}</h2>
+              <div className="text-black dark:text-white">
+                <p className="font-medium text-black dark:text-white mb-2">
                   {order.shippingAddress.firstName} {order.shippingAddress.lastName}
                 </p>
                 <p>{order.shippingAddress.address}</p>
