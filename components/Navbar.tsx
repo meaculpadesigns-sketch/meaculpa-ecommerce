@@ -88,17 +88,89 @@ export default function Navbar() {
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Brand Name */}
-            <Link href="/" className="flex items-center">
+          <div className="flex items-center h-16">
+            {/* Left Navigation - First 3 items */}
+            <div className="hidden lg:flex items-center space-x-1 flex-1">
+              {navItems.slice(0, 3).map((item) => (
+                <div
+                  key={item.href}
+                  className="relative"
+                  onMouseEnter={() => item.hasDropdown && setOpenDropdown(item.name)}
+                  onMouseLeave={() => setOpenDropdown(null)}
+                >
+                  <Link
+                    href={item.href}
+                    className="nav-link px-3 py-2 rounded-lg hover:bg-white hover:bg-opacity-5 flex items-center gap-1"
+                  >
+                    {item.name}
+                    {item.hasDropdown && <ChevronDown size={16} />}
+                  </Link>
+
+                  {/* Dropdown Menu */}
+                  {item.hasDropdown && openDropdown === item.name && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="absolute top-full left-0 pt-8 pb-32 z-50"
+                    >
+                      {item.href.includes('kimono') ? (
+                        // Kimono: Tek sütun liste
+                        <div className="glass rounded-xl border border-black dark:border-white border-opacity-10 dark:border-opacity-10 shadow-xl overflow-hidden min-w-[280px]">
+                          {kimonoSubcategories.map((sub) => (
+                            <Link
+                              key={sub.key}
+                              href={`/products?category=kimono&subcategory=${sub.key}`}
+                              className="block px-6 py-3 text-gray-700 dark:text-gray-300 hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-10 hover:text-black dark:hover:text-white transition-colors border-b border-black dark:border-white border-opacity-5 dark:border-opacity-5 last:border-0"
+                            >
+                              <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? sub.name : sub.nameEn}</div>
+                            </Link>
+                          ))}
+                        </div>
+                      ) : (
+                        // Setler: 2. seviye yan yana, 3. seviye aşağı açılır
+                        <div className="glass rounded-xl border border-black dark:border-white border-opacity-10 dark:border-opacity-10 shadow-xl overflow-visible min-w-[400px]">
+                          <div className="grid grid-cols-2 divide-x divide-black dark:divide-white divide-opacity-10 dark:divide-opacity-10">
+                            {setSecondLevelCategories.map((secondLevel) => (
+                              <div key={secondLevel.key} className="relative group">
+                                <div className="px-8 py-4 text-gray-700 dark:text-gray-300 hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-5 transition-colors cursor-pointer">
+                                  <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? secondLevel.name : secondLevel.nameEn}</div>
+                                </div>
+                                {/* 3. seviye aşağı açılan menü */}
+                                <div className="absolute top-full left-0 mt-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all z-50">
+                                  <div className="glass rounded-xl border border-black dark:border-white border-opacity-10 dark:border-opacity-10 shadow-xl overflow-hidden w-64">
+                                    {getThirdLevelCategories(secondLevel.key as 'kreasyonlar' | 'setler').map((third) => (
+                                      <Link
+                                        key={third.key}
+                                        href={`/products?category=set&subcategory=${secondLevel.key}&thirdLevel=${third.key}`}
+                                        className="block px-5 py-3 text-gray-700 dark:text-gray-300 hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-10 hover:text-black dark:hover:text-white transition-colors border-b border-black dark:border-white border-opacity-5 dark:border-opacity-5 last:border-0"
+                                      >
+                                        <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? third.name : third.nameEn}</div>
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </motion.div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Centered Brand Name */}
+            <Link href="/" className="flex items-center justify-center lg:mx-8">
               <span className="text-2xl font-bold tracking-wider whitespace-nowrap text-mea-gold">
                 MEA CULPA
               </span>
             </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-1">
-              {navItems.map((item) => (
+            {/* Right Navigation - Remaining items */}
+            <div className="hidden lg:flex items-center space-x-1 flex-1 justify-end">
+              {navItems.slice(3).map((item) => (
                 <div
                   key={item.href}
                   className="relative"
