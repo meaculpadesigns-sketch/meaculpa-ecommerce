@@ -85,7 +85,7 @@ export default function MessagesPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-white text-xl">{t('common.loading')}</div>
+        <div className="animate-pulse text-black dark:text-white text-xl">{t('common.loading')}</div>
       </div>
     );
   }
@@ -95,12 +95,12 @@ export default function MessagesPage() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <Link href="/profile" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4">
+          <Link href="/profile" className="inline-flex items-center gap-2 text-black dark:text-white hover:text-black dark:text-white transition-colors mb-4">
             <ArrowLeft size={20} />
             {t('profile.backToProfile')}
           </Link>
-          <h1 className="text-4xl font-bold text-white">{t('profile.messagesTitle')}</h1>
-          <p className="text-gray-400 mt-2">{t('profile.messagesDesc')}</p>
+          <h1 className="text-4xl font-bold text-black dark:text-white">{t('profile.messagesTitle')}</h1>
+          <p className="text-black dark:text-white mt-2">{t('profile.messagesDesc')}</p>
         </div>
 
         {/* Messages Container */}
@@ -112,7 +112,7 @@ export default function MessagesPage() {
           {/* Messages List */}
           <div className="space-y-4 mb-6 max-h-[500px] overflow-y-auto">
             {messages.length === 0 ? (
-              <div className="text-center py-12 text-gray-400">
+              <div className="text-center py-12 text-black dark:text-white">
                 <p>{t('profile.noMessages')}</p>
                 <p className="text-sm mt-2">{t('profile.noMessagesDesc')}</p>
               </div>
@@ -125,7 +125,7 @@ export default function MessagesPage() {
                   <div
                     className={`max-w-[70%] p-4 rounded-2xl ${
                       msg.isAdmin
-                        ? 'bg-zinc-800 text-white'
+                        ? 'bg-zinc-800 text-black dark:text-white'
                         : 'bg-mea-gold text-black'
                     }`}
                   >
@@ -161,7 +161,7 @@ export default function MessagesPage() {
         </motion.div>
 
         {/* Info */}
-        <div className="glass rounded-xl p-4 text-gray-400 text-sm">
+        <div className="glass rounded-xl p-4 text-black dark:text-white text-sm">
           <p>💬 {t('profile.messagesInfo')}</p>
           <p className="mt-2">⏰ {t('profile.avgResponseTime')}</p>
         </div>

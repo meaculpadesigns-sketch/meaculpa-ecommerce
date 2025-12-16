@@ -192,7 +192,7 @@ export default function CardsPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-white text-xl">{t('common.loading')}</div>
+        <div className="animate-pulse text-black dark:text-white text-xl">{t('common.loading')}</div>
       </div>
     );
   }
@@ -202,14 +202,14 @@ export default function CardsPage() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <Link href="/profile" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4">
+          <Link href="/profile" className="inline-flex items-center gap-2 text-black dark:text-white hover:text-black dark:text-white transition-colors mb-4">
             <ArrowLeft size={20} />
             {t('profile.backToProfile')}
           </Link>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <CreditCard className="text-yellow-500" size={32} />
-              <h1 className="text-4xl font-bold text-white">{t('profile.cards')}</h1>
+              <h1 className="text-4xl font-bold text-black dark:text-white">{t('profile.cards')}</h1>
             </div>
             <button
               onClick={() => openModal()}
@@ -219,7 +219,7 @@ export default function CardsPage() {
               {t('profile.addCard')}
             </button>
           </div>
-          <p className="text-gray-400 mt-2">{t('profile.savedCards')}</p>
+          <p className="text-black dark:text-white mt-2">{t('profile.savedCards')}</p>
         </div>
 
         {/* Cards Grid */}
@@ -229,11 +229,11 @@ export default function CardsPage() {
             animate={{ opacity: 1, y: 0 }}
             className="glass rounded-2xl p-12 text-center"
           >
-            <CreditCard className="mx-auto mb-6 text-gray-400" size={80} />
-            <h2 className="text-2xl font-bold text-white mb-4">
+            <CreditCard className="mx-auto mb-6 text-black dark:text-white" size={80} />
+            <h2 className="text-2xl font-bold text-black dark:text-white mb-4">
               {t('profile.noCards')}
             </h2>
-            <p className="text-gray-400 mb-8">
+            <p className="text-black dark:text-white mb-8">
               {t('profile.noCardsDesc')}
             </p>
           </motion.div>
@@ -261,17 +261,17 @@ export default function CardsPage() {
                     </div>
 
                     <div>
-                      <p className="text-white text-xl font-mono mb-4 tracking-wider">
+                      <p className="text-black dark:text-white text-xl font-mono mb-4 tracking-wider">
                         {maskCardNumber(card.cardNumber)}
                       </p>
                       <div className="flex items-end justify-between">
                         <div>
-                          <p className="text-gray-400 text-xs mb-1">{t('profile.cardHolder')}</p>
-                          <p className="text-white font-medium uppercase">{card.cardHolder}</p>
+                          <p className="text-black dark:text-white text-xs mb-1">{t('profile.cardHolder')}</p>
+                          <p className="text-black dark:text-white font-medium uppercase">{card.cardHolder}</p>
                         </div>
                         <div className="text-right">
-                          <p className="text-gray-400 text-xs mb-1">{t('profile.expiryDate')}</p>
-                          <p className="text-white font-medium">{card.expiryDate}</p>
+                          <p className="text-black dark:text-white text-xs mb-1">{t('profile.expiryDate')}</p>
+                          <p className="text-black dark:text-white font-medium">{card.expiryDate}</p>
                         </div>
                       </div>
                     </div>
@@ -282,7 +282,7 @@ export default function CardsPage() {
                 <div className="flex gap-2 mt-4">
                   <button
                     onClick={() => openModal(card)}
-                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 glass rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors text-white"
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 glass rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors text-black dark:text-white"
                   >
                     <Edit size={16} />
                     {t('profile.edit')}
@@ -300,7 +300,7 @@ export default function CardsPage() {
         )}
 
         {/* Security Notice */}
-        <div className="glass rounded-xl p-4 text-gray-400 text-sm mt-6">
+        <div className="glass rounded-xl p-4 text-black dark:text-white text-sm mt-6">
           <p>🔒 {t('profile.cardSecurity')}</p>
         </div>
 
@@ -314,12 +314,12 @@ export default function CardsPage() {
               style={{ backgroundColor: '#374151', border: '1px solid #4B5563' }}
             >
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-white">
+                <h2 className="text-2xl font-bold text-black dark:text-white">
                   {editingCard ? t('profile.editCard') : t('profile.addCard')}
                 </h2>
                 <button
                   onClick={closeModal}
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-black dark:text-white hover:text-black dark:text-white transition-colors"
                 >
                   <X size={24} />
                 </button>
@@ -327,7 +327,7 @@ export default function CardsPage() {
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-white font-medium mb-2">{t('profile.cardNumber')}</label>
+                  <label className="block text-black dark:text-white font-medium mb-2">{t('profile.cardNumber')}</label>
                   <input
                     type="text"
                     value={formData.cardNumber}
@@ -339,7 +339,7 @@ export default function CardsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white font-medium mb-2">{t('profile.cardHolder')}</label>
+                  <label className="block text-black dark:text-white font-medium mb-2">{t('profile.cardHolder')}</label>
                   <input
                     type="text"
                     value={formData.cardHolder}
@@ -351,7 +351,7 @@ export default function CardsPage() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-white font-medium mb-2">{t('profile.expiryDate')}</label>
+                    <label className="block text-black dark:text-white font-medium mb-2">{t('profile.expiryDate')}</label>
                     <input
                       type="text"
                       value={formData.expiryDate}
@@ -362,7 +362,7 @@ export default function CardsPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-white font-medium mb-2">CVV</label>
+                    <label className="block text-black dark:text-white font-medium mb-2">CVV</label>
                     <input
                       type="text"
                       value={formData.cvv}
@@ -380,7 +380,7 @@ export default function CardsPage() {
                 </div>
 
                 <div>
-                  <label className="flex items-center gap-2 text-white font-medium">
+                  <label className="flex items-center gap-2 text-black dark:text-white font-medium">
                     <input
                       type="checkbox"
                       checked={formData.isDefault}

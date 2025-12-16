@@ -85,7 +85,7 @@ export default function BodyInfoPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-white text-xl">{t('common.loading')}</div>
+        <div className="animate-pulse text-black dark:text-white text-xl">{t('common.loading')}</div>
       </div>
     );
   }
@@ -95,12 +95,12 @@ export default function BodyInfoPage() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <Link href="/profile" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4">
+          <Link href="/profile" className="inline-flex items-center gap-2 text-black dark:text-white hover:text-black dark:text-white transition-colors mb-4">
             <ArrowLeft size={20} />
             {t('profile.backToProfile')}
           </Link>
-          <h1 className="text-4xl font-bold text-white">{t('profile.bodyInfoTitle')}</h1>
-          <p className="text-gray-400 mt-2">{t('profile.bodyInfoSubtitle')}</p>
+          <h1 className="text-4xl font-bold text-black dark:text-white">{t('profile.bodyInfoTitle')}</h1>
+          <p className="text-black dark:text-white mt-2">{t('profile.bodyInfoSubtitle')}</p>
         </div>
 
         {/* Form */}
@@ -112,7 +112,7 @@ export default function BodyInfoPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Gender */}
             <div className="md:col-span-2">
-              <label className="block text-white font-medium mb-3">{t('profile.gender')}</label>
+              <label className="block text-black dark:text-white font-medium mb-3">{t('profile.gender')}</label>
               <div className="flex gap-4">
                 {[
                   { value: 'female', label: t('profile.female') },
@@ -125,7 +125,7 @@ export default function BodyInfoPage() {
                     className={`px-6 py-3 rounded-lg transition-all ${
                       formData.gender === option.value
                         ? 'bg-mea-gold text-black font-semibold'
-                        : 'glass hover:bg-white hover:bg-opacity-10 text-gray-300'
+                        : 'glass hover:bg-white hover:bg-opacity-10 text-black dark:text-white'
                     }`}
                   >
                     {option.label}
@@ -136,7 +136,7 @@ export default function BodyInfoPage() {
 
             {/* Height */}
             <div>
-              <label className="block text-white font-medium mb-2">{t('profile.height')}</label>
+              <label className="block text-black dark:text-white font-medium mb-2">{t('profile.height')}</label>
               <input
                 type="number"
                 value={formData.height}
@@ -148,7 +148,7 @@ export default function BodyInfoPage() {
 
             {/* Weight */}
             <div>
-              <label className="block text-white font-medium mb-2">{t('profile.weight')}</label>
+              <label className="block text-black dark:text-white font-medium mb-2">{t('profile.weight')}</label>
               <input
                 type="number"
                 value={formData.weight}
@@ -160,7 +160,7 @@ export default function BodyInfoPage() {
 
             {/* Chest Size */}
             <div>
-              <label className="block text-white font-medium mb-2">{t('profile.chestSize')}</label>
+              <label className="block text-black dark:text-white font-medium mb-2">{t('profile.chestSize')}</label>
               <input
                 type="number"
                 value={formData.chestSize}
@@ -172,7 +172,7 @@ export default function BodyInfoPage() {
 
             {/* Waist Size */}
             <div>
-              <label className="block text-white font-medium mb-2">{t('profile.waistSize')}</label>
+              <label className="block text-black dark:text-white font-medium mb-2">{t('profile.waistSize')}</label>
               <input
                 type="number"
                 value={formData.waistSize}
@@ -184,7 +184,7 @@ export default function BodyInfoPage() {
 
             {/* Hip Size */}
             <div>
-              <label className="block text-white font-medium mb-2">{t('profile.hipSize')}</label>
+              <label className="block text-black dark:text-white font-medium mb-2">{t('profile.hipSize')}</label>
               <input
                 type="number"
                 value={formData.hipSize}
@@ -196,7 +196,7 @@ export default function BodyInfoPage() {
 
             {/* Shoe Size */}
             <div>
-              <label className="block text-white font-medium mb-2">{t('profile.shoeSize')}</label>
+              <label className="block text-black dark:text-white font-medium mb-2">{t('profile.shoeSize')}</label>
               <input
                 type="number"
                 value={formData.shoeSize}
@@ -221,7 +221,7 @@ export default function BodyInfoPage() {
         </motion.div>
 
         {/* Info */}
-        <div className="glass rounded-xl p-4 text-gray-400 text-sm mt-6">
+        <div className="glass rounded-xl p-4 text-black dark:text-white text-sm mt-6">
           <p>📏 {t('profile.bodyInfoInfo')}</p>
           <p className="mt-2">🔒 {t('profile.bodyInfoPrivacy')}</p>
         </div>

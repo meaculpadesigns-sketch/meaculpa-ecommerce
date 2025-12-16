@@ -67,7 +67,7 @@ export default function ProfilePage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-white text-xl">{t('common.loading')}</div>
+        <div className="animate-pulse text-black dark:text-white text-xl">{t('common.loading')}</div>
       </div>
     );
   }
@@ -150,16 +150,16 @@ export default function ProfilePage() {
             </div>
 
             <div className="flex-grow">
-              <h1 className="text-3xl font-bold text-white mb-2">
+              <h1 className="text-3xl font-bold text-black dark:text-white mb-2">
                 {user.firstName} {user.lastName}
               </h1>
-              <p className="text-gray-400 mb-1">{user.email}</p>
-              <p className="text-gray-400">{user.phone}</p>
+              <p className="text-black dark:text-white mb-1">{user.email}</p>
+              <p className="text-black dark:text-white">{user.phone}</p>
             </div>
 
             <div className="flex gap-3">
               <button className="p-3 glass rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors">
-                <Settings className="text-white" size={20} />
+                <Settings className="text-black dark:text-white" size={20} />
               </button>
               <button
                 onClick={handleLogout}
@@ -189,14 +189,14 @@ export default function ProfilePage() {
 
                   <div className="relative">
                     <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${section.color} mb-4`}>
-                      <section.icon className="text-white" size={24} />
+                      <section.icon className="text-black dark:text-white" size={24} />
                     </div>
 
-                    <h3 className="text-xl font-semibold text-white mb-2">
+                    <h3 className="text-xl font-semibold text-black dark:text-white mb-2">
                       {section.title}
                     </h3>
 
-                    <p className="text-gray-400 text-sm">
+                    <p className="text-black dark:text-white text-sm">
                       {section.description}
                     </p>
 
@@ -222,7 +222,7 @@ export default function ProfilePage() {
             className="mt-8 glass rounded-2xl p-8"
           >
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-white">{t('profile.recentOrders')}</h2>
+              <h2 className="text-2xl font-bold text-black dark:text-white">{t('profile.recentOrders')}</h2>
               <Link href="/profile/orders" className="text-mea-gold hover:underline">
                 {t('profile.viewAll')}
               </Link>
@@ -237,10 +237,10 @@ export default function ProfilePage() {
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-white font-medium mb-1">
+                      <p className="text-black dark:text-white font-medium mb-1">
                         {t('profile.order')} #{order.orderNumber}
                       </p>
-                      <p className="text-gray-400 text-sm">
+                      <p className="text-black dark:text-white text-sm">
                         {new Date(order.createdAt).toLocaleDateString('tr-TR')}
                       </p>
                     </div>

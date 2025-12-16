@@ -66,7 +66,7 @@ export default function CouponsPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-white text-xl">{t('common.loading')}</div>
+        <div className="animate-pulse text-black dark:text-white text-xl">{t('common.loading')}</div>
       </div>
     );
   }
@@ -79,15 +79,15 @@ export default function CouponsPage() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <Link href="/profile" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4">
+          <Link href="/profile" className="inline-flex items-center gap-2 text-black dark:text-white hover:text-black dark:text-white transition-colors mb-4">
             <ArrowLeft size={20} />
             {t('profile.backToProfile')}
           </Link>
           <div className="flex items-center gap-3">
             <Gift className="text-pink-500" size={32} />
-            <h1 className="text-4xl font-bold text-white">{t('profile.coupons')}</h1>
+            <h1 className="text-4xl font-bold text-black dark:text-white">{t('profile.coupons')}</h1>
           </div>
-          <p className="text-gray-400 mt-2">
+          <p className="text-black dark:text-white mt-2">
             {activeCoupons.length} {t('profile.activeCoupons')}
           </p>
         </div>
@@ -99,11 +99,11 @@ export default function CouponsPage() {
             animate={{ opacity: 1, y: 0 }}
             className="glass rounded-2xl p-12 text-center"
           >
-            <Gift className="mx-auto mb-6 text-gray-400" size={80} />
-            <h2 className="text-2xl font-bold text-white mb-4">
+            <Gift className="mx-auto mb-6 text-black dark:text-white" size={80} />
+            <h2 className="text-2xl font-bold text-black dark:text-white mb-4">
               {t('profile.noCoupons')}
             </h2>
-            <p className="text-gray-400 mb-8">
+            <p className="text-black dark:text-white mb-8">
               {t('profile.noCouponsDesc')}
             </p>
             <Link href="/products" className="btn-primary inline-block">
@@ -115,7 +115,7 @@ export default function CouponsPage() {
             {/* Active Coupons Section */}
             {activeCoupons.length > 0 && (
               <div className="mb-8">
-                <h2 className="text-2xl font-bold text-white mb-4">{t('profile.activeCoupons')}</h2>
+                <h2 className="text-2xl font-bold text-black dark:text-white mb-4">{t('profile.activeCoupons')}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {activeCoupons.map((coupon, index) => (
                     <motion.div
@@ -132,24 +132,24 @@ export default function CouponsPage() {
                       <div className="relative">
                         <div className="flex items-start justify-between mb-4">
                           <div>
-                            <div className="text-4xl font-bold text-white mb-2">
+                            <div className="text-4xl font-bold text-black dark:text-white mb-2">
                               {formatDiscount(coupon)}
                             </div>
-                            <p className="text-white text-opacity-90 text-sm">
+                            <p className="text-black dark:text-white text-opacity-90 text-sm">
                               {coupon.description}
                             </p>
                           </div>
-                          <Gift className="text-white" size={32} />
+                          <Gift className="text-black dark:text-white" size={32} />
                         </div>
 
                         {coupon.minAmount && (
-                          <p className="text-white text-opacity-80 text-sm mb-4">
+                          <p className="text-black dark:text-white text-opacity-80 text-sm mb-4">
                             {t('profile.minAmount')}: {i18n.language === 'tr' ? `₺${coupon.minAmount}` : `$${coupon.minAmount}`}
                           </p>
                         )}
 
                         <div className="bg-white bg-opacity-20 rounded-lg p-3 mb-3 flex items-center justify-between">
-                          <code className="text-white font-mono font-bold text-lg">
+                          <code className="text-black dark:text-white font-mono font-bold text-lg">
                             {coupon.code}
                           </code>
                           <button
@@ -157,14 +157,14 @@ export default function CouponsPage() {
                             className="p-2 bg-white bg-opacity-20 rounded-lg hover:bg-opacity-30 transition-colors"
                           >
                             {copiedCode === coupon.code ? (
-                              <Check className="text-white" size={20} />
+                              <Check className="text-black dark:text-white" size={20} />
                             ) : (
-                              <Copy className="text-white" size={20} />
+                              <Copy className="text-black dark:text-white" size={20} />
                             )}
                           </button>
                         </div>
 
-                        <p className="text-white text-opacity-80 text-xs">
+                        <p className="text-black dark:text-white text-opacity-80 text-xs">
                           {t('profile.validUntil')}: {new Date(coupon.expiryDate).toLocaleDateString(i18n.language === 'tr' ? 'tr-TR' : 'en-US')}
                         </p>
                       </div>
@@ -177,7 +177,7 @@ export default function CouponsPage() {
             {/* Used/Expired Coupons Section */}
             {usedCoupons.length > 0 && (
               <div>
-                <h2 className="text-2xl font-bold text-white mb-4">{t('profile.usedExpiredCoupons')}</h2>
+                <h2 className="text-2xl font-bold text-black dark:text-white mb-4">{t('profile.usedExpiredCoupons')}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {usedCoupons.map((coupon, index) => (
                     <motion.div
@@ -189,25 +189,25 @@ export default function CouponsPage() {
                     >
                       <div className="flex items-start justify-between mb-4">
                         <div>
-                          <div className="text-3xl font-bold text-gray-400 mb-2">
+                          <div className="text-3xl font-bold text-black dark:text-white mb-2">
                             {formatDiscount(coupon)}
                           </div>
-                          <p className="text-gray-400 text-sm">
+                          <p className="text-black dark:text-white text-sm">
                             {coupon.description}
                           </p>
                         </div>
-                        <span className="px-3 py-1 rounded-full bg-gray-500 bg-opacity-20 text-gray-400 text-xs">
+                        <span className="px-3 py-1 rounded-full bg-gray-500 bg-opacity-20 text-black dark:text-white text-xs">
                           {coupon.isUsed ? t('profile.used') : t('profile.expired')}
                         </span>
                       </div>
 
                       <div className="bg-gray-800 rounded-lg p-3 mb-3">
-                        <code className="text-gray-400 font-mono font-bold">
+                        <code className="text-black dark:text-white font-mono font-bold">
                           {coupon.code}
                         </code>
                       </div>
 
-                      <p className="text-gray-400 text-xs">
+                      <p className="text-black dark:text-white text-xs">
                         {t('profile.expiredOn')}: {new Date(coupon.expiryDate).toLocaleDateString(i18n.language === 'tr' ? 'tr-TR' : 'en-US')}
                       </p>
                     </motion.div>

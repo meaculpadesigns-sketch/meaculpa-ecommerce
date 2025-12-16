@@ -52,7 +52,7 @@ function OrdersContent() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-white text-xl">{t('common.loading')}</div>
+        <div className="animate-pulse text-black dark:text-white text-xl">{t('common.loading')}</div>
       </div>
     );
   }
@@ -95,17 +95,17 @@ function OrdersContent() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <Link href="/profile" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4">
+          <Link href="/profile" className="inline-flex items-center gap-2 text-black dark:text-white hover:text-black dark:text-white transition-colors mb-4">
             <ArrowLeft size={20} />
             {t('profile.backToProfile')}
           </Link>
           <div className="flex items-center gap-3">
             <Package className="text-blue-500" size={32} />
-            <h1 className="text-4xl font-bold text-white">
+            <h1 className="text-4xl font-bold text-black dark:text-white">
               {filter === 'delivered' ? t('profile.pastOrders') : t('profile.activeOrders')}
             </h1>
           </div>
-          <p className="text-gray-400 mt-2">
+          <p className="text-black dark:text-white mt-2">
             {filteredOrders.length} {t('profile.orders')}
           </p>
         </div>
@@ -117,7 +117,7 @@ function OrdersContent() {
             className={`px-6 py-3 rounded-lg transition-all ${
               !filter
                 ? 'bg-mea-gold text-black font-semibold'
-                : 'glass hover:bg-white hover:bg-opacity-10 text-gray-300'
+                : 'glass hover:bg-white hover:bg-opacity-10 text-black dark:text-white'
             }`}
           >
             {t('profile.activeOrders')}
@@ -127,7 +127,7 @@ function OrdersContent() {
             className={`px-6 py-3 rounded-lg transition-all ${
               filter === 'delivered'
                 ? 'bg-mea-gold text-black font-semibold'
-                : 'glass hover:bg-white hover:bg-opacity-10 text-gray-300'
+                : 'glass hover:bg-white hover:bg-opacity-10 text-black dark:text-white'
             }`}
           >
             {t('profile.pastOrders')}
@@ -141,11 +141,11 @@ function OrdersContent() {
             animate={{ opacity: 1, y: 0 }}
             className="glass rounded-2xl p-12 text-center"
           >
-            <Package className="mx-auto mb-6 text-gray-400" size={80} />
-            <h2 className="text-2xl font-bold text-white mb-4">
+            <Package className="mx-auto mb-6 text-black dark:text-white" size={80} />
+            <h2 className="text-2xl font-bold text-black dark:text-white mb-4">
               {t('profile.noOrders')}
             </h2>
-            <p className="text-gray-400 mb-8">
+            <p className="text-black dark:text-white mb-8">
               {t('profile.noOrdersDesc')}
             </p>
             <Link href="/products" className="btn-primary inline-block">
@@ -165,28 +165,28 @@ function OrdersContent() {
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                   <div className="flex-grow">
                     <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-xl font-bold text-white">
+                      <h3 className="text-xl font-bold text-black dark:text-white">
                         {t('profile.order')} #{order.orderNumber}
                       </h3>
                       <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
                         {getStatusText(order.status)}
                       </span>
                     </div>
-                    <p className="text-gray-400 text-sm mb-2">
+                    <p className="text-black dark:text-white text-sm mb-2">
                       {new Date(order.createdAt).toLocaleDateString(i18n.language === 'tr' ? 'tr-TR' : 'en-US', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric',
                       })}
                     </p>
-                    <p className="text-gray-300">
+                    <p className="text-black dark:text-white">
                       {order.items.length} {t('profile.products')}
                     </p>
                   </div>
 
                   <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
                     <div className="text-right">
-                      <p className="text-gray-400 text-sm mb-1">{t('profile.total')}</p>
+                      <p className="text-black dark:text-white text-sm mb-1">{t('profile.total')}</p>
                       <p className="text-2xl font-bold text-mea-gold">
                         {formatPrice(order.total, i18n.language)}
                       </p>
@@ -228,7 +228,7 @@ export default function OrdersPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center bg-home text-dark-page">
-        <div className="animate-pulse text-white text-xl">Yükleniyor...</div>
+        <div className="animate-pulse text-black dark:text-white text-xl">Yükleniyor...</div>
       </div>
     }>
       <OrdersContent />

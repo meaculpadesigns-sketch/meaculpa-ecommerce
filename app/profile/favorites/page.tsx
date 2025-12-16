@@ -46,7 +46,7 @@ export default function FavoritesPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-white text-xl">{t('common.loading')}</div>
+        <div className="animate-pulse text-black dark:text-white text-xl">{t('common.loading')}</div>
       </div>
     );
   }
@@ -58,15 +58,15 @@ export default function FavoritesPage() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <Link href="/profile" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4">
+          <Link href="/profile" className="inline-flex items-center gap-2 text-black dark:text-white hover:text-black dark:text-white transition-colors mb-4">
             <ArrowLeft size={20} />
             {t('profile.backToProfile')}
           </Link>
           <div className="flex items-center gap-3">
             <Heart className="text-red-500" size={32} />
-            <h1 className="text-4xl font-bold text-white">{t('profile.favorites')}</h1>
+            <h1 className="text-4xl font-bold text-black dark:text-white">{t('profile.favorites')}</h1>
           </div>
-          <p className="text-gray-400 mt-2">
+          <p className="text-black dark:text-white mt-2">
             {favorites.length} {t('profile.products')}
           </p>
         </div>
@@ -78,11 +78,11 @@ export default function FavoritesPage() {
             animate={{ opacity: 1, y: 0 }}
             className="glass rounded-2xl p-12 text-center"
           >
-            <Heart className="mx-auto mb-6 text-gray-400" size={80} />
-            <h2 className="text-2xl font-bold text-white mb-4">
+            <Heart className="mx-auto mb-6 text-black dark:text-white" size={80} />
+            <h2 className="text-2xl font-bold text-black dark:text-white mb-4">
               {t('profile.noFavorites')}
             </h2>
-            <p className="text-gray-400 mb-8">
+            <p className="text-black dark:text-white mb-8">
               {t('profile.noFavoritesDesc')}
             </p>
             <Link href="/products" className="btn-primary inline-block">
@@ -105,12 +105,12 @@ export default function FavoritesPage() {
                     {t('common.loading')}...
                   </div>
                   <button className="absolute top-3 right-3 p-2 bg-red-500 bg-opacity-90 rounded-full hover:bg-opacity-100 transition-opacity">
-                    <Trash2 className="text-white" size={16} />
+                    <Trash2 className="text-black dark:text-white" size={16} />
                   </button>
                 </div>
 
                 <div className="p-4">
-                  <h3 className="text-lg font-bold text-white mb-2">
+                  <h3 className="text-lg font-bold text-black dark:text-white mb-2">
                     {t('common.loading')}...
                   </h3>
                   <p className="text-mea-gold font-semibold">

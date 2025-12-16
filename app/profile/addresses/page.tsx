@@ -145,7 +145,7 @@ export default function AddressesPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-white text-xl">{t('common.loading')}</div>
+        <div className="animate-pulse text-black dark:text-white text-xl">{t('common.loading')}</div>
       </div>
     );
   }
@@ -155,14 +155,14 @@ export default function AddressesPage() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <Link href="/profile" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4">
+          <Link href="/profile" className="inline-flex items-center gap-2 text-black dark:text-white hover:text-black dark:text-white transition-colors mb-4">
             <ArrowLeft size={20} />
             {t('profile.backToProfile')}
           </Link>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <MapPin className="text-purple-500" size={32} />
-              <h1 className="text-4xl font-bold text-white">{t('profile.addresses')}</h1>
+              <h1 className="text-4xl font-bold text-black dark:text-white">{t('profile.addresses')}</h1>
             </div>
             <button
               onClick={() => openModal()}
@@ -172,7 +172,7 @@ export default function AddressesPage() {
               {t('profile.addAddress')}
             </button>
           </div>
-          <p className="text-gray-400 mt-2">
+          <p className="text-black dark:text-white mt-2">
             {addresses.length} {t('profile.address')}
           </p>
         </div>
@@ -184,11 +184,11 @@ export default function AddressesPage() {
             animate={{ opacity: 1, y: 0 }}
             className="glass rounded-2xl p-12 text-center"
           >
-            <MapPin className="mx-auto mb-6 text-gray-400" size={80} />
-            <h2 className="text-2xl font-bold text-white mb-4">
+            <MapPin className="mx-auto mb-6 text-black dark:text-white" size={80} />
+            <h2 className="text-2xl font-bold text-black dark:text-white mb-4">
               {t('profile.noAddresses')}
             </h2>
-            <p className="text-gray-400 mb-8">
+            <p className="text-black dark:text-white mb-8">
               {t('profile.noAddressesDesc')}
             </p>
           </motion.div>
@@ -208,8 +208,8 @@ export default function AddressesPage() {
                   </span>
                 )}
 
-                <h3 className="text-xl font-bold text-white mb-3">{address.title}</h3>
-                <div className="space-y-2 text-gray-300 mb-4">
+                <h3 className="text-xl font-bold text-black dark:text-white mb-3">{address.title}</h3>
+                <div className="space-y-2 text-black dark:text-white mb-4">
                   <p className="font-medium">{address.firstName} {address.lastName}</p>
                   <p>{address.phone}</p>
                   <p>{address.address}</p>
@@ -247,12 +247,12 @@ export default function AddressesPage() {
               style={{ backgroundColor: '#374151', border: '1px solid #4B5563' }}
             >
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-white">
+                <h2 className="text-2xl font-bold text-black dark:text-white">
                   {editingAddress ? t('profile.editAddress') : t('profile.addAddress')}
                 </h2>
                 <button
                   onClick={closeModal}
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-black dark:text-white hover:text-black dark:text-white transition-colors"
                 >
                   <X size={24} />
                 </button>
@@ -260,7 +260,7 @@ export default function AddressesPage() {
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-white font-medium mb-2">{t('profile.addressTitle')}</label>
+                  <label className="block text-black dark:text-white font-medium mb-2">{t('profile.addressTitle')}</label>
                   <input
                     type="text"
                     value={formData.title}
@@ -272,7 +272,7 @@ export default function AddressesPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-white font-medium mb-2">{t('auth.firstName')}</label>
+                    <label className="block text-black dark:text-white font-medium mb-2">{t('auth.firstName')}</label>
                     <input
                       type="text"
                       value={formData.firstName}
@@ -281,7 +281,7 @@ export default function AddressesPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-white font-medium mb-2">{t('auth.lastName')}</label>
+                    <label className="block text-black dark:text-white font-medium mb-2">{t('auth.lastName')}</label>
                     <input
                       type="text"
                       value={formData.lastName}
@@ -292,7 +292,7 @@ export default function AddressesPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white font-medium mb-2">{t('profile.phone')}</label>
+                  <label className="block text-black dark:text-white font-medium mb-2">{t('profile.phone')}</label>
                   <input
                     type="tel"
                     value={formData.phone}
@@ -302,7 +302,7 @@ export default function AddressesPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white font-medium mb-2">{t('profile.address')}</label>
+                  <label className="block text-black dark:text-white font-medium mb-2">{t('profile.address')}</label>
                   <textarea
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
@@ -313,7 +313,7 @@ export default function AddressesPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-white font-medium mb-2">{t('profile.city')}</label>
+                    <label className="block text-black dark:text-white font-medium mb-2">{t('profile.city')}</label>
                     <input
                       type="text"
                       value={formData.city}
@@ -322,7 +322,7 @@ export default function AddressesPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-white font-medium mb-2">
+                    <label className="block text-black dark:text-white font-medium mb-2">
                       {i18n.language === 'tr' ? 'İl/Eyalet' : 'State/Province'}
                     </label>
                     <input
@@ -336,7 +336,7 @@ export default function AddressesPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-white font-medium mb-2">{t('profile.zipCode')}</label>
+                    <label className="block text-black dark:text-white font-medium mb-2">{t('profile.zipCode')}</label>
                     <input
                       type="text"
                       value={formData.zipCode}
@@ -345,7 +345,7 @@ export default function AddressesPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-white font-medium mb-2">
+                    <label className="block text-black dark:text-white font-medium mb-2">
                       {i18n.language === 'tr' ? 'Ülke' : 'Country'}
                     </label>
                     <input
@@ -358,7 +358,7 @@ export default function AddressesPage() {
                 </div>
 
                 <div>
-                  <label className="flex items-center gap-2 text-white font-medium">
+                  <label className="flex items-center gap-2 text-black dark:text-white font-medium">
                     <input
                       type="checkbox"
                       checked={formData.isDefault}
