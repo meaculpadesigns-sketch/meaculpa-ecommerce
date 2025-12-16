@@ -12,9 +12,10 @@ interface ProductCardProps {
   product: Product;
   index: number;
   viewMode?: 'grid' | 'list';
+  showPrice?: boolean;
 }
 
-export default function ProductCard({ product, index, viewMode = 'grid' }: ProductCardProps) {
+export default function ProductCard({ product, index, viewMode = 'grid', showPrice = false }: ProductCardProps) {
   const { t, i18n } = useTranslation();
   const [isFavorite, setIsFavorite] = useState(false);
   const [showStory, setShowStory] = useState(false);
@@ -204,31 +205,33 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
         </Link>
 
         {/* Info */}
-        <div className="p-6 bg-gradient-to-br from-mea-gold to-yellow-600">
+        <div className="p-6 glass bg-white bg-opacity-50 dark:bg-black dark:bg-opacity-50">
           <Link href={`/products/${product.id}`}>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2 hover:text-white transition-colors">
+            <h3 className="text-xl font-semibold text-black dark:text-white mb-2 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
               {name}
             </h3>
           </Link>
 
           {story && (
-            <p className="text-gray-800 text-sm mb-4 line-clamp-2">
+            <p className="text-black dark:text-white text-sm mb-4 line-clamp-2">
               {story}
             </p>
           )}
 
-          <div className="flex items-baseline gap-2 mb-4">
-            <span className="text-lg font-bold text-gray-900">{formatPrice(product.price, i18n.language)}</span>
-            {product.oldPrice && (
-              <span className="text-gray-700 line-through text-xs">{formatPrice(product.oldPrice, i18n.language)}</span>
-            )}
-          </div>
+          {showPrice && (
+            <div className="flex items-baseline gap-2 mb-4">
+              <span className="text-lg font-bold text-black dark:text-white">{formatPrice(product.price, i18n.language)}</span>
+              {product.oldPrice && (
+                <span className="text-black dark:text-white opacity-60 line-through text-xs">{formatPrice(product.oldPrice, i18n.language)}</span>
+              )}
+            </div>
+          )}
 
           {/* Story Button */}
           {product.story && (
             <button
               onClick={() => setShowStory(!showStory)}
-              className="text-gray-900 text-sm hover:text-white transition-colors mb-2 font-medium"
+              className="text-black dark:text-white text-sm hover:text-gray-700 dark:hover:text-gray-300 transition-colors mb-2 font-medium"
             >
               {t('products.viewStory')}
             </button>
@@ -241,8 +244,8 @@ export default function ProductCard({ product, index, viewMode = 'grid' }: Produ
                 key={size.size}
                 className={`px-2 py-1 rounded text-xs ${
                   size.inStock
-                    ? 'bg-gray-900 text-white'
-                    : 'bg-gray-700 text-gray-300'
+                    ? 'bg-black dark:bg-white text-white dark:text-black'
+                    : 'bg-gray-700 dark:bg-gray-300 text-gray-300 dark:text-gray-700'
                 }`}
               >
                 {size.size}
