@@ -47,8 +47,8 @@ export default function AdminLoginPage() {
             <div className="inline-flex items-center justify-center w-16 h-16 bg-mea-gold rounded-full mb-4">
               <Lock className="text-black" size={32} />
             </div>
-            <h1 className="text-3xl font-bold text-white mb-2">Admin Girişi</h1>
-            <p className="text-gray-400">Mea Culpa Yönetim Paneli</p>
+            <h1 className="text-3xl font-bold text-black dark:text-white mb-2">Admin Girişi</h1>
+            <p className="text-black dark:text-white">Mea Culpa Yönetim Paneli</p>
           </div>
 
           {/* Error Message */}
@@ -65,19 +65,19 @@ export default function AdminLoginPage() {
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-white font-medium mb-2">
+              <label className="block text-black dark:text-white font-medium mb-2">
                 Kullanıcı Adı
               </label>
               <div className="relative">
                 <div className="absolute left-4 top-1/2 -translate-y-1/2">
-                  <User className="text-gray-400" size={20} />
+                  <User className="text-black dark:text-white" size={20} />
                 </div>
                 <input
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="Kullanıcı adınızı girin"
-                  className="w-full pl-12 pr-4 py-3 bg-zinc-800 bg-opacity-50 border border-zinc-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-mea-gold transition-colors"
+                  className="w-full pl-12 pr-4 py-3 bg-zinc-800 bg-opacity-50 border border-zinc-700 rounded-lg text-black dark:text-white placeholder-gray-500 focus:outline-none focus:border-mea-gold transition-colors"
                   required
                   disabled={loading}
                 />
@@ -85,19 +85,19 @@ export default function AdminLoginPage() {
             </div>
 
             <div>
-              <label className="block text-white font-medium mb-2">
+              <label className="block text-black dark:text-white font-medium mb-2">
                 Şifre
               </label>
               <div className="relative">
                 <div className="absolute left-4 top-1/2 -translate-y-1/2">
-                  <Lock className="text-gray-400" size={20} />
+                  <Lock className="text-black dark:text-white" size={20} />
                 </div>
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Şifrenizi girin"
-                  className="w-full pl-12 pr-4 py-3 bg-zinc-800 bg-opacity-50 border border-zinc-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-mea-gold transition-colors"
+                  className="w-full pl-12 pr-4 py-3 bg-zinc-800 bg-opacity-50 border border-zinc-700 rounded-lg text-black dark:text-white placeholder-gray-500 focus:outline-none focus:border-mea-gold transition-colors"
                   required
                   disabled={loading}
                 />

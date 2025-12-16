@@ -141,10 +141,10 @@ export default function AdminCreationsPage() {
 
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-white mb-2">
+            <h1 className="text-4xl font-bold text-black dark:text-white mb-2">
               Kreasyon Yönetimi
             </h1>
-            <p className="text-gray-400">
+            <p className="text-black dark:text-white">
               Ana sayfada gösterilecek kreasyonları yönetin
             </p>
           </div>
@@ -185,18 +185,18 @@ export default function AdminCreationsPage() {
 
               <div className="p-4">
                 <div className="mb-3">
-                  <h3 className="text-xl font-bold text-white mb-1">
+                  <h3 className="text-xl font-bold text-black dark:text-white mb-1">
                     {creation.name}
                   </h3>
-                  <p className="text-gray-400 text-sm">{creation.season}</p>
+                  <p className="text-black dark:text-white text-sm">{creation.season}</p>
                 </div>
 
-                <p className="text-gray-300 text-sm mb-3 line-clamp-2">
+                <p className="text-black dark:text-white text-sm mb-3 line-clamp-2">
                   {creation.description}
                 </p>
 
                 {creation.story && (
-                  <p className="text-gray-400 text-xs mb-4 italic line-clamp-2">
+                  <p className="text-black dark:text-white text-xs mb-4 italic line-clamp-2">
                     "{creation.story}"
                   </p>
                 )}
@@ -223,11 +223,11 @@ export default function AdminCreationsPage() {
 
         {creations.length === 0 && (
           <div className="text-center py-20">
-            <ImageIcon className="mx-auto mb-6 text-gray-400" size={80} />
-            <h2 className="text-2xl font-bold text-white mb-4">
+            <ImageIcon className="mx-auto mb-6 text-black dark:text-white" size={80} />
+            <h2 className="text-2xl font-bold text-black dark:text-white mb-4">
               Henüz Kreasyon Yok
             </h2>
-            <p className="text-gray-400 mb-8">
+            <p className="text-black dark:text-white mb-8">
               Yeni kreasyon eklemek için yukarıdaki butona tıklayın
             </p>
           </div>
@@ -242,12 +242,12 @@ export default function AdminCreationsPage() {
               className="glass rounded-2xl p-4 md:p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
             >
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-white">
+                <h2 className="text-2xl font-bold text-black dark:text-white">
                   {editingCreation ? 'Kreasyon Düzenle' : 'Yeni Kreasyon Ekle'}
                 </h2>
                 <button
                   onClick={closeModal}
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-black dark:text-white hover:text-black dark:text-white transition-colors"
                 >
                   <X size={24} />
                 </button>
@@ -255,7 +255,7 @@ export default function AdminCreationsPage() {
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-white font-medium mb-2">
+                  <label className="block text-black dark:text-white font-medium mb-2">
                     Kreasyon Adı
                   </label>
                   <input
@@ -271,7 +271,7 @@ export default function AdminCreationsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white font-medium mb-2">
+                  <label className="block text-black dark:text-white font-medium mb-2">
                     Açıklama
                   </label>
                   <textarea
@@ -287,7 +287,7 @@ export default function AdminCreationsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white font-medium mb-2">
+                  <label className="block text-black dark:text-white font-medium mb-2">
                     Hikaye (Opsiyonel)
                   </label>
                   <textarea
@@ -302,7 +302,7 @@ export default function AdminCreationsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white font-medium mb-2">
+                  <label className="block text-black dark:text-white font-medium mb-2">
                     Sezon
                   </label>
                   <select
@@ -324,7 +324,7 @@ export default function AdminCreationsPage() {
                 </div>
 
                 <div>
-                  <label className="flex items-center gap-2 text-white font-medium mb-2">
+                  <label className="flex items-center gap-2 text-black dark:text-white font-medium mb-2">
                     <input
                       type="checkbox"
                       checked={formData.featured}
@@ -338,7 +338,7 @@ export default function AdminCreationsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white font-medium mb-2">
+                  <label className="block text-black dark:text-white font-medium mb-2">
                     Görsel
                   </label>
                   {formData.image && (

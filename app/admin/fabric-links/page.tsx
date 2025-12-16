@@ -149,10 +149,10 @@ export default function AdminFabricLinksPage() {
 
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-white mb-2">
+            <h1 className="text-4xl font-bold text-black dark:text-white mb-2">
               Kumaş Linkleri Yönetimi
             </h1>
-            <p className="text-gray-400">
+            <p className="text-black dark:text-white">
               Sipariş edilen kumaşların linklerini ekleyin ve yönetin
             </p>
           </div>
@@ -188,28 +188,28 @@ export default function AdminFabricLinksPage() {
               </div>
 
               <div className="p-4">
-                <h3 className="text-xl font-bold text-white mb-2">
+                <h3 className="text-xl font-bold text-black dark:text-white mb-2">
                   {fabric.name}
                 </h3>
 
                 <div className="space-y-1 mb-3 text-sm">
-                  <p className="text-gray-400">
+                  <p className="text-black dark:text-white">
                     <span className="text-mea-gold">Tedarikçi:</span> {fabric.supplier}
                   </p>
-                  <p className="text-gray-400">
+                  <p className="text-black dark:text-white">
                     <span className="text-mea-gold">Renk:</span> {fabric.color}
                   </p>
-                  <p className="text-gray-400">
+                  <p className="text-black dark:text-white">
                     <span className="text-mea-gold">Malzeme:</span> {fabric.material}
                   </p>
                   {fabric.price && fabric.price > 0 && (
-                    <p className="text-gray-400">
+                    <p className="text-black dark:text-white">
                       <span className="text-mea-gold">Fiyat:</span> ₺{fabric.price}
                     </p>
                   )}
                 </div>
 
-                <p className="text-gray-300 text-sm mb-4 line-clamp-2">
+                <p className="text-black dark:text-white text-sm mb-4 line-clamp-2">
                   {fabric.description}
                 </p>
 
@@ -245,11 +245,11 @@ export default function AdminFabricLinksPage() {
 
         {fabrics.length === 0 && (
           <div className="text-center py-20">
-            <LinkIcon className="mx-auto mb-6 text-gray-400" size={80} />
-            <h2 className="text-2xl font-bold text-white mb-4">
+            <LinkIcon className="mx-auto mb-6 text-black dark:text-white" size={80} />
+            <h2 className="text-2xl font-bold text-black dark:text-white mb-4">
               Henüz Kumaş Linki Yok
             </h2>
-            <p className="text-gray-400 mb-8">
+            <p className="text-black dark:text-white mb-8">
               Yeni kumaş linki eklemek için yukarıdaki butona tıklayın
             </p>
           </div>
@@ -264,12 +264,12 @@ export default function AdminFabricLinksPage() {
               className="glass rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
             >
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-white">
+                <h2 className="text-2xl font-bold text-black dark:text-white">
                   {editingFabric ? 'Kumaş Linki Düzenle' : 'Yeni Kumaş Linki Ekle'}
                 </h2>
                 <button
                   onClick={closeModal}
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-black dark:text-white hover:text-black dark:text-white transition-colors"
                 >
                   <X size={24} />
                 </button>
@@ -277,7 +277,7 @@ export default function AdminFabricLinksPage() {
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-white font-medium mb-2">
+                  <label className="block text-black dark:text-white font-medium mb-2">
                     Kumaş Adı
                   </label>
                   <input
@@ -294,7 +294,7 @@ export default function AdminFabricLinksPage() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-white font-medium mb-2">
+                    <label className="block text-black dark:text-white font-medium mb-2">
                       Tedarikçi
                     </label>
                     <input
@@ -310,7 +310,7 @@ export default function AdminFabricLinksPage() {
                   </div>
 
                   <div>
-                    <label className="block text-white font-medium mb-2">
+                    <label className="block text-black dark:text-white font-medium mb-2">
                       Renk
                     </label>
                     <input
@@ -328,7 +328,7 @@ export default function AdminFabricLinksPage() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-white font-medium mb-2">
+                    <label className="block text-black dark:text-white font-medium mb-2">
                       Malzeme
                     </label>
                     <input
@@ -344,7 +344,7 @@ export default function AdminFabricLinksPage() {
                   </div>
 
                   <div>
-                    <label className="block text-white font-medium mb-2">
+                    <label className="block text-black dark:text-white font-medium mb-2">
                       Fiyat (₺) - Opsiyonel
                     </label>
                     <input
@@ -362,7 +362,7 @@ export default function AdminFabricLinksPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white font-medium mb-2">
+                  <label className="block text-black dark:text-white font-medium mb-2">
                     Açıklama
                   </label>
                   <textarea
@@ -378,7 +378,7 @@ export default function AdminFabricLinksPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white font-medium mb-2">
+                  <label className="block text-black dark:text-white font-medium mb-2">
                     Link (URL)
                   </label>
                   <input
@@ -394,7 +394,7 @@ export default function AdminFabricLinksPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white font-medium mb-2">
+                  <label className="block text-black dark:text-white font-medium mb-2">
                     Kumaş Görseli
                   </label>
                   {formData.image && (

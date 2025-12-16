@@ -138,7 +138,7 @@ export default function AdminMessagesPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-white text-xl">Yükleniyor...</div>
+        <div className="animate-pulse text-black dark:text-white text-xl">Yükleniyor...</div>
       </div>
     );
   }
@@ -157,31 +157,31 @@ export default function AdminMessagesPage() {
         <AdminBackButton />
 
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Mesajlar</h1>
-          <p className="text-gray-400">Müşteri mesajlarını görüntüleyin ve yanıtlayın</p>
+          <h1 className="text-4xl font-bold text-black dark:text-white mb-2">Mesajlar</h1>
+          <p className="text-black dark:text-white">Müşteri mesajlarını görüntüleyin ve yanıtlayın</p>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
           <div className="glass rounded-xl p-4">
-            <p className="text-gray-400 text-sm mb-1">Toplam</p>
-            <p className="text-white text-2xl font-bold">{stats.total}</p>
+            <p className="text-black dark:text-white text-sm mb-1">Toplam</p>
+            <p className="text-black dark:text-white text-2xl font-bold">{stats.total}</p>
           </div>
           <div className="glass rounded-xl p-4">
-            <p className="text-gray-400 text-sm mb-1">Okunmamış</p>
+            <p className="text-black dark:text-white text-sm mb-1">Okunmamış</p>
             <p className="text-mea-gold text-2xl font-bold">{stats.unread}</p>
           </div>
           <div className="glass rounded-xl p-4">
-            <p className="text-gray-400 text-sm mb-1">İletişim</p>
-            <p className="text-white text-2xl font-bold">{stats.contact}</p>
+            <p className="text-black dark:text-white text-sm mb-1">İletişim</p>
+            <p className="text-black dark:text-white text-2xl font-bold">{stats.contact}</p>
           </div>
           <div className="glass rounded-xl p-4">
-            <p className="text-gray-400 text-sm mb-1">Sipariş</p>
-            <p className="text-white text-2xl font-bold">{stats.order}</p>
+            <p className="text-black dark:text-white text-sm mb-1">Sipariş</p>
+            <p className="text-black dark:text-white text-2xl font-bold">{stats.order}</p>
           </div>
           <div className="glass rounded-xl p-4">
-            <p className="text-gray-400 text-sm mb-1">Destek</p>
-            <p className="text-white text-2xl font-bold">{stats.support}</p>
+            <p className="text-black dark:text-white text-sm mb-1">Destek</p>
+            <p className="text-black dark:text-white text-2xl font-bold">{stats.support}</p>
           </div>
         </div>
 
@@ -189,7 +189,7 @@ export default function AdminMessagesPage() {
         <div className="glass rounded-2xl p-6 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black dark:text-white" size={20} />
               <input
                 type="text"
                 placeholder="Mesaj ara..."
@@ -228,8 +228,8 @@ export default function AdminMessagesPage() {
           {filteredMessages.length === 0 ? (
             <div className="p-12 text-center">
               <Mail className="mx-auto mb-4 text-gray-600" size={60} />
-              <p className="text-white text-xl">Mesaj bulunamadı</p>
-              <p className="text-gray-400 mt-2">
+              <p className="text-black dark:text-white text-xl">Mesaj bulunamadı</p>
+              <p className="text-black dark:text-white mt-2">
                 {searchTerm || filterType !== 'all' || filterRead !== 'all'
                   ? 'Filtreleri değiştirmeyi deneyin'
                   : 'Henüz mesaj yok'}
@@ -256,20 +256,20 @@ export default function AdminMessagesPage() {
 
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <h3 className="text-white font-semibold">{message.name}</h3>
+                          <h3 className="text-black dark:text-white font-semibold">{message.name}</h3>
                           {!message.read && (
                             <span className="px-2 py-1 bg-mea-gold text-black text-xs font-semibold rounded-full">
                               YENİ
                             </span>
                           )}
                         </div>
-                        <p className="text-gray-400 text-sm mb-2">{message.email}</p>
-                        <p className="text-gray-300 line-clamp-2">{message.message}</p>
+                        <p className="text-black dark:text-white text-sm mb-2">{message.email}</p>
+                        <p className="text-black dark:text-white line-clamp-2">{message.message}</p>
                       </div>
                     </div>
 
                     <div className="text-right flex-shrink-0">
-                      <span className="text-sm text-gray-400">
+                      <span className="text-sm text-black dark:text-white">
                         {message.createdAt.toLocaleDateString('tr-TR')}
                       </span>
                       <p className="text-xs text-gray-500 mt-1">{getTypeLabel(message.type)}</p>
@@ -295,13 +295,13 @@ export default function AdminMessagesPage() {
                     {getTypeIcon(selectedMessage.type)}
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold text-white">{selectedMessage.name}</h2>
-                    <p className="text-gray-400">{getTypeLabel(selectedMessage.type)}</p>
+                    <h2 className="text-2xl font-bold text-black dark:text-white">{selectedMessage.name}</h2>
+                    <p className="text-black dark:text-white">{getTypeLabel(selectedMessage.type)}</p>
                   </div>
                 </div>
                 <button
                   onClick={() => setSelectedMessage(null)}
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-black dark:text-white hover:text-black dark:text-white transition-colors"
                 >
                   ✕
                 </button>
@@ -309,20 +309,20 @@ export default function AdminMessagesPage() {
 
               <div className="space-y-4 mb-6">
                 <div>
-                  <p className="text-gray-400 text-sm mb-1">E-posta</p>
-                  <p className="text-white">{selectedMessage.email}</p>
+                  <p className="text-black dark:text-white text-sm mb-1">E-posta</p>
+                  <p className="text-black dark:text-white">{selectedMessage.email}</p>
                 </div>
 
                 {selectedMessage.phone && (
                   <div>
-                    <p className="text-gray-400 text-sm mb-1">Telefon</p>
-                    <p className="text-white">{selectedMessage.phone}</p>
+                    <p className="text-black dark:text-white text-sm mb-1">Telefon</p>
+                    <p className="text-black dark:text-white">{selectedMessage.phone}</p>
                   </div>
                 )}
 
                 <div>
-                  <p className="text-gray-400 text-sm mb-1">Tarih</p>
-                  <p className="text-white">
+                  <p className="text-black dark:text-white text-sm mb-1">Tarih</p>
+                  <p className="text-black dark:text-white">
                     {selectedMessage.createdAt.toLocaleDateString('tr-TR', {
                       year: 'numeric',
                       month: 'long',
@@ -334,9 +334,9 @@ export default function AdminMessagesPage() {
                 </div>
 
                 <div>
-                  <p className="text-gray-400 text-sm mb-2">Mesaj</p>
+                  <p className="text-black dark:text-white text-sm mb-2">Mesaj</p>
                   <div className="glass rounded-xl p-4">
-                    <p className="text-white whitespace-pre-wrap">{selectedMessage.message}</p>
+                    <p className="text-black dark:text-white whitespace-pre-wrap">{selectedMessage.message}</p>
                   </div>
                 </div>
               </div>

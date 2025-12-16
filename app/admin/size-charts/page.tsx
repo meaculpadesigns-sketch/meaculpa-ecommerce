@@ -175,26 +175,26 @@ export default function AdminSizeChartsPage() {
     if (category === 'kimono') {
       return (
         <>
-          <th className="text-left text-gray-400 font-medium pb-3 px-2">Beden</th>
-          <th className="text-left text-gray-400 font-medium pb-3 px-2">Kimono Boyu</th>
-          <th className="text-left text-gray-400 font-medium pb-3 px-2">Kol Boyu</th>
+          <th className="text-left text-black dark:text-white font-medium pb-3 px-2">Beden</th>
+          <th className="text-left text-black dark:text-white font-medium pb-3 px-2">Kimono Boyu</th>
+          <th className="text-left text-black dark:text-white font-medium pb-3 px-2">Kol Boyu</th>
         </>
       );
     } else if (subCategory === 'krop') {
       return (
         <>
-          <th className="text-left text-gray-400 font-medium pb-3 px-2">Beden</th>
-          <th className="text-left text-gray-400 font-medium pb-3 px-2">Gömlek Boyu</th>
-          <th className="text-left text-gray-400 font-medium pb-3 px-2">Kol Boyu</th>
+          <th className="text-left text-black dark:text-white font-medium pb-3 px-2">Beden</th>
+          <th className="text-left text-black dark:text-white font-medium pb-3 px-2">Gömlek Boyu</th>
+          <th className="text-left text-black dark:text-white font-medium pb-3 px-2">Kol Boyu</th>
         </>
       );
     } else {
       return (
         <>
-          <th className="text-left text-gray-400 font-medium pb-3 px-2">Beden</th>
-          <th className="text-left text-gray-400 font-medium pb-3 px-2">Pijama Boyu</th>
-          <th className="text-left text-gray-400 font-medium pb-3 px-2">Gömlek Boyu</th>
-          <th className="text-left text-gray-400 font-medium pb-3 px-2">Kol Boyu</th>
+          <th className="text-left text-black dark:text-white font-medium pb-3 px-2">Beden</th>
+          <th className="text-left text-black dark:text-white font-medium pb-3 px-2">Pijama Boyu</th>
+          <th className="text-left text-black dark:text-white font-medium pb-3 px-2">Gömlek Boyu</th>
+          <th className="text-left text-black dark:text-white font-medium pb-3 px-2">Kol Boyu</th>
         </>
       );
     }
@@ -204,26 +204,26 @@ export default function AdminSizeChartsPage() {
     if (category === 'kimono') {
       return (
         <>
-          <td className="py-3 px-2 text-white font-semibold">{row.beden}</td>
-          <td className="py-3 px-2 text-gray-300">{row.kimonoBoyu}</td>
-          <td className="py-3 px-2 text-gray-300">{row.kolBoyu}</td>
+          <td className="py-3 px-2 text-black dark:text-white font-semibold">{row.beden}</td>
+          <td className="py-3 px-2 text-black dark:text-white">{row.kimonoBoyu}</td>
+          <td className="py-3 px-2 text-black dark:text-white">{row.kolBoyu}</td>
         </>
       );
     } else if (subCategory === 'krop') {
       return (
         <>
-          <td className="py-3 px-2 text-white font-semibold">{row.beden}</td>
-          <td className="py-3 px-2 text-gray-300">{row.gomlekBoyu}</td>
-          <td className="py-3 px-2 text-gray-300">{row.kolBoyu}</td>
+          <td className="py-3 px-2 text-black dark:text-white font-semibold">{row.beden}</td>
+          <td className="py-3 px-2 text-black dark:text-white">{row.gomlekBoyu}</td>
+          <td className="py-3 px-2 text-black dark:text-white">{row.kolBoyu}</td>
         </>
       );
     } else {
       return (
         <>
-          <td className="py-3 px-2 text-white font-semibold">{row.beden}</td>
-          <td className="py-3 px-2 text-gray-300">{row.pijamaBoyu}</td>
-          <td className="py-3 px-2 text-gray-300">{row.gomlekBoyu}</td>
-          <td className="py-3 px-2 text-gray-300">{row.kolBoyu}</td>
+          <td className="py-3 px-2 text-black dark:text-white font-semibold">{row.beden}</td>
+          <td className="py-3 px-2 text-black dark:text-white">{row.pijamaBoyu}</td>
+          <td className="py-3 px-2 text-black dark:text-white">{row.gomlekBoyu}</td>
+          <td className="py-3 px-2 text-black dark:text-white">{row.kolBoyu}</td>
         </>
       );
     }
@@ -232,7 +232,7 @@ export default function AdminSizeChartsPage() {
   if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-white text-xl">Yükleniyor...</div>
+        <div className="animate-pulse text-black dark:text-white text-xl">Yükleniyor...</div>
       </div>
     );
   }
@@ -256,8 +256,8 @@ export default function AdminSizeChartsPage() {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-white mb-2">Beden Tabloları</h1>
-            <p className="text-gray-400">Ürünler için beden tabloları oluşturun ve yönetin</p>
+            <h1 className="text-4xl font-bold text-black dark:text-white mb-2">Beden Tabloları</h1>
+            <p className="text-black dark:text-white">Ürünler için beden tabloları oluşturun ve yönetin</p>
           </div>
           <button
             onClick={() => openModal()}
@@ -286,8 +286,8 @@ export default function AdminSizeChartsPage() {
                     <div className="flex items-center gap-3 mb-2">
                       <Ruler className="text-mea-gold" size={24} />
                       <div>
-                        <h3 className="text-xl font-bold text-white">{chart.name}</h3>
-                        <p className="text-sm text-gray-400">{chart.nameEn}</p>
+                        <h3 className="text-xl font-bold text-black dark:text-white">{chart.name}</h3>
+                        <p className="text-sm text-black dark:text-white">{chart.nameEn}</p>
                       </div>
                     </div>
                     <div className="flex gap-2">
@@ -449,7 +449,7 @@ export default function AdminSizeChartsPage() {
                     <button
                       type="button"
                       onClick={addRow}
-                      className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm"
+                      className="px-4 py-2 bg-blue-500 text-black dark:text-white rounded-lg hover:bg-blue-600 transition-colors text-sm"
                     >
                       + Satır Ekle
                     </button>
@@ -546,7 +546,7 @@ export default function AdminSizeChartsPage() {
                 <div className="flex gap-4">
                   <button
                     type="submit"
-                    className="flex-1 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium"
+                    className="flex-1 py-3 bg-blue-500 text-black dark:text-white rounded-lg hover:bg-blue-600 transition-colors font-medium"
                   >
                     {editingChart ? 'Güncelle' : 'Oluştur'}
                   </button>

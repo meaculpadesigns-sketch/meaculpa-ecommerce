@@ -35,7 +35,7 @@ export default function AdminDashboard() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-white text-xl">Yükleniyor...</div>
+        <div className="animate-pulse text-black dark:text-white text-xl">Yükleniyor...</div>
       </div>
     );
   }
@@ -160,10 +160,10 @@ export default function AdminDashboard() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
             Admin Paneli
           </h1>
-          <p className="text-gray-400 text-lg">
+          <p className="text-black dark:text-white text-lg">
             Mea Culpa yönetim paneline hoş geldiniz
           </p>
         </motion.div>
@@ -184,14 +184,14 @@ export default function AdminDashboard() {
 
                   <div className="relative">
                     <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${section.color} mb-4`}>
-                      <section.icon className="text-white" size={24} />
+                      <section.icon className="text-black dark:text-white" size={24} />
                     </div>
 
-                    <h3 className="text-xl font-semibold text-white mb-2">
+                    <h3 className="text-xl font-semibold text-black dark:text-white mb-2">
                       {section.title}
                     </h3>
 
-                    <p className="text-gray-400 text-sm">
+                    <p className="text-black dark:text-white text-sm">
                       {section.description}
                     </p>
 
@@ -216,20 +216,20 @@ export default function AdminDashboard() {
           className="mt-12 grid grid-cols-1 md:grid-cols-4 gap-6"
         >
           <div className="glass rounded-xl p-6">
-            <p className="text-gray-400 text-sm mb-2">Toplam Ürün</p>
-            <p className="text-3xl font-bold text-white">0</p>
+            <p className="text-black dark:text-white text-sm mb-2">Toplam Ürün</p>
+            <p className="text-3xl font-bold text-black dark:text-white">0</p>
           </div>
           <div className="glass rounded-xl p-6">
-            <p className="text-gray-400 text-sm mb-2">Bekleyen Siparişler</p>
-            <p className="text-3xl font-bold text-white">0</p>
+            <p className="text-black dark:text-white text-sm mb-2">Bekleyen Siparişler</p>
+            <p className="text-3xl font-bold text-black dark:text-white">0</p>
           </div>
           <div className="glass rounded-xl p-6">
-            <p className="text-gray-400 text-sm mb-2">Toplam Kullanıcı</p>
-            <p className="text-3xl font-bold text-white">0</p>
+            <p className="text-black dark:text-white text-sm mb-2">Toplam Kullanıcı</p>
+            <p className="text-3xl font-bold text-black dark:text-white">0</p>
           </div>
           <div className="glass rounded-xl p-6">
-            <p className="text-gray-400 text-sm mb-2">Okunmamış Mesaj</p>
-            <p className="text-3xl font-bold text-white">0</p>
+            <p className="text-black dark:text-white text-sm mb-2">Okunmamış Mesaj</p>
+            <p className="text-3xl font-bold text-black dark:text-white">0</p>
           </div>
         </motion.div>
       </div>

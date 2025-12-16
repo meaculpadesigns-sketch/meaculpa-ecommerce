@@ -69,10 +69,10 @@ export default function AdminSettingsPage() {
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">
+          <h1 className="text-4xl font-bold text-black dark:text-white mb-2">
             {isTurkish ? 'Site Ayarları' : 'Site Settings'}
           </h1>
-          <p className="text-gray-400">
+          <p className="text-black dark:text-white">
             {isTurkish
               ? 'Genel site ayarlarını ve konfigürasyonları yönetin'
               : 'Manage general site settings and configurations'}
@@ -86,7 +86,7 @@ export default function AdminSettingsPage() {
             className={`px-6 py-3 rounded-lg font-medium transition-colors whitespace-nowrap ${
               activeTab === 'general'
                 ? 'bg-mea-gold text-black'
-                : 'glass text-white hover:bg-zinc-800'
+                : 'glass text-black dark:text-white hover:bg-zinc-800'
             }`}
           >
             <Settings className="inline mr-2" size={20} />
@@ -97,7 +97,7 @@ export default function AdminSettingsPage() {
             className={`px-6 py-3 rounded-lg font-medium transition-colors whitespace-nowrap ${
               activeTab === 'contact'
                 ? 'bg-mea-gold text-black'
-                : 'glass text-white hover:bg-zinc-800'
+                : 'glass text-black dark:text-white hover:bg-zinc-800'
             }`}
           >
             <Phone className="inline mr-2" size={20} />
@@ -108,7 +108,7 @@ export default function AdminSettingsPage() {
             className={`px-6 py-3 rounded-lg font-medium transition-colors whitespace-nowrap ${
               activeTab === 'shipping'
                 ? 'bg-mea-gold text-black'
-                : 'glass text-white hover:bg-zinc-800'
+                : 'glass text-black dark:text-white hover:bg-zinc-800'
             }`}
           >
             <Truck className="inline mr-2" size={20} />
@@ -119,7 +119,7 @@ export default function AdminSettingsPage() {
             className={`px-6 py-3 rounded-lg font-medium transition-colors whitespace-nowrap ${
               activeTab === 'payment'
                 ? 'bg-mea-gold text-black'
-                : 'glass text-white hover:bg-zinc-800'
+                : 'glass text-black dark:text-white hover:bg-zinc-800'
             }`}
           >
             <DollarSign className="inline mr-2" size={20} />
@@ -130,7 +130,7 @@ export default function AdminSettingsPage() {
             className={`px-6 py-3 rounded-lg font-medium transition-colors whitespace-nowrap ${
               activeTab === 'notifications'
                 ? 'bg-mea-gold text-black'
-                : 'glass text-white hover:bg-zinc-800'
+                : 'glass text-black dark:text-white hover:bg-zinc-800'
             }`}
           >
             <Bell className="inline mr-2" size={20} />
@@ -145,12 +145,12 @@ export default function AdminSettingsPage() {
             animate={{ opacity: 1, y: 0 }}
             className="glass rounded-xl p-6"
           >
-            <h2 className="text-2xl font-semibold text-white mb-6">
+            <h2 className="text-2xl font-semibold text-black dark:text-white mb-6">
               {isTurkish ? 'Genel Ayarlar' : 'General Settings'}
             </h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-white mb-2">
+                <label className="block text-black dark:text-white mb-2">
                   {isTurkish ? 'Site Adı' : 'Site Name'}
                 </label>
                 <input
@@ -161,7 +161,7 @@ export default function AdminSettingsPage() {
                 />
               </div>
               <div>
-                <label className="block text-white mb-2">
+                <label className="block text-black dark:text-white mb-2">
                   {isTurkish ? 'Site URL' : 'Site URL'}
                 </label>
                 <input
@@ -172,7 +172,7 @@ export default function AdminSettingsPage() {
                 />
               </div>
               <div>
-                <label className="block text-white mb-2">
+                <label className="block text-black dark:text-white mb-2">
                   {isTurkish ? 'Varsayılan Dil' : 'Default Language'}
                 </label>
                 <select
@@ -186,10 +186,10 @@ export default function AdminSettingsPage() {
               </div>
               <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
                 <div>
-                  <p className="text-white font-medium">
+                  <p className="text-black dark:text-white font-medium">
                     {isTurkish ? 'Bakım Modu' : 'Maintenance Mode'}
                   </p>
-                  <p className="text-gray-400 text-sm">
+                  <p className="text-black dark:text-white text-sm">
                     {isTurkish
                       ? 'Siteyi ziyaretçilere kapalı tut'
                       : 'Close the site to visitors'}
@@ -207,10 +207,10 @@ export default function AdminSettingsPage() {
               </div>
               <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
                 <div>
-                  <p className="text-white font-medium">
+                  <p className="text-black dark:text-white font-medium">
                     {isTurkish ? 'Kullanıcı Kayıt' : 'User Registration'}
                   </p>
-                  <p className="text-gray-400 text-sm">
+                  <p className="text-black dark:text-white text-sm">
                     {isTurkish
                       ? 'Yeni kullanıcıların kayıt olmasına izin ver'
                       : 'Allow new users to register'}
@@ -241,12 +241,12 @@ export default function AdminSettingsPage() {
             animate={{ opacity: 1, y: 0 }}
             className="glass rounded-xl p-6"
           >
-            <h2 className="text-2xl font-semibold text-white mb-6">
+            <h2 className="text-2xl font-semibold text-black dark:text-white mb-6">
               {isTurkish ? 'İletişim Bilgileri' : 'Contact Information'}
             </h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-white mb-2 flex items-center gap-2">
+                <label className="block text-black dark:text-white mb-2 flex items-center gap-2">
                   <Mail size={18} />
                   {isTurkish ? 'E-posta' : 'Email'}
                 </label>
@@ -258,7 +258,7 @@ export default function AdminSettingsPage() {
                 />
               </div>
               <div>
-                <label className="block text-white mb-2 flex items-center gap-2">
+                <label className="block text-black dark:text-white mb-2 flex items-center gap-2">
                   <Phone size={18} />
                   {isTurkish ? 'Telefon' : 'Phone'}
                 </label>
@@ -270,7 +270,7 @@ export default function AdminSettingsPage() {
                 />
               </div>
               <div>
-                <label className="block text-white mb-2 flex items-center gap-2">
+                <label className="block text-black dark:text-white mb-2 flex items-center gap-2">
                   <MapPin size={18} />
                   {isTurkish ? 'Adres' : 'Address'}
                 </label>
@@ -282,7 +282,7 @@ export default function AdminSettingsPage() {
                 />
               </div>
               <div>
-                <label className="block text-white mb-2">Instagram</label>
+                <label className="block text-black dark:text-white mb-2">Instagram</label>
                 <input
                   type="text"
                   value={contactSettings.instagram}
@@ -291,7 +291,7 @@ export default function AdminSettingsPage() {
                 />
               </div>
               <div>
-                <label className="block text-white mb-2">
+                <label className="block text-black dark:text-white mb-2">
                   {isTurkish ? 'Çalışma Saatleri (TR)' : 'Working Hours (TR)'}
                 </label>
                 <input
@@ -302,7 +302,7 @@ export default function AdminSettingsPage() {
                 />
               </div>
               <div>
-                <label className="block text-white mb-2">
+                <label className="block text-black dark:text-white mb-2">
                   {isTurkish ? 'Çalışma Saatleri (EN)' : 'Working Hours (EN)'}
                 </label>
                 <input
@@ -327,12 +327,12 @@ export default function AdminSettingsPage() {
             animate={{ opacity: 1, y: 0 }}
             className="glass rounded-xl p-6"
           >
-            <h2 className="text-2xl font-semibold text-white mb-6">
+            <h2 className="text-2xl font-semibold text-black dark:text-white mb-6">
               {isTurkish ? 'Kargo Ayarları' : 'Shipping Settings'}
             </h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-white mb-2">
+                <label className="block text-black dark:text-white mb-2">
                   {isTurkish ? 'Ücretsiz Kargo Eşiği (₺)' : 'Free Shipping Threshold (₺)'}
                 </label>
                 <input
@@ -343,7 +343,7 @@ export default function AdminSettingsPage() {
                 />
               </div>
               <div>
-                <label className="block text-white mb-2">
+                <label className="block text-black dark:text-white mb-2">
                   {isTurkish ? 'Yurtiçi Kargo Ücreti (₺)' : 'Domestic Shipping Fee (₺)'}
                 </label>
                 <input
@@ -354,7 +354,7 @@ export default function AdminSettingsPage() {
                 />
               </div>
               <div>
-                <label className="block text-white mb-2">
+                <label className="block text-black dark:text-white mb-2">
                   {isTurkish ? 'Tahmini Teslimat Süresi (Gün)' : 'Estimated Delivery Time (Days)'}
                 </label>
                 <input
@@ -366,10 +366,10 @@ export default function AdminSettingsPage() {
               </div>
               <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
                 <div>
-                  <p className="text-white font-medium">
+                  <p className="text-black dark:text-white font-medium">
                     {isTurkish ? 'Uluslararası Kargo' : 'International Shipping'}
                   </p>
-                  <p className="text-gray-400 text-sm">
+                  <p className="text-black dark:text-white text-sm">
                     {isTurkish
                       ? 'Yurtdışı gönderimlerini aktifleştir'
                       : 'Enable international shipments'}
@@ -400,12 +400,12 @@ export default function AdminSettingsPage() {
             animate={{ opacity: 1, y: 0 }}
             className="glass rounded-xl p-6"
           >
-            <h2 className="text-2xl font-semibold text-white mb-6">
+            <h2 className="text-2xl font-semibold text-black dark:text-white mb-6">
               {isTurkish ? 'Ödeme Ayarları' : 'Payment Settings'}
             </h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-white mb-2">
+                <label className="block text-black dark:text-white mb-2">
                   {isTurkish ? 'Para Birimi' : 'Currency'}
                 </label>
                 <select
@@ -419,7 +419,7 @@ export default function AdminSettingsPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-white mb-2">
+                <label className="block text-black dark:text-white mb-2">
                   {isTurkish ? 'KDV Oranı (%)' : 'Tax Rate (%)'}
                 </label>
                 <input
@@ -430,11 +430,11 @@ export default function AdminSettingsPage() {
                 />
               </div>
               <div className="space-y-3">
-                <p className="text-white font-medium">
+                <p className="text-black dark:text-white font-medium">
                   {isTurkish ? 'Ödeme Yöntemleri' : 'Payment Methods'}
                 </p>
                 <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
-                  <p className="text-white">
+                  <p className="text-black dark:text-white">
                     {isTurkish ? 'Kredi Kartı' : 'Credit Card'}
                   </p>
                   <label className="relative inline-flex items-center cursor-pointer">
@@ -448,7 +448,7 @@ export default function AdminSettingsPage() {
                   </label>
                 </div>
                 <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
-                  <p className="text-white">Google Pay</p>
+                  <p className="text-black dark:text-white">Google Pay</p>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
@@ -460,7 +460,7 @@ export default function AdminSettingsPage() {
                   </label>
                 </div>
                 <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
-                  <p className="text-white">
+                  <p className="text-black dark:text-white">
                     {isTurkish ? 'Kripto Para' : 'Cryptocurrency'}
                   </p>
                   <label className="relative inline-flex items-center cursor-pointer">
@@ -489,16 +489,16 @@ export default function AdminSettingsPage() {
             animate={{ opacity: 1, y: 0 }}
             className="glass rounded-xl p-6"
           >
-            <h2 className="text-2xl font-semibold text-white mb-6">
+            <h2 className="text-2xl font-semibold text-black dark:text-white mb-6">
               {isTurkish ? 'Bildirim Ayarları' : 'Notification Settings'}
             </h2>
             <div className="space-y-3">
               <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
                 <div>
-                  <p className="text-white font-medium">
+                  <p className="text-black dark:text-white font-medium">
                     {isTurkish ? 'E-posta Bildirimleri' : 'Email Notifications'}
                   </p>
-                  <p className="text-gray-400 text-sm">
+                  <p className="text-black dark:text-white text-sm">
                     {isTurkish
                       ? 'E-posta ile bildirim al'
                       : 'Receive notifications via email'}
@@ -516,10 +516,10 @@ export default function AdminSettingsPage() {
               </div>
               <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
                 <div>
-                  <p className="text-white font-medium">
+                  <p className="text-black dark:text-white font-medium">
                     {isTurkish ? 'SMS Bildirimleri' : 'SMS Notifications'}
                   </p>
-                  <p className="text-gray-400 text-sm">
+                  <p className="text-black dark:text-white text-sm">
                     {isTurkish
                       ? 'SMS ile bildirim al'
                       : 'Receive notifications via SMS'}
@@ -536,7 +536,7 @@ export default function AdminSettingsPage() {
                 </label>
               </div>
               <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
-                <p className="text-white">
+                <p className="text-black dark:text-white">
                   {isTurkish ? 'Yeni Sipariş Bildirimi' : 'New Order Alert'}
                 </p>
                 <label className="relative inline-flex items-center cursor-pointer">
@@ -550,7 +550,7 @@ export default function AdminSettingsPage() {
                 </label>
               </div>
               <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
-                <p className="text-white">
+                <p className="text-black dark:text-white">
                   {isTurkish ? 'Düşük Stok Uyarısı' : 'Low Stock Alert'}
                 </p>
                 <label className="relative inline-flex items-center cursor-pointer">
@@ -564,7 +564,7 @@ export default function AdminSettingsPage() {
                 </label>
               </div>
               <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
-                <p className="text-white">
+                <p className="text-black dark:text-white">
                   {isTurkish ? 'Yeni Yorum Bildirimi' : 'New Review Alert'}
                 </p>
                 <label className="relative inline-flex items-center cursor-pointer">

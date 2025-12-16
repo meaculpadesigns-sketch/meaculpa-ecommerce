@@ -158,7 +158,7 @@ export default function AdminAnalyticsPage() {
   if (loading) {
     return (
       <div className="min-h-screen py-20 px-4 flex items-center justify-center">
-        <div className="text-white text-xl">
+        <div className="text-black dark:text-white text-xl">
           {isTurkish ? 'Yükleniyor...' : 'Loading...'}
         </div>
       </div>
@@ -173,17 +173,17 @@ export default function AdminAnalyticsPage() {
         {/* Header */}
         <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
-            <h1 className="text-4xl font-bold text-white mb-2">
+            <h1 className="text-4xl font-bold text-black dark:text-white mb-2">
               {isTurkish ? 'Analitik & Raporlar' : 'Analytics & Reports'}
             </h1>
-            <p className="text-gray-400">
+            <p className="text-black dark:text-white">
               {isTurkish
                 ? 'Satış ve kullanıcı davranış analizleri'
                 : 'Sales and user behavior analytics'}
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <Calendar size={20} className="text-gray-400" />
+            <Calendar size={20} className="text-black dark:text-white" />
             <select
               value={timeRange}
               onChange={(e) => setTimeRange(e.target.value as any)}
@@ -213,10 +213,10 @@ export default function AdminAnalyticsPage() {
                 {Math.abs(stats.revenueChange)}%
               </div>
             </div>
-            <p className="text-gray-400 text-sm mb-1">
+            <p className="text-black dark:text-white text-sm mb-1">
               {isTurkish ? 'Toplam Gelir' : 'Total Revenue'}
             </p>
-            <p className="text-3xl font-bold text-white">₺{Math.round(stats.totalRevenue).toLocaleString()}</p>
+            <p className="text-3xl font-bold text-black dark:text-white">₺{Math.round(stats.totalRevenue).toLocaleString()}</p>
           </motion.div>
 
           <motion.div
@@ -234,10 +234,10 @@ export default function AdminAnalyticsPage() {
                 {Math.abs(stats.ordersChange)}%
               </div>
             </div>
-            <p className="text-gray-400 text-sm mb-1">
+            <p className="text-black dark:text-white text-sm mb-1">
               {isTurkish ? 'Toplam Sipariş' : 'Total Orders'}
             </p>
-            <p className="text-3xl font-bold text-white">{stats.totalOrders}</p>
+            <p className="text-3xl font-bold text-black dark:text-white">{stats.totalOrders}</p>
           </motion.div>
 
           <motion.div
@@ -255,10 +255,10 @@ export default function AdminAnalyticsPage() {
                 {Math.abs(stats.customersChange)}%
               </div>
             </div>
-            <p className="text-gray-400 text-sm mb-1">
+            <p className="text-black dark:text-white text-sm mb-1">
               {isTurkish ? 'Toplam Müşteri' : 'Total Customers'}
             </p>
-            <p className="text-3xl font-bold text-white">{stats.totalCustomers}</p>
+            <p className="text-3xl font-bold text-black dark:text-white">{stats.totalCustomers}</p>
           </motion.div>
 
           <motion.div
@@ -276,10 +276,10 @@ export default function AdminAnalyticsPage() {
                 {Math.abs(stats.avgOrderValueChange)}%
               </div>
             </div>
-            <p className="text-gray-400 text-sm mb-1">
+            <p className="text-black dark:text-white text-sm mb-1">
               {isTurkish ? 'Ort. Sipariş Değeri' : 'Avg. Order Value'}
             </p>
-            <p className="text-3xl font-bold text-white">₺{Math.round(stats.avgOrderValue)}</p>
+            <p className="text-3xl font-bold text-black dark:text-white">₺{Math.round(stats.avgOrderValue)}</p>
           </motion.div>
         </div>
 
@@ -291,7 +291,7 @@ export default function AdminAnalyticsPage() {
             transition={{ delay: 0.4 }}
             className="glass rounded-xl p-6"
           >
-            <h3 className="text-xl font-semibold text-white mb-6">
+            <h3 className="text-xl font-semibold text-black dark:text-white mb-6">
               {isTurkish ? 'En Çok Satan Ürünler' : 'Top Selling Products'}
             </h3>
             {topProducts.length > 0 ? (
@@ -299,8 +299,8 @@ export default function AdminAnalyticsPage() {
                 {topProducts.map((product, index) => (
                   <div key={index} className="flex items-center justify-between">
                     <div className="flex-1">
-                      <p className="text-white font-medium mb-1">{product.name}</p>
-                      <p className="text-sm text-gray-400">
+                      <p className="text-black dark:text-white font-medium mb-1">{product.name}</p>
+                      <p className="text-sm text-black dark:text-white">
                         {product.sales} {isTurkish ? 'satış' : 'sales'}
                       </p>
                     </div>
@@ -309,7 +309,7 @@ export default function AdminAnalyticsPage() {
                 ))}
               </div>
             ) : (
-              <p className="text-gray-400 text-center py-8">
+              <p className="text-black dark:text-white text-center py-8">
                 {isTurkish ? 'Henüz satış yok' : 'No sales yet'}
               </p>
             )}
@@ -322,11 +322,11 @@ export default function AdminAnalyticsPage() {
             transition={{ delay: 0.5 }}
             className="glass rounded-xl p-6"
           >
-            <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
+            <h3 className="text-xl font-semibold text-black dark:text-white mb-6 flex items-center gap-2">
               <Eye size={24} />
               {isTurkish ? 'Trafik Kaynakları' : 'Traffic Sources'}
             </h3>
-            <div className="text-center py-8 text-gray-400">
+            <div className="text-center py-8 text-black dark:text-white">
               <p className="mb-2">
                 {isTurkish
                   ? 'Trafik verilerini görmek için Google Analytics entegrasyonu gereklidir.'
@@ -348,27 +348,27 @@ export default function AdminAnalyticsPage() {
           transition={{ delay: 0.6 }}
           className="glass rounded-xl p-6"
         >
-          <h3 className="text-xl font-semibold text-white mb-6">
+          <h3 className="text-xl font-semibold text-black dark:text-white mb-6">
             {isTurkish ? 'Kategoriye Göre Satışlar' : 'Sales by Category'}
           </h3>
           {totalCategorySales > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {salesByCategory.map((category, index) => (
                 <div key={index} className="bg-zinc-900/50 rounded-lg p-4">
-                  <p className="text-gray-400 text-sm mb-2">{category.category}</p>
-                  <p className="text-2xl font-bold text-white mb-2">{category.sales}</p>
+                  <p className="text-black dark:text-white text-sm mb-2">{category.category}</p>
+                  <p className="text-2xl font-bold text-black dark:text-white mb-2">{category.sales}</p>
                   <div className="w-full bg-zinc-800 rounded-full h-2">
                     <div
                       className="bg-mea-gold rounded-full h-2"
                       style={{ width: `${category.percentage}%` }}
                     />
                   </div>
-                  <p className="text-gray-400 text-sm mt-2">{category.percentage}%</p>
+                  <p className="text-black dark:text-white text-sm mt-2">{category.percentage}%</p>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-gray-400 text-center py-8">
+            <p className="text-black dark:text-white text-center py-8">
               {isTurkish ? 'Henüz satış yok' : 'No sales yet'}
             </p>
           )}

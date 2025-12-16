@@ -146,7 +146,7 @@ export default function AdminDiscountsPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-white text-xl">Yükleniyor...</div>
+        <div className="animate-pulse text-black dark:text-white text-xl">Yükleniyor...</div>
       </div>
     );
   }
@@ -165,23 +165,23 @@ export default function AdminDiscountsPage() {
         <AdminBackButton />
 
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">İndirim Yönetimi</h1>
-          <p className="text-gray-400">Ürünlere indirim uygulayın veya kaldırın</p>
+          <h1 className="text-4xl font-bold text-black dark:text-white mb-2">İndirim Yönetimi</h1>
+          <p className="text-black dark:text-white">Ürünlere indirim uygulayın veya kaldırın</p>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           <div className="glass rounded-xl p-6">
-            <p className="text-gray-400 text-sm mb-1">Toplam Ürün</p>
-            <p className="text-white text-3xl font-bold">{stats.total}</p>
+            <p className="text-black dark:text-white text-sm mb-1">Toplam Ürün</p>
+            <p className="text-black dark:text-white text-3xl font-bold">{stats.total}</p>
           </div>
           <div className="glass rounded-xl p-6">
-            <p className="text-gray-400 text-sm mb-1">İndirimli Ürün</p>
-            <p className="text-white text-3xl font-bold">{stats.onDiscount}</p>
+            <p className="text-black dark:text-white text-sm mb-1">İndirimli Ürün</p>
+            <p className="text-black dark:text-white text-3xl font-bold">{stats.onDiscount}</p>
           </div>
           <div className="glass rounded-xl p-6">
-            <p className="text-gray-400 text-sm mb-1">Ortalama İndirim</p>
-            <p className="text-white text-3xl font-bold">%{stats.avgDiscount}</p>
+            <p className="text-black dark:text-white text-sm mb-1">Ortalama İndirim</p>
+            <p className="text-black dark:text-white text-3xl font-bold">%{stats.avgDiscount}</p>
           </div>
         </div>
 
@@ -225,7 +225,7 @@ export default function AdminDiscountsPage() {
               max={discountType === 'percentage' ? 100 : undefined}
             />
 
-            <div className="text-gray-400 text-sm flex items-center">
+            <div className="text-black dark:text-white text-sm flex items-center">
               {discountType === 'percentage'
                 ? `%${discountValue} indirim uygulanacak`
                 : `₺${discountValue} olarak ayarlanacak`}
@@ -252,14 +252,14 @@ export default function AdminDiscountsPage() {
                 <div className="aspect-square bg-zinc-800 flex items-center justify-center relative">
                   <Package className="text-gray-600" size={60} />
                   {hasDiscount && (
-                    <div className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full font-semibold text-sm">
+                    <div className="absolute top-3 right-3 bg-red-500 text-black dark:text-white px-3 py-1 rounded-full font-semibold text-sm">
                       %{discountPercentage}
                     </div>
                   )}
                 </div>
 
                 <div className="p-4">
-                  <h3 className="text-white font-semibold mb-2 truncate">
+                  <h3 className="text-black dark:text-white font-semibold mb-2 truncate">
                     {product.name}
                   </h3>
 
@@ -279,7 +279,7 @@ export default function AdminDiscountsPage() {
                         </p>
                       </>
                     ) : (
-                      <span className="text-2xl font-bold text-white">
+                      <span className="text-2xl font-bold text-black dark:text-white">
                         ₺{product.price}
                       </span>
                     )}
@@ -310,11 +310,11 @@ export default function AdminDiscountsPage() {
 
         {filteredProducts.length === 0 && (
           <div className="text-center py-20">
-            <Package className="mx-auto mb-6 text-gray-400" size={80} />
-            <h2 className="text-2xl font-bold text-white mb-4">
+            <Package className="mx-auto mb-6 text-black dark:text-white" size={80} />
+            <h2 className="text-2xl font-bold text-black dark:text-white mb-4">
               Ürün Bulunamadı
             </h2>
-            <p className="text-gray-400">
+            <p className="text-black dark:text-white">
               {searchTerm ? 'Arama kriterlerinize uygun ürün bulunamadı' : 'Henüz ürün eklenmemiş'}
             </p>
           </div>
@@ -328,20 +328,20 @@ export default function AdminDiscountsPage() {
               animate={{ opacity: 1, scale: 1 }}
               className="glass rounded-2xl p-8 max-w-md w-full"
             >
-              <h2 className="text-2xl font-bold text-white mb-6">
+              <h2 className="text-2xl font-bold text-black dark:text-white mb-6">
                 {editingProduct.name} - İndirim Uygula
               </h2>
 
               <div className="space-y-4">
                 <div>
-                  <p className="text-gray-400 text-sm mb-2">Mevcut Fiyat</p>
-                  <p className="text-white text-3xl font-bold">
+                  <p className="text-black dark:text-white text-sm mb-2">Mevcut Fiyat</p>
+                  <p className="text-black dark:text-white text-3xl font-bold">
                     ₺{editingProduct.oldPrice || editingProduct.price}
                   </p>
                 </div>
 
                 <div>
-                  <label className="block text-white font-medium mb-2">
+                  <label className="block text-black dark:text-white font-medium mb-2">
                     İndirim Tipi
                   </label>
                   <select
@@ -355,7 +355,7 @@ export default function AdminDiscountsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white font-medium mb-2">
+                  <label className="block text-black dark:text-white font-medium mb-2">
                     {discountType === 'percentage' ? 'İndirim Yüzdesi (%)' : 'Yeni Fiyat (₺)'}
                   </label>
                   <input
@@ -371,14 +371,14 @@ export default function AdminDiscountsPage() {
 
                 {discountValue > 0 && (
                   <div className="glass rounded-xl p-4">
-                    <p className="text-gray-400 text-sm mb-2">Yeni Fiyat</p>
+                    <p className="text-black dark:text-white text-sm mb-2">Yeni Fiyat</p>
                     <p className="text-mea-gold text-2xl font-bold">
                       ₺{discountType === 'percentage'
                         ? Math.round((editingProduct.oldPrice || editingProduct.price) * (1 - discountValue / 100) * 100) / 100
                         : discountValue}
                     </p>
                     {discountType === 'percentage' && (
-                      <p className="text-gray-400 text-sm mt-1">
+                      <p className="text-black dark:text-white text-sm mt-1">
                         %{discountValue} indirim
                       </p>
                     )}

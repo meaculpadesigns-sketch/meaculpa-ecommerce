@@ -126,7 +126,7 @@ export default function AdminReviewsPage() {
   if (loading) {
     return (
       <div className="min-h-screen py-20 px-4 flex items-center justify-center">
-        <div className="text-white text-xl">
+        <div className="text-black dark:text-white text-xl">
           {isTurkish ? 'Yükleniyor...' : 'Loading...'}
         </div>
       </div>
@@ -140,10 +140,10 @@ export default function AdminReviewsPage() {
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">
+          <h1 className="text-4xl font-bold text-black dark:text-white mb-2">
             {isTurkish ? 'Yorumlar & Değerlendirmeler' : 'Reviews & Ratings'}
           </h1>
-          <p className="text-gray-400">
+          <p className="text-black dark:text-white">
             {isTurkish
               ? 'Müşteri yorumlarını yönetin ve değerlendirin'
               : 'Manage and evaluate customer reviews'}
@@ -153,31 +153,31 @@ export default function AdminReviewsPage() {
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
           <div className="glass rounded-xl p-4">
-            <p className="text-gray-400 text-sm mb-1">
+            <p className="text-black dark:text-white text-sm mb-1">
               {isTurkish ? 'Toplam' : 'Total'}
             </p>
-            <p className="text-3xl font-bold text-white">{stats.total}</p>
+            <p className="text-3xl font-bold text-black dark:text-white">{stats.total}</p>
           </div>
           <div className="glass rounded-xl p-4">
-            <p className="text-gray-400 text-sm mb-1">
+            <p className="text-black dark:text-white text-sm mb-1">
               {isTurkish ? 'Bekleyen' : 'Pending'}
             </p>
             <p className="text-3xl font-bold text-yellow-500">{stats.pending}</p>
           </div>
           <div className="glass rounded-xl p-4">
-            <p className="text-gray-400 text-sm mb-1">
+            <p className="text-black dark:text-white text-sm mb-1">
               {isTurkish ? 'Onaylanan' : 'Approved'}
             </p>
             <p className="text-3xl font-bold text-green-500">{stats.approved}</p>
           </div>
           <div className="glass rounded-xl p-4">
-            <p className="text-gray-400 text-sm mb-1">
+            <p className="text-black dark:text-white text-sm mb-1">
               {isTurkish ? 'Reddedilen' : 'Rejected'}
             </p>
             <p className="text-3xl font-bold text-red-500">{stats.rejected}</p>
           </div>
           <div className="glass rounded-xl p-4">
-            <p className="text-gray-400 text-sm mb-1">
+            <p className="text-black dark:text-white text-sm mb-1">
               {isTurkish ? 'Ort. Puan' : 'Avg. Rating'}
             </p>
             <p className="text-3xl font-bold text-mea-gold flex items-center gap-1">
@@ -190,7 +190,7 @@ export default function AdminReviewsPage() {
         <div className="glass rounded-xl p-4 mb-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black dark:text-white" size={20} />
               <input
                 type="text"
                 placeholder={isTurkish ? 'Ara...' : 'Search...'}
@@ -200,7 +200,7 @@ export default function AdminReviewsPage() {
               />
             </div>
             <div className="flex items-center gap-2">
-              <Filter size={20} className="text-gray-400" />
+              <Filter size={20} className="text-black dark:text-white" />
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value as any)}
@@ -227,7 +227,7 @@ export default function AdminReviewsPage() {
               <div className="flex flex-col md:flex-row justify-between gap-4 mb-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-xl font-semibold text-white">{review.userName}</h3>
+                    <h3 className="text-xl font-semibold text-black dark:text-white">{review.userName}</h3>
                     <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                       review.status === 'approved' ? 'bg-green-500/20 text-green-500' :
                       review.status === 'pending' ? 'bg-yellow-500/20 text-yellow-500' :
@@ -238,7 +238,7 @@ export default function AdminReviewsPage() {
                        (isTurkish ? 'Reddedildi' : 'Rejected')}
                     </span>
                   </div>
-                  <p className="text-gray-400 text-sm mb-2">{review.productName}</p>
+                  <p className="text-black dark:text-white text-sm mb-2">{review.productName}</p>
                   <div className="flex items-center gap-1 mb-3">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <Star
@@ -248,8 +248,8 @@ export default function AdminReviewsPage() {
                       />
                     ))}
                   </div>
-                  <p className="text-white mb-2">{review.comment}</p>
-                  <div className="flex items-center gap-4 text-sm text-gray-400">
+                  <p className="text-black dark:text-white mb-2">{review.comment}</p>
+                  <div className="flex items-center gap-4 text-sm text-black dark:text-white">
                     <span>{review.createdAt ? new Date(review.createdAt.toString()).toLocaleDateString(isTurkish ? 'tr-TR' : 'en-US') : 'N/A'}</span>
                     <span className="flex items-center gap-1">
                       <ThumbsUp size={14} />
@@ -271,7 +271,7 @@ export default function AdminReviewsPage() {
                       </button>
                       <button
                         onClick={() => handleReject(review.id)}
-                        className="bg-red-500 hover:bg-red-600 text-white rounded-lg flex items-center justify-center gap-2 px-4 py-2 text-sm transition-colors"
+                        className="bg-red-500 hover:bg-red-600 text-black dark:text-white rounded-lg flex items-center justify-center gap-2 px-4 py-2 text-sm transition-colors"
                       >
                         <ThumbsDown size={16} />
                         {isTurkish ? 'Reddet' : 'Reject'}
@@ -281,7 +281,7 @@ export default function AdminReviewsPage() {
                   {review.status === 'approved' && (
                     <button
                       onClick={() => handleToggleVisibility(review.id)}
-                      className={`${review.isVisible ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-green-500 hover:bg-green-600'} text-white rounded-lg flex items-center justify-center gap-2 px-4 py-2 text-sm transition-colors`}
+                      className={`${review.isVisible ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-green-500 hover:bg-green-600'} text-black dark:text-white rounded-lg flex items-center justify-center gap-2 px-4 py-2 text-sm transition-colors`}
                     >
                       {review.isVisible ? <EyeOff size={16} /> : <Eye size={16} />}
                       {review.isVisible
@@ -291,7 +291,7 @@ export default function AdminReviewsPage() {
                   )}
                   <button
                     onClick={() => handleDelete(review.id)}
-                    className="bg-red-500 hover:bg-red-600 text-white rounded-lg flex items-center justify-center gap-2 px-4 py-2 text-sm transition-colors"
+                    className="bg-red-500 hover:bg-red-600 text-black dark:text-white rounded-lg flex items-center justify-center gap-2 px-4 py-2 text-sm transition-colors"
                   >
                     <Trash2 size={16} />
                     {isTurkish ? 'Sil' : 'Delete'}
@@ -304,7 +304,7 @@ export default function AdminReviewsPage() {
 
         {filteredReviews.length === 0 && (
           <div className="glass rounded-xl p-12 text-center">
-            <p className="text-gray-400">
+            <p className="text-black dark:text-white">
               {isTurkish ? 'Yorum bulunamadı' : 'No reviews found'}
             </p>
           </div>

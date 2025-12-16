@@ -111,7 +111,7 @@ export default function AdminOrdersPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-white text-xl">Yükleniyor...</div>
+        <div className="animate-pulse text-black dark:text-white text-xl">Yükleniyor...</div>
       </div>
     );
   }
@@ -122,39 +122,39 @@ export default function AdminOrdersPage() {
         <AdminBackButton />
 
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Sipariş Yönetimi</h1>
-          <p className="text-gray-400">Tüm siparişleri görüntüleyin ve yönetin</p>
+          <h1 className="text-4xl font-bold text-black dark:text-white mb-2">Sipariş Yönetimi</h1>
+          <p className="text-black dark:text-white">Tüm siparişleri görüntüleyin ve yönetin</p>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
           <div className="glass rounded-xl p-4">
-            <p className="text-gray-400 text-sm mb-1">Toplam</p>
-            <p className="text-white text-2xl font-bold">{stats.total}</p>
+            <p className="text-black dark:text-white text-sm mb-1">Toplam</p>
+            <p className="text-black dark:text-white text-2xl font-bold">{stats.total}</p>
           </div>
           <div className="glass rounded-xl p-4">
             <p className="text-yellow-500 text-sm mb-1">Beklemede</p>
-            <p className="text-white text-2xl font-bold">{stats.pending}</p>
+            <p className="text-black dark:text-white text-2xl font-bold">{stats.pending}</p>
           </div>
           <div className="glass rounded-xl p-4">
             <p className="text-blue-500 text-sm mb-1">İşleniyor</p>
-            <p className="text-white text-2xl font-bold">{stats.processing}</p>
+            <p className="text-black dark:text-white text-2xl font-bold">{stats.processing}</p>
           </div>
           <div className="glass rounded-xl p-4">
             <p className="text-purple-500 text-sm mb-1">Kargoda</p>
-            <p className="text-white text-2xl font-bold">{stats.shipped}</p>
+            <p className="text-black dark:text-white text-2xl font-bold">{stats.shipped}</p>
           </div>
           <div className="glass rounded-xl p-4">
             <p className="text-green-500 text-sm mb-1">Teslim Edildi</p>
-            <p className="text-white text-2xl font-bold">{stats.delivered}</p>
+            <p className="text-black dark:text-white text-2xl font-bold">{stats.delivered}</p>
           </div>
           <div className="glass rounded-xl p-4">
             <p className="text-red-500 text-sm mb-1">İptal</p>
-            <p className="text-white text-2xl font-bold">{stats.cancelled}</p>
+            <p className="text-black dark:text-white text-2xl font-bold">{stats.cancelled}</p>
           </div>
           <div className="glass rounded-xl p-4">
             <p className="text-mea-gold text-sm mb-1">Gelir</p>
-            <p className="text-white text-xl font-bold">
+            <p className="text-black dark:text-white text-xl font-bold">
               ₺{stats.totalRevenue.toFixed(2)}
             </p>
           </div>
@@ -164,7 +164,7 @@ export default function AdminOrdersPage() {
         <div className="glass rounded-2xl p-6 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black dark:text-white" size={20} />
               <input
                 type="text"
                 placeholder="Sipariş numarası, müşteri adı veya e-posta ile ara..."
@@ -175,7 +175,7 @@ export default function AdminOrdersPage() {
             </div>
 
             <div className="relative">
-              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black dark:text-white" size={20} />
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value as OrderStatus | 'all')}
@@ -198,12 +198,12 @@ export default function AdminOrdersPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-white border-opacity-10">
-                  <th className="text-left text-white font-semibold p-4">Sipariş No</th>
-                  <th className="text-left text-white font-semibold p-4">Müşteri</th>
-                  <th className="text-left text-white font-semibold p-4">Tarih</th>
-                  <th className="text-left text-white font-semibold p-4">Toplam</th>
-                  <th className="text-left text-white font-semibold p-4">Durum</th>
-                  <th className="text-left text-white font-semibold p-4">İşlemler</th>
+                  <th className="text-left text-black dark:text-white font-semibold p-4">Sipariş No</th>
+                  <th className="text-left text-black dark:text-white font-semibold p-4">Müşteri</th>
+                  <th className="text-left text-black dark:text-white font-semibold p-4">Tarih</th>
+                  <th className="text-left text-black dark:text-white font-semibold p-4">Toplam</th>
+                  <th className="text-left text-black dark:text-white font-semibold p-4">Durum</th>
+                  <th className="text-left text-black dark:text-white font-semibold p-4">İşlemler</th>
                 </tr>
               </thead>
               <tbody>
@@ -221,16 +221,16 @@ export default function AdminOrdersPage() {
                       </Link>
                     </td>
                     <td className="p-4">
-                      <p className="text-white font-medium">
+                      <p className="text-black dark:text-white font-medium">
                         {order.shippingAddress.firstName} {order.shippingAddress.lastName}
                       </p>
-                      <p className="text-gray-400 text-sm">{order.guestEmail || 'N/A'}</p>
+                      <p className="text-black dark:text-white text-sm">{order.guestEmail || 'N/A'}</p>
                     </td>
                     <td className="p-4">
-                      <p className="text-white">
+                      <p className="text-black dark:text-white">
                         {new Date(order.createdAt).toLocaleDateString('tr-TR')}
                       </p>
-                      <p className="text-gray-400 text-sm">
+                      <p className="text-black dark:text-white text-sm">
                         {new Date(order.createdAt).toLocaleTimeString('tr-TR', {
                           hour: '2-digit',
                           minute: '2-digit',
@@ -238,8 +238,8 @@ export default function AdminOrdersPage() {
                       </p>
                     </td>
                     <td className="p-4">
-                      <p className="text-white font-semibold">₺{order.total.toFixed(2)}</p>
-                      <p className="text-gray-400 text-sm">{order.items.length} ürün</p>
+                      <p className="text-black dark:text-white font-semibold">₺{order.total.toFixed(2)}</p>
+                      <p className="text-black dark:text-white text-sm">{order.items.length} ürün</p>
                     </td>
                     <td className="p-4">
                       <span className={`px-3 py-1 rounded-full text-xs font-medium ${statusColors[order.status]}`}>
@@ -301,11 +301,11 @@ export default function AdminOrdersPage() {
 
           {filteredOrders.length === 0 && (
             <div className="text-center py-20">
-              <Package className="mx-auto mb-6 text-gray-400" size={80} />
-              <h2 className="text-2xl font-bold text-white mb-4">
+              <Package className="mx-auto mb-6 text-black dark:text-white" size={80} />
+              <h2 className="text-2xl font-bold text-black dark:text-white mb-4">
                 Sipariş Bulunamadı
               </h2>
-              <p className="text-gray-400">
+              <p className="text-black dark:text-white">
                 {searchTerm || statusFilter !== 'all'
                   ? 'Arama kriterlerinize uygun sipariş bulunamadı'
                   : 'Henüz hiç sipariş alınmadı'}

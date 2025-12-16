@@ -85,10 +85,10 @@ export default function AdminContentPage() {
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">
+          <h1 className="text-4xl font-bold text-black dark:text-white mb-2">
             {isTurkish ? 'İçerik Yönetimi & SEO' : 'Content Management & SEO'}
           </h1>
-          <p className="text-gray-400">
+          <p className="text-black dark:text-white">
             {isTurkish
               ? 'Sayfa içerikleri ve SEO ayarlarını yönetin'
               : 'Manage page content and SEO settings'}
@@ -102,7 +102,7 @@ export default function AdminContentPage() {
             className={`px-6 py-3 rounded-lg font-medium transition-colors ${
               activeTab === 'pages'
                 ? 'bg-mea-gold text-black'
-                : 'glass text-white hover:bg-zinc-800'
+                : 'glass text-black dark:text-white hover:bg-zinc-800'
             }`}
           >
             <FileText className="inline mr-2" size={20} />
@@ -113,7 +113,7 @@ export default function AdminContentPage() {
             className={`px-6 py-3 rounded-lg font-medium transition-colors ${
               activeTab === 'seo'
                 ? 'bg-mea-gold text-black'
-                : 'glass text-white hover:bg-zinc-800'
+                : 'glass text-black dark:text-white hover:bg-zinc-800'
             }`}
           >
             <Search className="inline mr-2" size={20} />
@@ -124,7 +124,7 @@ export default function AdminContentPage() {
             className={`px-6 py-3 rounded-lg font-medium transition-colors ${
               activeTab === 'media'
                 ? 'bg-mea-gold text-black'
-                : 'glass text-white hover:bg-zinc-800'
+                : 'glass text-black dark:text-white hover:bg-zinc-800'
             }`}
           >
             <Image className="inline mr-2" size={20} />
@@ -140,7 +140,7 @@ export default function AdminContentPage() {
             className="space-y-4"
           >
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-semibold text-white">
+              <h2 className="text-2xl font-semibold text-black dark:text-white">
                 {isTurkish ? 'Sayfa İçerikleri' : 'Page Contents'}
               </h2>
               <button className="btn-primary flex items-center gap-2">
@@ -154,7 +154,7 @@ export default function AdminContentPage() {
                 <div className="flex flex-col md:flex-row justify-between gap-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-xl font-semibold text-white">{page.title}</h3>
+                      <h3 className="text-xl font-semibold text-black dark:text-white">{page.title}</h3>
                       <span className={`px-2 py-1 rounded text-xs font-medium ${
                         page.language === 'tr' ? 'bg-blue-500/20 text-blue-500' : 'bg-green-500/20 text-green-500'
                       }`}>
@@ -168,10 +168,10 @@ export default function AdminContentPage() {
                           : (isTurkish ? 'Taslak' : 'Draft')}
                       </span>
                     </div>
-                    <p className="text-gray-400 text-sm mb-2">{page.slug}</p>
+                    <p className="text-black dark:text-white text-sm mb-2">{page.slug}</p>
                     <div className="space-y-1">
-                      <p className="text-sm text-white"><strong>Meta Title:</strong> {page.metaTitle}</p>
-                      <p className="text-sm text-gray-400"><strong>Meta Description:</strong> {page.metaDescription}</p>
+                      <p className="text-sm text-black dark:text-white"><strong>Meta Title:</strong> {page.metaTitle}</p>
+                      <p className="text-sm text-black dark:text-white"><strong>Meta Description:</strong> {page.metaDescription}</p>
                     </div>
                     <p className="text-xs text-gray-500 mt-2">
                       {isTurkish ? 'Son güncelleme: ' : 'Last updated: '}
@@ -192,7 +192,7 @@ export default function AdminContentPage() {
                     </button>
                     <button
                       onClick={() => handleDeletePage(page.id)}
-                      className="bg-red-500 hover:bg-red-600 text-white rounded-lg flex items-center justify-center gap-2 px-4 py-2 text-sm transition-colors"
+                      className="bg-red-500 hover:bg-red-600 text-black dark:text-white rounded-lg flex items-center justify-center gap-2 px-4 py-2 text-sm transition-colors"
                     >
                       <Trash2 size={16} />
                       {isTurkish ? 'Sil' : 'Delete'}
@@ -211,18 +211,18 @@ export default function AdminContentPage() {
             animate={{ opacity: 1, y: 0 }}
             className="glass rounded-xl p-6"
           >
-            <h2 className="text-2xl font-semibold text-white mb-6">
+            <h2 className="text-2xl font-semibold text-black dark:text-white mb-6">
               {isTurkish ? 'SEO Genel Ayarları' : 'General SEO Settings'}
             </h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-white mb-2">
+                <label className="block text-black dark:text-white mb-2">
                   {isTurkish ? 'Site Başlığı' : 'Site Title'}
                 </label>
                 <input type="text" defaultValue="Mea Culpa" className="admin-input w-full" />
               </div>
               <div>
-                <label className="block text-white mb-2">
+                <label className="block text-black dark:text-white mb-2">
                   {isTurkish ? 'Site Açıklaması' : 'Site Description'}
                 </label>
                 <textarea
@@ -232,7 +232,7 @@ export default function AdminContentPage() {
                 />
               </div>
               <div>
-                <label className="block text-white mb-2">
+                <label className="block text-black dark:text-white mb-2">
                   {isTurkish ? 'Anahtar Kelimeler' : 'Keywords'}
                 </label>
                 <input
@@ -242,11 +242,11 @@ export default function AdminContentPage() {
                 />
               </div>
               <div>
-                <label className="block text-white mb-2">Google Analytics ID</label>
+                <label className="block text-black dark:text-white mb-2">Google Analytics ID</label>
                 <input type="text" placeholder="G-XXXXXXXXXX" className="admin-input w-full" />
               </div>
               <div>
-                <label className="block text-white mb-2">Google Search Console</label>
+                <label className="block text-black dark:text-white mb-2">Google Search Console</label>
                 <input
                   type="text"
                   placeholder="meta content..."
@@ -269,7 +269,7 @@ export default function AdminContentPage() {
             className="glass rounded-xl p-6"
           >
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-semibold text-white">
+              <h2 className="text-2xl font-semibold text-black dark:text-white">
                 {isTurkish ? 'Medya Kütüphanesi' : 'Media Library'}
               </h2>
               <button className="btn-primary flex items-center gap-2">
@@ -298,12 +298,12 @@ export default function AdminContentPage() {
               animate={{ opacity: 1, scale: 1 }}
               className="glass rounded-2xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
             >
-              <h3 className="text-2xl font-bold text-white mb-6">
+              <h3 className="text-2xl font-bold text-black dark:text-white mb-6">
                 {isTurkish ? 'Sayfayı Düzenle' : 'Edit Page'}
               </h3>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-white mb-2">
+                  <label className="block text-black dark:text-white mb-2">
                     {isTurkish ? 'Başlık' : 'Title'}
                   </label>
                   <input
@@ -314,7 +314,7 @@ export default function AdminContentPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-white mb-2">Meta Title</label>
+                  <label className="block text-black dark:text-white mb-2">Meta Title</label>
                   <input
                     type="text"
                     value={editingPage.metaTitle}
@@ -323,7 +323,7 @@ export default function AdminContentPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-white mb-2">Meta Description</label>
+                  <label className="block text-black dark:text-white mb-2">Meta Description</label>
                   <textarea
                     value={editingPage.metaDescription}
                     onChange={(e) => setEditingPage({ ...editingPage, metaDescription: e.target.value })}

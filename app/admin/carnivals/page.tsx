@@ -150,10 +150,10 @@ export default function AdminCarnivalsPage() {
 
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-white mb-2">
+            <h1 className="text-4xl font-bold text-black dark:text-white mb-2">
               Festival Yönetimi
             </h1>
-            <p className="text-gray-400">
+            <p className="text-black dark:text-white">
               Etkinlikleri ekleyin, düzenleyin ve yönetin
             </p>
           </div>
@@ -184,13 +184,13 @@ export default function AdminCarnivalsPage() {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <p className="text-white">Görsel Yok</p>
+                  <p className="text-black dark:text-white">Görsel Yok</p>
                 )}
                 <span
                   className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-medium ${
                     carnival.status === 'upcoming'
                       ? 'bg-green-500 bg-opacity-20 text-green-500'
-                      : 'bg-gray-500 bg-opacity-20 text-gray-400'
+                      : 'bg-gray-500 bg-opacity-20 text-black dark:text-white'
                   }`}
                 >
                   {carnival.status === 'upcoming' ? 'Yakında' : 'Geçmiş'}
@@ -198,22 +198,22 @@ export default function AdminCarnivalsPage() {
               </div>
 
               <div className="p-4">
-                <h3 className="text-xl font-bold text-white mb-2">
+                <h3 className="text-xl font-bold text-black dark:text-white mb-2">
                   {carnival.name}
                 </h3>
 
                 <div className="space-y-1 mb-3">
-                  <div className="flex items-center gap-2 text-gray-400 text-sm">
+                  <div className="flex items-center gap-2 text-black dark:text-white text-sm">
                     <Calendar size={16} />
                     <span>{carnival.date}</span>
                   </div>
-                  <div className="flex items-center gap-2 text-gray-400 text-sm">
+                  <div className="flex items-center gap-2 text-black dark:text-white text-sm">
                     <MapPin size={16} />
                     <span>{carnival.location}</span>
                   </div>
                 </div>
 
-                <p className="text-gray-300 text-sm mb-4 line-clamp-2">
+                <p className="text-black dark:text-white text-sm mb-4 line-clamp-2">
                   {carnival.description}
                 </p>
 
@@ -239,11 +239,11 @@ export default function AdminCarnivalsPage() {
 
         {carnivals.length === 0 && (
           <div className="text-center py-20">
-            <Calendar className="mx-auto mb-6 text-gray-400" size={80} />
-            <h2 className="text-2xl font-bold text-white mb-4">
+            <Calendar className="mx-auto mb-6 text-black dark:text-white" size={80} />
+            <h2 className="text-2xl font-bold text-black dark:text-white mb-4">
               Henüz Festival Yok
             </h2>
-            <p className="text-gray-400 mb-8">
+            <p className="text-black dark:text-white mb-8">
               Yeni festival eklemek için yukarıdaki butona tıklayın
             </p>
           </div>
@@ -258,12 +258,12 @@ export default function AdminCarnivalsPage() {
               className="glass rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
             >
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-white">
+                <h2 className="text-2xl font-bold text-black dark:text-white">
                   {editingCarnival ? 'Festival Düzenle' : 'Yeni Festival Ekle'}
                 </h2>
                 <button
                   onClick={closeModal}
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-black dark:text-white hover:text-black dark:text-white transition-colors"
                 >
                   <X size={24} />
                 </button>
@@ -271,7 +271,7 @@ export default function AdminCarnivalsPage() {
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-white font-medium mb-2">
+                  <label className="block text-black dark:text-white font-medium mb-2">
                     Festival Adı
                   </label>
                   <input
@@ -287,7 +287,7 @@ export default function AdminCarnivalsPage() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-white font-medium mb-2">
+                    <label className="block text-black dark:text-white font-medium mb-2">
                       Tarih
                     </label>
                     <input
@@ -303,7 +303,7 @@ export default function AdminCarnivalsPage() {
                   </div>
 
                   <div>
-                    <label className="block text-white font-medium mb-2">
+                    <label className="block text-black dark:text-white font-medium mb-2">
                       Konum
                     </label>
                     <input
@@ -320,7 +320,7 @@ export default function AdminCarnivalsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white font-medium mb-2">
+                  <label className="block text-black dark:text-white font-medium mb-2">
                     Açıklama
                   </label>
                   <textarea
@@ -335,7 +335,7 @@ export default function AdminCarnivalsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white font-medium mb-2">
+                  <label className="block text-black dark:text-white font-medium mb-2">
                     Durum
                   </label>
                   <select
@@ -355,7 +355,7 @@ export default function AdminCarnivalsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white font-medium mb-2">
+                  <label className="block text-black dark:text-white font-medium mb-2">
                     Görsel
                   </label>
                   {formData.image && (

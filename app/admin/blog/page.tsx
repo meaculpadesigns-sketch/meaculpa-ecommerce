@@ -104,8 +104,8 @@ export default function AdminBlogPage() {
 
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-white mb-2">Blog Yönetimi</h1>
-            <p className="text-gray-400">
+            <h1 className="text-4xl font-bold text-black dark:text-white mb-2">Blog Yönetimi</h1>
+            <p className="text-black dark:text-white">
               Blog yazılarını ekleyin, düzenleyin ve yönetin
             </p>
           </div>
@@ -122,8 +122,8 @@ export default function AdminBlogPage() {
             className="glass rounded-xl p-6 hover:bg-white hover:bg-opacity-5 transition-colors"
           >
             <FileText className="text-mea-gold mb-3" size={32} />
-            <h3 className="text-xl font-bold text-white mb-1">Kategoriler</h3>
-            <p className="text-gray-400 text-sm">Blog kategorilerini yönetin</p>
+            <h3 className="text-xl font-bold text-black dark:text-white mb-1">Kategoriler</h3>
+            <p className="text-black dark:text-white text-sm">Blog kategorilerini yönetin</p>
           </Link>
 
           <Link
@@ -131,16 +131,16 @@ export default function AdminBlogPage() {
             className="glass rounded-xl p-6 hover:bg-white hover:bg-opacity-5 transition-colors"
           >
             <Eye className="text-mea-gold mb-3" size={32} />
-            <h3 className="text-xl font-bold text-white mb-1">Yorumlar</h3>
-            <p className="text-gray-400 text-sm">Yorumları onaylayın veya reddedin</p>
+            <h3 className="text-xl font-bold text-black dark:text-white mb-1">Yorumlar</h3>
+            <p className="text-black dark:text-white text-sm">Yorumları onaylayın veya reddedin</p>
           </Link>
 
           <div className="glass rounded-xl p-6">
             <Calendar className="text-mea-gold mb-3" size={32} />
-            <h3 className="text-xl font-bold text-white mb-1">
+            <h3 className="text-xl font-bold text-black dark:text-white mb-1">
               {posts.length} Blog Yazısı
             </h3>
-            <p className="text-gray-400 text-sm">
+            <p className="text-black dark:text-white text-sm">
               {posts.filter((p) => p.status === 'published').length} yayında,{' '}
               {posts.filter((p) => p.status === 'draft').length} taslak
             </p>
@@ -152,7 +152,7 @@ export default function AdminBlogPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="relative">
               <Search
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-black dark:text-white"
                 size={20}
               />
               <input
@@ -185,15 +185,15 @@ export default function AdminBlogPage() {
         {loading ? (
           <div className="text-center py-20">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-mea-gold mx-auto"></div>
-            <p className="text-gray-400 mt-4">Yükleniyor...</p>
+            <p className="text-black dark:text-white mt-4">Yükleniyor...</p>
           </div>
         ) : filteredPosts.length === 0 ? (
           <div className="text-center py-20">
-            <FileText className="mx-auto mb-6 text-gray-400" size={80} />
-            <h2 className="text-2xl font-bold text-white mb-4">
+            <FileText className="mx-auto mb-6 text-black dark:text-white" size={80} />
+            <h2 className="text-2xl font-bold text-black dark:text-white mb-4">
               {searchQuery || statusFilter !== 'all' ? 'Sonuç Bulunamadı' : 'Henüz Blog Yazısı Yok'}
             </h2>
-            <p className="text-gray-400 mb-8">
+            <p className="text-black dark:text-white mb-8">
               {searchQuery || statusFilter !== 'all'
                 ? 'Arama kriterlerinize uygun blog yazısı bulunamadı'
                 : 'Yeni blog yazısı eklemek için yukarıdaki butona tıklayın'}
@@ -205,12 +205,12 @@ export default function AdminBlogPage() {
               <table className="w-full">
                 <thead className="border-b border-white border-opacity-10">
                   <tr>
-                    <th className="text-left p-4 text-gray-400 font-medium">Başlık</th>
-                    <th className="text-left p-4 text-gray-400 font-medium">Kategori</th>
-                    <th className="text-left p-4 text-gray-400 font-medium">Durum</th>
-                    <th className="text-left p-4 text-gray-400 font-medium">Görüntülenme</th>
-                    <th className="text-left p-4 text-gray-400 font-medium">Tarih</th>
-                    <th className="text-right p-4 text-gray-400 font-medium">İşlemler</th>
+                    <th className="text-left p-4 text-black dark:text-white font-medium">Başlık</th>
+                    <th className="text-left p-4 text-black dark:text-white font-medium">Kategori</th>
+                    <th className="text-left p-4 text-black dark:text-white font-medium">Durum</th>
+                    <th className="text-left p-4 text-black dark:text-white font-medium">Görüntülenme</th>
+                    <th className="text-left p-4 text-black dark:text-white font-medium">Tarih</th>
+                    <th className="text-right p-4 text-black dark:text-white font-medium">İşlemler</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -224,16 +224,16 @@ export default function AdminBlogPage() {
                     >
                       <td className="p-4">
                         <div>
-                          <div className="text-white font-medium line-clamp-1">
+                          <div className="text-black dark:text-white font-medium line-clamp-1">
                             {post.title}
                           </div>
-                          <div className="text-gray-400 text-sm line-clamp-1">
+                          <div className="text-black dark:text-white text-sm line-clamp-1">
                             {post.titleEn}
                           </div>
                         </div>
                       </td>
                       <td className="p-4">
-                        <span className="text-gray-300">{post.categoryName}</span>
+                        <span className="text-black dark:text-white">{post.categoryName}</span>
                       </td>
                       <td className="p-4">
                         <span
@@ -242,7 +242,7 @@ export default function AdminBlogPage() {
                               ? 'bg-green-500 bg-opacity-20 text-green-500'
                               : post.status === 'scheduled'
                               ? 'bg-blue-500 bg-opacity-20 text-blue-500'
-                              : 'bg-gray-500 bg-opacity-20 text-gray-400'
+                              : 'bg-gray-500 bg-opacity-20 text-black dark:text-white'
                           }`}
                         >
                           {post.status === 'published'
@@ -253,10 +253,10 @@ export default function AdminBlogPage() {
                         </span>
                       </td>
                       <td className="p-4">
-                        <span className="text-gray-300">{post.views || 0}</span>
+                        <span className="text-black dark:text-white">{post.views || 0}</span>
                       </td>
                       <td className="p-4">
-                        <div className="text-gray-300 text-sm">
+                        <div className="text-black dark:text-white text-sm">
                           {post.status === 'published'
                             ? formatDate(post.publishedAt)
                             : formatDate(post.createdAt)}
@@ -276,7 +276,7 @@ export default function AdminBlogPage() {
                           {post.status === 'published' && (
                             <button
                               onClick={() => handleStatusChange(post.id, 'draft')}
-                              className="px-3 py-1 bg-gray-500 bg-opacity-20 text-gray-400 rounded-lg hover:bg-opacity-30 transition-colors text-sm"
+                              className="px-3 py-1 bg-gray-500 bg-opacity-20 text-black dark:text-white rounded-lg hover:bg-opacity-30 transition-colors text-sm"
                             >
                               Taslak Yap
                             </button>

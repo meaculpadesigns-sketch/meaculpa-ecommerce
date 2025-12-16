@@ -186,7 +186,7 @@ export default function AdminCouponsPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-white text-xl">Yükleniyor...</div>
+        <div className="animate-pulse text-black dark:text-white text-xl">Yükleniyor...</div>
       </div>
     );
   }
@@ -205,8 +205,8 @@ export default function AdminCouponsPage() {
 
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-bold text-white mb-2">Kupon Kodları Yönetimi</h1>
-            <p className="text-gray-400">Kişiye özel ve genel kullanım kuponları oluşturun</p>
+            <h1 className="text-4xl font-bold text-black dark:text-white mb-2">Kupon Kodları Yönetimi</h1>
+            <p className="text-black dark:text-white">Kişiye özel ve genel kullanım kuponları oluşturun</p>
           </div>
           <button
             onClick={() => openModal()}
@@ -220,20 +220,20 @@ export default function AdminCouponsPage() {
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
           <div className="glass rounded-xl p-6">
-            <p className="text-gray-400 text-sm mb-1">Toplam Kupon</p>
-            <p className="text-white text-3xl font-bold">{stats.total}</p>
+            <p className="text-black dark:text-white text-sm mb-1">Toplam Kupon</p>
+            <p className="text-black dark:text-white text-3xl font-bold">{stats.total}</p>
           </div>
           <div className="glass rounded-xl p-6">
-            <p className="text-gray-400 text-sm mb-1">Aktif Kupon</p>
-            <p className="text-white text-3xl font-bold">{stats.active}</p>
+            <p className="text-black dark:text-white text-sm mb-1">Aktif Kupon</p>
+            <p className="text-black dark:text-white text-3xl font-bold">{stats.active}</p>
           </div>
           <div className="glass rounded-xl p-6">
-            <p className="text-gray-400 text-sm mb-1">Kişiye Özel</p>
-            <p className="text-white text-3xl font-bold">{stats.singleUser}</p>
+            <p className="text-black dark:text-white text-sm mb-1">Kişiye Özel</p>
+            <p className="text-black dark:text-white text-3xl font-bold">{stats.singleUser}</p>
           </div>
           <div className="glass rounded-xl p-6">
-            <p className="text-gray-400 text-sm mb-1">Çok Kullanımlı</p>
-            <p className="text-white text-3xl font-bold">{stats.multiUser}</p>
+            <p className="text-black dark:text-white text-sm mb-1">Çok Kullanımlı</p>
+            <p className="text-black dark:text-white text-3xl font-bold">{stats.multiUser}</p>
           </div>
         </div>
 
@@ -258,10 +258,10 @@ export default function AdminCouponsPage() {
                       <Ticket className="text-mea-gold" size={24} />
                       <div>
                         <div className="flex items-center gap-2">
-                          <h3 className="text-xl font-bold text-white">{coupon.code}</h3>
+                          <h3 className="text-xl font-bold text-black dark:text-white">{coupon.code}</h3>
                           <button
                             onClick={() => copyCode(coupon.code)}
-                            className="text-gray-400 hover:text-white transition-colors"
+                            className="text-black dark:text-white hover:text-black dark:text-white transition-colors"
                             title="Kodu Kopyala"
                           >
                             {copiedCode === coupon.code ? (
@@ -284,7 +284,7 @@ export default function AdminCouponsPage() {
                           )}
                         </div>
                         {user && (
-                          <p className="text-sm text-gray-400 mt-1">
+                          <p className="text-sm text-black dark:text-white mt-1">
                             {user.firstName} {user.lastName} ({user.email})
                           </p>
                         )}
@@ -293,35 +293,35 @@ export default function AdminCouponsPage() {
 
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                       <div>
-                        <p className="text-gray-400">İndirim</p>
-                        <p className="text-white font-semibold">
+                        <p className="text-black dark:text-white">İndirim</p>
+                        <p className="text-black dark:text-white font-semibold">
                           {coupon.type === 'percentage' ? `%${coupon.value}` : `₺${coupon.value}`}
                         </p>
                       </div>
                       {coupon.minPurchase && (
                         <div>
-                          <p className="text-gray-400">Min. Tutar</p>
-                          <p className="text-white font-semibold">₺{coupon.minPurchase}</p>
+                          <p className="text-black dark:text-white">Min. Tutar</p>
+                          <p className="text-black dark:text-white font-semibold">₺{coupon.minPurchase}</p>
                         </div>
                       )}
                       {coupon.maxDiscount && (
                         <div>
-                          <p className="text-gray-400">Max. İndirim</p>
-                          <p className="text-white font-semibold">₺{coupon.maxDiscount}</p>
+                          <p className="text-black dark:text-white">Max. İndirim</p>
+                          <p className="text-black dark:text-white font-semibold">₺{coupon.maxDiscount}</p>
                         </div>
                       )}
                       {coupon.expiresAt && (
                         <div>
-                          <p className="text-gray-400">Son Kullanma</p>
-                          <p className={`font-semibold ${isExpired ? 'text-red-500' : 'text-white'}`}>
+                          <p className="text-black dark:text-white">Son Kullanma</p>
+                          <p className={`font-semibold ${isExpired ? 'text-red-500' : 'text-black dark:text-white'}`}>
                             {new Date(coupon.expiresAt).toLocaleDateString('tr-TR')}
                           </p>
                         </div>
                       )}
                       {coupon.usageLimit && (
                         <div>
-                          <p className="text-gray-400">Kullanım</p>
-                          <p className={`font-semibold ${isLimitReached ? 'text-red-500' : 'text-white'}`}>
+                          <p className="text-black dark:text-white">Kullanım</p>
+                          <p className={`font-semibold ${isLimitReached ? 'text-red-500' : 'text-black dark:text-white'}`}>
                             {coupon.usedCount} / {coupon.usageLimit}
                           </p>
                         </div>
@@ -341,7 +341,7 @@ export default function AdminCouponsPage() {
                           </span>
                         )}
                         {!coupon.active && (
-                          <span className="px-3 py-1 bg-gray-500 bg-opacity-20 text-gray-400 text-xs rounded-full">
+                          <span className="px-3 py-1 bg-gray-500 bg-opacity-20 text-black dark:text-white text-xs rounded-full">
                             Pasif
                           </span>
                         )}
@@ -355,7 +355,7 @@ export default function AdminCouponsPage() {
                       className={`p-2 rounded-lg transition-colors ${
                         coupon.active
                           ? 'bg-green-500 bg-opacity-20 text-green-400 hover:bg-opacity-30'
-                          : 'bg-gray-500 bg-opacity-20 text-gray-400 hover:bg-opacity-30'
+                          : 'bg-gray-500 bg-opacity-20 text-black dark:text-white hover:bg-opacity-30'
                       }`}
                       title={coupon.active ? 'Pasif Yap' : 'Aktif Yap'}
                     >
@@ -384,9 +384,9 @@ export default function AdminCouponsPage() {
 
         {coupons.length === 0 && (
           <div className="text-center py-20">
-            <Ticket className="mx-auto mb-6 text-gray-400" size={80} />
-            <h2 className="text-2xl font-bold text-white mb-4">Henüz Kupon Yok</h2>
-            <p className="text-gray-400 mb-6">
+            <Ticket className="mx-auto mb-6 text-black dark:text-white" size={80} />
+            <h2 className="text-2xl font-bold text-black dark:text-white mb-4">Henüz Kupon Yok</h2>
+            <p className="text-black dark:text-white mb-6">
               İlk kuponunuzu oluşturarak başlayın
             </p>
             <button

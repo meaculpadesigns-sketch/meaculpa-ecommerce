@@ -121,8 +121,8 @@ export default function BlogCategoriesPage() {
 
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-white mb-2">Blog Kategorileri</h1>
-            <p className="text-gray-400">Blog kategorilerini yönetin</p>
+            <h1 className="text-4xl font-bold text-black dark:text-white mb-2">Blog Kategorileri</h1>
+            <p className="text-black dark:text-white">Blog kategorilerini yönetin</p>
           </div>
           <button onClick={() => openModal()} className="btn-primary flex items-center gap-2">
             <Plus size={20} />
@@ -134,11 +134,11 @@ export default function BlogCategoriesPage() {
           <table className="w-full">
             <thead className="border-b border-white border-opacity-10">
               <tr>
-                <th className="text-left p-4 text-gray-400 font-medium">Kategori</th>
-                <th className="text-left p-4 text-gray-400 font-medium">Slug</th>
-                <th className="text-left p-4 text-gray-400 font-medium">Yazı Sayısı</th>
-                <th className="text-left p-4 text-gray-400 font-medium">Sıra</th>
-                <th className="text-right p-4 text-gray-400 font-medium">İşlemler</th>
+                <th className="text-left p-4 text-black dark:text-white font-medium">Kategori</th>
+                <th className="text-left p-4 text-black dark:text-white font-medium">Slug</th>
+                <th className="text-left p-4 text-black dark:text-white font-medium">Yazı Sayısı</th>
+                <th className="text-left p-4 text-black dark:text-white font-medium">Sıra</th>
+                <th className="text-right p-4 text-black dark:text-white font-medium">İşlemler</th>
               </tr>
             </thead>
             <tbody>
@@ -152,13 +152,13 @@ export default function BlogCategoriesPage() {
                 >
                   <td className="p-4">
                     <div>
-                      <div className="text-white font-medium">{category.name}</div>
-                      <div className="text-gray-400 text-sm">{category.nameEn}</div>
+                      <div className="text-black dark:text-white font-medium">{category.name}</div>
+                      <div className="text-black dark:text-white text-sm">{category.nameEn}</div>
                     </div>
                   </td>
-                  <td className="p-4 text-gray-300">{category.slug}</td>
-                  <td className="p-4 text-gray-300">{category.postCount}</td>
-                  <td className="p-4 text-gray-300">{category.order}</td>
+                  <td className="p-4 text-black dark:text-white">{category.slug}</td>
+                  <td className="p-4 text-black dark:text-white">{category.postCount}</td>
+                  <td className="p-4 text-black dark:text-white">{category.order}</td>
                   <td className="p-4">
                     <div className="flex items-center justify-end gap-2">
                       <button
@@ -190,10 +190,10 @@ export default function BlogCategoriesPage() {
               className="glass rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
             >
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-white">
+                <h2 className="text-2xl font-bold text-black dark:text-white">
                   {editingCategory ? 'Kategori Düzenle' : 'Yeni Kategori'}
                 </h2>
-                <button onClick={closeModal} className="text-gray-400 hover:text-white">
+                <button onClick={closeModal} className="text-black dark:text-white hover:text-black dark:text-white">
                   <X size={24} />
                 </button>
               </div>
@@ -201,7 +201,7 @@ export default function BlogCategoriesPage() {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-white font-medium mb-2">Kategori Adı (TR)</label>
+                    <label className="block text-black dark:text-white font-medium mb-2">Kategori Adı (TR)</label>
                     <input
                       type="text"
                       value={formData.name}
@@ -212,7 +212,7 @@ export default function BlogCategoriesPage() {
                   </div>
 
                   <div>
-                    <label className="block text-white font-medium mb-2">Kategori Adı (EN)</label>
+                    <label className="block text-black dark:text-white font-medium mb-2">Kategori Adı (EN)</label>
                     <input
                       type="text"
                       value={formData.nameEn}
@@ -223,7 +223,7 @@ export default function BlogCategoriesPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white font-medium mb-2">Slug</label>
+                  <label className="block text-black dark:text-white font-medium mb-2">Slug</label>
                   <input
                     type="text"
                     value={formData.slug}
@@ -235,7 +235,7 @@ export default function BlogCategoriesPage() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-white font-medium mb-2">Sıra</label>
+                    <label className="block text-black dark:text-white font-medium mb-2">Sıra</label>
                     <input
                       type="number"
                       value={formData.order}
@@ -245,7 +245,7 @@ export default function BlogCategoriesPage() {
                   </div>
 
                   <div>
-                    <label className="block text-white font-medium mb-2">Renk</label>
+                    <label className="block text-black dark:text-white font-medium mb-2">Renk</label>
                     <input
                       type="color"
                       value={formData.color}

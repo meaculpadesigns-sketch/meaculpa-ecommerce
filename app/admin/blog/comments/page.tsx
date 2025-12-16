@@ -89,8 +89,8 @@ export default function BlogCommentsPage() {
 
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-white mb-2">Yorum Moderasyonu</h1>
-            <p className="text-gray-400">Blog yorumlarını onaylayın veya reddedin</p>
+            <h1 className="text-4xl font-bold text-black dark:text-white mb-2">Yorum Moderasyonu</h1>
+            <p className="text-black dark:text-white">Blog yorumlarını onaylayın veya reddedin</p>
           </div>
         </div>
 
@@ -102,7 +102,7 @@ export default function BlogCommentsPage() {
               className={`px-4 py-2 rounded-lg transition-colors ${
                 filter === 'pending'
                   ? 'bg-mea-gold text-black'
-                  : 'bg-white bg-opacity-10 text-white hover:bg-opacity-20'
+                  : 'bg-white bg-opacity-10 text-black dark:text-white hover:bg-opacity-20'
               }`}
             >
               Bekleyenler
@@ -112,7 +112,7 @@ export default function BlogCommentsPage() {
               className={`px-4 py-2 rounded-lg transition-colors ${
                 filter === 'approved'
                   ? 'bg-mea-gold text-black'
-                  : 'bg-white bg-opacity-10 text-white hover:bg-opacity-20'
+                  : 'bg-white bg-opacity-10 text-black dark:text-white hover:bg-opacity-20'
               }`}
             >
               Onaylananlar
@@ -122,7 +122,7 @@ export default function BlogCommentsPage() {
               className={`px-4 py-2 rounded-lg transition-colors ${
                 filter === 'rejected'
                   ? 'bg-mea-gold text-black'
-                  : 'bg-white bg-opacity-10 text-white hover:bg-opacity-20'
+                  : 'bg-white bg-opacity-10 text-black dark:text-white hover:bg-opacity-20'
               }`}
             >
               Reddedilenler
@@ -132,7 +132,7 @@ export default function BlogCommentsPage() {
               className={`px-4 py-2 rounded-lg transition-colors ${
                 filter === 'all'
                   ? 'bg-mea-gold text-black'
-                  : 'bg-white bg-opacity-10 text-white hover:bg-opacity-20'
+                  : 'bg-white bg-opacity-10 text-black dark:text-white hover:bg-opacity-20'
               }`}
             >
               Tümü
@@ -144,13 +144,13 @@ export default function BlogCommentsPage() {
         {loading ? (
           <div className="text-center py-20">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-mea-gold mx-auto"></div>
-            <p className="text-gray-400 mt-4">Yükleniyor...</p>
+            <p className="text-black dark:text-white mt-4">Yükleniyor...</p>
           </div>
         ) : comments.length === 0 ? (
           <div className="text-center py-20">
-            <MessageSquare className="mx-auto mb-6 text-gray-400" size={80} />
-            <h2 className="text-2xl font-bold text-white mb-4">Yorum Bulunamadı</h2>
-            <p className="text-gray-400">Bu filtreyeuygun yorum bulunmuyor</p>
+            <MessageSquare className="mx-auto mb-6 text-black dark:text-white" size={80} />
+            <h2 className="text-2xl font-bold text-black dark:text-white mb-4">Yorum Bulunamadı</h2>
+            <p className="text-black dark:text-white">Bu filtreyeuygun yorum bulunmuyor</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -165,7 +165,7 @@ export default function BlogCommentsPage() {
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <div className="flex items-center gap-3 mb-1">
-                      <h3 className="text-lg font-bold text-white">{comment.userName}</h3>
+                      <h3 className="text-lg font-bold text-black dark:text-white">{comment.userName}</h3>
                       <span
                         className={`px-3 py-1 rounded-full text-xs font-medium ${
                           comment.status === 'approved'
@@ -182,8 +182,8 @@ export default function BlogCommentsPage() {
                           : 'Bekliyor'}
                       </span>
                     </div>
-                    <p className="text-gray-400 text-sm">{comment.userEmail}</p>
-                    <p className="text-gray-400 text-sm">
+                    <p className="text-black dark:text-white text-sm">{comment.userEmail}</p>
+                    <p className="text-black dark:text-white text-sm">
                       {comment.postTitle} • {formatDate(comment.createdAt)}
                     </p>
                   </div>
@@ -217,11 +217,11 @@ export default function BlogCommentsPage() {
                   </div>
                 </div>
 
-                <p className="text-gray-300">{comment.content}</p>
+                <p className="text-black dark:text-white">{comment.content}</p>
 
                 {comment.parentCommentId && (
                   <div className="mt-3 pl-4 border-l-2 border-mea-gold border-opacity-30">
-                    <p className="text-gray-400 text-sm">↳ Bir yoruma yanıt</p>
+                    <p className="text-black dark:text-white text-sm">↳ Bir yoruma yanıt</p>
                   </div>
                 )}
               </motion.div>

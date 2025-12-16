@@ -156,16 +156,16 @@ export default function NewBlogPage() {
       <div className="max-w-5xl mx-auto">
         <AdminBackButton />
 
-        <h1 className="text-4xl font-bold text-white mb-8">Yeni Blog Yazısı</h1>
+        <h1 className="text-4xl font-bold text-black dark:text-white mb-8">Yeni Blog Yazısı</h1>
 
         <form className="space-y-6">
           {/* Turkish Title & Slug */}
           <div className="glass rounded-2xl p-6">
-            <h2 className="text-xl font-bold text-white mb-4">Temel Bilgiler (Türkçe)</h2>
+            <h2 className="text-xl font-bold text-black dark:text-white mb-4">Temel Bilgiler (Türkçe)</h2>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-white font-medium mb-2">
+                <label className="block text-black dark:text-white font-medium mb-2">
                   Başlık (TR) *
                 </label>
                 <input
@@ -178,7 +178,7 @@ export default function NewBlogPage() {
               </div>
 
               <div>
-                <label className="block text-white font-medium mb-2">
+                <label className="block text-black dark:text-white font-medium mb-2">
                   URL Slug (otomatik)
                 </label>
                 <input
@@ -191,7 +191,7 @@ export default function NewBlogPage() {
               </div>
 
               <div>
-                <label className="block text-white font-medium mb-2">
+                <label className="block text-black dark:text-white font-medium mb-2">
                   Özet (TR) *
                 </label>
                 <textarea
@@ -204,7 +204,7 @@ export default function NewBlogPage() {
               </div>
 
               <div>
-                <label className="block text-white font-medium mb-2">
+                <label className="block text-black dark:text-white font-medium mb-2">
                   İçerik (TR) *
                 </label>
                 <RichTextEditor
@@ -218,11 +218,11 @@ export default function NewBlogPage() {
 
           {/* English Title & Content */}
           <div className="glass rounded-2xl p-6">
-            <h2 className="text-xl font-bold text-white mb-4">İngilizce Çeviri</h2>
+            <h2 className="text-xl font-bold text-black dark:text-white mb-4">İngilizce Çeviri</h2>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-white font-medium mb-2">
+                <label className="block text-black dark:text-white font-medium mb-2">
                   Başlık (EN)
                 </label>
                 <input
@@ -234,7 +234,7 @@ export default function NewBlogPage() {
               </div>
 
               <div>
-                <label className="block text-white font-medium mb-2">
+                <label className="block text-black dark:text-white font-medium mb-2">
                   Özet (EN)
                 </label>
                 <textarea
@@ -246,7 +246,7 @@ export default function NewBlogPage() {
               </div>
 
               <div>
-                <label className="block text-white font-medium mb-2">
+                <label className="block text-black dark:text-white font-medium mb-2">
                   İçerik (EN)
                 </label>
                 <RichTextEditor
@@ -260,11 +260,11 @@ export default function NewBlogPage() {
 
           {/* Category & Tags */}
           <div className="glass rounded-2xl p-6">
-            <h2 className="text-xl font-bold text-white mb-4">Kategori ve Etiketler</h2>
+            <h2 className="text-xl font-bold text-black dark:text-white mb-4">Kategori ve Etiketler</h2>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-white font-medium mb-2">
+                <label className="block text-black dark:text-white font-medium mb-2">
                   Kategori *
                 </label>
                 <select
@@ -283,7 +283,7 @@ export default function NewBlogPage() {
               </div>
 
               <div>
-                <label className="block text-white font-medium mb-2">
+                <label className="block text-black dark:text-white font-medium mb-2">
                   Etiketler
                 </label>
                 <div className="flex gap-2 mb-2">
@@ -327,7 +327,7 @@ export default function NewBlogPage() {
 
           {/* Featured Image */}
           <div className="glass rounded-2xl p-6">
-            <h2 className="text-xl font-bold text-white mb-4">Öne Çıkan Görsel</h2>
+            <h2 className="text-xl font-bold text-black dark:text-white mb-4">Öne Çıkan Görsel</h2>
 
             {formData.featuredImage && (
               <div className="mb-4 aspect-video bg-zinc-800 rounded-lg overflow-hidden">
@@ -357,11 +357,11 @@ export default function NewBlogPage() {
 
           {/* Publishing Options */}
           <div className="glass rounded-2xl p-6">
-            <h2 className="text-xl font-bold text-white mb-4">Yayın Ayarları</h2>
+            <h2 className="text-xl font-bold text-black dark:text-white mb-4">Yayın Ayarları</h2>
 
             <div className="space-y-4">
               <div className="flex items-center gap-4">
-                <label className="flex items-center gap-2 text-white">
+                <label className="flex items-center gap-2 text-black dark:text-white">
                   <input
                     type="checkbox"
                     checked={formData.featured}
@@ -371,7 +371,7 @@ export default function NewBlogPage() {
                   Öne Çıkan Yazı
                 </label>
 
-                <label className="flex items-center gap-2 text-white">
+                <label className="flex items-center gap-2 text-black dark:text-white">
                   <input
                     type="checkbox"
                     checked={formData.allowComments}
@@ -383,7 +383,7 @@ export default function NewBlogPage() {
               </div>
 
               <div>
-                <label className="block text-white font-medium mb-2">
+                <label className="block text-black dark:text-white font-medium mb-2">
                   Planlı Yayın Tarihi (Opsiyonel)
                 </label>
                 <input

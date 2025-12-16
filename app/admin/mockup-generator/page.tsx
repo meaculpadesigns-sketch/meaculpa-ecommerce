@@ -154,10 +154,10 @@ export default function AdminMockupGeneratorPage() {
         <AdminBackButton />
 
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">
+          <h1 className="text-4xl font-bold text-black dark:text-white mb-2">
             AI Mock-up Oluşturucu
           </h1>
-          <p className="text-gray-400">
+          <p className="text-black dark:text-white">
             Gemini AI ile tasarımlarınızın mock-up'larını oluşturun
           </p>
         </div>
@@ -167,10 +167,10 @@ export default function AdminMockupGeneratorPage() {
           <div className="space-y-6">
             {/* Image Upload */}
             <div className="glass rounded-2xl p-6">
-              <h3 className="text-xl font-semibold text-white mb-4">
+              <h3 className="text-xl font-semibold text-black dark:text-white mb-4">
                 Fotoğraflar ({images.length}/3)
               </h3>
-              <p className="text-sm text-gray-400 mb-4">
+              <p className="text-sm text-black dark:text-white mb-4">
                 Maksimum 3 fotoğraf, her biri 10MB'a kadar
               </p>
 
@@ -186,7 +186,7 @@ export default function AdminMockupGeneratorPage() {
                       onClick={() => removeImage(index)}
                       className="absolute top-2 right-2 p-1 bg-red-500 rounded-full hover:bg-red-600 transition-colors"
                     >
-                      <X size={16} className="text-white" />
+                      <X size={16} className="text-black dark:text-white" />
                     </button>
                   </div>
                 ))}
@@ -209,10 +209,10 @@ export default function AdminMockupGeneratorPage() {
               {images.length === 0 && (
                 <label className="w-full flex flex-col items-center justify-center p-12 border-2 border-dashed border-gray-600 rounded-lg hover:border-mea-gold transition-colors cursor-pointer">
                   <Upload size={48} className="text-gray-600 mb-4" />
-                  <p className="text-white font-medium mb-2">
+                  <p className="text-black dark:text-white font-medium mb-2">
                     Fotoğraf Yükle
                   </p>
-                  <p className="text-gray-400 text-sm text-center">
+                  <p className="text-black dark:text-white text-sm text-center">
                     Tasarımlarınızın fotoğraflarını sürükleyin veya tıklayarak seçin
                     <br />
                     (Maksimum 3 fotoğraf, her biri 10MB'a kadar)
@@ -230,7 +230,7 @@ export default function AdminMockupGeneratorPage() {
 
             {/* Prompt Input */}
             <div className="glass rounded-2xl p-6">
-              <h3 className="text-xl font-semibold text-white mb-4">
+              <h3 className="text-xl font-semibold text-black dark:text-white mb-4">
                 Prompt (İstek)
               </h3>
               <textarea
@@ -242,10 +242,10 @@ export default function AdminMockupGeneratorPage() {
               />
 
               <div className="mt-4 p-4 bg-zinc-800 rounded-lg">
-                <p className="text-sm text-gray-400 mb-2">
-                  <strong className="text-white">Örnek Promptlar:</strong>
+                <p className="text-sm text-black dark:text-white mb-2">
+                  <strong className="text-black dark:text-white">Örnek Promptlar:</strong>
                 </p>
-                <ul className="text-sm text-gray-400 space-y-1">
+                <ul className="text-sm text-black dark:text-white space-y-1">
                   <li>• "Profesyonel e-ticaret fotoğrafı oluştur, beyaz arka plan"</li>
                   <li>• "Instagram için stil çekimi, doğal ışıklandırma"</li>
                   <li>• "Katalog fotoğrafı, ürün detayları net görünsün"</li>
@@ -277,25 +277,25 @@ export default function AdminMockupGeneratorPage() {
 
           {/* Right Side - Result */}
           <div className="glass rounded-2xl p-6">
-            <h3 className="text-xl font-semibold text-white mb-4">
+            <h3 className="text-xl font-semibold text-black dark:text-white mb-4">
               Sonuç
             </h3>
 
             {loading && (
               <div className="flex flex-col items-center justify-center py-20">
                 <div className="animate-spin rounded-full h-16 w-16 border-4 border-mea-gold border-t-transparent mb-4"></div>
-                <p className="text-white font-medium">AI mock-up oluşturuyor...</p>
-                <p className="text-gray-400 text-sm mt-2">Bu birkaç dakika sürebilir</p>
+                <p className="text-black dark:text-white font-medium">AI mock-up oluşturuyor...</p>
+                <p className="text-black dark:text-white text-sm mt-2">Bu birkaç dakika sürebilir</p>
               </div>
             )}
 
             {!loading && !generatedImage && (
               <div className="flex flex-col items-center justify-center py-20 text-center">
                 <Wand2 size={64} className="text-gray-600 mb-4" />
-                <p className="text-white font-medium mb-2">
+                <p className="text-black dark:text-white font-medium mb-2">
                   Henüz Mock-up Oluşturulmadı
                 </p>
-                <p className="text-gray-400 text-sm">
+                <p className="text-black dark:text-white text-sm">
                   Fotoğraf yükleyin ve prompt girerek AI ile mock-up oluşturun
                 </p>
               </div>
