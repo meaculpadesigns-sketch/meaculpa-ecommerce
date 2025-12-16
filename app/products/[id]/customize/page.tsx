@@ -692,37 +692,6 @@ export default function CustomizePage() {
                   </div>
                 </div>
 
-                {/* Kimono Type Selection - Only for Kimono category */}
-                {product.category === 'kimono' && (
-                  <div>
-                    <label className="block text-black dark:text-white font-semibold mb-3">
-                      {i18n.language === 'tr' ? 'Kimono Türü' : 'Kimono Type'}
-                    </label>
-                    <div className="grid grid-cols-2 gap-3">
-                      <button
-                        onClick={() => setKimonoType('uzun')}
-                        className={`p-3 rounded-lg transition-all ${
-                          kimonoType === 'uzun'
-                            ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                            : 'text-black dark:text-white hover:opacity-80'
-                        }`}
-                      >
-                        {i18n.language === 'tr' ? 'Uzun Kimono' : 'Long Kimono'}
-                      </button>
-                      <button
-                        onClick={() => setKimonoType('kisa')}
-                        className={`p-3 rounded-lg transition-all ${
-                          kimonoType === 'kisa'
-                            ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
-                            : 'text-black dark:text-white hover:opacity-80'
-                        }`}
-                      >
-                        {i18n.language === 'tr' ? 'Kısa Kimono' : 'Short Kimono'}
-                      </button>
-                    </div>
-                  </div>
-                )}
-
                 {/* Crop Shirt Option - Only for Set category and Female gender */}
                 {product.category === 'set' && gender === 'female' && (
                   <div>
