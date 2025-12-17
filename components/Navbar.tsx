@@ -87,7 +87,7 @@ export default function Navbar() {
           borderColor: isScrolled ? 'rgba(var(--foreground-rgb, 0, 0, 0), 0.1)' : undefined
         }}
       >
-        <div className="max-w-7xl mx-auto px-2">
+        <div className="w-full px-4">
           <div className="flex items-center h-16">
             {/* Left Navigation - First 5 items */}
             <div className="hidden lg:flex items-center space-x-1 flex-1">
