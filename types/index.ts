@@ -50,7 +50,7 @@ export interface Product {
   kimonoType?: 'uzun' | 'kisa'; // Sadece kimono kategorisi için
   setPricing?: {
     shirtOnly?: number; // Sadece gömlek fiyatı (opsiyonel)
-    pajamaOnly?: number; // Sadece pijama fiyatı (opsiyonel)
+    pantsOnly?: number; // Sadece pantolon fiyatı (opsiyonel)
   };
   seoTitle?: string;
   seoTitleEn?: string;
@@ -149,7 +149,7 @@ export interface CartItem {
   customMeasurements?: {
     sleeveLength?: string;
     shirtLength?: string;
-    pajamaLength?: string;
+    pantsLength?: string;
   };
 }
 

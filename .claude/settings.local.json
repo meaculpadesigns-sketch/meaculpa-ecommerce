@@ -43,7 +43,9 @@
       "Bash(powershell -Command \"Move-Item -Path ''app\\carnivals'' -Destination ''app\\festivals-and-blog''\")",
       "Bash(powershell -Command:*)",
       "Bash(timeout:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(node replace-pijama.js:*)",
+      "Bash(del replace-pijama.js)"
     ],
     "deny": [],
     "ask": []

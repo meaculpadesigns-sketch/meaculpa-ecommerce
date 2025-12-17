@@ -59,7 +59,7 @@ export default function AdminProducts() {
     deliveryDays: undefined as number | undefined,
     careInstructions: undefined as { type: 'standard' | 'custom'; customText?: string } | undefined,
     kimonoType: undefined as 'uzun' | 'kisa' | undefined,
-    setPricing: undefined as { shirtOnly?: number; pajamaOnly?: number } | undefined,
+    setPricing: undefined as { shirtOnly?: number; pantsOnly?: number } | undefined,
     seoTitle: '',
     seoTitleEn: '',
     seoDescription: '',
@@ -1042,15 +1042,15 @@ export default function AdminProducts() {
                           <div>
                             <input
                               type="number"
-                              value={formData.setPricing?.pajamaOnly || ''}
+                              value={formData.setPricing?.pantsOnly || ''}
                               onChange={(e) => setFormData({
                                 ...formData,
                                 setPricing: {
                                   ...formData.setPricing,
-                                  pajamaOnly: e.target.value ? parseFloat(e.target.value) : undefined
+                                  pantsOnly: e.target.value ? parseFloat(e.target.value) : undefined
                                 }
                               })}
-                              placeholder="Sadece Pijama Fiyatı"
+                              placeholder="Sadece Pantolon Fiyatı"
                               className="admin-input"
                             />
                           </div>

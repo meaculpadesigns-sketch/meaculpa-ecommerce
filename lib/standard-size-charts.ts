@@ -2,8 +2,8 @@
 
 export interface SizeChartRow {
   beden: string;
-  // For sets (pijama, gomlek, krop)
-  pijamaBoyu?: string;
+  // For sets (pantolon, gomlek, krop)
+  pantolonBoyu?: string;
   gomlekBoyu?: string;
   kolBoyu?: string;
   // For kimonos
@@ -29,10 +29,10 @@ export const KADIN_SET_SIZE_CHART: Omit<SizeChart, 'id' | 'createdAt'> = {
   category: 'set',
   subCategory: 'kadin',
   rows: [
-    { beden: 'S', pijamaBoyu: '95cm', gomlekBoyu: '60cm', kolBoyu: '35cm' },
-    { beden: 'M', pijamaBoyu: '100cm', gomlekBoyu: '65cm', kolBoyu: '35cm' },
-    { beden: 'L', pijamaBoyu: '105cm', gomlekBoyu: '70cm', kolBoyu: '35cm' },
-    { beden: 'XL', pijamaBoyu: '110cm', gomlekBoyu: '75cm', kolBoyu: '35cm' },
+    { beden: 'S', pantolonBoyu: '95cm', gomlekBoyu: '60cm', kolBoyu: '35cm' },
+    { beden: 'M', pantolonBoyu: '100cm', gomlekBoyu: '65cm', kolBoyu: '35cm' },
+    { beden: 'L', pantolonBoyu: '105cm', gomlekBoyu: '70cm', kolBoyu: '35cm' },
+    { beden: 'XL', pantolonBoyu: '110cm', gomlekBoyu: '75cm', kolBoyu: '35cm' },
   ],
 };
 
@@ -43,10 +43,10 @@ export const ERKEK_SET_SIZE_CHART: Omit<SizeChart, 'id' | 'createdAt'> = {
   category: 'set',
   subCategory: 'erkek',
   rows: [
-    { beden: 'S', pijamaBoyu: '100cm', gomlekBoyu: '65cm', kolBoyu: '35cm' },
-    { beden: 'M', pijamaBoyu: '105cm', gomlekBoyu: '70cm', kolBoyu: '35cm' },
-    { beden: 'L', pijamaBoyu: '110cm', gomlekBoyu: '75cm', kolBoyu: '35cm' },
-    { beden: 'XL', pijamaBoyu: '115cm', gomlekBoyu: '80cm', kolBoyu: '35cm' },
+    { beden: 'S', pantolonBoyu: '100cm', gomlekBoyu: '65cm', kolBoyu: '35cm' },
+    { beden: 'M', pantolonBoyu: '105cm', gomlekBoyu: '70cm', kolBoyu: '35cm' },
+    { beden: 'L', pantolonBoyu: '110cm', gomlekBoyu: '75cm', kolBoyu: '35cm' },
+    { beden: 'XL', pantolonBoyu: '115cm', gomlekBoyu: '80cm', kolBoyu: '35cm' },
   ],
 };
 

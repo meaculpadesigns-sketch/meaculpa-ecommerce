@@ -25,7 +25,7 @@ interface ParentInfo {
   size: string;
   shirtLength: string;
   sleeveLength: string;
-  pajamaLength: string;
+  pantsLength: string;
 }
 
 interface ChildInfo {
@@ -36,7 +36,7 @@ interface ChildInfo {
   weight: string;
   shirtLength: string;
   sleeveLength: string;
-  pajamaLength: string;
+  pantsLength: string;
 }
 
 export default function CustomizePage() {
@@ -59,11 +59,11 @@ export default function CustomizePage() {
   const [size, setSize] = useState('');
   const [shirtLength, setShirtLength] = useState('');
   const [sleeveLength, setSleeveLength] = useState('');
-  const [pajamaLength, setPajamaLength] = useState('');
+  const [pantsLength, setPantsLength] = useState('');
 
   // New states for kimono/set options
   const [kimonoType, setKimonoType] = useState<'uzun' | 'kisa'>('uzun');
-  const [setItemSelection, setSetItemSelection] = useState<'full' | 'shirt-only' | 'pajama-only'>('full');
+  const [setItemSelection, setSetItemSelection] = useState<'full' | 'shirt-only' | 'pants-only'>('full');
   const [isCropShirt, setIsCropShirt] = useState(false);
   const [showFamilyOrder, setShowFamilyOrder] = useState(false);
 
@@ -77,14 +77,14 @@ export default function CustomizePage() {
     size: '',
     shirtLength: '',
     sleeveLength: '',
-    pajamaLength: '',
+    pantsLength: '',
   });
   const [parent2, setParent2] = useState<ParentInfo>({
     gender: 'female',
     size: '',
     shirtLength: '',
     sleeveLength: '',
-    pajamaLength: '',
+    pantsLength: '',
   });
   const [children, setChildren] = useState<ChildInfo[]>([]);
 
@@ -97,9 +97,9 @@ export default function CustomizePage() {
       if (setItemSelection === 'shirt-only') {
         // Use admin-defined shirt price or default to half the set price
         return product.setPricing?.shirtOnly || product.price / 2;
-      } else if (setItemSelection === 'pajama-only') {
-        // Use admin-defined pajama price or default to half the set price
-        return product.setPricing?.pajamaOnly || product.price / 2;
+      } else if (setItemSelection === 'pants-only') {
+        // Use admin-defined pants price or default to half the set price
+        return product.setPricing?.pantsOnly || product.price / 2;
       }
     }
 
@@ -167,7 +167,7 @@ export default function CustomizePage() {
           weight: '',
           shirtLength: '',
           sleeveLength: '',
-          pajamaLength: '',
+          pantsLength: '',
         }));
         setChildren([...children, ...newChildren]);
       } else if (childCount < currentCount) {
@@ -198,7 +198,7 @@ export default function CustomizePage() {
         console.log('Setting kimono measurements:', { kimonoBoy, kolBoy });
         setShirtLength(kimonoBoy);
         setSleeveLength(kolBoy);
-        setPajamaLength('');
+        setPantsLength('');
       }
     } else if (product.category === 'set') {
       let chart;
@@ -221,21 +221,21 @@ export default function CustomizePage() {
           console.log('Setting shirt-only measurements:', { gomlekBoy, kolBoy });
           setShirtLength(gomlekBoy);
           setSleeveLength(kolBoy);
-          setPajamaLength('');
-        } else if (setItemSelection === 'pajama-only') {
-          const pijamaBoy = sizeRow.pijamaBoyu?.replace('cm', '') || '';
-          console.log('Setting pajama-only measurements:', { pijamaBoy });
+          setPantsLength('');
+        } else if (setItemSelection === 'pants-only') {
+          const pantolonBoy = sizeRow.pantolonBoyu?.replace('cm', '') || '';
+          console.log('Setting pants-only measurements:', { pantolonBoy });
           setShirtLength('');
           setSleeveLength('');
-          setPajamaLength(pijamaBoy);
+          setPantsLength(pantolonBoy);
         } else {
           const gomlekBoy = sizeRow.gomlekBoyu?.replace('cm', '') || '';
           const kolBoy = sizeRow.kolBoyu?.replace('cm', '') || '';
-          const pijamaBoy = sizeRow.pijamaBoyu?.replace('cm', '') || '';
-          console.log('Setting full set measurements:', { gomlekBoy, kolBoy, pijamaBoy });
+          const pantolonBoy = sizeRow.pantolonBoyu?.replace('cm', '') || '';
+          console.log('Setting full set measurements:', { gomlekBoy, kolBoy, pantolonBoy });
           setShirtLength(gomlekBoy);
           setSleeveLength(kolBoy);
-          setPajamaLength(pijamaBoy);
+          setPantsLength(pantolonBoy);
         }
       }
     }
@@ -259,7 +259,7 @@ export default function CustomizePage() {
           ...parent1,
           shirtLength: kimonoBoy,
           sleeveLength: kolBoy,
-          pajamaLength: '',
+          pantsLength: '',
         });
       }
     } else if (product.category === 'set') {
@@ -269,13 +269,13 @@ export default function CustomizePage() {
       if (sizeRow) {
         const gomlekBoy = sizeRow.gomlekBoyu?.replace('cm', '') || '';
         const kolBoy = sizeRow.kolBoyu?.replace('cm', '') || '';
-        const pijamaBoy = sizeRow.pijamaBoyu?.replace('cm', '') || '';
-        console.log('Setting Parent 1 set measurements:', { gomlekBoy, kolBoy, pijamaBoy });
+        const pantolonBoy = sizeRow.pantolonBoyu?.replace('cm', '') || '';
+        console.log('Setting Parent 1 set measurements:', { gomlekBoy, kolBoy, pantolonBoy });
         setParent1({
           ...parent1,
           shirtLength: gomlekBoy,
           sleeveLength: kolBoy,
-          pajamaLength: pijamaBoy,
+          pantsLength: pantolonBoy,
         });
       }
     }
@@ -299,7 +299,7 @@ export default function CustomizePage() {
           ...parent2,
           shirtLength: kimonoBoy,
           sleeveLength: kolBoy,
-          pajamaLength: '',
+          pantsLength: '',
         });
       }
     } else if (product.category === 'set') {
@@ -309,13 +309,13 @@ export default function CustomizePage() {
       if (sizeRow) {
         const gomlekBoy = sizeRow.gomlekBoyu?.replace('cm', '') || '';
         const kolBoy = sizeRow.kolBoyu?.replace('cm', '') || '';
-        const pijamaBoy = sizeRow.pijamaBoyu?.replace('cm', '') || '';
-        console.log('Setting Parent 2 set measurements:', { gomlekBoy, kolBoy, pijamaBoy });
+        const pantolonBoy = sizeRow.pantolonBoyu?.replace('cm', '') || '';
+        console.log('Setting Parent 2 set measurements:', { gomlekBoy, kolBoy, pantolonBoy });
         setParent2({
           ...parent2,
           shirtLength: gomlekBoy,
           sleeveLength: kolBoy,
-          pajamaLength: pijamaBoy,
+          pantsLength: pantolonBoy,
         });
       }
     }
@@ -332,7 +332,7 @@ export default function CustomizePage() {
       return {
         shirtLength: String(Math.round(heightNum * 0.4)),
         sleeveLength: String(Math.round(heightNum * 0.3)),
-        pajamaLength: String(Math.round(heightNum * 0.55)),
+        pantsLength: String(Math.round(heightNum * 0.55)),
       };
     }
     return null;
@@ -355,7 +355,7 @@ export default function CustomizePage() {
           if (measurements) {
             updatedChild.shirtLength = measurements.shirtLength;
             updatedChild.sleeveLength = measurements.sleeveLength;
-            updatedChild.pajamaLength = measurements.pajamaLength;
+            updatedChild.pantsLength = measurements.pantsLength;
           }
         }
 
@@ -384,7 +384,7 @@ export default function CustomizePage() {
       if (product.category === 'set' && setItemSelection !== 'full') {
         const itemNote = setItemSelection === 'shirt-only'
           ? (i18n.language === 'tr' ? 'Sadece Gömlek' : 'Shirt Only')
-          : (i18n.language === 'tr' ? 'Sadece Pijama' : 'Pajama Only');
+          : (i18n.language === 'tr' ? 'Sadece Pantolon' : 'Pants Only');
         finalSpecialRequests = finalSpecialRequests
           ? `${itemNote} - ${finalSpecialRequests}`
           : itemNote;
@@ -414,7 +414,7 @@ export default function CustomizePage() {
         {
           shirtLength: shirtLength || undefined,
           sleeveLength: sleeveLength || undefined,
-          pajamaLength: pajamaLength || undefined,
+          pantsLength: pantsLength || undefined,
         }
       );
 
@@ -466,7 +466,7 @@ export default function CustomizePage() {
         {
           shirtLength: parent1.shirtLength || undefined,
           sleeveLength: parent1.sleeveLength || undefined,
-          pajamaLength: parent1.pajamaLength || undefined,
+          pantsLength: parent1.pantsLength || undefined,
         }
       );
 
@@ -485,7 +485,7 @@ export default function CustomizePage() {
         {
           shirtLength: parent2.shirtLength || undefined,
           sleeveLength: parent2.sleeveLength || undefined,
-          pajamaLength: parent2.pajamaLength || undefined,
+          pantsLength: parent2.pantsLength || undefined,
         }
       );
 
@@ -505,7 +505,7 @@ export default function CustomizePage() {
           {
             shirtLength: child.shirtLength || undefined,
             sleeveLength: child.sleeveLength || undefined,
-            pajamaLength: child.pajamaLength || undefined,
+            pantsLength: child.pantsLength || undefined,
           }
         );
       });
@@ -747,11 +747,11 @@ export default function CustomizePage() {
                           <input
                             type="radio"
                             name="setItem"
-                            checked={setItemSelection === 'pajama-only'}
-                            onChange={() => setSetItemSelection('pajama-only')}
+                            checked={setItemSelection === 'pants-only'}
+                            onChange={() => setSetItemSelection('pants-only')}
                             className="w-4 h-4 border-gray-600 text-mea-gold focus:ring-mea-gold focus:ring-offset-0"
                           />
-                          <span>{i18n.language === 'tr' ? 'Sadece Pijama' : 'Pajama Only'}</span>
+                          <span>{i18n.language === 'tr' ? 'Sadece Pantolon' : 'Pants Only'}</span>
                         </label>
                       </div>
                     )}
@@ -787,7 +787,7 @@ export default function CustomizePage() {
                   </h4>
                   <div className="grid grid-cols-3 gap-4">
                     {/* First field - Kimono Boyu OR Gömlek Boyu */}
-                    {(product.category === 'set' ? setItemSelection !== 'pajama-only' : true) && (
+                    {(product.category === 'set' ? setItemSelection !== 'pants-only' : true) && (
                       <div>
                         <label className="block text-black dark:text-white text-sm mb-2">
                           {product.category === 'kimono'
@@ -805,8 +805,8 @@ export default function CustomizePage() {
                       </div>
                     )}
 
-                    {/* Second field - Kol Boyu (always shown except for pajama-only) */}
-                    {(product.category === 'set' ? setItemSelection !== 'pajama-only' : true) && (
+                    {/* Second field - Kol Boyu (always shown except for pants-only) */}
+                    {(product.category === 'set' ? setItemSelection !== 'pants-only' : true) && (
                       <div>
                         <label className="block text-black dark:text-white text-sm mb-2">
                           {i18n.language === 'tr' ? 'Kol Boyu (cm)' : 'Sleeve Length (cm)'}
@@ -821,16 +821,16 @@ export default function CustomizePage() {
                       </div>
                     )}
 
-                    {/* Third field - Pijama Boyu (only for set, not for shirt-only) */}
+                    {/* Third field - Pantolon Boyu (only for set, not for shirt-only) */}
                     {product.category === 'set' && setItemSelection !== 'shirt-only' && (
                       <div>
                         <label className="block text-black dark:text-white text-sm mb-2">
-                          {i18n.language === 'tr' ? 'Pijama Boyu (cm)' : 'Pajama Length (cm)'}
+                          {i18n.language === 'tr' ? 'Pantolon Boyu (cm)' : 'Pants Length (cm)'}
                         </label>
                         <input
                           type="number"
-                          value={pajamaLength}
-                          onChange={(e) => setPajamaLength(e.target.value)}
+                          value={pantsLength}
+                          onChange={(e) => setPantsLength(e.target.value)}
                           className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none"
                           placeholder="cm"
                         />
@@ -997,10 +997,10 @@ export default function CustomizePage() {
                       <div>
                         <input
                           type="number"
-                          value={parent1.pajamaLength}
-                          onChange={(e) => setParent1({ ...parent1, pajamaLength: e.target.value })}
+                          value={parent1.pantsLength}
+                          onChange={(e) => setParent1({ ...parent1, pantsLength: e.target.value })}
                           className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
-                          placeholder={i18n.language === 'tr' ? 'Pijama (cm)' : 'Pajama (cm)'}
+                          placeholder={i18n.language === 'tr' ? 'Pantolon (cm)' : 'Pants (cm)'}
                         />
                       </div>
                     </div>
@@ -1091,10 +1091,10 @@ export default function CustomizePage() {
                       <div>
                         <input
                           type="number"
-                          value={parent2.pajamaLength}
-                          onChange={(e) => setParent2({ ...parent2, pajamaLength: e.target.value })}
+                          value={parent2.pantsLength}
+                          onChange={(e) => setParent2({ ...parent2, pantsLength: e.target.value })}
                           className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
-                          placeholder={i18n.language === 'tr' ? 'Pijama (cm)' : 'Pajama (cm)'}
+                          placeholder={i18n.language === 'tr' ? 'Pantolon (cm)' : 'Pants (cm)'}
                         />
                       </div>
                     </div>
@@ -1211,10 +1211,10 @@ export default function CustomizePage() {
                           <div>
                             <input
                               type="number"
-                              value={child.pajamaLength}
-                              onChange={(e) => updateChild(child.id, 'pajamaLength', e.target.value)}
+                              value={child.pantsLength}
+                              onChange={(e) => updateChild(child.id, 'pantsLength', e.target.value)}
                               className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-mea-gold focus:outline-none text-sm"
-                              placeholder={i18n.language === 'tr' ? 'Pijama (cm)' : 'Pajama (cm)'}
+                              placeholder={i18n.language === 'tr' ? 'Pantolon (cm)' : 'Pants (cm)'}
                             />
                           </div>
                         </div>
@@ -1247,7 +1247,7 @@ export default function CustomizePage() {
                     <div className="text-xs text-black dark:text-white mt-1">
                       {setItemSelection === 'shirt-only'
                         ? (i18n.language === 'tr' ? 'Sadece Gömlek' : 'Shirt Only')
-                        : (i18n.language === 'tr' ? 'Sadece Pijama' : 'Pajama Only')
+                        : (i18n.language === 'tr' ? 'Sadece Pantolon' : 'Pants Only')
                       }
                     </div>
                   )}
@@ -1357,7 +1357,7 @@ export default function CustomizePage() {
                     <thead>
                       <tr className="border-b border-white border-opacity-20">
                         <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Beden' : 'Size'}</th>
-                        <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Pijama Boyu' : 'Pajama Length'}</th>
+                        <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Pantolon Boyu' : 'Pants Length'}</th>
                         <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Gömlek Boyu' : 'Shirt Length'}</th>
                         <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Kol Boyu' : 'Sleeve Length'}</th>
                       </tr>
@@ -1366,7 +1366,7 @@ export default function CustomizePage() {
                       {KADIN_SET_SIZE_CHART.rows.map((row, idx) => (
                         <tr key={idx} className="border-b border-white border-opacity-10">
                           <td className="py-3 px-4 font-semibold">{row.beden}</td>
-                          <td className="py-3 px-4 text-black dark:text-white">{row.pijamaBoyu}</td>
+                          <td className="py-3 px-4 text-black dark:text-white">{row.pantolonBoyu}</td>
                           <td className="py-3 px-4 text-black dark:text-white">{row.gomlekBoyu}</td>
                           <td className="py-3 px-4 text-black dark:text-white">{row.kolBoyu}</td>
                         </tr>
@@ -1386,7 +1386,7 @@ export default function CustomizePage() {
                     <thead>
                       <tr className="border-b border-white border-opacity-20">
                         <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Beden' : 'Size'}</th>
-                        <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Pijama Boyu' : 'Pajama Length'}</th>
+                        <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Pantolon Boyu' : 'Pants Length'}</th>
                         <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Gömlek Boyu' : 'Shirt Length'}</th>
                         <th className="text-left py-3 px-4">{i18n.language === 'tr' ? 'Kol Boyu' : 'Sleeve Length'}</th>
                       </tr>
@@ -1395,7 +1395,7 @@ export default function CustomizePage() {
                       {ERKEK_SET_SIZE_CHART.rows.map((row, idx) => (
                         <tr key={idx} className="border-b border-white border-opacity-10">
                           <td className="py-3 px-4 font-semibold">{row.beden}</td>
-                          <td className="py-3 px-4 text-black dark:text-white">{row.pijamaBoyu}</td>
+                          <td className="py-3 px-4 text-black dark:text-white">{row.pantolonBoyu}</td>
                           <td className="py-3 px-4 text-black dark:text-white">{row.gomlekBoyu}</td>
                           <td className="py-3 px-4 text-black dark:text-white">{row.kolBoyu}</td>
                         </tr>

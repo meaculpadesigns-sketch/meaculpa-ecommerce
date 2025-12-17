@@ -21,10 +21,10 @@ export default function AdminSizeChartsPage() {
     category: 'set' as 'set' | 'kimono',
     subCategory: 'kadin' as 'kadin' | 'erkek' | 'krop' | 'uzun' | 'kisa' | undefined,
     rows: [
-      { beden: 'S', pijamaBoyu: '', gomlekBoyu: '', kolBoyu: '' },
-      { beden: 'M', pijamaBoyu: '', gomlekBoyu: '', kolBoyu: '' },
-      { beden: 'L', pijamaBoyu: '', gomlekBoyu: '', kolBoyu: '' },
-      { beden: 'XL', pijamaBoyu: '', gomlekBoyu: '', kolBoyu: '' },
+      { beden: 'S', pantolonBoyu: '', gomlekBoyu: '', kolBoyu: '' },
+      { beden: 'M', pantolonBoyu: '', gomlekBoyu: '', kolBoyu: '' },
+      { beden: 'L', pantolonBoyu: '', gomlekBoyu: '', kolBoyu: '' },
+      { beden: 'XL', pantolonBoyu: '', gomlekBoyu: '', kolBoyu: '' },
     ] as SizeChartRow[],
   });
 
@@ -125,10 +125,10 @@ export default function AdminSizeChartsPage() {
         category: 'set',
         subCategory: 'kadin',
         rows: [
-          { beden: 'S', pijamaBoyu: '', gomlekBoyu: '', kolBoyu: '' },
-          { beden: 'M', pijamaBoyu: '', gomlekBoyu: '', kolBoyu: '' },
-          { beden: 'L', pijamaBoyu: '', gomlekBoyu: '', kolBoyu: '' },
-          { beden: 'XL', pijamaBoyu: '', gomlekBoyu: '', kolBoyu: '' },
+          { beden: 'S', pantolonBoyu: '', gomlekBoyu: '', kolBoyu: '' },
+          { beden: 'M', pantolonBoyu: '', gomlekBoyu: '', kolBoyu: '' },
+          { beden: 'L', pantolonBoyu: '', gomlekBoyu: '', kolBoyu: '' },
+          { beden: 'XL', pantolonBoyu: '', gomlekBoyu: '', kolBoyu: '' },
         ],
       });
     }
@@ -144,7 +144,7 @@ export default function AdminSizeChartsPage() {
     const newRow: SizeChartRow = { beden: '' };
     if (formData.category === 'set') {
       if (formData.subCategory !== 'krop') {
-        newRow.pijamaBoyu = '';
+        newRow.pantolonBoyu = '';
       }
       newRow.gomlekBoyu = '';
       newRow.kolBoyu = '';
@@ -192,7 +192,7 @@ export default function AdminSizeChartsPage() {
       return (
         <>
           <th className="text-left text-black dark:text-white font-medium pb-3 px-2">Beden</th>
-          <th className="text-left text-black dark:text-white font-medium pb-3 px-2">Pijama Boyu</th>
+          <th className="text-left text-black dark:text-white font-medium pb-3 px-2">Pantolon Boyu</th>
           <th className="text-left text-black dark:text-white font-medium pb-3 px-2">Gömlek Boyu</th>
           <th className="text-left text-black dark:text-white font-medium pb-3 px-2">Kol Boyu</th>
         </>
@@ -221,7 +221,7 @@ export default function AdminSizeChartsPage() {
       return (
         <>
           <td className="py-3 px-2 text-black dark:text-white font-semibold">{row.beden}</td>
-          <td className="py-3 px-2 text-black dark:text-white">{row.pijamaBoyu}</td>
+          <td className="py-3 px-2 text-black dark:text-white">{row.pantolonBoyu}</td>
           <td className="py-3 px-2 text-black dark:text-white">{row.gomlekBoyu}</td>
           <td className="py-3 px-2 text-black dark:text-white">{row.kolBoyu}</td>
         </>
@@ -460,7 +460,7 @@ export default function AdminSizeChartsPage() {
                         <tr>
                           <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase">Beden</th>
                           {formData.category === 'set' && formData.subCategory !== 'krop' && (
-                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase">Pijama Boyu (cm)</th>
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase">Pantolon Boyu (cm)</th>
                           )}
                           {formData.category === 'set' && (
                             <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase">Gömlek Boyu (cm)</th>
@@ -488,8 +488,8 @@ export default function AdminSizeChartsPage() {
                               <td className="px-4 py-3">
                                 <input
                                   type="text"
-                                  value={row.pijamaBoyu || ''}
-                                  onChange={(e) => updateRow(index, 'pijamaBoyu', e.target.value)}
+                                  value={row.pantolonBoyu || ''}
+                                  onChange={(e) => updateRow(index, 'pantolonBoyu', e.target.value)}
                                   className="w-full px-3 py-2 border border-gray-300 rounded-lg"
                                   placeholder="95cm"
                                 />
