@@ -6,15 +6,16 @@ function generateAuthorizationHeader(
   apiKey: string,
   secretKey: string,
   randomString: string,
+  requestPath: string,
   requestBody: string
 ): string {
-  const authString = randomString + requestBody;
+  const authString = randomString + requestPath + requestBody;
   const signature = crypto
     .createHmac('sha256', secretKey)
     .update(authString, 'utf8')
     .digest('base64');
 
-  return `IYZIWS ${apiKey}:${randomString}:${signature}`;
+  return `IYZWSv2 ${apiKey}:${signature}`;
 }
 
 export async function POST(request: NextRequest) {
@@ -98,7 +99,8 @@ export async function POST(request: NextRequest) {
     // Generate authorization
     const randomString = crypto.randomBytes(16).toString('hex');
     const requestBody = JSON.stringify(paymentRequest);
-    const authHeader = generateAuthorizationHeader(apiKey, secretKey, randomString, requestBody);
+    const requestPath = '/payment/auth';
+    const authHeader = generateAuthorizationHeader(apiKey, secretKey, randomString, requestPath, requestBody);
 
     // Call iyzico API
     const response = await fetch(`${baseUrl}/payment/auth`, {
