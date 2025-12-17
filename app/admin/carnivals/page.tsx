@@ -11,9 +11,13 @@ import AdminBackButton from '@/components/AdminBackButton';
 interface Carnival {
   id: string;
   name: string;
+  nameEn: string;
   date: string;
+  dateEn: string;
   location: string;
+  locationEn: string;
   description: string;
+  descriptionEn: string;
   image: string;
   status: 'upcoming' | 'past';
 }
@@ -27,9 +31,13 @@ export default function AdminCarnivalsPage() {
 
   const [formData, setFormData] = useState({
     name: '',
+    nameEn: '',
     date: '',
+    dateEn: '',
     location: '',
+    locationEn: '',
     description: '',
+    descriptionEn: '',
     image: '',
     status: 'upcoming' as 'upcoming' | 'past',
   });
@@ -110,9 +118,13 @@ export default function AdminCarnivalsPage() {
       setEditingCarnival(carnival);
       setFormData({
         name: carnival.name,
+        nameEn: carnival.nameEn || '',
         date: carnival.date,
+        dateEn: carnival.dateEn || '',
         location: carnival.location,
+        locationEn: carnival.locationEn || '',
         description: carnival.description,
+        descriptionEn: carnival.descriptionEn || '',
         image: carnival.image,
         status: carnival.status,
       });
@@ -120,9 +132,13 @@ export default function AdminCarnivalsPage() {
       setEditingCarnival(null);
       setFormData({
         name: '',
+        nameEn: '',
         date: '',
+        dateEn: '',
         location: '',
+        locationEn: '',
         description: '',
+        descriptionEn: '',
         image: '',
         status: 'upcoming',
       });
@@ -135,9 +151,13 @@ export default function AdminCarnivalsPage() {
     setEditingCarnival(null);
     setFormData({
       name: '',
+      nameEn: '',
       date: '',
+      dateEn: '',
       location: '',
+      locationEn: '',
       description: '',
+      descriptionEn: '',
       image: '',
       status: 'upcoming',
     });
@@ -270,68 +290,150 @@ export default function AdminCarnivalsPage() {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label className="block text-black dark:text-white font-medium mb-2">
-                    Festival Adı
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    className="admin-input"
-                    required
-                  />
+                {/* Turkish Information Section */}
+                <div className="border-b border-mea-gold/20 pb-6">
+                  <h3 className="text-lg font-bold text-mea-gold mb-4">
+                    Türkçe Bilgiler
+                  </h3>
+
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-black dark:text-white font-medium mb-2">
+                        Festival Adı (TR)
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.name}
+                        onChange={(e) =>
+                          setFormData({ ...formData, name: e.target.value })
+                        }
+                        className="admin-input"
+                        required
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-black dark:text-white font-medium mb-2">
+                          Tarih (TR)
+                        </label>
+                        <input
+                          type="text"
+                          value={formData.date}
+                          onChange={(e) =>
+                            setFormData({ ...formData, date: e.target.value })
+                          }
+                          placeholder="15-20 Haziran 2024"
+                          className="admin-input"
+                          required
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-black dark:text-white font-medium mb-2">
+                          Konum (TR)
+                        </label>
+                        <input
+                          type="text"
+                          value={formData.location}
+                          onChange={(e) =>
+                            setFormData({ ...formData, location: e.target.value })
+                          }
+                          placeholder="İstanbul, Türkiye"
+                          className="admin-input"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-black dark:text-white font-medium mb-2">
+                        Açıklama (TR)
+                      </label>
+                      <textarea
+                        value={formData.description}
+                        onChange={(e) =>
+                          setFormData({ ...formData, description: e.target.value })
+                        }
+                        className="admin-input"
+                        rows={4}
+                        required
+                      />
+                    </div>
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-black dark:text-white font-medium mb-2">
-                      Tarih
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.date}
-                      onChange={(e) =>
-                        setFormData({ ...formData, date: e.target.value })
-                      }
-                      placeholder="15-20 Haziran 2024"
-                      className="admin-input"
-                      required
-                    />
-                  </div>
+                {/* English Information Section */}
+                <div className="border-b border-mea-gold/20 pb-6">
+                  <h3 className="text-lg font-bold text-mea-gold mb-4">
+                    English Information
+                  </h3>
 
-                  <div>
-                    <label className="block text-black dark:text-white font-medium mb-2">
-                      Konum
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.location}
-                      onChange={(e) =>
-                        setFormData({ ...formData, location: e.target.value })
-                      }
-                      placeholder="İstanbul, Türkiye"
-                      className="admin-input"
-                      required
-                    />
-                  </div>
-                </div>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-black dark:text-white font-medium mb-2">
+                        Festival Name (EN)
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.nameEn}
+                        onChange={(e) =>
+                          setFormData({ ...formData, nameEn: e.target.value })
+                        }
+                        className="admin-input"
+                        required
+                      />
+                    </div>
 
-                <div>
-                  <label className="block text-black dark:text-white font-medium mb-2">
-                    Açıklama
-                  </label>
-                  <textarea
-                    value={formData.description}
-                    onChange={(e) =>
-                      setFormData({ ...formData, description: e.target.value })
-                    }
-                    className="admin-input"
-                    rows={4}
-                    required
-                  />
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-black dark:text-white font-medium mb-2">
+                          Date (EN)
+                        </label>
+                        <input
+                          type="text"
+                          value={formData.dateEn}
+                          onChange={(e) =>
+                            setFormData({ ...formData, dateEn: e.target.value })
+                          }
+                          placeholder="June 15-20, 2024"
+                          className="admin-input"
+                          required
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-black dark:text-white font-medium mb-2">
+                          Location (EN)
+                        </label>
+                        <input
+                          type="text"
+                          value={formData.locationEn}
+                          onChange={(e) =>
+                            setFormData({ ...formData, locationEn: e.target.value })
+                          }
+                          placeholder="Istanbul, Turkey"
+                          className="admin-input"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-black dark:text-white font-medium mb-2">
+                        Description (EN)
+                      </label>
+                      <textarea
+                        value={formData.descriptionEn}
+                        onChange={(e) =>
+                          setFormData({ ...formData, descriptionEn: e.target.value })
+                        }
+                        className="admin-input"
+                        rows={4}
+                        required
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div>

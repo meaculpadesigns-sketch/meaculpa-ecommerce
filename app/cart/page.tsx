@@ -6,6 +6,7 @@ import { useCart } from '@/lib/cart-context';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Trash2, Plus, Minus, ShoppingBag, ArrowRight } from 'lucide-react';
+import { formatPrice } from '@/lib/currency';
 
 export default function CartPage() {
   const { t, i18n } = useTranslation();
@@ -42,7 +43,8 @@ export default function CartPage() {
   }
 
   const subtotal = getCartTotal();
-  const shipping = subtotal > 500 ? 0 : 50;
+  // Yurt içi kargo hesaplama (4500 TL üzeri ücretsiz, altı 175 TL)
+  const shipping = subtotal >= 4500 ? 0 : 175;
   const total = subtotal + shipping;
 
   return (
@@ -82,7 +84,7 @@ export default function CartPage() {
                         <img
                           src={item.product.images[0]}
                           alt={name}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-contain"
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-gray-700 dark:text-gray-400">
@@ -152,10 +154,10 @@ export default function CartPage() {
 
                         <div className="text-right">
                           <p className="text-2xl font-bold text-black dark:text-white">
-                            ₺{(item.product.price * item.quantity).toFixed(2)}
+                            {formatPrice(item.product.price * item.quantity, i18n.language)}
                           </p>
                           <p className="text-gray-700 dark:text-gray-400 text-sm">
-                            ₺{item.product.price} x {item.quantity}
+                            {formatPrice(item.product.price, i18n.language)} x {item.quantity}
                           </p>
                         </div>
                       </div>
@@ -181,20 +183,34 @@ export default function CartPage() {
               <div className="space-y-4 mb-6">
                 <div className="flex items-center justify-between">
                   <span className="text-gray-700 dark:text-gray-400">{t('cart.subtotal')}</span>
-                  <span className="text-black dark:text-white font-medium">₺{subtotal.toFixed(2)}</span>
+                  <span className="text-black dark:text-white font-medium">{formatPrice(subtotal, i18n.language)}</span>
                 </div>
 
                 <div className="flex items-center justify-between">
                   <span className="text-gray-700 dark:text-gray-400">{t('cart.shipping')}</span>
                   <span className="text-black dark:text-white font-medium">
-                    {shipping === 0 ? 'Ücretsiz' : `₺${shipping.toFixed(2)}`}
+                    {shipping === 0 ? (i18n.language === 'tr' ? 'Ücretsiz' : 'Free') : formatPrice(shipping, i18n.language)}
                   </span>
                 </div>
 
-                {subtotal < 500 && (
-                  <div className="p-3 bg-mea-gold bg-opacity-20 rounded-lg">
-                    <p className="text-mea-gold text-sm">
-                      ₺{(500 - subtotal).toFixed(2)} daha alışveriş yapın, kargo bedava!
+                {/* Free Shipping Info */}
+                {shipping === 0 ? (
+                  <div className="p-3 bg-green-500 bg-opacity-20 border border-green-500 rounded-lg">
+                    <p className="text-green-500 text-sm">
+                      {i18n.language === 'tr' ? '✓ Ücretsiz kargo kazandınız!' : '✓ You earned free shipping!'}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="p-3 bg-mea-gold bg-opacity-20 border border-mea-gold rounded-lg space-y-2">
+                    <p className="text-black dark:text-white text-sm">
+                      {i18n.language === 'tr'
+                        ? `${formatPrice(4500 - subtotal, i18n.language)} daha alışveriş yapın, kargo ücretsiz olsun!`
+                        : `Add ${formatPrice(4500 - subtotal, i18n.language)} more for free shipping!`}
+                    </p>
+                    <p className="text-gray-700 dark:text-gray-400 text-xs">
+                      {i18n.language === 'tr'
+                        ? 'Türkiye içi: 4500 TL üzeri ücretsiz kargo | Yurt dışı: 200 Euro üzeri ücretsiz kargo'
+                        : 'Turkey: Free shipping over 4500 TL | International: Free shipping over 200 Euro'}
                     </p>
                   </div>
                 )}
@@ -205,7 +221,7 @@ export default function CartPage() {
                       {t('cart.total')}
                     </span>
                     <span className="text-2xl font-bold text-black">
-                      ₺{total.toFixed(2)}
+                      {formatPrice(total, i18n.language)}
                     </span>
                   </div>
                 </div>

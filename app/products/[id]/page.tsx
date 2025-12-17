@@ -137,7 +137,7 @@ export default function ProductDetailPage() {
                 <img
                   src={product.images[currentImageIndex]}
                   alt={`${name} - ${currentImageIndex + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover/zoom:scale-125"
+                  className="w-full h-full object-contain transition-transform duration-500 group-hover/zoom:scale-125"
                 />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center text-black dark:text-white text-lg">
@@ -185,7 +185,7 @@ export default function ProductDetailPage() {
                     <img
                       src={image}
                       alt={`${name} thumbnail ${index + 1}`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     />
                   </button>
                 ))}
@@ -204,7 +204,7 @@ export default function ProductDetailPage() {
                       <img
                         src={fabricImg}
                         alt={`${i18n.language === 'tr' ? 'Kumaş Detayı' : 'Fabric Detail'} ${index + 1}`}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover/fabric:scale-150 cursor-zoom-in"
+                        className="w-full h-full object-contain transition-transform duration-500 group-hover/fabric:scale-150 cursor-zoom-in"
                       />
                     </div>
                   ))}

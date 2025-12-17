@@ -31,6 +31,7 @@ export default function EditBlogPage() {
     title: '',
     titleEn: '',
     slug: '',
+    slugEn: '',
     content: '',
     contentEn: '',
     excerpt: '',
@@ -68,6 +69,7 @@ export default function EditBlogPage() {
           title: post.title,
           titleEn: post.titleEn,
           slug: post.slug,
+          slugEn: post.slugEn || '',
           content: post.content,
           contentEn: post.contentEn,
           excerpt: post.excerpt,
@@ -266,6 +268,17 @@ export default function EditBlogPage() {
                   value={formData.titleEn}
                   onChange={(e) => setFormData({ ...formData, titleEn: e.target.value })}
                   className="admin-input"
+                />
+              </div>
+
+              <div>
+                <label className="block text-white font-medium mb-2">URL Slug (EN)</label>
+                <input
+                  type="text"
+                  value={formData.slugEn}
+                  onChange={(e) => setFormData({ ...formData, slugEn: e.target.value })}
+                  className="admin-input"
+                  placeholder="Boş bırakırsanız İngilizce başlıktan otomatik oluşturulur"
                 />
               </div>
 

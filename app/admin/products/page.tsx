@@ -57,7 +57,7 @@ export default function AdminProducts() {
     featured: false,
     estimatedDelivery: '',
     deliveryDays: undefined as number | undefined,
-    careInstructions: undefined as { type: 'standard' | 'custom'; customText?: string } | undefined,
+    careInstructions: undefined as { type: 'standard' | 'custom'; customText?: string; customTextEn?: string } | undefined,
     kimonoType: undefined as 'uzun' | 'kisa' | undefined,
     setPricing: undefined as { shirtOnly?: number; pantsOnly?: number } | undefined,
     seoTitle: '',
@@ -409,7 +409,7 @@ export default function AdminProducts() {
                         <img
                           src={product.images[0]}
                           alt={product.name}
-                          className="w-16 h-16 bg-zinc-800 rounded-lg object-cover"
+                          className="w-16 h-16 bg-zinc-800 rounded-lg object-contain"
                         />
                       ) : (
                         <div className="w-16 h-16 bg-zinc-800 rounded-lg" />
@@ -538,7 +538,7 @@ export default function AdminProducts() {
                           <img
                             src={url}
                             alt={`Product ${index + 1}`}
-                            className="w-full h-full bg-zinc-800 rounded-lg object-cover"
+                            className="w-full h-full bg-zinc-800 rounded-lg object-contain"
                           />
                           <button
                             type="button"
@@ -580,7 +580,7 @@ export default function AdminProducts() {
                           <img
                             src={url}
                             alt={`Fabric ${index + 1}`}
-                            className="w-full h-full bg-zinc-800 rounded-lg object-cover"
+                            className="w-full h-full bg-zinc-800 rounded-lg object-contain"
                           />
                           <button
                             type="button"
@@ -622,7 +622,7 @@ export default function AdminProducts() {
                           <img
                             src={url}
                             alt={`White BG ${index + 1}`}
-                            className="w-full h-full bg-zinc-800 rounded-lg object-cover"
+                            className="w-full h-full bg-zinc-800 rounded-lg object-contain"
                           />
                           <button
                             type="button"
@@ -985,16 +985,46 @@ export default function AdminProducts() {
                           Özel talimat gir
                         </label>
                         {formData.careInstructions?.type === 'custom' && (
-                          <textarea
-                            value={formData.careInstructions.customText || ''}
-                            onChange={(e) => setFormData({
-                              ...formData,
-                              careInstructions: { type: 'custom', customText: e.target.value }
-                            })}
-                            placeholder="Özel bakım talimatlarını buraya yazın..."
-                            className="admin-input mt-2"
-                            rows={3}
-                          />
+                          <div className="space-y-3 mt-3">
+                            <div>
+                              <label className="block text-black dark:text-white text-sm font-medium mb-1">
+                                Bakım Talimatları (TR)
+                              </label>
+                              <textarea
+                                value={formData.careInstructions.customText || ''}
+                                onChange={(e) => setFormData({
+                                  ...formData,
+                                  careInstructions: {
+                                    type: 'custom',
+                                    customText: e.target.value,
+                                    customTextEn: formData.careInstructions?.customTextEn
+                                  }
+                                })}
+                                placeholder="Özel bakım talimatlarını buraya yazın..."
+                                className="admin-input"
+                                rows={3}
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-black dark:text-white text-sm font-medium mb-1">
+                                Care Instructions (EN)
+                              </label>
+                              <textarea
+                                value={formData.careInstructions.customTextEn || ''}
+                                onChange={(e) => setFormData({
+                                  ...formData,
+                                  careInstructions: {
+                                    type: 'custom',
+                                    customText: formData.careInstructions?.customText,
+                                    customTextEn: e.target.value
+                                  }
+                                })}
+                                placeholder="Enter custom care instructions..."
+                                className="admin-input"
+                                rows={3}
+                              />
+                            </div>
+                          </div>
                         )}
                       </div>
                     </div>

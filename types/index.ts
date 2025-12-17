@@ -45,7 +45,8 @@ export interface Product {
   deliveryDays?: number; // Teslimat süresi (gün)
   careInstructions?: {
     type: 'standard' | 'custom';
-    customText?: string; // type='custom' ise
+    customText?: string; // type='custom' ise (TR)
+    customTextEn?: string; // type='custom' için İngilizce metin
   };
   kimonoType?: 'uzun' | 'kisa'; // Sadece kimono kategorisi için
   setPricing?: {
@@ -312,6 +313,7 @@ export interface BlogPost {
   title: string;
   titleEn: string;
   slug: string; // URL-friendly: "mea-culpa-hikayesi"
+  slugEn?: string; // English URL slug: "mea-culpa-story"
   content: string; // Rich HTML
   contentEn: string;
   excerpt: string; // Short summary

@@ -21,6 +21,7 @@ export default function NewBlogPage() {
     title: '',
     titleEn: '',
     slug: '',
+    slugEn: '',
     content: '',
     contentEn: '',
     excerpt: '',
@@ -57,6 +58,16 @@ export default function NewBlogPage() {
       }));
     }
   }, [formData.title]);
+
+  // Auto-generate slugEn from titleEn
+  useEffect(() => {
+    if (formData.titleEn && !formData.slugEn) {
+      setFormData((prev) => ({
+        ...prev,
+        slugEn: generateSlug(formData.titleEn),
+      }));
+    }
+  }, [formData.titleEn]);
 
   const fetchCategories = async () => {
     try {
@@ -230,6 +241,19 @@ export default function NewBlogPage() {
                   value={formData.titleEn}
                   onChange={(e) => setFormData({ ...formData, titleEn: e.target.value })}
                   className="admin-input"
+                />
+              </div>
+
+              <div>
+                <label className="block text-black dark:text-white font-medium mb-2">
+                  URL Slug (EN)
+                </label>
+                <input
+                  type="text"
+                  value={formData.slugEn}
+                  onChange={(e) => setFormData({ ...formData, slugEn: e.target.value })}
+                  className="admin-input"
+                  placeholder="Boş bırakırsanız İngilizce başlıktan otomatik oluşturulur"
                 />
               </div>
 

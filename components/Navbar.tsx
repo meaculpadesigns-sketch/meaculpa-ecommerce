@@ -88,9 +88,9 @@ export default function Navbar() {
         }}
       >
         <div className="w-full px-4">
-          <div className="flex items-center justify-between h-16 relative">
+          <div className="grid grid-cols-[1fr_auto_1fr] items-center h-16 gap-4">
             {/* Left Navigation - First 5 items */}
-            <div className="hidden lg:flex items-center space-x-1">
+            <div className="hidden lg:flex items-center space-x-1 justify-start">
               {navItems.slice(0, 5).map((item) => (
                 <div
                   key={item.href}
@@ -165,14 +165,14 @@ export default function Navbar() {
             </div>
 
             {/* Centered Brand Name */}
-            <Link href="/" className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center">
+            <Link href="/" className="flex items-center justify-center">
               <span className="text-2xl font-bold tracking-wider whitespace-nowrap text-mea-gold">
                 MEA CULPA
               </span>
             </Link>
 
             {/* Right Navigation - Last 2 items */}
-            <div className="hidden lg:flex items-center space-x-1">
+            <div className="hidden lg:flex items-center space-x-1 justify-end">
               {navItems.slice(5).map((item) => (
                 <div
                   key={item.href}

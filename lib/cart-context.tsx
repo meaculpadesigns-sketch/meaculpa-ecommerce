@@ -6,7 +6,7 @@ import { CartItem, Product } from '@/types';
 interface CustomMeasurements {
   sleeveLength?: string;
   shirtLength?: string;
-  pajamaLength?: string;
+  pantsLength?: string;
 }
 
 interface CartContextType {

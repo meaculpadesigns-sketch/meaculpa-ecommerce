@@ -29,11 +29,11 @@ export default function ProductCard({ product, index, viewMode = 'grid', showPri
   };
 
   const handleAddToCart = (e?: React.MouseEvent) => {
-    // Navigate to customize page instead of directly adding to cart
+    // Navigate to product detail page
     if (e) {
       e.preventDefault();
     }
-    window.location.href = `/products/${product.id}/customize`;
+    window.location.href = `/products/${product.id}`;
   };
 
   if (viewMode === 'list') {
@@ -50,7 +50,7 @@ export default function ProductCard({ product, index, viewMode = 'grid', showPri
               <img
                 src={product.images[0]}
                 alt={name}
-                className="w-full h-full object-cover transition-transform duration-300 group-hover/image:scale-110"
+                className="w-full h-full object-contain transition-transform duration-300 group-hover/image:scale-110"
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-black dark:text-white">
@@ -153,7 +153,7 @@ export default function ProductCard({ product, index, viewMode = 'grid', showPri
               <img
                 src={product.images[0]}
                 alt={name}
-                className="w-full h-full object-cover transition-transform duration-300 group-hover/image:scale-110"
+                className="w-full h-full object-contain transition-transform duration-300 group-hover/image:scale-110"
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-black dark:text-white">
@@ -198,7 +198,7 @@ export default function ProductCard({ product, index, viewMode = 'grid', showPri
                 className="btn-primary"
               >
                 <ShoppingCart size={20} className="mr-2 inline" />
-                {t('products.addToCart')}
+                {t('products.viewProduct')}
               </button>
             </div>
           </div>

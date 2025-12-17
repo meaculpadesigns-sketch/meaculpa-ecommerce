@@ -91,7 +91,24 @@ export default function CheckoutPage() {
   }, [cart, router]);
 
   const subtotal = getCartTotal();
-  const shipping = subtotal > 500 ? 0 : 50;
+
+  // Calculate shipping based on country
+  const calculateShipping = () => {
+    const isTurkey = shippingAddress.country === 'Türkiye' || shippingAddress.country === 'Turkey';
+
+    if (isTurkey) {
+      // Yurt içi: 4500 TL üzeri ücretsiz, altı 175 TL
+      return subtotal >= 4500 ? 0 : 175;
+    } else {
+      // Yurt dışı: 200 Euro = ~7000 TL (1 EUR = 35 TL varsayımı)
+      // 200 Euro üzeri ücretsiz, altı 35 Euro = ~1225 TL
+      const freeShippingThreshold = 200 * 35; // 7000 TL
+      const internationalShippingCost = 35 * 35; // 1225 TL
+      return subtotal >= freeShippingThreshold ? 0 : internationalShippingCost;
+    }
+  };
+
+  const shipping = calculateShipping();
 
   // Calculate discount
   const calculateDiscount = () => {
@@ -370,15 +387,36 @@ export default function CheckoutPage() {
                     className="input-field"
                     required
                   />
-                  <input
-                    type="tel"
-                    value={shippingAddress.phone}
-                    onChange={(e) => setShippingAddress({ ...shippingAddress, phone: e.target.value })}
-                    placeholder={t('checkout.phone')}
+                  <select
+                    value={shippingAddress.country}
+                    onChange={(e) => setShippingAddress({ ...shippingAddress, country: e.target.value })}
                     className="input-field"
                     required
-                  />
+                  >
+                    <option value="Türkiye">{i18n.language === 'tr' ? 'Türkiye' : 'Turkey'}</option>
+                    <option value="United States">{i18n.language === 'tr' ? 'Amerika Birleşik Devletleri' : 'United States'}</option>
+                    <option value="United Kingdom">{i18n.language === 'tr' ? 'İngiltere' : 'United Kingdom'}</option>
+                    <option value="Germany">{i18n.language === 'tr' ? 'Almanya' : 'Germany'}</option>
+                    <option value="France">{i18n.language === 'tr' ? 'Fransa' : 'France'}</option>
+                    <option value="Italy">{i18n.language === 'tr' ? 'İtalya' : 'Italy'}</option>
+                    <option value="Spain">{i18n.language === 'tr' ? 'İspanya' : 'Spain'}</option>
+                    <option value="Netherlands">{i18n.language === 'tr' ? 'Hollanda' : 'Netherlands'}</option>
+                    <option value="Belgium">{i18n.language === 'tr' ? 'Belçika' : 'Belgium'}</option>
+                    <option value="Austria">{i18n.language === 'tr' ? 'Avusturya' : 'Austria'}</option>
+                    <option value="Switzerland">{i18n.language === 'tr' ? 'İsviçre' : 'Switzerland'}</option>
+                    <option value="Canada">{i18n.language === 'tr' ? 'Kanada' : 'Canada'}</option>
+                    <option value="Australia">{i18n.language === 'tr' ? 'Avustralya' : 'Australia'}</option>
+                    <option value="Other">{i18n.language === 'tr' ? 'Diğer' : 'Other'}</option>
+                  </select>
                 </div>
+                <input
+                  type="tel"
+                  value={shippingAddress.phone}
+                  onChange={(e) => setShippingAddress({ ...shippingAddress, phone: e.target.value })}
+                  placeholder={t('checkout.phone')}
+                  className="input-field"
+                  required
+                />
               </div>
             </motion.div>
 
@@ -438,13 +476,11 @@ export default function CheckoutPage() {
                     </div>
                     <div className="flex items-center gap-2">
                       {/* Visa & Mastercard */}
-                      <div className="bg-white px-2 py-1 rounded">
-                        <svg className="h-4 w-auto" viewBox="0 0 48 16" fill="none">
-                          <path d="M18.5 2.5L16 13.5h3l2.5-11h-3zm8.5 0l-4 11h3l.7-2h4l.3 2h3.5l-3-11h-4.5zm.5 3l1 5h-2.5l1.5-5zM11 2.5L7.5 10 7 7.5 6 3c-.2-.5-.5-.5-1-.5H0l.5.5c1 .2 2 .5 3 1l2.5 9.5h3L14 2.5h-3zm19 0c-.8 0-1.5.5-1.5 1.2 0 1.3 3 1.3 3 3.8 0 2.5-3.5 2.5-4.5 1.5l-.5 2c1 .5 2 .5 3 .5 2.5 0 4.5-1.2 4.5-3.5 0-1.5-3-1.5-3-3 0-1 2.5-1 3.5 0l.5-2c-1-.5-2-.5-3-.5z" fill="#1434CB"/>
-                        </svg>
+                      <div className="bg-white px-3 py-1.5 rounded flex items-center">
+                        <span className="font-bold text-blue-800 text-sm tracking-wide">VISA</span>
                       </div>
                       <div className="bg-white px-2 py-1 rounded">
-                        <svg className="h-4 w-auto" viewBox="0 0 48 32" fill="none">
+                        <svg className="h-6 w-auto" viewBox="0 0 48 32" fill="none">
                           <circle cx="19" cy="16" r="11" fill="#EB001B"/>
                           <circle cx="29" cy="16" r="11" fill="#F79E1B"/>
                           <path d="M24 8a10.97 10.97 0 00-5 8 10.97 10.97 0 005 8 10.97 10.97 0 005-8 10.97 10.97 0 00-5-8z" fill="#FF5F00"/>
@@ -604,6 +640,42 @@ export default function CheckoutPage() {
                   <span>{t('cart.shipping')}</span>
                   <span>{shipping === 0 ? t('checkout.shippingFree') : formatPrice(shipping, i18n.language)}</span>
                 </div>
+
+                {/* Free Shipping Info */}
+                {(() => {
+                  const isTurkey = shippingAddress.country === 'Türkiye' || shippingAddress.country === 'Turkey';
+                  const freeShippingThreshold = isTurkey ? 4500 : (200 * 35); // 4500 TL veya 7000 TL (200 EUR)
+                  const remainingForFreeShipping = freeShippingThreshold - subtotal;
+
+                  if (shipping === 0) {
+                    return (
+                      <div className="p-3 bg-green-500 bg-opacity-20 border border-green-500 rounded-lg">
+                        <p className="text-green-500 text-sm">
+                          {i18n.language === 'tr' ? '✓ Ücretsiz kargo kazandınız!' : '✓ You earned free shipping!'}
+                        </p>
+                      </div>
+                    );
+                  } else if (remainingForFreeShipping > 0) {
+                    return (
+                      <div className="p-3 bg-mea-gold bg-opacity-20 border border-mea-gold rounded-lg">
+                        <p className="text-black dark:text-white text-sm">
+                          {i18n.language === 'tr'
+                            ? `${formatPrice(remainingForFreeShipping, i18n.language)} daha alışveriş yapın, kargo ücretsiz olsun!`
+                            : `Add ${formatPrice(remainingForFreeShipping, i18n.language)} more for free shipping!`}
+                        </p>
+                        {!isTurkey && (
+                          <p className="text-gray-700 dark:text-gray-400 text-xs mt-1">
+                            {i18n.language === 'tr'
+                              ? `(200 Euro üzeri yurt dışı kargolar ücretsizdir)`
+                              : `(International orders over 200 Euro get free shipping)`}
+                          </p>
+                        )}
+                      </div>
+                    );
+                  }
+                  return null;
+                })()}
+
                 <div className="flex justify-between text-black dark:text-white font-bold text-lg pt-3 border-t border-white border-opacity-10">
                   <span>{t('cart.total')}</span>
                   <span className="text-mea-gold">{formatPrice(total, i18n.language)}</span>
