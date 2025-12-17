@@ -45,7 +45,9 @@
       "Bash(timeout:*)",
       "Bash(grep:*)",
       "Bash(node replace-pijama.js:*)",
-      "Bash(del replace-pijama.js)"
+      "Bash(del replace-pijama.js)",
+      "Bash(vercel login)",
+      "Bash(npm uninstall:*)"
     ],
     "deny": [],
     "ask": []

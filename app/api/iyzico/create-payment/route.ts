@@ -1,6 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
-// @ts-ignore - iyzipay doesn't have proper TypeScript definitions
-import Iyzipay from 'iyzipay';
+import crypto from 'crypto';
+
+// iyzico REST API helper
+function generateAuthorizationHeader(
+  apiKey: string,
+  secretKey: string,
+  randomString: string,
+  requestBody: string
+): string {
+  const authString = randomString + requestBody;
+  const signature = crypto
+    .createHmac('sha256', secretKey)
+    .update(authString, 'utf8')
+    .digest('base64');
+
+  return `IYZIWS ${apiKey}:${randomString}:${signature}`;
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,12 +29,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Initialize iyzico
-    const iyzipay = new Iyzipay({
-      apiKey: process.env.IYZICO_API_KEY!,
-      secretKey: process.env.IYZICO_SECRET_KEY!,
-      uri: process.env.IYZICO_BASE_URL!,
-    });
+    const apiKey = process.env.IYZICO_API_KEY!;
+    const secretKey = process.env.IYZICO_SECRET_KEY!;
+    const baseUrl = process.env.IYZICO_BASE_URL!;
 
     // Prepare payment request
     const conversationId = `conv_${Date.now()}`;
@@ -27,22 +39,22 @@ export async function POST(request: NextRequest) {
     const paidPrice = body.total.toFixed(2);
 
     const paymentRequest = {
-      locale: Iyzipay.LOCALE.TR,
+      locale: 'tr',
       conversationId,
       price,
       paidPrice,
-      currency: Iyzipay.CURRENCY.TRY,
-      installment: '1',
+      currency: 'TRY',
+      installment: 1,
       basketId: `basket_${Date.now()}`,
-      paymentChannel: Iyzipay.PAYMENT_CHANNEL.WEB,
-      paymentGroup: Iyzipay.PAYMENT_GROUP.PRODUCT,
+      paymentChannel: 'WEB',
+      paymentGroup: 'PRODUCT',
       paymentCard: {
         cardHolderName: body.cardHolderName,
         cardNumber: body.cardNumber.replace(/\s/g, ''),
         expireMonth: body.expireMonth,
         expireYear: body.expireYear,
         cvc: body.cvc,
-        registerCard: '0',
+        registerCard: 0,
       },
       buyer: {
         id: body.buyer.id || 'guest',
@@ -78,49 +90,47 @@ export async function POST(request: NextRequest) {
         name: item.name.substring(0, 50), // Max 50 karakter
         category1: item.category1 || 'Fashion',
         category2: item.category2 || 'Clothing',
-        itemType: Iyzipay.BASKET_ITEM_TYPE.PHYSICAL,
+        itemType: 'PHYSICAL',
         price: item.price.toFixed(2),
       })),
     };
 
-    // Create payment with iyzico
-    return new Promise<NextResponse>((resolve) => {
-      iyzipay.payment.create(paymentRequest, (err: any, result: any) => {
-        if (err) {
-          console.error('iyzico error:', err);
-          resolve(
-            NextResponse.json(
-              {
-                status: 'error',
-                errorMessage: err.errorMessage || 'Ödeme işlemi başarısız oldu',
-              },
-              { status: 400 }
-            )
-          );
-        } else if (result.status === 'success') {
-          resolve(
-            NextResponse.json({
-              status: 'success',
-              paymentId: result.paymentId,
-              conversationId: result.conversationId,
-              paymentStatus: result.paymentStatus,
-            })
-          );
-        } else {
-          console.error('iyzico payment failed:', result);
-          resolve(
-            NextResponse.json(
-              {
-                status: 'error',
-                errorMessage: result.errorMessage || 'Ödeme reddedildi',
-                errorCode: result.errorCode,
-              },
-              { status: 400 }
-            )
-          );
-        }
-      });
+    // Generate authorization
+    const randomString = crypto.randomBytes(16).toString('hex');
+    const requestBody = JSON.stringify(paymentRequest);
+    const authHeader = generateAuthorizationHeader(apiKey, secretKey, randomString, requestBody);
+
+    // Call iyzico API
+    const response = await fetch(`${baseUrl}/payment/auth`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': authHeader,
+        'x-iyzi-rnd': randomString,
+      },
+      body: requestBody,
     });
+
+    const result = await response.json();
+
+    if (result.status === 'success') {
+      return NextResponse.json({
+        status: 'success',
+        paymentId: result.paymentId,
+        conversationId: result.conversationId,
+        paymentStatus: result.paymentStatus,
+      });
+    } else {
+      console.error('iyzico payment failed:', result);
+      return NextResponse.json(
+        {
+          status: 'error',
+          errorMessage: result.errorMessage || 'Ödeme reddedildi',
+          errorCode: result.errorCode,
+        },
+        { status: 400 }
+      );
+    }
   } catch (error: any) {
     console.error('Payment API error:', error);
     return NextResponse.json(
