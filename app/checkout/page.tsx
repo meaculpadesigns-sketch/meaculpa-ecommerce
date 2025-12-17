@@ -56,7 +56,8 @@ export default function CheckoutPage() {
     };
   }, []);
 
-  // Card Info (for Stripe)
+  // Card Info (for iyzico)
+  const [cardHolderName, setCardHolderName] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [cardExpiry, setCardExpiry] = useState('');
   const [cardCvv, setCardCvv] = useState('');
@@ -203,39 +204,138 @@ export default function CheckoutPage() {
         return;
       }
 
-      // Generate order number
-      const orderNumber = `MEA${Date.now()}`;
+      // Validate card info for card payments
+      if (paymentMethod === 'card') {
+        if (!cardHolderName || !cardNumber || !cardExpiry || !cardCvv) {
+          alert('Lütfen kart bilgilerini eksiksiz doldurun');
+          setLoading(false);
+          return;
+        }
 
-      // Create order
-      const orderId = await createOrder({
-        userId: user?.id,
-        orderNumber,
-        items: cart,
-        subtotal,
-        discount,
-        shipping,
-        total,
-        status: 'pending',
-        paymentMethod,
-        paymentStatus: 'pending',
-        shippingAddress: shippingAddress as Address,
-        billingAddress: sameAsBilling ? (shippingAddress as Address) : (billingAddress as Address),
-        guestEmail: isGuest ? email : undefined,
-        guestPhone: isGuest ? phone : undefined,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      });
+        // Parse expiry date (MM/YY format)
+        const [expireMonth, expireYear] = cardExpiry.split('/').map(s => s.trim());
+        if (!expireMonth || !expireYear || expireMonth.length !== 2 || expireYear.length !== 2) {
+          alert('Geçerli bir son kullanma tarihi girin (AA/YY)');
+          setLoading(false);
+          return;
+        }
 
-      // If coupon was used, increment usage count
-      if (appliedCoupon) {
-        await useCoupon(appliedCoupon.id);
+        // Call iyzico payment API
+        try {
+          const paymentResponse = await fetch('/api/iyzico/create-payment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              cardHolderName,
+              cardNumber,
+              expireMonth,
+              expireYear: `20${expireYear}`, // YY -> YYYY
+              cvc: cardCvv,
+              total,
+              buyer: {
+                id: user?.id || `guest_${Date.now()}`,
+                name: firstName,
+                surname: lastName,
+                email,
+                phone,
+                address: shippingAddress.address,
+                city: shippingAddress.city,
+                zipCode: shippingAddress.zipCode,
+              },
+              shippingAddress,
+              billingAddress: sameAsBilling ? shippingAddress : billingAddress,
+              basketItems: cart.map(item => ({
+                id: item.productId,
+                name: item.product.name,
+                category1: item.product.category,
+                category2: item.product.subcategory || '',
+                price: item.product.price * item.quantity,
+              })),
+            }),
+          });
+
+          const paymentResult = await paymentResponse.json();
+
+          if (paymentResult.status !== 'success') {
+            // Payment failed
+            alert(paymentResult.errorMessage || 'Ödeme işlemi başarısız oldu');
+            setLoading(false);
+            return;
+          }
+
+          // Payment successful - create order
+          const orderNumber = `MEA${Date.now()}`;
+          const orderId = await createOrder({
+            userId: user?.id,
+            orderNumber,
+            items: cart,
+            subtotal,
+            discount,
+            shipping,
+            total,
+            status: 'processing', // Payment confirmed
+            paymentMethod,
+            paymentStatus: 'paid', // Payment successful
+            shippingAddress: shippingAddress as Address,
+            billingAddress: sameAsBilling ? (shippingAddress as Address) : (billingAddress as Address),
+            guestEmail: isGuest ? email : undefined,
+            guestPhone: isGuest ? phone : undefined,
+            iyzicoPaymentId: paymentResult.paymentId,
+            iyzicoConversationId: paymentResult.conversationId,
+            iyzicoPaymentStatus: paymentResult.paymentStatus,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          });
+
+          // If coupon was used, increment usage count
+          if (appliedCoupon) {
+            await useCoupon(appliedCoupon.id);
+          }
+
+          // Clear cart
+          clearCart();
+
+          // Redirect to success page
+          router.push(`/order-success?orderNumber=${orderNumber}`);
+        } catch (paymentError: any) {
+          console.error('Payment error:', paymentError);
+          alert('Ödeme işlemi sırasında bir hata oluştu');
+          setLoading(false);
+          return;
+        }
+      } else {
+        // For crypto/googlepay - create order without payment (will be processed later)
+        const orderNumber = `MEA${Date.now()}`;
+        const orderId = await createOrder({
+          userId: user?.id,
+          orderNumber,
+          items: cart,
+          subtotal,
+          discount,
+          shipping,
+          total,
+          status: 'pending',
+          paymentMethod,
+          paymentStatus: 'pending',
+          shippingAddress: shippingAddress as Address,
+          billingAddress: sameAsBilling ? (shippingAddress as Address) : (billingAddress as Address),
+          guestEmail: isGuest ? email : undefined,
+          guestPhone: isGuest ? phone : undefined,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        });
+
+        // If coupon was used, increment usage count
+        if (appliedCoupon) {
+          await useCoupon(appliedCoupon.id);
+        }
+
+        // Clear cart
+        clearCart();
+
+        // Redirect to success page
+        router.push(`/order-success?orderNumber=${orderNumber}`);
       }
-
-      // Clear cart
-      clearCart();
-
-      // Redirect to success page
-      router.push(`/order-success?orderNumber=${orderNumber}`);
     } catch (error) {
       console.error('Error creating order:', error);
       alert(t('common.error'));
@@ -491,11 +591,20 @@ export default function CheckoutPage() {
 
                   <input
                     type="text"
+                    value={cardHolderName}
+                    onChange={(e) => setCardHolderName(e.target.value)}
+                    placeholder="Kart Üzerindeki İsim"
+                    className="input-field"
+                    required
+                  />
+                  <input
+                    type="text"
                     value={cardNumber}
                     onChange={(e) => setCardNumber(e.target.value)}
                     placeholder={t('checkout.cardNumber')}
                     className="input-field"
                     maxLength={19}
+                    required
                   />
                   <div className="grid grid-cols-2 gap-4">
                     <input

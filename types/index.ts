@@ -173,6 +173,11 @@ export interface Order {
   updatedAt: Date;
   guestEmail?: string;
   guestPhone?: string;
+  // iyzico payment details
+  iyzicoPaymentId?: string;
+  iyzicoConversationId?: string;
+  iyzicoPaymentStatus?: string;
+  iyzicoErrorMessage?: string;
 }
 
 export interface DesignRequest {
