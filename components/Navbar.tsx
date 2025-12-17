@@ -65,9 +65,9 @@ export default function Navbar() {
       hasDropdown: true,
       subcategories: setSecondLevelCategories
     },
+    { name: t('nav.festivalsAndBlog'), href: '/festivals-and-blog' },
     { name: t('nav.corporate'), href: '/corporate' },
     { name: t('nav.aboutUs'), href: '/about' },
-    { name: t('nav.festivalsAndBlog'), href: '/festivals-and-blog' },
     { name: t('nav.designRequest'), href: '/design-request' },
     { name: t('nav.tryOn'), href: '/try-on' },
   ];
@@ -87,11 +87,11 @@ export default function Navbar() {
           borderColor: isScrolled ? 'rgba(var(--foreground-rgb, 0, 0, 0), 0.1)' : undefined
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-2">
           <div className="flex items-center h-16">
-            {/* Left Navigation - First 3 items */}
+            {/* Left Navigation - First 5 items */}
             <div className="hidden lg:flex items-center space-x-1 flex-1">
-              {navItems.slice(0, 3).map((item) => (
+              {navItems.slice(0, 5).map((item) => (
                 <div
                   key={item.href}
                   className="relative"
@@ -133,9 +133,12 @@ export default function Navbar() {
                           <div className="grid grid-cols-2 divide-x divide-black dark:divide-white divide-opacity-10 dark:divide-opacity-10">
                             {setSecondLevelCategories.map((secondLevel) => (
                               <div key={secondLevel.key} className="relative group">
-                                <div className="px-8 py-4 text-gray-700 dark:text-gray-300 hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-5 transition-colors cursor-pointer">
+                                <Link
+                                  href={`/products?category=set&subcategory=${secondLevel.key}`}
+                                  className="block px-8 py-4 text-gray-700 dark:text-gray-300 hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-5 transition-colors cursor-pointer"
+                                >
                                   <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? secondLevel.name : secondLevel.nameEn}</div>
-                                </div>
+                                </Link>
                                 {/* 3. seviye aşağı açılan menü */}
                                 <div className="absolute top-full left-0 mt-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all z-50">
                                   <div className="glass rounded-xl border border-black dark:border-white border-opacity-10 dark:border-opacity-10 shadow-xl overflow-hidden w-64">
@@ -168,9 +171,9 @@ export default function Navbar() {
               </span>
             </Link>
 
-            {/* Right Navigation - Remaining items */}
+            {/* Right Navigation - Last 2 items */}
             <div className="hidden lg:flex items-center space-x-1 flex-1 justify-end">
-              {navItems.slice(3).map((item) => (
+              {navItems.slice(5).map((item) => (
                 <div
                   key={item.href}
                   className="relative"
@@ -212,9 +215,12 @@ export default function Navbar() {
                           <div className="grid grid-cols-2 divide-x divide-black dark:divide-white divide-opacity-10 dark:divide-opacity-10">
                             {setSecondLevelCategories.map((secondLevel) => (
                               <div key={secondLevel.key} className="relative group">
-                                <div className="px-8 py-4 text-gray-700 dark:text-gray-300 hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-5 transition-colors cursor-pointer">
+                                <Link
+                                  href={`/products?category=set&subcategory=${secondLevel.key}`}
+                                  className="block px-8 py-4 text-gray-700 dark:text-gray-300 hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-5 transition-colors cursor-pointer"
+                                >
                                   <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? secondLevel.name : secondLevel.nameEn}</div>
-                                </div>
+                                </Link>
                                 {/* 3. seviye aşağı açılan menü */}
                                 <div className="absolute top-full left-0 mt-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all z-50">
                                   <div className="glass rounded-xl border border-black dark:border-white border-opacity-10 dark:border-opacity-10 shadow-xl overflow-hidden w-64">

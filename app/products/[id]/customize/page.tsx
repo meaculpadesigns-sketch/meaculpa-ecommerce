@@ -673,7 +673,7 @@ export default function CustomizePage() {
                       onClick={() => setGender('male')}
                       className={`p-3 rounded-lg transition-all ${
                         gender === 'male'
-                          ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                          ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-black dark:text-white'
                           : 'text-black dark:text-white hover:opacity-80'
                       }`}
                     >
@@ -683,7 +683,7 @@ export default function CustomizePage() {
                       onClick={() => setGender('female')}
                       className={`p-3 rounded-lg transition-all ${
                         gender === 'female'
-                          ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                          ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-black dark:text-white'
                           : 'text-black dark:text-white hover:opacity-80'
                       }`}
                     >
@@ -770,7 +770,7 @@ export default function CustomizePage() {
                         onClick={() => setSize(sizeOption)}
                         className={`p-3 rounded-lg transition-all ${
                           size === sizeOption
-                            ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                            ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-black dark:text-white'
                             : 'text-black dark:text-white hover:text-black dark:text-white border border-gray-600'
                         }`}
                       >
@@ -851,7 +851,7 @@ export default function CustomizePage() {
                     >
                       <Minus size={20} className="text-white" />
                     </button>
-                    <span className="text-2xl font-bold text-white w-12 text-center">{quantity}</span>
+                    <span className="text-2xl font-bold text-black dark:text-white w-12 text-center">{quantity}</span>
                     <button
                       onClick={() => setQuantity(quantity + 1)}
                       className="p-2 glass rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors"
@@ -900,7 +900,7 @@ export default function CustomizePage() {
                     >
                       <Minus size={20} className="text-white" />
                     </button>
-                    <span className="text-2xl font-bold text-white w-12 text-center">{childCount}</span>
+                    <span className="text-2xl font-bold text-black dark:text-white w-12 text-center">{childCount}</span>
                     <button
                       onClick={() => setChildCount(Math.min(10, childCount + 1))}
                       className="p-2 glass rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors"
@@ -929,7 +929,7 @@ export default function CustomizePage() {
                         onClick={() => setParent1({ ...parent1, gender: 'male' })}
                         className={`p-3 rounded-lg transition-all ${
                           parent1.gender === 'male'
-                            ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                            ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-black dark:text-white'
                             : 'text-black dark:text-white hover:opacity-80'
                         }`}
                       >
@@ -939,7 +939,7 @@ export default function CustomizePage() {
                         onClick={() => setParent1({ ...parent1, gender: 'female' })}
                         className={`p-3 rounded-lg transition-all ${
                           parent1.gender === 'female'
-                            ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                            ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-black dark:text-white'
                             : 'text-black dark:text-white hover:opacity-80'
                         }`}
                       >
@@ -960,7 +960,7 @@ export default function CustomizePage() {
                           onClick={() => setParent1({ ...parent1, size: sizeOption })}
                           className={`p-2 rounded-lg transition-all text-sm ${
                             parent1.size === sizeOption
-                              ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                              ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-black dark:text-white'
                               : 'text-black dark:text-white hover:text-black dark:text-white border border-gray-600'
                           }`}
                         >
@@ -1023,7 +1023,7 @@ export default function CustomizePage() {
                         onClick={() => setParent2({ ...parent2, gender: 'male' })}
                         className={`p-3 rounded-lg transition-all ${
                           parent2.gender === 'male'
-                            ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                            ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-black dark:text-white'
                             : 'text-black dark:text-white hover:opacity-80'
                         }`}
                       >
@@ -1033,7 +1033,7 @@ export default function CustomizePage() {
                         onClick={() => setParent2({ ...parent2, gender: 'female' })}
                         className={`p-3 rounded-lg transition-all ${
                           parent2.gender === 'female'
-                            ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                            ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-black dark:text-white'
                             : 'text-black dark:text-white hover:opacity-80'
                         }`}
                       >
@@ -1054,7 +1054,7 @@ export default function CustomizePage() {
                           onClick={() => setParent2({ ...parent2, size: sizeOption })}
                           className={`p-2 rounded-lg transition-all text-sm ${
                             parent2.size === sizeOption
-                              ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                              ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-black dark:text-white'
                               : 'text-black dark:text-white hover:text-black dark:text-white border border-gray-600'
                           }`}
                         >
@@ -1121,7 +1121,7 @@ export default function CustomizePage() {
                           onClick={() => updateChild(child.id, 'gender', 'male')}
                           className={`p-3 rounded-lg transition-all ${
                             child.gender === 'male'
-                              ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                              ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-black dark:text-white'
                               : 'text-black dark:text-white hover:opacity-80'
                           }`}
                         >
@@ -1131,7 +1131,7 @@ export default function CustomizePage() {
                           onClick={() => updateChild(child.id, 'gender', 'female')}
                           className={`p-3 rounded-lg transition-all ${
                             child.gender === 'female'
-                              ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-white'
+                              ? 'border-2 border-mea-gold bg-mea-gold bg-opacity-10 text-black dark:text-white'
                               : 'text-black dark:text-white hover:opacity-80'
                           }`}
                         >
