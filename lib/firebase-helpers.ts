@@ -96,8 +96,14 @@ export async function deleteCreation(id: string) {
 // Orders
 export async function createOrder(order: Omit<Order, 'id'>) {
   const ordersRef = collection(db, 'orders');
+
+  // Remove undefined values (Firestore doesn't accept undefined)
+  const cleanOrder = Object.fromEntries(
+    Object.entries(order).filter(([_, value]) => value !== undefined)
+  );
+
   const docRef = await addDoc(ordersRef, {
-    ...order,
+    ...cleanOrder,
     createdAt: Timestamp.now(),
     updatedAt: Timestamp.now(),
   });
