@@ -93,14 +93,42 @@ export async function deleteCreation(id: string) {
   await deleteDoc(creationRef);
 }
 
+// Helper function to recursively remove undefined values
+function removeUndefined(obj: any): any {
+  if (obj === null || obj === undefined) {
+    return null;
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map(item => removeUndefined(item)).filter(item => item !== undefined);
+  }
+
+  if (typeof obj === 'object' && obj instanceof Date) {
+    return obj;
+  }
+
+  if (typeof obj === 'object') {
+    const cleaned: any = {};
+    for (const [key, value] of Object.entries(obj)) {
+      if (value !== undefined) {
+        const cleanedValue = removeUndefined(value);
+        if (cleanedValue !== undefined) {
+          cleaned[key] = cleanedValue;
+        }
+      }
+    }
+    return cleaned;
+  }
+
+  return obj;
+}
+
 // Orders
 export async function createOrder(order: Omit<Order, 'id'>) {
   const ordersRef = collection(db, 'orders');
 
-  // Remove undefined values (Firestore doesn't accept undefined)
-  const cleanOrder = Object.fromEntries(
-    Object.entries(order).filter(([_, value]) => value !== undefined)
-  );
+  // Remove undefined values recursively (Firestore doesn't accept undefined)
+  const cleanOrder = removeUndefined(order);
 
   const docRef = await addDoc(ordersRef, {
     ...cleanOrder,
