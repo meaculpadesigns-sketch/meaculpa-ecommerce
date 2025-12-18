@@ -132,7 +132,7 @@ export async function POST(request: NextRequest) {
       price,
       paidPrice,
       currency: 'TRY',
-      installment: 1,
+      installment: '1',
       basketId: `basket_${Date.now()}`,
       paymentChannel: 'WEB',
       paymentGroup: 'PRODUCT',
@@ -144,7 +144,7 @@ export async function POST(request: NextRequest) {
           ? body.expireYear.toString().slice(-2)  // 2030 -> 30
           : body.expireYear.toString(),            // 30 -> 30
         cvc: body.cvc,
-        registerCard: 0,
+        registerCard: '0',
       },
       buyer: {
         id: body.buyer.id || 'guest',
@@ -203,7 +203,12 @@ export async function POST(request: NextRequest) {
     console.log('Base URL:', baseUrl);
     console.log('Callback URL:', callbackUrl);
     console.log('API Key (first 10 chars):', apiKey?.substring(0, 10));
+    console.log('Secret Key (first 10 chars):', secretKey?.substring(0, 10));
     console.log('Environment:', process.env.NODE_ENV);
+    console.log('Random String:', randomString);
+    console.log('Request Path:', requestPath3DS);
+    console.log('Request Body Length:', requestBodyWith3DS.length);
+    console.log('Auth Header (first 60 chars):', authHeader3DS.substring(0, 60));
 
     // Call iyzico 3D Secure Initialize API
     const response = await fetch(`${baseUrl}/payment/3dsecure/initialize`, {
