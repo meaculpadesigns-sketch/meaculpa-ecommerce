@@ -242,6 +242,19 @@ export default function CheckoutPage() {
 
         // Call iyzico payment API
         try {
+          const buyerData = {
+            id: user?.id || `guest_${Date.now()}`,
+            name: firstName || shippingAddress.firstName,
+            surname: lastName || shippingAddress.lastName,
+            email,
+            phone,
+            address: shippingAddress.address,
+            city: shippingAddress.city,
+            zipCode: shippingAddress.zipCode,
+          };
+
+          console.log('Buyer data being sent:', buyerData);
+
           const paymentResponse = await fetch('/api/iyzico/create-payment', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -252,16 +265,7 @@ export default function CheckoutPage() {
               expireYear: `20${expireYear}`, // YY -> YYYY
               cvc: cardCvv,
               total,
-              buyer: {
-                id: user?.id || `guest_${Date.now()}`,
-                name: firstName || shippingAddress.firstName,
-                surname: lastName || shippingAddress.lastName,
-                email,
-                phone,
-                address: shippingAddress.address,
-                city: shippingAddress.city,
-                zipCode: shippingAddress.zipCode,
-              },
+              buyer: buyerData,
               shippingAddress,
               billingAddress: sameAsBilling ? shippingAddress : billingAddress,
               basketItems: cart.map(item => ({

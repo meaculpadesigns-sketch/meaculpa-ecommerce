@@ -39,9 +39,32 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate buyer information
-    if (!body.buyer || !body.buyer.name || !body.buyer.surname || !body.buyer.email || !body.buyer.phone || !body.buyer.address || !body.buyer.city || !body.buyer.zipCode) {
+    if (!body.buyer) {
+      console.error('Buyer object is missing');
       return NextResponse.json(
-        { status: 'error', errorMessage: 'Alıcı bilgileri eksik' },
+        { status: 'error', errorMessage: 'Alıcı bilgileri tamamen eksik' },
+        { status: 400 }
+      );
+    }
+
+    const missingBuyerFields = [];
+    if (!body.buyer.name) missingBuyerFields.push('name');
+    if (!body.buyer.surname) missingBuyerFields.push('surname');
+    if (!body.buyer.email) missingBuyerFields.push('email');
+    if (!body.buyer.phone) missingBuyerFields.push('phone');
+    if (!body.buyer.address) missingBuyerFields.push('address');
+    if (!body.buyer.city) missingBuyerFields.push('city');
+    if (!body.buyer.zipCode) missingBuyerFields.push('zipCode');
+
+    if (missingBuyerFields.length > 0) {
+      console.error('Missing buyer fields:', missingBuyerFields);
+      console.error('Buyer data received:', body.buyer);
+      return NextResponse.json(
+        {
+          status: 'error',
+          errorMessage: `Alıcı bilgileri eksik: ${missingBuyerFields.join(', ')}`,
+          missingFields: missingBuyerFields
+        },
         { status: 400 }
       );
     }
