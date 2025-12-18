@@ -1,19 +1,30 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCart } from '@/lib/cart-context';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Trash2, Plus, Minus, ShoppingBag, ArrowRight } from 'lucide-react';
-import { formatPrice } from '@/lib/currency';
+import { formatPrice, calculateShippingCost } from '@/lib/currency';
+import { getShippingSettings } from '@/lib/firebase-helpers';
+import { ShippingSettings } from '@/types';
 
 export default function CartPage() {
   const { t, i18n } = useTranslation();
   const { cart, removeFromCart, updateQuantity, getCartTotal } = useCart();
+  const [shippingSettings, setShippingSettings] = useState<ShippingSettings | null>(null);
 
   useEffect(() => {
     document.body.className = 'bg-home text-dark-page';
+
+    // Load shipping settings
+    const loadSettings = async () => {
+      const settings = await getShippingSettings();
+      setShippingSettings(settings);
+    };
+    loadSettings();
+
     return () => {
       document.body.className = '';
     };
@@ -43,8 +54,22 @@ export default function CartPage() {
   }
 
   const subtotal = getCartTotal();
-  // Yurt içi kargo hesaplama (4500 TL üzeri ücretsiz, altı 175 TL)
-  const shipping = subtotal >= 4500 ? 0 : 175;
+
+  // Calculate shipping (domestic only for cart preview)
+  const shipping = shippingSettings
+    ? calculateShippingCost({
+        subtotal,
+        isDomestic: true, // Default to domestic in cart preview
+        language: i18n.language,
+        settings: {
+          domestic: shippingSettings.domestic,
+          international: shippingSettings.international,
+        },
+      })
+    : subtotal >= 4500
+    ? 0
+    : 175; // Fallback to hardcoded
+
   const total = subtotal + shipping;
 
   return (
@@ -194,7 +219,11 @@ export default function CartPage() {
                 </div>
 
                 {/* Free Shipping Info */}
-                {shipping === 0 ? (
+                {!shippingSettings ? (
+                  <div className="animate-pulse p-3 bg-zinc-800 rounded-lg">
+                    <div className="h-4 bg-zinc-700 rounded w-3/4"></div>
+                  </div>
+                ) : shipping === 0 ? (
                   <div className="p-3 bg-green-500 bg-opacity-20 border border-green-500 rounded-lg">
                     <p className="text-green-500 text-sm">
                       {i18n.language === 'tr' ? '✓ Ücretsiz kargo kazandınız!' : '✓ You earned free shipping!'}
@@ -204,13 +233,13 @@ export default function CartPage() {
                   <div className="p-3 bg-mea-gold bg-opacity-20 border border-mea-gold rounded-lg space-y-2">
                     <p className="text-black dark:text-white text-sm">
                       {i18n.language === 'tr'
-                        ? `${formatPrice(4500 - subtotal, i18n.language)} daha alışveriş yapın, kargo ücretsiz olsun!`
-                        : `Add ${formatPrice(4500 - subtotal, i18n.language)} more for free shipping!`}
+                        ? `${formatPrice(shippingSettings.domestic.thresholdTRY - subtotal, i18n.language)} daha alışveriş yapın, kargo ücretsiz olsun!`
+                        : `Add ${formatPrice(shippingSettings.domestic.thresholdTRY - subtotal, i18n.language)} more for free shipping!`}
                     </p>
                     <p className="text-gray-700 dark:text-gray-400 text-xs">
                       {i18n.language === 'tr'
-                        ? 'Türkiye içi: 4500 TL üzeri ücretsiz kargo | Yurt dışı: 200 Euro üzeri ücretsiz kargo'
-                        : 'Turkey: Free shipping over 4500 TL | International: Free shipping over 200 Euro'}
+                        ? `Türkiye içi: ${formatPrice(shippingSettings.domestic.thresholdTRY, i18n.language)} üzeri ücretsiz | Yurt dışı: ${shippingSettings.international.thresholdEUR} Euro üzeri ücretsiz`
+                        : `Turkey: Free over ${formatPrice(shippingSettings.domestic.thresholdTRY, i18n.language)} | International: Free over ${shippingSettings.international.thresholdEUR} Euro`}
                     </p>
                   </div>
                 )}

@@ -5,11 +5,11 @@ import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { useCart } from '@/lib/cart-context';
 import { auth } from '@/lib/firebase';
-import { getUserById, createOrder, getCouponByCode, useCoupon } from '@/lib/firebase-helpers';
-import { Address, User, Coupon } from '@/types';
+import { getUserById, createOrder, getCouponByCode, useCoupon, getShippingSettings } from '@/lib/firebase-helpers';
+import { Address, User, Coupon, ShippingSettings } from '@/types';
 import { motion } from 'framer-motion';
 import { CreditCard, Wallet, CheckCircle, Tag } from 'lucide-react';
-import { formatPrice } from '@/lib/currency';
+import { formatPrice, calculateShippingCost } from '@/lib/currency';
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -62,11 +62,21 @@ export default function CheckoutPage() {
   const [cardExpiry, setCardExpiry] = useState('');
   const [cardCvv, setCardCvv] = useState('');
 
+  // Shipping Settings
+  const [shippingSettings, setShippingSettings] = useState<ShippingSettings | null>(null);
+
   useEffect(() => {
     if (cart.length === 0) {
       router.push('/cart');
       return;
     }
+
+    // Load shipping settings
+    const loadSettings = async () => {
+      const settings = await getShippingSettings();
+      setShippingSettings(settings);
+    };
+    loadSettings();
 
     const unsubscribe = auth.onAuthStateChanged(async (authUser) => {
       if (authUser) {
@@ -95,18 +105,28 @@ export default function CheckoutPage() {
 
   // Calculate shipping based on country
   const calculateShipping = () => {
+    if (!shippingSettings) {
+      // Fallback to hardcoded values if settings not loaded
+      const isTurkey = shippingAddress.country === 'Türkiye' || shippingAddress.country === 'Turkey';
+      if (isTurkey) {
+        return subtotal >= 4500 ? 0 : 175;
+      } else {
+        return subtotal >= 7000 ? 0 : 1225;
+      }
+    }
+
     const isTurkey = shippingAddress.country === 'Türkiye' || shippingAddress.country === 'Turkey';
 
-    if (isTurkey) {
-      // Yurt içi: 4500 TL üzeri ücretsiz, altı 175 TL
-      return subtotal >= 4500 ? 0 : 175;
-    } else {
-      // Yurt dışı: 200 Euro = ~7000 TL (1 EUR = 35 TL varsayımı)
-      // 200 Euro üzeri ücretsiz, altı 35 Euro = ~1225 TL
-      const freeShippingThreshold = 200 * 35; // 7000 TL
-      const internationalShippingCost = 35 * 35; // 1225 TL
-      return subtotal >= freeShippingThreshold ? 0 : internationalShippingCost;
-    }
+    return calculateShippingCost({
+      subtotal,
+      isDomestic: isTurkey,
+      language: i18n.language,
+      settings: {
+        domestic: shippingSettings.domestic,
+        international: shippingSettings.international,
+      },
+      freeShippingOverride: appliedCoupon?.freeShipping || false,
+    });
   };
 
   const shipping = calculateShipping();
@@ -718,6 +738,11 @@ export default function CheckoutPage() {
                             ? `%${appliedCoupon.value} ${t('checkout.discount')}`
                             : `${formatPrice(appliedCoupon.value, i18n.language)} ${t('checkout.discount')}`}
                         </p>
+                        {appliedCoupon.freeShipping && (
+                          <p className="text-green-400 text-xs mt-1">
+                            + {i18n.language === 'tr' ? 'Ücretsiz Kargo' : 'Free Shipping'}
+                          </p>
+                        )}
                       </div>
                     </div>
                     <button
@@ -753,8 +778,25 @@ export default function CheckoutPage() {
                 {/* Free Shipping Info */}
                 {(() => {
                   const isTurkey = shippingAddress.country === 'Türkiye' || shippingAddress.country === 'Turkey';
-                  const freeShippingThreshold = isTurkey ? 4500 : (200 * 35); // 4500 TL veya 7000 TL (200 EUR)
-                  const remainingForFreeShipping = freeShippingThreshold - subtotal;
+
+                  // Show coupon free shipping message
+                  if (appliedCoupon?.freeShipping) {
+                    return (
+                      <div className="p-3 bg-green-500 bg-opacity-20 border border-green-500 rounded-lg">
+                        <p className="text-green-500 text-sm">
+                          {i18n.language === 'tr'
+                            ? '✓ Kupon ile ücretsiz kargo!'
+                            : '✓ Free shipping with coupon!'}
+                        </p>
+                      </div>
+                    );
+                  }
+
+                  if (!shippingSettings) return null;
+
+                  const config = isTurkey ? shippingSettings.domestic : shippingSettings.international;
+                  const threshold = config.thresholdTRY;
+                  const remainingForFreeShipping = threshold - subtotal;
 
                   if (shipping === 0) {
                     return (
@@ -775,8 +817,8 @@ export default function CheckoutPage() {
                         {!isTurkey && (
                           <p className="text-gray-700 dark:text-gray-400 text-xs mt-1">
                             {i18n.language === 'tr'
-                              ? `(200 Euro üzeri yurt dışı kargolar ücretsizdir)`
-                              : `(International orders over 200 Euro get free shipping)`}
+                              ? `(${config.thresholdEUR} Euro üzeri yurt dışı kargolar ücretsizdir)`
+                              : `(International orders over ${config.thresholdEUR} Euro get free shipping)`}
                           </p>
                         )}
                       </div>

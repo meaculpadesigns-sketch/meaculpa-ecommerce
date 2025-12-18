@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   Settings,
@@ -16,6 +16,8 @@ import {
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import AdminBackButton from '@/components/AdminBackButton';
+import { getShippingSettings, updateShippingSettings } from '@/lib/firebase-helpers';
+import { ShippingSettings } from '@/types';
 
 export default function AdminSettingsPage() {
   const { t, i18n } = useTranslation();
@@ -61,6 +63,26 @@ export default function AdminSettingsPage() {
     lowStockAlert: true,
     newReviewAlert: true,
   });
+
+  const [shippingSettingsState, setShippingSettingsState] = useState<ShippingSettings | null>(null);
+  const [loadingSettings, setLoadingSettings] = useState(true);
+  const [savingShipping, setSavingShipping] = useState(false);
+
+  useEffect(() => {
+    loadShippingSettings();
+  }, []);
+
+  const loadShippingSettings = async () => {
+    setLoadingSettings(true);
+    try {
+      const settings = await getShippingSettings();
+      setShippingSettingsState(settings);
+    } catch (error) {
+      console.error('Error loading shipping settings:', error);
+    } finally {
+      setLoadingSettings(false);
+    }
+  };
 
   return (
     <div className="min-h-screen py-20 px-4">
@@ -330,66 +352,256 @@ export default function AdminSettingsPage() {
             <h2 className="text-2xl font-semibold text-black dark:text-white mb-6">
               {isTurkish ? 'Kargo Ayarları' : 'Shipping Settings'}
             </h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-black dark:text-white mb-2">
-                  {isTurkish ? 'Ücretsiz Kargo Eşiği (₺)' : 'Free Shipping Threshold (₺)'}
-                </label>
-                <input
-                  type="number"
-                  value={shippingSettings.freeShippingThreshold}
-                  onChange={(e) => setShippingSettings({ ...shippingSettings, freeShippingThreshold: Number(e.target.value) })}
-                  className="admin-input w-full"
-                />
+
+            {loadingSettings ? (
+              <div className="text-center py-8">
+                <div className="animate-pulse text-black dark:text-white">
+                  {isTurkish ? 'Yükleniyor...' : 'Loading...'}
+                </div>
               </div>
-              <div>
-                <label className="block text-black dark:text-white mb-2">
-                  {isTurkish ? 'Yurtiçi Kargo Ücreti (₺)' : 'Domestic Shipping Fee (₺)'}
-                </label>
-                <input
-                  type="number"
-                  value={shippingSettings.domesticShippingFee}
-                  onChange={(e) => setShippingSettings({ ...shippingSettings, domesticShippingFee: Number(e.target.value) })}
-                  className="admin-input w-full"
-                />
-              </div>
-              <div>
-                <label className="block text-black dark:text-white mb-2">
-                  {isTurkish ? 'Tahmini Teslimat Süresi (Gün)' : 'Estimated Delivery Time (Days)'}
-                </label>
-                <input
-                  type="text"
-                  value={shippingSettings.estimatedDeliveryDays}
-                  onChange={(e) => setShippingSettings({ ...shippingSettings, estimatedDeliveryDays: e.target.value })}
-                  className="admin-input w-full"
-                />
-              </div>
-              <div className="flex items-center justify-between p-4 bg-zinc-900/50 rounded-lg">
-                <div>
-                  <p className="text-black dark:text-white font-medium">
+            ) : shippingSettingsState ? (
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  setSavingShipping(true);
+                  try {
+                    await updateShippingSettings({
+                      domestic: shippingSettingsState.domestic,
+                      international: shippingSettingsState.international,
+                    });
+                    alert(isTurkish ? 'Kargo ayarları kaydedildi!' : 'Shipping settings saved!');
+                  } catch (error) {
+                    console.error('Error saving shipping settings:', error);
+                    alert(isTurkish ? 'Kaydetme hatası!' : 'Error saving!');
+                  } finally {
+                    setSavingShipping(false);
+                  }
+                }}
+                className="space-y-6"
+              >
+                {/* Domestic (Turkey) Shipping */}
+                <div className="border border-white border-opacity-10 rounded-lg p-6">
+                  <h3 className="text-xl font-semibold text-black dark:text-white mb-4">
+                    {isTurkish ? 'Yurtiçi Kargo (Türkiye)' : 'Domestic Shipping (Turkey)'}
+                  </h3>
+
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <label className="block text-black dark:text-white mb-2">
+                        {isTurkish ? 'Ücretsiz Kargo Eşiği (TL)' : 'Free Shipping Threshold (TRY)'}
+                      </label>
+                      <input
+                        type="number"
+                        value={shippingSettingsState.domestic.thresholdTRY}
+                        onChange={(e) =>
+                          setShippingSettingsState({
+                            ...shippingSettingsState,
+                            domestic: {
+                              ...shippingSettingsState.domestic,
+                              thresholdTRY: Number(e.target.value),
+                            },
+                          })
+                        }
+                        className="admin-input w-full"
+                        required
+                        min="0"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-black dark:text-white mb-2">
+                        {isTurkish ? 'Ücretsiz Kargo Eşiği (EUR)' : 'Free Shipping Threshold (EUR)'}
+                      </label>
+                      <input
+                        type="number"
+                        value={shippingSettingsState.domestic.thresholdEUR}
+                        onChange={(e) =>
+                          setShippingSettingsState({
+                            ...shippingSettingsState,
+                            domestic: {
+                              ...shippingSettingsState.domestic,
+                              thresholdEUR: Number(e.target.value),
+                            },
+                          })
+                        }
+                        className="admin-input w-full"
+                        required
+                        min="0"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-black dark:text-white mb-2">
+                        {isTurkish ? 'Kargo Ücreti (TL)' : 'Shipping Fee (TRY)'}
+                      </label>
+                      <input
+                        type="number"
+                        value={shippingSettingsState.domestic.feeTRY}
+                        onChange={(e) =>
+                          setShippingSettingsState({
+                            ...shippingSettingsState,
+                            domestic: {
+                              ...shippingSettingsState.domestic,
+                              feeTRY: Number(e.target.value),
+                            },
+                          })
+                        }
+                        className="admin-input w-full"
+                        required
+                        min="0"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-black dark:text-white mb-2">
+                        {isTurkish ? 'Kargo Ücreti (EUR)' : 'Shipping Fee (EUR)'}
+                      </label>
+                      <input
+                        type="number"
+                        value={shippingSettingsState.domestic.feeEUR}
+                        onChange={(e) =>
+                          setShippingSettingsState({
+                            ...shippingSettingsState,
+                            domestic: {
+                              ...shippingSettingsState.domestic,
+                              feeEUR: Number(e.target.value),
+                            },
+                          })
+                        }
+                        className="admin-input w-full"
+                        required
+                        min="0"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* International Shipping */}
+                <div className="border border-white border-opacity-10 rounded-lg p-6">
+                  <h3 className="text-xl font-semibold text-black dark:text-white mb-4">
                     {isTurkish ? 'Uluslararası Kargo' : 'International Shipping'}
-                  </p>
-                  <p className="text-black dark:text-white text-sm">
+                  </h3>
+
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <label className="block text-black dark:text-white mb-2">
+                        {isTurkish ? 'Ücretsiz Kargo Eşiği (TL)' : 'Free Shipping Threshold (TRY)'}
+                      </label>
+                      <input
+                        type="number"
+                        value={shippingSettingsState.international.thresholdTRY}
+                        onChange={(e) =>
+                          setShippingSettingsState({
+                            ...shippingSettingsState,
+                            international: {
+                              ...shippingSettingsState.international,
+                              thresholdTRY: Number(e.target.value),
+                            },
+                          })
+                        }
+                        className="admin-input w-full"
+                        required
+                        min="0"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-black dark:text-white mb-2">
+                        {isTurkish ? 'Ücretsiz Kargo Eşiği (EUR)' : 'Free Shipping Threshold (EUR)'}
+                      </label>
+                      <input
+                        type="number"
+                        value={shippingSettingsState.international.thresholdEUR}
+                        onChange={(e) =>
+                          setShippingSettingsState({
+                            ...shippingSettingsState,
+                            international: {
+                              ...shippingSettingsState.international,
+                              thresholdEUR: Number(e.target.value),
+                            },
+                          })
+                        }
+                        className="admin-input w-full"
+                        required
+                        min="0"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-black dark:text-white mb-2">
+                        {isTurkish ? 'Kargo Ücreti (TL)' : 'Shipping Fee (TRY)'}
+                      </label>
+                      <input
+                        type="number"
+                        value={shippingSettingsState.international.feeTRY}
+                        onChange={(e) =>
+                          setShippingSettingsState({
+                            ...shippingSettingsState,
+                            international: {
+                              ...shippingSettingsState.international,
+                              feeTRY: Number(e.target.value),
+                            },
+                          })
+                        }
+                        className="admin-input w-full"
+                        required
+                        min="0"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-black dark:text-white mb-2">
+                        {isTurkish ? 'Kargo Ücreti (EUR)' : 'Shipping Fee (EUR)'}
+                      </label>
+                      <input
+                        type="number"
+                        value={shippingSettingsState.international.feeEUR}
+                        onChange={(e) =>
+                          setShippingSettingsState({
+                            ...shippingSettingsState,
+                            international: {
+                              ...shippingSettingsState.international,
+                              feeEUR: Number(e.target.value),
+                            },
+                          })
+                        }
+                        className="admin-input w-full"
+                        required
+                        min="0"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Info Box */}
+                <div className="bg-blue-500 bg-opacity-20 border border-blue-500 rounded-lg p-4">
+                  <p className="text-blue-400 text-sm">
                     {isTurkish
-                      ? 'Yurtdışı gönderimlerini aktifleştir'
-                      : 'Enable international shipments'}
+                      ? 'ℹ️ Müşteriler Türkçe seçerse TL, İngilizce seçerse EUR/USD görecektir. Her iki para birimini de ayarlayın.'
+                      : 'ℹ️ Customers see TRY for Turkish, EUR/USD for English. Set both currencies.'}
                   </p>
                 </div>
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={shippingSettings.internationalShipping}
-                    onChange={(e) => setShippingSettings({ ...shippingSettings, internationalShipping: e.target.checked })}
-                    className="sr-only peer"
-                  />
-                  <div className="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-mea-gold"></div>
-                </label>
+
+                <button
+                  type="submit"
+                  disabled={savingShipping}
+                  className="btn-primary flex items-center gap-2 w-full md:w-auto"
+                >
+                  <Save size={20} />
+                  {savingShipping
+                    ? isTurkish
+                      ? 'Kaydediliyor...'
+                      : 'Saving...'
+                    : isTurkish
+                    ? 'Kaydet'
+                    : 'Save'}
+                </button>
+              </form>
+            ) : (
+              <div className="text-center py-8 text-red-500">
+                {isTurkish ? 'Ayarlar yüklenemedi' : 'Failed to load settings'}
               </div>
-              <button className="btn-primary flex items-center gap-2 w-full md:w-auto">
-                <Save size={20} />
-                {isTurkish ? 'Kaydet' : 'Save'}
-              </button>
-            </div>
+            )}
           </motion.div>
         )}
 

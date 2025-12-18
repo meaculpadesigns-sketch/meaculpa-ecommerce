@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Ticket, Plus, Trash2, Edit, Copy, Check, X, Users, User } from 'lucide-react';
+import { Ticket, Plus, Trash2, Edit, Copy, Check, X, Users, User, Truck } from 'lucide-react';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, where } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Coupon } from '@/types';
@@ -24,6 +24,7 @@ export default function AdminCouponsPage() {
     expiresAt: '',
     usageLimit: 0,
     userSpecific: '',
+    freeShipping: false,
     active: true,
   });
 
@@ -91,6 +92,9 @@ export default function AdminCouponsPage() {
         // Only add usageLimit if it's not user-specific
         couponData.usageLimit = Number(formData.usageLimit);
       }
+      if (formData.freeShipping) {
+        couponData.freeShipping = true;
+      }
 
       if (editingCoupon) {
         await updateDoc(doc(db, 'coupons', editingCoupon.id), couponData);
@@ -150,6 +154,7 @@ export default function AdminCouponsPage() {
         expiresAt: coupon.expiresAt ? new Date(coupon.expiresAt).toISOString().split('T')[0] : '',
         usageLimit: coupon.usageLimit || 0,
         userSpecific: coupon.userSpecific || '',
+        freeShipping: coupon.freeShipping || false,
         active: coupon.active,
       });
     } else {
@@ -163,6 +168,7 @@ export default function AdminCouponsPage() {
         expiresAt: '',
         usageLimit: 0,
         userSpecific: '',
+        freeShipping: false,
         active: true,
       });
     }
@@ -280,6 +286,12 @@ export default function AdminCouponsPage() {
                             <span className="px-2 py-1 bg-blue-500 bg-opacity-20 text-blue-400 text-xs rounded-full flex items-center gap-1">
                               <Users size={12} />
                               Çok Kullanımlı
+                            </span>
+                          )}
+                          {coupon.freeShipping && (
+                            <span className="px-2 py-1 bg-green-500 bg-opacity-20 text-green-400 text-xs rounded-full flex items-center gap-1">
+                              <Truck size={12} />
+                              Ücretsiz Kargo
                             </span>
                           )}
                         </div>
@@ -542,6 +554,21 @@ export default function AdminCouponsPage() {
                       </option>
                     ))}
                   </select>
+                </div>
+
+                {/* Free Shipping Toggle */}
+                <div className="flex items-center gap-3">
+                  <input
+                    type="checkbox"
+                    id="freeShipping"
+                    checked={formData.freeShipping}
+                    onChange={(e) => setFormData({ ...formData, freeShipping: e.target.checked })}
+                    className="w-5 h-5 text-mea-gold focus:ring-mea-gold rounded"
+                  />
+                  <label htmlFor="freeShipping" className="text-gray-900">
+                    <span className="font-medium">Ücretsiz Kargo</span>
+                    <p className="text-sm text-gray-600">Bu kupon kargo ücretini sıfırlar</p>
+                  </label>
                 </div>
 
                 {/* Active Toggle */}

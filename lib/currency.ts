@@ -57,3 +57,60 @@ export function getExchangeRates() {
 export function convertCurrency(priceInTRY: number, toCurrency: 'USD' | 'EUR'): number {
   return priceInTRY / EXCHANGE_RATES[toCurrency];
 }
+
+// Shipping calculation utility
+export interface ShippingCalculationParams {
+  subtotal: number; // Always in TRY
+  isDomestic: boolean; // Turkey = true, International = false
+  language: string; // 'tr' or 'en'
+  settings: {
+    domestic: {
+      thresholdTRY: number;
+      thresholdEUR: number;
+      feeTRY: number;
+      feeEUR: number;
+    };
+    international: {
+      thresholdTRY: number;
+      thresholdEUR: number;
+      feeTRY: number;
+      feeEUR: number;
+    };
+  };
+  freeShippingOverride?: boolean; // Coupon free shipping
+}
+
+export function calculateShippingCost(params: ShippingCalculationParams): number {
+  const { subtotal, isDomestic, settings, freeShippingOverride } = params;
+
+  // If coupon provides free shipping, return 0
+  if (freeShippingOverride) {
+    return 0;
+  }
+
+  const config = isDomestic ? settings.domestic : settings.international;
+
+  // Check threshold (always compare in TRY)
+  if (subtotal >= config.thresholdTRY) {
+    return 0; // Free shipping threshold reached
+  }
+
+  // Return shipping fee in TRY
+  return config.feeTRY;
+}
+
+// Get shipping threshold info for display
+export function getShippingThresholdInfo(params: ShippingCalculationParams): {
+  remaining: number; // Amount remaining to get free shipping (in TRY)
+  threshold: number; // Free shipping threshold (in TRY)
+  fee: number; // Shipping fee (in TRY)
+} {
+  const { subtotal, isDomestic, settings } = params;
+  const config = isDomestic ? settings.domestic : settings.international;
+
+  return {
+    remaining: Math.max(0, config.thresholdTRY - subtotal),
+    threshold: config.thresholdTRY,
+    fee: config.feeTRY,
+  };
+}

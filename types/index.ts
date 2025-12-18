@@ -206,6 +206,7 @@ export interface Coupon {
   usageLimit?: number;
   usedCount: number;
   userSpecific?: string; // User ID
+  freeShipping?: boolean; // Ücretsiz kargo sağlar
   active: boolean;
   createdAt: Date;
 }
@@ -264,6 +265,23 @@ export interface SiteSettings {
     twitter?: string;
     pinterest?: string;
   };
+}
+
+export interface ShippingSettings {
+  id: string; // 'shipping' - singleton document
+  domestic: {
+    thresholdTRY: number;    // Örn: 4500
+    thresholdEUR: number;    // Örn: 130
+    feeTRY: number;          // Örn: 175
+    feeEUR: number;          // Örn: 5
+  };
+  international: {
+    thresholdTRY: number;    // Örn: 7000
+    thresholdEUR: number;    // Örn: 200
+    feeTRY: number;          // Örn: 1225
+    feeEUR: number;          // Örn: 35
+  };
+  updatedAt: Date;
 }
 
 export interface AnalyticsData {

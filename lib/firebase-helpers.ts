@@ -6,6 +6,7 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
+  setDoc,
   query,
   where,
   orderBy,
@@ -14,7 +15,7 @@ import {
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { db, storage, auth } from './firebase';
-import { Product, Order, User, Creation, DesignRequest, Message, Coupon, Review, Story } from '@/types';
+import { Product, Order, User, Creation, DesignRequest, Message, Coupon, Review, Story, ShippingSettings } from '@/types';
 
 // Products
 export async function getProducts() {
@@ -465,4 +466,76 @@ export async function getAllUsers() {
   const usersRef = collection(db, 'users');
   const snapshot = await getDocs(usersRef);
   return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as User));
+}
+
+// Shipping Settings
+export async function getShippingSettings(): Promise<ShippingSettings | null> {
+  try {
+    const settingsRef = doc(db, 'settings', 'shipping');
+    const snapshot = await getDoc(settingsRef);
+
+    if (snapshot.exists()) {
+      const data = snapshot.data();
+      return {
+        id: snapshot.id,
+        ...data,
+        updatedAt: data.updatedAt?.toDate?.() || new Date(data.updatedAt),
+      } as ShippingSettings;
+    }
+
+    // Return default values if no settings exist
+    return {
+      id: 'shipping',
+      domestic: {
+        thresholdTRY: 4500,
+        thresholdEUR: 130,
+        feeTRY: 175,
+        feeEUR: 5,
+      },
+      international: {
+        thresholdTRY: 7000,
+        thresholdEUR: 200,
+        feeTRY: 1225,
+        feeEUR: 35,
+      },
+      updatedAt: new Date(),
+    };
+  } catch (error) {
+    console.error('Error fetching shipping settings:', error);
+    // Return defaults on error
+    return {
+      id: 'shipping',
+      domestic: {
+        thresholdTRY: 4500,
+        thresholdEUR: 130,
+        feeTRY: 175,
+        feeEUR: 5,
+      },
+      international: {
+        thresholdTRY: 7000,
+        thresholdEUR: 200,
+        feeTRY: 1225,
+        feeEUR: 35,
+      },
+      updatedAt: new Date(),
+    };
+  }
+}
+
+export async function updateShippingSettings(settings: Omit<ShippingSettings, 'id' | 'updatedAt'>) {
+  const settingsRef = doc(db, 'settings', 'shipping');
+  await updateDoc(settingsRef, {
+    ...settings,
+    updatedAt: Timestamp.now(),
+  }).catch(async (error) => {
+    // If document doesn't exist, create it
+    if (error.code === 'not-found') {
+      await setDoc(settingsRef, {
+        ...settings,
+        updatedAt: Timestamp.now(),
+      });
+    } else {
+      throw error;
+    }
+  });
 }
