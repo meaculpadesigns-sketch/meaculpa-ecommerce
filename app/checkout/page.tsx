@@ -254,8 +254,8 @@ export default function CheckoutPage() {
               total,
               buyer: {
                 id: user?.id || `guest_${Date.now()}`,
-                name: firstName,
-                surname: lastName,
+                name: firstName || shippingAddress.firstName,
+                surname: lastName || shippingAddress.lastName,
                 email,
                 phone,
                 address: shippingAddress.address,
