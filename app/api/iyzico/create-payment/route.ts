@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    // Validate required fields
+    // Validate card fields
     if (!body.cardHolderName || !body.cardNumber || !body.expireMonth || !body.expireYear || !body.cvc) {
       return NextResponse.json(
         { status: 'error', errorMessage: 'Kart bilgileri eksik' },
@@ -30,9 +30,58 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const apiKey = process.env.IYZICO_API_KEY!;
-    const secretKey = process.env.IYZICO_SECRET_KEY!;
-    const baseUrl = process.env.IYZICO_BASE_URL!;
+    // Validate payment amount
+    if (!body.total || typeof body.total !== 'number' || body.total <= 0) {
+      return NextResponse.json(
+        { status: 'error', errorMessage: 'Geçersiz ödeme tutarı' },
+        { status: 400 }
+      );
+    }
+
+    // Validate buyer information
+    if (!body.buyer || !body.buyer.name || !body.buyer.surname || !body.buyer.email || !body.buyer.phone || !body.buyer.address || !body.buyer.city || !body.buyer.zipCode) {
+      return NextResponse.json(
+        { status: 'error', errorMessage: 'Alıcı bilgileri eksik' },
+        { status: 400 }
+      );
+    }
+
+    // Validate shipping address
+    if (!body.shippingAddress || !body.shippingAddress.firstName || !body.shippingAddress.lastName || !body.shippingAddress.address || !body.shippingAddress.city || !body.shippingAddress.zipCode) {
+      return NextResponse.json(
+        { status: 'error', errorMessage: 'Teslimat adresi eksik' },
+        { status: 400 }
+      );
+    }
+
+    // Validate billing address
+    if (!body.billingAddress || !body.billingAddress.firstName || !body.billingAddress.lastName || !body.billingAddress.address || !body.billingAddress.city || !body.billingAddress.zipCode) {
+      return NextResponse.json(
+        { status: 'error', errorMessage: 'Fatura adresi eksik' },
+        { status: 400 }
+      );
+    }
+
+    // Validate basket items
+    if (!body.basketItems || !Array.isArray(body.basketItems) || body.basketItems.length === 0) {
+      return NextResponse.json(
+        { status: 'error', errorMessage: 'Sepet bilgileri eksik' },
+        { status: 400 }
+      );
+    }
+
+    // Validate environment variables
+    const apiKey = process.env.IYZICO_API_KEY;
+    const secretKey = process.env.IYZICO_SECRET_KEY;
+    const baseUrl = process.env.IYZICO_BASE_URL;
+
+    if (!apiKey || !secretKey || !baseUrl) {
+      console.error('iyzico environment variables not configured');
+      return NextResponse.json(
+        { status: 'error', errorMessage: 'Ödeme sistemi yapılandırma hatası' },
+        { status: 500 }
+      );
+    }
 
     // Prepare payment request
     const conversationId = `conv_${Date.now()}`;
@@ -135,8 +184,14 @@ export async function POST(request: NextRequest) {
     }
   } catch (error: any) {
     console.error('Payment API error:', error);
+    console.error('Error stack:', error?.stack);
+    console.error('Error message:', error?.message);
     return NextResponse.json(
-      { status: 'error', errorMessage: 'Sunucu hatası' },
+      {
+        status: 'error',
+        errorMessage: 'Sunucu hatası: ' + (error?.message || 'Bilinmeyen hata'),
+        errorDetails: process.env.NODE_ENV === 'development' ? error?.stack : undefined
+      },
       { status: 500 }
     );
   }
