@@ -268,13 +268,24 @@ export default function CheckoutPage() {
               buyer: buyerData,
               shippingAddress,
               billingAddress: sameAsBilling ? shippingAddress : billingAddress,
-              basketItems: cart.map(item => ({
-                id: item.productId,
-                name: item.product.name,
-                category1: item.product.category,
-                category2: item.product.subcategory || '',
-                price: item.product.price * item.quantity,
-              })),
+              basketItems: [
+                ...cart.map(item => ({
+                  id: item.productId,
+                  name: item.product.name,
+                  category1: item.product.category,
+                  category2: item.product.subcategory || '',
+                  price: item.product.price * item.quantity,
+                })),
+                // Add shipping as separate line item
+                ...(shipping > 0 ? [{
+                  id: 'SHIPPING',
+                  name: 'Kargo Ücreti',
+                  category1: 'Shipping',
+                  category2: 'Delivery',
+                  price: shipping,
+                }] : []),
+              ],
+              discount, // Send discount separately for paidPrice calculation
             }),
           });
 

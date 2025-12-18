@@ -108,14 +108,20 @@ export async function POST(request: NextRequest) {
 
     // Prepare payment request
     const conversationId = `conv_${Date.now()}`;
-    const price = body.total.toFixed(2);
-    const paidPrice = body.total.toFixed(2);
 
-    // Calculate basket total to match iyzico requirements
+    // Calculate basket total (sum of all items including shipping)
     const basketTotal = body.basketItems.reduce((sum: number, item: any) => sum + item.price, 0);
-    console.log('Total from body:', body.total);
+
+    // price = sum of basketItems, paidPrice = price - discount
+    const price = basketTotal.toFixed(2);
+    const discount = body.discount || 0;
+    const paidPrice = (basketTotal - discount).toFixed(2);
+
     console.log('Basket items total:', basketTotal);
-    console.log('Difference:', Math.abs(body.total - basketTotal));
+    console.log('Discount:', discount);
+    console.log('Price (before discount):', price);
+    console.log('Paid Price (after discount):', paidPrice);
+    console.log('Total from body:', body.total);
 
     const paymentRequest = {
       locale: 'tr',
