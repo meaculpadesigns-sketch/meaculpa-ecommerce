@@ -183,13 +183,7 @@ export async function POST(request: NextRequest) {
       })),
     };
 
-    // Generate authorization
-    const randomString = crypto.randomBytes(16).toString('hex');
-    const requestBody = JSON.stringify(paymentRequest);
-    const requestPath = '/payment/auth';
-    const authHeader = generateAuthorizationHeader(apiKey, secretKey, randomString, requestPath, requestBody);
-
-    // Add callback URLs for 3D Secure
+    // Add callback URL for 3D Secure
     const callbackUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://meaculpa.vercel.app'}/api/iyzico/3d-callback`;
     const paymentRequestWith3DS = {
       ...paymentRequest,
@@ -197,6 +191,7 @@ export async function POST(request: NextRequest) {
     };
 
     // Generate authorization for 3D Secure
+    const randomString = crypto.randomBytes(16).toString('hex');
     const requestBodyWith3DS = JSON.stringify(paymentRequestWith3DS);
     const requestPath3DS = '/payment/3dsecure/initialize';
     const authHeader3DS = generateAuthorizationHeader(apiKey, secretKey, randomString, requestPath3DS, requestBodyWith3DS);
