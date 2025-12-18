@@ -20,6 +20,7 @@ export default function CheckoutPage() {
   const [isGuest, setIsGuest] = useState(true);
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'crypto' | 'googlepay'>('card');
   const [loading, setLoading] = useState(false);
+  const [threeDSHtmlContent, setThreeDSHtmlContent] = useState<string | null>(null);
 
   // Coupon
   const [couponCode, setCouponCode] = useState('');
@@ -298,6 +299,31 @@ export default function CheckoutPage() {
             return;
           }
 
+          // Check if 3D Secure is required
+          if (paymentResult.threeDSHtmlContent) {
+            // Show 3D Secure page
+            setThreeDSHtmlContent(paymentResult.threeDSHtmlContent);
+            // Store order data in sessionStorage for after 3DS completion
+            sessionStorage.setItem('pendingOrder', JSON.stringify({
+              userId: user?.id,
+              items: cart,
+              subtotal,
+              discount,
+              shipping,
+              total,
+              paymentMethod,
+              shippingAddress,
+              billingAddress: sameAsBilling ? shippingAddress : billingAddress,
+              guestEmail: isGuest ? email : undefined,
+              guestPhone: isGuest ? phone : undefined,
+              appliedCoupon,
+              paymentId: paymentResult.paymentId,
+              conversationId: paymentResult.conversationId,
+            }));
+            setLoading(false);
+            return;
+          }
+
           // Payment successful - create order
           const orderNumber = `MEA${Date.now()}`;
           const orderId = await createOrder({
@@ -378,6 +404,28 @@ export default function CheckoutPage() {
       setLoading(false);
     }
   };
+
+  // If 3D Secure HTML is available, show it
+  if (threeDSHtmlContent) {
+    return (
+      <div className="min-h-screen py-20 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="glass rounded-2xl p-6 mb-4">
+            <h2 className="text-2xl font-bold text-black dark:text-white mb-4">
+              Güvenli Ödeme - 3D Secure
+            </h2>
+            <p className="text-gray-700 dark:text-gray-400 mb-6">
+              Ödemenizi tamamlamak için lütfen aşağıdaki güvenlik adımlarını takip edin.
+            </p>
+          </div>
+          <div
+            className="w-full"
+            dangerouslySetInnerHTML={{ __html: threeDSHtmlContent }}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen py-20 px-4">

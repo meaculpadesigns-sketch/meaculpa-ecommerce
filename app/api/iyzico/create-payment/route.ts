@@ -189,40 +189,54 @@ export async function POST(request: NextRequest) {
     const requestPath = '/payment/auth';
     const authHeader = generateAuthorizationHeader(apiKey, secretKey, randomString, requestPath, requestBody);
 
-    console.log('=== İyzico Payment Request ===');
-    console.log('Request Body:', JSON.stringify(paymentRequest, null, 2));
-    console.log('Base URL:', baseUrl);
+    // Add callback URLs for 3D Secure
+    const callbackUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://meaculpa.vercel.app'}/api/iyzico/3d-callback`;
+    const paymentRequestWith3DS = {
+      ...paymentRequest,
+      callbackUrl,
+    };
 
-    // Call iyzico API
-    const response = await fetch(`${baseUrl}/payment/auth`, {
+    // Generate authorization for 3D Secure
+    const requestBodyWith3DS = JSON.stringify(paymentRequestWith3DS);
+    const requestPath3DS = '/payment/3dsecure/initialize';
+    const authHeader3DS = generateAuthorizationHeader(apiKey, secretKey, randomString, requestPath3DS, requestBodyWith3DS);
+
+    console.log('=== İyzico 3D Secure Payment Request ===');
+    console.log('Request Body:', JSON.stringify(paymentRequestWith3DS, null, 2));
+    console.log('Base URL:', baseUrl);
+    console.log('Callback URL:', callbackUrl);
+
+    // Call iyzico 3D Secure Initialize API
+    const response = await fetch(`${baseUrl}/payment/3dsecure/initialize`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': authHeader,
+        'Authorization': authHeader3DS,
         'x-iyzi-rnd': randomString,
       },
-      body: requestBody,
+      body: requestBodyWith3DS,
     });
 
     const result = await response.json();
 
-    console.log('=== İyzico Response ===');
+    console.log('=== İyzico 3D Secure Response ===');
     console.log('Status Code:', response.status);
     console.log('Response:', JSON.stringify(result, null, 2));
 
     if (result.status === 'success') {
+      // Return 3D Secure HTML content
       return NextResponse.json({
         status: 'success',
+        threeDSHtmlContent: result.threeDSHtmlContent,
         paymentId: result.paymentId,
         conversationId: result.conversationId,
-        paymentStatus: result.paymentStatus,
       });
     } else {
-      console.error('iyzico payment failed:', result);
+      console.error('iyzico 3D Secure initialization failed:', result);
       return NextResponse.json(
         {
           status: 'error',
-          errorMessage: result.errorMessage || 'Ödeme reddedildi',
+          errorMessage: result.errorMessage || 'Ödeme başlatılamadı',
           errorCode: result.errorCode,
         },
         { status: 400 }
