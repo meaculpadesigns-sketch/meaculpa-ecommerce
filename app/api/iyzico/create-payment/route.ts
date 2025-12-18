@@ -174,6 +174,10 @@ export async function POST(request: NextRequest) {
     const requestPath = '/payment/auth';
     const authHeader = generateAuthorizationHeader(apiKey, secretKey, randomString, requestPath, requestBody);
 
+    console.log('=== İyzico Payment Request ===');
+    console.log('Request Body:', JSON.stringify(paymentRequest, null, 2));
+    console.log('Base URL:', baseUrl);
+
     // Call iyzico API
     const response = await fetch(`${baseUrl}/payment/auth`, {
       method: 'POST',
@@ -186,6 +190,10 @@ export async function POST(request: NextRequest) {
     });
 
     const result = await response.json();
+
+    console.log('=== İyzico Response ===');
+    console.log('Status Code:', response.status);
+    console.log('Response:', JSON.stringify(result, null, 2));
 
     if (result.status === 'success') {
       return NextResponse.json({
