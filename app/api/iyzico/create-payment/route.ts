@@ -152,7 +152,7 @@ export async function POST(request: NextRequest) {
         surname: body.buyer.surname.substring(0, 50),
         gsmNumber: '+90' + body.buyer.phone.replace(/\D/g, '').replace(/^0/, ''), // 0'ı kaldır ve +90 ekle
         email: body.buyer.email,
-        identityNumber: '11111111111', // Test için sabit TC
+        identityNumber: process.env.IYZICO_IDENTITY_NUMBER || '11111111111', // Production TC kimlik numarası
         lastLoginDate: new Date().toISOString().split('T')[0] + ' 00:00:00',
         registrationDate: new Date().toISOString().split('T')[0] + ' 00:00:00',
         registrationAddress: body.buyer.address.substring(0, 150),
