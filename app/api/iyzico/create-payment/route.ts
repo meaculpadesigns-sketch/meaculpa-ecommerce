@@ -22,6 +22,9 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
+    console.log('🔴 NEW CODE ACTIVE - DEPLOYMENT TIMESTAMP:', new Date().toISOString());
+    console.log('🔴 Request body received:', JSON.stringify(body, null, 2));
+
     // Validate card fields
     if (!body.cardHolderName || !body.cardNumber || !body.expireMonth || !body.expireYear || !body.cvc) {
       return NextResponse.json(
