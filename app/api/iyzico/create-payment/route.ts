@@ -140,7 +140,9 @@ export async function POST(request: NextRequest) {
         cardHolderName: body.cardHolderName,
         cardNumber: body.cardNumber.replace(/\s/g, ''),
         expireMonth: body.expireMonth,
-        expireYear: body.expireYear.toString().slice(-2), // Son 2 rakam (2024 -> 24)
+        expireYear: body.expireYear.toString().length === 4
+          ? body.expireYear.toString().slice(-2)  // 2030 -> 30
+          : body.expireYear.toString(),            // 30 -> 30
         cvc: body.cvc,
         registerCard: 0,
       },
@@ -200,6 +202,8 @@ export async function POST(request: NextRequest) {
     console.log('Request Body:', JSON.stringify(paymentRequestWith3DS, null, 2));
     console.log('Base URL:', baseUrl);
     console.log('Callback URL:', callbackUrl);
+    console.log('API Key (first 10 chars):', apiKey?.substring(0, 10));
+    console.log('Environment:', process.env.NODE_ENV);
 
     // Call iyzico 3D Secure Initialize API
     const response = await fetch(`${baseUrl}/payment/3dsecure/initialize`, {
