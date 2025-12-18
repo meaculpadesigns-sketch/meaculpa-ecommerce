@@ -111,6 +111,12 @@ export async function POST(request: NextRequest) {
     const price = body.total.toFixed(2);
     const paidPrice = body.total.toFixed(2);
 
+    // Calculate basket total to match iyzico requirements
+    const basketTotal = body.basketItems.reduce((sum: number, item: any) => sum + item.price, 0);
+    console.log('Total from body:', body.total);
+    console.log('Basket items total:', basketTotal);
+    console.log('Difference:', Math.abs(body.total - basketTotal));
+
     const paymentRequest = {
       locale: 'tr',
       conversationId,
@@ -125,7 +131,7 @@ export async function POST(request: NextRequest) {
         cardHolderName: body.cardHolderName,
         cardNumber: body.cardNumber.replace(/\s/g, ''),
         expireMonth: body.expireMonth,
-        expireYear: body.expireYear,
+        expireYear: body.expireYear.toString().slice(-2), // Son 2 rakam (2024 -> 24)
         cvc: body.cvc,
         registerCard: 0,
       },
@@ -133,7 +139,7 @@ export async function POST(request: NextRequest) {
         id: body.buyer.id || 'guest',
         name: body.buyer.name.substring(0, 50),
         surname: body.buyer.surname.substring(0, 50),
-        gsmNumber: '+90' + body.buyer.phone.replace(/\D/g, '').slice(-10), // +90 ekle ve son 10 rakam
+        gsmNumber: '+90' + body.buyer.phone.replace(/\D/g, '').replace(/^0/, ''), // 0'ı kaldır ve +90 ekle
         email: body.buyer.email,
         identityNumber: '11111111111', // Test için sabit TC
         lastLoginDate: new Date().toISOString().split('T')[0] + ' 00:00:00',
