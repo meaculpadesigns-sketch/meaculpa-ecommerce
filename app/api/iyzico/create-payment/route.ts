@@ -15,7 +15,7 @@ function generateAuthorizationHeader(
     .update(authString, 'utf8')
     .digest('base64');
 
-  return `IYZWSv2 ${apiKey}:${signature}`;
+  return `IYZWS ${apiKey}:${signature}`;
 }
 
 export async function POST(request: NextRequest) {
@@ -132,7 +132,7 @@ export async function POST(request: NextRequest) {
       price,
       paidPrice,
       currency: 'TRY',
-      installment: '1',
+      installment: 1,
       basketId: `basket_${Date.now()}`,
       paymentChannel: 'WEB',
       paymentGroup: 'PRODUCT',
@@ -144,7 +144,7 @@ export async function POST(request: NextRequest) {
           ? body.expireYear.toString().slice(-2)  // 2030 -> 30
           : body.expireYear.toString(),            // 30 -> 30
         cvc: body.cvc,
-        registerCard: '0',
+        registerCard: 0,
       },
       buyer: {
         id: body.buyer.id || 'guest',

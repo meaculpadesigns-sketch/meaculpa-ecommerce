@@ -15,7 +15,7 @@ function generateAuthorizationHeader(
     .update(authString, 'utf8')
     .digest('base64');
 
-  return `IYZWSv2 ${apiKey}:${signature}`;
+  return `IYZWS ${apiKey}:${signature}`;
 }
 
 // Handle both POST (form data from iyzico) and GET requests
