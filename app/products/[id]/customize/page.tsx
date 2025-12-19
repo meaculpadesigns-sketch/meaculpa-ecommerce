@@ -206,7 +206,8 @@ export default function CustomizePage() {
       }
     } else if (product.category === 'set') {
       let chart;
-      if (isCropShirt && gender === 'female') {
+      // Only use crop chart when ordering ONLY the shirt (not full set)
+      if (isCropShirt && gender === 'female' && setItemSelection === 'shirt-only') {
         chart = KROP_GOMLEK_SIZE_CHART;
       } else if (gender === 'male') {
         chart = ERKEK_SET_SIZE_CHART;
@@ -696,8 +697,8 @@ export default function CustomizePage() {
                   </div>
                 </div>
 
-                {/* Crop Shirt Option - Only for single shirt purchases */}
-                {product.category === 'set' && gender === 'female' && setItemSelection === 'shirt-only' && (
+                {/* Crop Shirt Option - For female customers who want crop shirt style */}
+                {product.category === 'set' && gender === 'female' && (
                   <div>
                     <label className="flex items-center gap-3 text-black dark:text-white cursor-pointer">
                       <input
