@@ -122,6 +122,11 @@ export async function POST(request: NextRequest) {
     // Prepare payment request
     const conversationId = `conv_${Date.now()}`;
 
+    // Get current host from request for callback URL
+    const host = request.headers.get('host') || 'www.meaculpadesign.com';
+    const protocol = host.includes('localhost') ? 'http' : 'https';
+    const callbackUrl = `${protocol}://${host}/api/iyzico/3d-callback`;
+
     // Calculate basket total (sum of all items including shipping)
     const basketTotal = body.basketItems.reduce((sum: number, item: any) => sum + item.price, 0);
 
@@ -146,7 +151,7 @@ export async function POST(request: NextRequest) {
       basketId: `basket_${Date.now()}`,
       paymentChannel: 'WEB',
       paymentGroup: 'PRODUCT',
-      callbackUrl: `${process.env.NEXT_PUBLIC_APP_URL || 'https://meaculpa.vercel.app'}/api/iyzico/3d-callback`,
+      callbackUrl,
       paymentCard: {
         cardHolderName: body.cardHolderName,
         cardNumber: body.cardNumber.replace(/\s/g, ''),
@@ -202,6 +207,7 @@ export async function POST(request: NextRequest) {
     const authHeader = generateAuthorizationHeader(apiKey, secretKey, randomString, '/payment/3dsecure/initialize', requestBodyString);
 
     console.log('=== İyzico REST API 3D Secure Payment Request ===');
+    console.log('Callback URL:', callbackUrl);
     console.log('Request Body:', JSON.stringify(paymentRequest, null, 2));
     console.log('Base URL:', baseUrl);
     console.log('API Key (first 10 chars):', apiKey?.substring(0, 10));
