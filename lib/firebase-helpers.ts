@@ -136,6 +136,26 @@ export async function createOrder(order: Omit<Order, 'id'>) {
     createdAt: Timestamp.now(),
     updatedAt: Timestamp.now(),
   });
+
+  // Send email notification to admin (non-blocking)
+  try {
+    await fetch('/api/send-order-notification', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        order: {
+          ...cleanOrder,
+          id: docRef.id,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      }),
+    });
+  } catch (error) {
+    console.error('Email notification failed (order still created):', error);
+    // Email hatası olsa da sipariş oluşturulmuş olsun - hata fırlatma
+  }
+
   return docRef.id;
 }
 

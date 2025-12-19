@@ -35,6 +35,7 @@
     "react-confetti": "^6.4.0",
     "react-dom": "^19.2.1",
     "react-i18next": "^16.2.0",
+    "resend": "^6.6.0",
     "sharp": "^0.34.5",
     "slugify": "^1.6.6",
     "stripe": "^19.1.0",
