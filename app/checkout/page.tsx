@@ -301,8 +301,9 @@ export default function CheckoutPage() {
 
           // Check if 3D Secure is required
           if (paymentResult.threeDSHtmlContent) {
-            // Show 3D Secure page
-            setThreeDSHtmlContent(paymentResult.threeDSHtmlContent);
+            // Show 3D Secure page - decode base64 HTML content
+            const decodedHtml = atob(paymentResult.threeDSHtmlContent);
+            setThreeDSHtmlContent(decodedHtml);
             // Store order data in sessionStorage for after 3DS completion
             sessionStorage.setItem('pendingOrder', JSON.stringify({
               userId: user?.id,
