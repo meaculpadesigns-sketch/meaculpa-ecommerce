@@ -101,7 +101,13 @@ async function handleCallback(request: NextRequest) {
 
     if (result.status === 'success') {
       // Payment successful - redirect to success page
-      const successUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://meaculpa.vercel.app'}/payment-success?paymentId=${result.paymentId}&conversationId=${result.conversationId}`;
+      const host = request.headers.get('host') || 'www.meaculpadesign.com';
+      const protocol = host.includes('localhost') ? 'http' : 'https';
+      const successUrl = `${protocol}://${host}/payment-success?paymentId=${result.paymentId}&conversationId=${result.conversationId}`;
+
+      console.log('=== Redirecting to Success Page ===');
+      console.log('Host:', host);
+      console.log('Success URL:', successUrl);
 
       // Return HTML to redirect
       return new NextResponse(
@@ -129,7 +135,9 @@ async function handleCallback(request: NextRequest) {
       console.error('3D Secure auth failed:', result);
 
       // Payment failed - redirect to failure page
-      const failureUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://meaculpa.vercel.app'}/payment-failure?error=${encodeURIComponent(result.errorMessage || 'Ödeme başarısız')}`;
+      const host = request.headers.get('host') || 'www.meaculpadesign.com';
+      const protocol = host.includes('localhost') ? 'http' : 'https';
+      const failureUrl = `${protocol}://${host}/payment-failure?error=${encodeURIComponent(result.errorMessage || 'Ödeme başarısız')}`;
 
       // Return HTML to redirect
       return new NextResponse(
@@ -158,7 +166,9 @@ async function handleCallback(request: NextRequest) {
     console.error('3D Secure Callback error:', error);
     console.error('Error stack:', error?.stack);
 
-    const errorUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://meaculpa.vercel.app'}/payment-failure?error=${encodeURIComponent('Sunucu hatası')}`;
+    const host = request.headers.get('host') || 'www.meaculpadesign.com';
+    const protocol = host.includes('localhost') ? 'http' : 'https';
+    const errorUrl = `${protocol}://${host}/payment-failure?error=${encodeURIComponent('Sunucu hatası')}`;
 
     return new NextResponse(
       `<!DOCTYPE html>
