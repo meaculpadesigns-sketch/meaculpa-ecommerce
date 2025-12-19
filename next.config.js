@@ -17,7 +17,6 @@ const nextConfig = {
       },
     ],
   },
-  serverComponentsExternalPackages: ['iyzipay'],
 }
 
 module.exports = nextConfig

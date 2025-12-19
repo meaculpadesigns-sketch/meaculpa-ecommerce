@@ -1,11 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server';
-import Iyzipay from 'iyzipay';
+import crypto from 'crypto';
+
+// iyzico REST API helper - Resmi dokümantasyon formatı
+function generateAuthorizationHeader(
+  apiKey: string,
+  secretKey: string,
+  randomString: string,
+  requestBody: string
+): string {
+  // Authorization string format: randomString + requestBody
+  const dataToSign = `${randomString}${requestBody}`;
+
+  const signature = crypto
+    .createHmac('sha256', secretKey)
+    .update(dataToSign)
+    .digest('base64');
+
+  return `IYZWS ${apiKey}:${signature}`;
+}
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    console.log('🔴 İYZİCO SDK VERSION - DEPLOYMENT TIMESTAMP:', new Date().toISOString());
+    console.log('🔴 REST API VERSION - DEPLOYMENT TIMESTAMP:', new Date().toISOString());
     console.log('🔴 Request body received:', JSON.stringify(body, null, 2));
 
     // Validate card fields
@@ -92,13 +110,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Initialize İyzico SDK
-    const iyzipay = new Iyzipay({
-      apiKey: apiKey,
-      secretKey: secretKey,
-      uri: baseUrl
-    });
-
     // Prepare payment request
     const conversationId = `conv_${Date.now()}`;
 
@@ -117,15 +128,15 @@ export async function POST(request: NextRequest) {
     console.log('Total from body:', body.total);
 
     const paymentRequest = {
-      locale: Iyzipay.LOCALE.TR,
-      conversationId: conversationId,
-      price: price,
-      paidPrice: paidPrice,
-      currency: Iyzipay.CURRENCY.TRY,
-      installment: '1',
+      locale: 'tr',
+      conversationId,
+      price,
+      paidPrice,
+      currency: 'TRY',
+      installment: 1,
       basketId: `basket_${Date.now()}`,
-      paymentChannel: Iyzipay.PAYMENT_CHANNEL.WEB,
-      paymentGroup: Iyzipay.PAYMENT_GROUP.PRODUCT,
+      paymentChannel: 'WEB',
+      paymentGroup: 'PRODUCT',
       callbackUrl: `${process.env.NEXT_PUBLIC_APP_URL || 'https://meaculpa.vercel.app'}/api/iyzico/3d-callback`,
       paymentCard: {
         cardHolderName: body.cardHolderName,
@@ -135,7 +146,7 @@ export async function POST(request: NextRequest) {
           ? body.expireYear.toString().slice(-2)  // 2030 -> 30
           : body.expireYear.toString(),            // 30 -> 30
         cvc: body.cvc,
-        registerCard: '0',
+        registerCard: 0,
       },
       buyer: {
         id: body.buyer.id || 'guest',
@@ -171,53 +182,63 @@ export async function POST(request: NextRequest) {
         name: item.name.substring(0, 50),
         category1: item.category1 || 'Fashion',
         category2: item.category2 || 'Clothing',
-        itemType: Iyzipay.BASKET_ITEM_TYPE.PHYSICAL,
+        itemType: 'PHYSICAL',
         price: item.price.toFixed(2),
       })),
     };
 
-    console.log('=== İyzico SDK 3D Secure Payment Request ===');
-    console.log('Request:', JSON.stringify(paymentRequest, null, 2));
+    // Generate authorization
+    const randomString = crypto.randomBytes(16).toString('hex');
+    const requestBodyString = JSON.stringify(paymentRequest);
+    const authHeader = generateAuthorizationHeader(apiKey, secretKey, randomString, requestBodyString);
 
-    // Call iyzico 3D Secure Initialize API using SDK
-    return new Promise((resolve) => {
-      iyzipay.threedsInitialize.create(paymentRequest, (err: any, result: any) => {
-        if (err) {
-          console.error('İyzico SDK Error:', err);
-          resolve(NextResponse.json(
-            {
-              status: 'error',
-              errorMessage: 'Ödeme başlatılamadı: ' + (err.errorMessage || err.message || 'Bilinmeyen hata'),
-              errorCode: err.errorCode,
-            },
-            { status: 400 }
-          ));
-          return;
-        }
+    console.log('=== İyzico REST API 3D Secure Payment Request ===');
+    console.log('Request Body:', JSON.stringify(paymentRequest, null, 2));
+    console.log('Base URL:', baseUrl);
+    console.log('API Key (first 10 chars):', apiKey?.substring(0, 10));
+    console.log('Secret Key (first 10 chars):', secretKey?.substring(0, 10));
+    console.log('Random String:', randomString);
+    console.log('Request Body Length:', requestBodyString.length);
+    console.log('Auth Header (first 60 chars):', authHeader.substring(0, 60));
 
-        console.log('=== İyzico SDK 3D Secure Response ===');
-        console.log('Response:', JSON.stringify(result, null, 2));
-
-        if (result.status === 'success') {
-          resolve(NextResponse.json({
-            status: 'success',
-            threeDSHtmlContent: result.threeDSHtmlContent,
-            paymentId: result.paymentId,
-            conversationId: result.conversationId,
-          }));
-        } else {
-          console.error('iyzico 3D Secure initialization failed:', result);
-          resolve(NextResponse.json(
-            {
-              status: 'error',
-              errorMessage: result.errorMessage || 'Ödeme başlatılamadı',
-              errorCode: result.errorCode,
-            },
-            { status: 400 }
-          ));
-        }
-      });
+    // Call iyzico 3D Secure Initialize API
+    const response = await fetch(`${baseUrl}/payment/3dsecure/initialize`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': authHeader,
+        'x-iyzi-rnd': randomString,
+        'x-iyzi-client-version': 'iyzipay-node-2.0.64',
+      },
+      body: requestBodyString,
     });
+
+    const result = await response.json();
+
+    console.log('=== İyzico REST API 3D Secure Response ===');
+    console.log('Status Code:', response.status);
+    console.log('Response:', JSON.stringify(result, null, 2));
+
+    if (result.status === 'success') {
+      // Return 3D Secure HTML content
+      return NextResponse.json({
+        status: 'success',
+        threeDSHtmlContent: result.threeDSHtmlContent,
+        paymentId: result.paymentId,
+        conversationId: result.conversationId,
+      });
+    } else {
+      console.error('iyzico 3D Secure initialization failed:', result);
+      return NextResponse.json(
+        {
+          status: 'error',
+          errorMessage: result.errorMessage || 'Ödeme başlatılamadı',
+          errorCode: result.errorCode,
+        },
+        { status: 400 }
+      );
+    }
   } catch (error: any) {
     console.error('Payment API error:', error);
     console.error('Error stack:', error?.stack);
