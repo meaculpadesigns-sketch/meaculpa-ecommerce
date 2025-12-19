@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 
-// iyzico REST API helper
+// iyzico REST API helper - IYZWSv2 format (2025 güncel dokümantasyon)
 function generateAuthorizationHeader(
   apiKey: string,
   secretKey: string,
@@ -9,13 +9,23 @@ function generateAuthorizationHeader(
   requestPath: string,
   requestBody: string
 ): string {
-  const authString = randomString + requestPath + requestBody;
-  const signature = crypto
-    .createHmac('sha256', secretKey)
-    .update(authString, 'utf8')
-    .digest('base64');
+  // 1. Create payload: randomKey + uriPath + requestBody
+  const payload = randomString + requestPath + requestBody;
 
-  return `IYZWS ${apiKey}:${signature}`;
+  // 2. Generate HMAC-SHA256 signature in HEX format
+  const encryptedData = crypto
+    .createHmac('sha256', secretKey)
+    .update(payload, 'utf8')
+    .digest('hex');  // HEX format, not base64!
+
+  // 3. Build authorization string: apiKey:{key}&randomKey:{random}&signature:{hex}
+  const authString = `apiKey:${apiKey}&randomKey:${randomString}&signature:${encryptedData}`;
+
+  // 4. Base64 encode the authorization string
+  const base64Auth = Buffer.from(authString).toString('base64');
+
+  // 5. Return IYZWSv2 header format
+  return `IYZWSv2 ${base64Auth}`;
 }
 
 // Handle both POST (form data from iyzico) and GET requests
