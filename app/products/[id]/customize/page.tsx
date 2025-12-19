@@ -696,8 +696,8 @@ export default function CustomizePage() {
                   </div>
                 </div>
 
-                {/* Crop Shirt Option - Only for Set category and Female gender */}
-                {product.category === 'set' && gender === 'female' && (
+                {/* Crop Shirt Option - Only for single shirt purchases */}
+                {product.category === 'set' && gender === 'female' && setItemSelection === 'shirt-only' && (
                   <div>
                     <label className="flex items-center gap-3 text-black dark:text-white cursor-pointer">
                       <input
@@ -1245,7 +1245,7 @@ export default function CustomizePage() {
                 </span>
                 <div className="text-right">
                   <div className="text-3xl font-bold text-black">
-                    ₺{currentPrice.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    {formatPrice(currentPrice, i18n.language)}
                   </div>
                   {product.category === 'set' && setItemSelection !== 'full' && (
                     <div className="text-xs text-black dark:text-white mt-1">

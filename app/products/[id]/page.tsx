@@ -280,9 +280,11 @@ export default function ProductDetailPage() {
               {/* Care Instructions */}
               <div>
                 <h3 className="text-black dark:text-white font-semibold mb-2">{t('products.careInstructions')}</h3>
-                <p className="text-gray-700 dark:text-gray-400">
-                  {product.careInstructions?.type === 'custom' && product.careInstructions?.customText
-                    ? product.careInstructions.customText
+                <p className="text-gray-700 dark:text-gray-400 whitespace-pre-line">
+                  {product.careInstructions?.type === 'custom'
+                    ? i18n.language === 'tr'
+                      ? product.careInstructions.customText
+                      : product.careInstructions.customTextEn || product.careInstructions.customText
                     : i18n.language === 'tr'
                     ? '30 derecede yıkayınız. Ütü sıcaklığı orta.'
                     : 'Wash at 30 degrees. Iron at medium temperature.'}
