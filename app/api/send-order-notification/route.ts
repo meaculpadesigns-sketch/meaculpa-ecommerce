@@ -8,9 +8,14 @@ export async function POST(request: NextRequest) {
   try {
     const { order }: { order: Order } = await request.json();
 
+    // Parse admin emails (supports comma-separated list)
+    const adminEmails = (process.env.ADMIN_EMAIL || 'meaculpadesigns@gmail.com,info@meaculpadesign.com')
+      .split(',')
+      .map(email => email.trim());
+
     console.log('=== Sending Order Notification Email ===');
     console.log('Order Number:', order.orderNumber);
-    console.log('Admin Email:', process.env.ADMIN_EMAIL);
+    console.log('Admin Emails:', adminEmails);
 
     // Email içeriği HTML formatında
     const emailHtml = `
@@ -99,7 +104,7 @@ export async function POST(request: NextRequest) {
 
     const { data, error } = await resend.emails.send({
       from: 'Mea Culpa <onboarding@resend.dev>',
-      to: process.env.ADMIN_EMAIL || 'admin@meaculpadesign.com',
+      to: adminEmails,
       subject: `🎉 Yeni Sipariş: ${order.orderNumber}`,
       html: emailHtml,
     });
