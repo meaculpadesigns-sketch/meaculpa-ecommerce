@@ -419,9 +419,11 @@ export default function CheckoutPage() {
               Ödemenizi tamamlamak için lütfen aşağıdaki güvenlik adımlarını takip edin.
             </p>
           </div>
-          <div
-            className="w-full"
-            dangerouslySetInnerHTML={{ __html: threeDSHtmlContent }}
+          <iframe
+            srcDoc={threeDSHtmlContent}
+            className="w-full h-screen border-0"
+            title="3D Secure Payment"
+            sandbox="allow-scripts allow-forms allow-same-origin allow-top-navigation"
           />
         </div>
       </div>
