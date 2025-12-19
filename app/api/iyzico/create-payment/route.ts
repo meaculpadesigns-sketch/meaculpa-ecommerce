@@ -6,10 +6,11 @@ function generateAuthorizationHeader(
   apiKey: string,
   secretKey: string,
   randomString: string,
+  requestPath: string,
   requestBody: string
 ): string {
-  // Authorization string format: randomString + requestBody
-  const dataToSign = `${randomString}${requestBody}`;
+  // Authorization string format: randomString + requestPath + requestBody
+  const dataToSign = `${randomString}${requestPath}${requestBody}`;
 
   const signature = crypto
     .createHmac('sha256', secretKey)
@@ -190,7 +191,7 @@ export async function POST(request: NextRequest) {
     // Generate authorization
     const randomString = crypto.randomBytes(16).toString('hex');
     const requestBodyString = JSON.stringify(paymentRequest);
-    const authHeader = generateAuthorizationHeader(apiKey, secretKey, randomString, requestBodyString);
+    const authHeader = generateAuthorizationHeader(apiKey, secretKey, randomString, '/payment/3dsecure/initialize', requestBodyString);
 
     console.log('=== İyzico REST API 3D Secure Payment Request ===');
     console.log('Request Body:', JSON.stringify(paymentRequest, null, 2));
