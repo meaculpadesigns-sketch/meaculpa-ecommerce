@@ -2,9 +2,19 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { Order } from '@/types';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(request: NextRequest) {
+  // Initialize Resend at runtime, not at build time
+  const apiKey = process.env.RESEND_API_KEY;
+
+  if (!apiKey) {
+    console.error('RESEND_API_KEY is not configured');
+    return NextResponse.json({
+      success: false,
+      error: 'Email service not configured'
+    }, { status: 500 });
+  }
+
+  const resend = new Resend(apiKey);
   try {
     const { order }: { order: Order } = await request.json();
 
