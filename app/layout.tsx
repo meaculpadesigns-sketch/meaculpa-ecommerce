@@ -6,6 +6,7 @@ import { CartProvider } from '@/lib/cart-context';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import CookieConsent from '@/components/CookieConsent';
+import WhatsAppFloat from '@/components/WhatsAppFloat';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://meaculpadesigns.com'),
@@ -77,6 +78,7 @@ export default function RootLayout({
                 </main>
                 <Footer />
                 <CookieConsent />
+                <WhatsAppFloat />
               </div>
             </ThemeProvider>
           </CartProvider>

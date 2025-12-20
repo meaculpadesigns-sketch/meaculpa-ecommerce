@@ -50,7 +50,10 @@
       "Bash(npm uninstall:*)",
       "Bash(ls:*)",
       "Bash(npx vercel logs --limit 50)",
-      "Bash(npx vercel logs:*)"
+      "Bash(npx vercel logs:*)",
+      "Bash(xargs cat:*)",
+      "Bash(vercel logs:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfix: UI iyileştirmeleri ve WhatsApp button eklendi\n\n- Ürün görsellerindeki siyah çerçeveler kaldırıldı\n- WhatsApp floating button eklendi \\(sağ alt köşe\\)\n- Admin panel görselleri düzeltildi\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
     ],
     "deny": [],
     "ask": []

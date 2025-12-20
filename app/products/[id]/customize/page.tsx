@@ -562,7 +562,7 @@ export default function CustomizePage() {
             {product.whiteBackgroundImages && product.whiteBackgroundImages.length > 0 && (
               <>
                 {/* Main Image Display */}
-                <div className="relative aspect-[3/4] bg-zinc-800 rounded-xl overflow-hidden mb-6">
+                <div className="relative aspect-[3/4] rounded-xl overflow-hidden mb-6">
                   <img
                     src={product.whiteBackgroundImages[currentImageIndex]}
                     alt={`${name} - ${currentImageIndex + 1}`}
@@ -577,7 +577,7 @@ export default function CustomizePage() {
                       <button
                         key={idx}
                         onClick={() => setCurrentImageIndex(idx)}
-                        className={`relative aspect-square bg-zinc-800 rounded-lg overflow-hidden transition-all ${
+                        className={`relative aspect-square rounded-lg overflow-hidden transition-all ${
                           currentImageIndex === idx
                             ? 'ring-2 ring-mea-gold'
                             : 'opacity-60 hover:opacity-100'

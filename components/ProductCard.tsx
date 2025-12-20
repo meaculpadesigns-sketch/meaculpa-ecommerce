@@ -45,7 +45,7 @@ export default function ProductCard({ product, index, viewMode = 'grid', showPri
         className="glass rounded-2xl p-6 flex flex-col md:flex-row gap-6 hover:bg-white hover:bg-opacity-5 transition-all"
       >
         <Link href={`/products/${product.id}`} className="flex-shrink-0">
-          <div className="relative w-full md:w-64 aspect-square bg-zinc-800 rounded-xl overflow-hidden group/image">
+          <div className="relative w-full md:w-64 aspect-square rounded-xl overflow-hidden group/image">
             {product.images && product.images.length > 0 ? (
               <img
                 src={product.images[0]}
@@ -148,7 +148,7 @@ export default function ProductCard({ product, index, viewMode = 'grid', showPri
       <div className="product-card">
         {/* Image */}
         <Link href={`/products/${product.id}`}>
-          <div className="relative aspect-[3/4] bg-zinc-800 overflow-hidden group/image">
+          <div className="relative aspect-[3/4] overflow-hidden group/image">
             {product.images && product.images.length > 0 ? (
               <img
                 src={product.images[0]}

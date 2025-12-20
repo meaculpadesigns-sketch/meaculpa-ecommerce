@@ -409,10 +409,10 @@ export default function AdminProducts() {
                         <img
                           src={product.images[0]}
                           alt={product.name}
-                          className="w-16 h-16 bg-zinc-800 rounded-lg object-contain"
+                          className="w-16 h-16 rounded-lg object-contain"
                         />
                       ) : (
-                        <div className="w-16 h-16 bg-zinc-800 rounded-lg" />
+                        <div className="w-16 h-16 rounded-lg border border-gray-300 dark:border-gray-700" />
                       )}
                     </td>
                     <td className="px-6 py-4">
@@ -538,7 +538,7 @@ export default function AdminProducts() {
                           <img
                             src={url}
                             alt={`Product ${index + 1}`}
-                            className="w-full h-full bg-zinc-800 rounded-lg object-contain"
+                            className="w-full h-full rounded-lg object-contain border border-gray-200 dark:border-gray-700"
                           />
                           <button
                             type="button"
@@ -580,7 +580,7 @@ export default function AdminProducts() {
                           <img
                             src={url}
                             alt={`Fabric ${index + 1}`}
-                            className="w-full h-full bg-zinc-800 rounded-lg object-contain"
+                            className="w-full h-full rounded-lg object-contain border border-gray-200 dark:border-gray-700"
                           />
                           <button
                             type="button"
@@ -622,7 +622,7 @@ export default function AdminProducts() {
                           <img
                             src={url}
                             alt={`White BG ${index + 1}`}
-                            className="w-full h-full bg-zinc-800 rounded-lg object-contain"
+                            className="w-full h-full rounded-lg object-contain border border-gray-200 dark:border-gray-700"
                           />
                           <button
                             type="button"

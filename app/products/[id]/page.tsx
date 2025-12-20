@@ -132,7 +132,7 @@ export default function ProductDetailPage() {
             className="space-y-4"
           >
             {/* Main Image */}
-            <div className="relative aspect-[3/4] bg-zinc-800 rounded-2xl overflow-hidden group/zoom">
+            <div className="relative aspect-[3/4] rounded-2xl overflow-hidden group/zoom">
               {product.images && product.images.length > 0 ? (
                 <img
                   src={product.images[currentImageIndex]}
@@ -178,7 +178,7 @@ export default function ProductDetailPage() {
                   <button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
-                    className={`aspect-square bg-zinc-800 rounded-lg overflow-hidden ${
+                    className={`aspect-square rounded-lg overflow-hidden ${
                       currentImageIndex === index ? 'ring-2 ring-mea-gold' : ''
                     }`}
                   >
@@ -200,7 +200,7 @@ export default function ProductDetailPage() {
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
                   {product.fabricImages.map((fabricImg, index) => (
-                    <div key={index} className="aspect-square bg-zinc-800 rounded-xl overflow-hidden group/fabric">
+                    <div key={index} className="aspect-square rounded-xl overflow-hidden group/fabric">
                       <img
                         src={fabricImg}
                         alt={`${i18n.language === 'tr' ? 'Kumaş Detayı' : 'Fabric Detail'} ${index + 1}`}
