@@ -99,8 +99,14 @@ export default function Home() {
           style={{ opacity, scale }}
           className="absolute inset-0 z-0"
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-transparent opacity-30" />
-          <div className="h-full w-full bg-[url('/images/hero-bg.jpg')] bg-cover bg-center opacity-20" />
+          <Image
+            src="/images/header-hero.jpg"
+            alt="Hero background"
+            fill
+            className="object-cover object-center"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/40" />
         </motion.div>
 
         {/* Content */}
@@ -113,19 +119,16 @@ export default function Home() {
             {/* Large Logo */}
             <div className="mb-8 flex justify-center">
               <Image
-                src="/images/logonew.png"
-                alt="MEA CULPA Logo"
-                width={800}
+                src="/images/logo-main.png"
+                alt="Mea Culpa"
+                width={600}
                 height={600}
-                className="w-auto h-64 md:h-72 lg:h-80 object-contain"
+                className="w-auto h-56 md:h-64 lg:h-72 object-contain drop-shadow-2xl"
                 priority
               />
             </div>
 
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6" style={{ color: '#94593b' }}>
-              MEA CULPA
-            </h1>
-            <p className="text-xl md:text-2xl lg:text-3xl text-black dark:text-white mb-12">
+            <p className="text-xl md:text-2xl lg:text-3xl text-white mb-12">
               {t('hero.slogan1')}
             </p>
 

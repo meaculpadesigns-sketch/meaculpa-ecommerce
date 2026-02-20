@@ -164,11 +164,16 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Centered Brand Name */}
+            {/* Centered Brand Logo */}
             <Link href="/" className="flex items-center justify-center">
-              <span className="text-2xl font-bold tracking-wider whitespace-nowrap text-mea-gold">
-                MEA CULPA
-              </span>
+              <Image
+                src="/images/logo-symbol.png"
+                alt="Mea Culpa"
+                width={48}
+                height={48}
+                className="h-10 w-auto object-contain"
+                priority
+              />
             </Link>
 
             {/* Third Column: Right Navigation + Icons */}

@@ -17,7 +17,9 @@ const config: Config = {
         'mea-earth': '#8B7355',
       },
       fontFamily: {
-        sans: ['SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        sans: ["'New Hero'", '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        'new-hero': ["'New Hero'", '-apple-system', 'sans-serif'],
+        'warbler': ["'Warbler Banner'", 'serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.6s ease-in-out',

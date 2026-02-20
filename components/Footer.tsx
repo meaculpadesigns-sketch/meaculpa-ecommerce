@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import { Instagram, Facebook, Twitter, MessageCircle } from 'lucide-react';
 
@@ -60,7 +61,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <h2 className="text-2xl font-bold text-black dark:text-white mb-4">MEA CULPA</h2>
+            <div className="flex items-center gap-3 mb-4">
+              <Image src="/images/logo-symbol.png" alt="Mea Culpa" width={36} height={36} className="h-9 w-auto" />
+              <h2 className="text-xl font-semibold text-black dark:text-white">Mea Culpa</h2>
+            </div>
             <p className="text-black dark:text-white text-sm mb-4 max-w-md">
               {t('footer.brandDescription')}
             </p>
