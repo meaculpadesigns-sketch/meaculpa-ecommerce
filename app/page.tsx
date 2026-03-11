@@ -39,117 +39,117 @@ export default function Home() {
 
   const scrollCarousel = (ref: React.RefObject<HTMLDivElement | null>, direction: 'left' | 'right') => {
     if (ref.current) {
-      const cardWidth = 280 + 16;
-      ref.current.scrollBy({ left: direction === 'left' ? -cardWidth : cardWidth, behavior: 'smooth' });
+      ref.current.scrollBy({ left: direction === 'left' ? -240 : 240, behavior: 'smooth' });
     }
   };
 
   return (
     <div>
-      {/* ── 1. HERO – Split layout ── */}
-      <section className="relative overflow-hidden" style={{ minHeight: '100vh', background: '#FFF4DE' }}>
-        <div className="flex flex-col lg:flex-row" style={{ minHeight: '100vh' }}>
+      {/* ── 1. HERO – Full bleed fotoğraf + overlay içerik ── */}
+      <section className="relative h-screen overflow-hidden">
+        {/* Tam ekran arka plan fotoğrafı */}
+        <Image
+          src="/images/header-hero.jpg"
+          alt="Mea Culpa koleksiyon"
+          fill
+          className="object-cover object-center"
+          priority
+        />
+        <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.38)' }} />
 
-          {/* Left: Logo + Slogan + CTA */}
-          <div className="lg:w-5/12 flex flex-col justify-center px-8 md:px-12 lg:px-16 py-24 lg:py-0">
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.9, ease: 'easeOut' }}
-            >
-              {/* Large brand logo */}
-              <div className="mb-8 md:mb-10">
-                <Image
-                  src="/images/logo-horizontal.png"
-                  alt="Mea Culpa"
-                  width={440}
-                  height={200}
-                  className="w-full max-w-xs md:max-w-sm object-contain"
-                  priority
-                />
-              </div>
+        {/* Overlay içerik */}
+        <div className="absolute inset-0 z-10 flex flex-col justify-between px-8 md:px-16 py-10 md:py-14">
 
-              <h1
-                className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4"
-                style={{ color: '#853710' }}
-              >
-                {t('hero.slogan1')}
-              </h1>
-
-              <p
-                className="text-base md:text-lg leading-relaxed mb-8"
-                style={{ color: '#9E906C', fontStyle: 'italic', fontFamily: "'Bellota Text'" }}
-              >
-                {i18n.language === 'tr'
-                  ? 'Doğunun ilhamıyla, modern yaşamın içinde.'
-                  : 'Inspired by the East, within modern life.'}
-              </p>
-
-              <Link
-                href="/products"
-                className="inline-flex items-center gap-2 btn-primary self-start"
-              >
-                {i18n.language === 'tr' ? 'Alışverişe Başla' : 'Start Shopping'}
-                <ArrowRight size={18} />
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* Right: Fashion photo + floating polaroids */}
-          <div className="lg:w-7/12 relative overflow-hidden" style={{ minHeight: '60vh' }}>
+          {/* Sol üst: büyük logo */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+          >
             <Image
-              src="/images/header-hero.jpg"
-              alt="Mea Culpa koleksiyon"
-              fill
-              className="object-cover object-center"
+              src="/images/logo-main.png"
+              alt="Mea Culpa"
+              width={220}
+              height={220}
+              className="w-36 md:w-48 lg:w-56 object-contain"
               priority
             />
-            <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.18)' }} />
+          </motion.div>
 
-            {/* Floating polaroids */}
-            <div className="absolute inset-0 pointer-events-none hidden md:block">
-              <div
-                className="absolute shadow-2xl"
-                style={{ top: '10%', left: '6%', transform: 'rotate(-4deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 148 }}
-              >
-                <div className="relative" style={{ height: 185 }}>
-                  <Image src="/images/homepage/2polaroid.png" alt="" fill className="object-cover" />
-                </div>
-              </div>
-              <div
-                className="absolute shadow-2xl"
-                style={{ top: '6%', right: '10%', transform: 'rotate(3deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 140 }}
-              >
-                <div className="relative" style={{ height: 175 }}>
-                  <Image src="/images/homepage/3polaroid.png" alt="" fill className="object-cover" />
-                </div>
-              </div>
-              <div
-                className="absolute shadow-2xl"
-                style={{ bottom: '18%', left: '14%', transform: 'rotate(2deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 145 }}
-              >
-                <div className="relative" style={{ height: 180 }}>
-                  <Image src="/images/homepage/polaroid3.png" alt="" fill className="object-cover" />
-                </div>
-              </div>
-              <div
-                className="absolute shadow-2xl"
-                style={{ bottom: '8%', right: '6%', transform: 'rotate(-2deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 138 }}
-              >
-                <div className="relative" style={{ height: 172 }}>
-                  <Image src="/images/homepage/polaroid4.png" alt="" fill className="object-cover" />
-                </div>
-              </div>
+          {/* Sol alt: slogan + metin + CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.2 }}
+            className="max-w-lg"
+          >
+            <h1
+              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4"
+              style={{ color: '#FFF4DE' }}
+            >
+              {t('hero.slogan1')}
+            </h1>
+            <p
+              className="text-base md:text-lg mb-8 leading-relaxed"
+              style={{ color: '#FFF4DE', opacity: 0.88, fontStyle: 'italic', fontFamily: "'Bellota Text'" }}
+            >
+              {i18n.language === 'tr'
+                ? 'Doğunun ilhamıyla, modern yaşamın içinde.'
+                : 'Inspired by the East, within modern life.'}
+            </p>
+            <Link
+              href="/products"
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-medium transition-all"
+              style={{ background: '#FFF4DE', color: '#853710' }}
+            >
+              {i18n.language === 'tr' ? 'Alışverişe Başla' : 'Start Shopping'}
+              <ArrowRight size={18} />
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* Sağ taraf: çapraz polaroidler */}
+        <div className="absolute right-8 md:right-16 inset-y-0 w-64 md:w-80 hidden md:block pointer-events-none" style={{ zIndex: 11 }}>
+          <div
+            className="absolute shadow-2xl"
+            style={{ top: '12%', left: '10%', transform: 'rotate(-12deg)', background: '#fff', padding: '7px 7px 26px 7px', width: 136 }}
+          >
+            <div className="relative" style={{ height: 168 }}>
+              <Image src="/images/homepage/2polaroid.png" alt="" fill className="object-cover" />
+            </div>
+          </div>
+          <div
+            className="absolute shadow-2xl"
+            style={{ top: '8%', right: '0%', transform: 'rotate(8deg)', background: '#fff', padding: '7px 7px 26px 7px', width: 128 }}
+          >
+            <div className="relative" style={{ height: 158 }}>
+              <Image src="/images/homepage/3polaroid.png" alt="" fill className="object-cover" />
+            </div>
+          </div>
+          <div
+            className="absolute shadow-2xl"
+            style={{ bottom: '24%', left: '5%', transform: 'rotate(6deg)', background: '#fff', padding: '7px 7px 26px 7px', width: 132 }}
+          >
+            <div className="relative" style={{ height: 162 }}>
+              <Image src="/images/homepage/polaroid3.png" alt="" fill className="object-cover" />
+            </div>
+          </div>
+          <div
+            className="absolute shadow-2xl"
+            style={{ bottom: '10%', right: '4%', transform: 'rotate(-8deg)', background: '#fff', padding: '7px 7px 26px 7px', width: 126 }}
+          >
+            <div className="relative" style={{ height: 154 }}>
+              <Image src="/images/homepage/polaroid4.png" alt="" fill className="object-cover" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── 2. KİMONO – Sage green, featured image left ── */}
+      {/* ── 2. KİMONO – Sage green, featured image sol ── */}
       <section className="overflow-hidden" style={{ background: '#889177' }}>
         <div className="flex flex-col lg:flex-row">
 
-          {/* Left: Featured kimono image */}
+          {/* Sol: Featured kimono fotoğrafı */}
           <div className="lg:w-2/5 relative" style={{ minHeight: 520 }}>
             <Image
               src="/images/homepage/4kimono.png"
@@ -159,7 +159,7 @@ export default function Home() {
             />
           </div>
 
-          {/* Right: Title + cards */}
+          {/* Sağ: Başlık + şerit + kartlar */}
           <div className="lg:w-3/5 flex flex-col justify-center px-8 md:px-12 py-14">
             <motion.div
               initial={{ opacity: 0, x: 40 }}
@@ -167,13 +167,15 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
             >
-              <p className="text-xs tracking-widest uppercase mb-2" style={{ color: '#FFF4DE', opacity: 0.65 }}>
+              <p className="text-xs tracking-widest uppercase mb-3" style={{ color: '#FFF4DE', opacity: 0.6 }}>
                 {i18n.language === 'tr' ? 'Koleksiyon' : 'Collection'}
               </p>
-              <h2 className="text-5xl md:text-6xl font-bold mb-1" style={{ color: '#FFF4DE' }}>
+              <h2 className="text-5xl md:text-6xl font-bold" style={{ color: '#FFF4DE' }}>
                 KİMONO
               </h2>
-              <p className="text-lg mb-6" style={{ color: '#FFF4DE', opacity: 0.8, fontStyle: 'italic', fontFamily: "'Bellota Text'" }}>
+              {/* Dekoratif şerit */}
+              <div className="w-14 h-px my-3" style={{ background: '#FFF4DE' }} />
+              <p className="text-lg mb-6" style={{ color: '#FFF4DE', opacity: 0.82, fontStyle: 'italic', fontFamily: "'Bellota Text'" }}>
                 {i18n.language === 'tr' ? 'hikayesi olan özel tasarımlar' : 'unique designs with a story'}
               </p>
               <Link
@@ -186,29 +188,29 @@ export default function Home() {
               </Link>
             </motion.div>
 
-            {/* Product carousel */}
+            {/* Ürün kartları */}
             {loading ? (
-              <p className="text-sm" style={{ color: '#FFF4DE', opacity: 0.7 }}>{t('common.loading')}</p>
+              <p className="text-sm" style={{ color: '#FFF4DE', opacity: 0.6 }}>{t('common.loading')}</p>
             ) : kimonoProducts.length > 0 ? (
-              <div className="relative">
+              <div>
                 <div
                   ref={kimonoScrollRef}
-                  className="flex gap-4 overflow-x-auto pb-2 scroll-smooth scrollbar-hide"
+                  className="flex gap-3 overflow-x-auto pb-2 scroll-smooth scrollbar-hide"
                 >
                   {kimonoProducts.map((product, index) => (
-                    <div key={product.id} className="w-64 flex-shrink-0">
+                    <div key={product.id} className="w-56 flex-shrink-0">
                       <ProductCard product={product} index={index} />
                     </div>
                   ))}
                 </div>
-                <div className="flex gap-2 mt-4">
+                <div className="flex gap-2 mt-3">
                   <button
                     onClick={() => scrollCarousel(kimonoScrollRef, 'left')}
                     className="p-2 rounded-full border"
                     style={{ borderColor: '#FFF4DE', color: '#FFF4DE' }}
                     aria-label="Previous"
                   >
-                    <ChevronLeft size={18} />
+                    <ChevronLeft size={16} />
                   </button>
                   <button
                     onClick={() => scrollCarousel(kimonoScrollRef, 'right')}
@@ -216,12 +218,12 @@ export default function Home() {
                     style={{ borderColor: '#FFF4DE', color: '#FFF4DE' }}
                     aria-label="Next"
                   >
-                    <ChevronRight size={18} />
+                    <ChevronRight size={16} />
                   </button>
                 </div>
               </div>
             ) : (
-              <p className="text-sm" style={{ color: '#FFF4DE', opacity: 0.6 }}>
+              <p className="text-sm" style={{ color: '#FFF4DE', opacity: 0.5 }}>
                 {i18n.language === 'tr' ? 'Henüz ürün eklenmedi' : 'No products yet'}
               </p>
             )}
@@ -229,36 +231,38 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 3. SETLER – Cream bg, featured image right ── */}
+      {/* ── 3. SETLER – 3 sütun (sol manken | orta içerik | sağ manken) ── */}
       <section className="overflow-hidden" style={{ background: '#FFF4DE' }}>
-        <div className="flex flex-col lg:flex-row-reverse">
+        <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr_220px]" style={{ minHeight: 560 }}>
 
-          {/* Right: Featured set image */}
-          <div className="lg:w-2/5 relative" style={{ minHeight: 520 }}>
+          {/* Sol: sol-manken */}
+          <div className="hidden lg:block relative">
             <Image
-              src="/images/homepage/sag-manken.png"
-              alt="Set koleksiyonu"
+              src="/images/homepage/sol-manken.png"
+              alt="Setler koleksiyonu"
               fill
               className="object-cover object-top"
             />
           </div>
 
-          {/* Left: Title + cards */}
-          <div className="lg:w-3/5 flex flex-col justify-center px-8 md:px-12 py-14">
+          {/* Orta: başlık + kartlar */}
+          <div className="flex flex-col justify-center px-8 md:px-12 py-14">
             <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
             >
-              <p className="text-xs tracking-widest uppercase mb-2" style={{ color: '#853710', opacity: 0.65 }}>
+              <p className="text-xs tracking-widest uppercase mb-3" style={{ color: '#853710', opacity: 0.6 }}>
                 {i18n.language === 'tr' ? 'Koleksiyon' : 'Collection'}
               </p>
-              <h2 className="text-5xl md:text-6xl font-bold mb-1" style={{ color: '#853710' }}>
+              <h2 className="text-5xl md:text-6xl font-bold" style={{ color: '#853710' }}>
                 SETLER
               </h2>
+              {/* Dekoratif şerit */}
+              <div className="w-14 h-px my-3" style={{ background: '#853710' }} />
               <p className="text-lg mb-6" style={{ color: '#9E906C', fontStyle: 'italic', fontFamily: "'Bellota Text'" }}>
-                {i18n.language === 'tr' ? 'şık ve özgün kombinler' : 'stylish and original combinations'}
+                {i18n.language === 'tr' ? 'özel kumaşlardan üretilmiş kombinler' : 'combinations crafted from special fabrics'}
               </p>
               <Link
                 href="/products?category=set"
@@ -269,29 +273,29 @@ export default function Home() {
               </Link>
             </motion.div>
 
-            {/* Product carousel */}
+            {/* Ürün kartları */}
             {loading ? (
               <p className="text-sm" style={{ color: '#9E906C' }}>{t('common.loading')}</p>
             ) : setProducts.length > 0 ? (
-              <div className="relative">
+              <div>
                 <div
                   ref={setScrollRef}
-                  className="flex gap-4 overflow-x-auto pb-2 scroll-smooth scrollbar-hide"
+                  className="flex gap-3 overflow-x-auto pb-2 scroll-smooth scrollbar-hide"
                 >
                   {setProducts.map((product, index) => (
-                    <div key={product.id} className="w-64 flex-shrink-0">
+                    <div key={product.id} className="w-56 flex-shrink-0">
                       <ProductCard product={product} index={index} />
                     </div>
                   ))}
                 </div>
-                <div className="flex gap-2 mt-4">
+                <div className="flex gap-2 mt-3">
                   <button
                     onClick={() => scrollCarousel(setScrollRef, 'left')}
                     className="p-2 rounded-full border"
                     style={{ borderColor: '#853710', color: '#853710' }}
                     aria-label="Previous"
                   >
-                    <ChevronLeft size={18} />
+                    <ChevronLeft size={16} />
                   </button>
                   <button
                     onClick={() => scrollCarousel(setScrollRef, 'right')}
@@ -299,7 +303,7 @@ export default function Home() {
                     style={{ borderColor: '#853710', color: '#853710' }}
                     aria-label="Next"
                   >
-                    <ChevronRight size={18} />
+                    <ChevronRight size={16} />
                   </button>
                 </div>
               </div>
@@ -309,55 +313,78 @@ export default function Home() {
               </p>
             )}
           </div>
+
+          {/* Sağ: sag-manken */}
+          <div className="hidden lg:block relative">
+            <Image
+              src="/images/homepage/sag-manken.png"
+              alt="Setler koleksiyonu"
+              fill
+              className="object-cover object-top"
+            />
+          </div>
         </div>
       </section>
 
-      {/* ── 4. BİZ KİMİZ? – Dark sage background ── */}
-      <section className="py-24 px-6 md:px-12" style={{ background: '#5d6b54' }}>
-        <div className="max-w-3xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            {/* Decorative symbol */}
-            <div className="flex justify-center mb-6">
-              <Image
-                src="/images/logo-symbol.png"
-                alt=""
-                width={52}
-                height={52}
-                className="h-12 w-auto opacity-60"
-              />
-            </div>
+      {/* ── 4. BİZ KİMİZ? – Taupe bg, sol polaroidler, sağ metin ── */}
+      <section style={{ background: '#9E906C' }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2" style={{ minHeight: 380 }}>
 
-            <p className="text-xs tracking-widest uppercase mb-4" style={{ color: '#F5D482', opacity: 0.8 }}>
-              {i18n.language === 'tr' ? 'Hikayemiz' : 'Our Story'}
-            </p>
-            <h2 className="text-4xl md:text-5xl font-bold mb-8" style={{ color: '#FFF4DE' }}>
-              {i18n.language === 'tr' ? 'Biz Kimiz?' : 'Who Are We?'}
-            </h2>
-            <p className="text-lg leading-relaxed mb-4" style={{ color: '#FFF4DE', opacity: 0.85 }}>
-              {t('home.storyText1')}
-            </p>
-            <p className="text-lg leading-relaxed mb-10" style={{ color: '#FFF4DE', opacity: 0.85 }}>
-              {t('home.storyText2')}
-            </p>
-            <Link
-              href="/about"
-              className="inline-flex items-center gap-2 px-8 py-3 rounded-full border font-medium transition-all"
-              style={{ borderColor: '#FFF4DE', color: '#FFF4DE' }}
+          {/* Sol: üst üste tilted polaroidler */}
+          <div className="relative overflow-hidden" style={{ minHeight: 320 }}>
+            <div
+              className="absolute shadow-xl"
+              style={{ top: '12%', left: '8%', transform: 'rotate(-5deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 175, zIndex: 2 }}
             >
-              {i18n.language === 'tr' ? 'Hakkımızda' : 'About Us'}
-              <ArrowRight size={18} />
-            </Link>
-          </motion.div>
+              <div className="relative" style={{ height: 215 }}>
+                <Image src="/images/homepage/2polaroid.png" alt="" fill className="object-cover" />
+              </div>
+            </div>
+            <div
+              className="absolute shadow-xl"
+              style={{ top: '26%', left: '32%', transform: 'rotate(5deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 162, zIndex: 3 }}
+            >
+              <div className="relative" style={{ height: 198 }}>
+                <Image src="/images/homepage/polaroid3.png" alt="" fill className="object-cover" />
+              </div>
+            </div>
+          </div>
+
+          {/* Sağ: metin */}
+          <div className="flex flex-col justify-center px-10 md:px-16 py-16">
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+            >
+              <p className="text-xs tracking-widest uppercase mb-3" style={{ color: '#FFF4DE', opacity: 0.65 }}>
+                {i18n.language === 'tr' ? 'Hikayemiz' : 'Our Story'}
+              </p>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: '#FFF4DE' }}>
+                {i18n.language === 'tr' ? 'Biz Kimiz?' : 'Who Are We?'}
+              </h2>
+              <p
+                className="text-base leading-relaxed mb-8"
+                style={{ color: '#FFF4DE', opacity: 0.88, fontStyle: 'italic', fontFamily: "'Bellota Text'" }}
+              >
+                {t('home.storyText1')}
+              </p>
+              <Link
+                href="/about"
+                className="inline-flex items-center gap-2 px-7 py-3 rounded-full border font-medium self-start transition-all hover:bg-white hover:bg-opacity-10"
+                style={{ borderColor: '#FFF4DE', color: '#FFF4DE' }}
+              >
+                {i18n.language === 'tr' ? 'Hakkımızda' : 'About Us'}
+                <ArrowRight size={18} />
+              </Link>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* ── 5. FESTİVALLER & BLOG – Dark forest background ── */}
-      <section className="relative overflow-hidden py-20 px-6 md:px-12" style={{ minHeight: 600 }}>
+      {/* ── 5. FESTİVALLER & BLOG – Forest bg, yatay kartlar alt alta ── */}
+      <section className="relative overflow-hidden py-16 px-6 md:px-12" style={{ minHeight: 520 }}>
         <Image
           src="/images/homepage/forest.jpg"
           alt="Festival arka plan"
@@ -366,7 +393,7 @@ export default function Home() {
         />
         <div className="absolute inset-0" style={{ background: 'rgba(10, 20, 10, 0.65)' }} />
 
-        <div className="relative z-10 max-w-7xl mx-auto">
+        <div className="relative z-10 max-w-4xl mx-auto">
           <div className="flex items-end justify-between mb-10">
             <div>
               <p className="text-xs tracking-widest uppercase mb-2" style={{ color: '#F5D482', opacity: 0.8 }}>
@@ -386,7 +413,8 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Yatay kartlar — alt alta */}
+          <div className="flex flex-col gap-5">
             {[
               {
                 src: 'labryinto.jpg',
@@ -408,10 +436,11 @@ export default function Home() {
               <Link
                 key={src}
                 href="/festivals-and-blog"
-                className="group overflow-hidden rounded-2xl block"
+                className="flex flex-row overflow-hidden rounded-xl group"
                 style={{ background: 'rgba(255,244,222,0.08)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,244,222,0.15)' }}
               >
-                <div className="relative overflow-hidden rounded-t-2xl" style={{ height: 220 }}>
+                {/* Sol: fotoğraf */}
+                <div className="relative flex-shrink-0" style={{ width: 192, minHeight: 180 }}>
                   <Image
                     src={`/images/homepage/${src}`}
                     alt={title}
@@ -419,12 +448,13 @@ export default function Home() {
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
-                <div className="p-6">
+                {/* Sağ: metin */}
+                <div className="p-5 flex flex-col justify-center">
                   <p className="text-xs tracking-widest uppercase mb-1" style={{ color: '#F5D482', opacity: 0.75 }}>
                     {location}
                   </p>
-                  <h3 className="text-xl font-bold mb-3" style={{ color: '#FFF4DE' }}>{title}</h3>
-                  <p className="text-sm leading-relaxed mb-4" style={{ color: '#FFF4DE', opacity: 0.75 }}>{desc}</p>
+                  <h3 className="text-lg font-bold mb-2" style={{ color: '#FFF4DE' }}>{title}</h3>
+                  <p className="text-sm leading-relaxed mb-3" style={{ color: '#FFF4DE', opacity: 0.75 }}>{desc}</p>
                   <span className="inline-flex items-center gap-1 text-sm font-medium" style={{ color: '#F5D482' }}>
                     {i18n.language === 'tr' ? 'Detaylı İncele' : 'Read More'}
                     <ArrowRight size={14} />
