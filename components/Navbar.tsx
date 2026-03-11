@@ -87,100 +87,25 @@ export default function Navbar() {
           borderColor: isScrolled ? 'rgba(var(--foreground-rgb, 0, 0, 0), 0.1)' : undefined
         }}
       >
-        <div className="w-full px-4">
-          <div className="grid grid-cols-[1fr_auto_1fr] items-center h-16 gap-4">
-            {/* Left Navigation - First 5 items */}
-            <div className="hidden lg:flex items-center space-x-1 justify-start">
-              {navItems.slice(0, 5).map((item) => (
-                <div
-                  key={item.href}
-                  className="relative"
-                  onMouseEnter={() => item.hasDropdown && setOpenDropdown(item.name)}
-                  onMouseLeave={() => setOpenDropdown(null)}
-                >
-                  <Link
-                    href={item.href}
-                    className="nav-link px-3 py-2 rounded-lg hover:bg-white hover:bg-opacity-5 flex items-center gap-1"
-                  >
-                    {item.name}
-                    {item.hasDropdown && <ChevronDown size={16} />}
-                  </Link>
-
-                  {/* Dropdown Menu */}
-                  {item.hasDropdown && openDropdown === item.name && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      className="absolute top-full left-0 pt-8 pb-32 z-50"
-                    >
-                      {item.href.includes('kimono') ? (
-                        // Kimono: Tek sütun liste
-                        <div className="glass rounded-xl border border-black dark:border-white border-opacity-10 dark:border-opacity-10 shadow-xl overflow-hidden min-w-[280px]">
-                          {kimonoSubcategories.map((sub) => (
-                            <Link
-                              key={sub.key}
-                              href={`/products?category=kimono&subcategory=${sub.key}`}
-                              className="block px-6 py-3 text-gray-700 dark:text-gray-300 hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-10 hover:text-black dark:hover:text-white transition-colors border-b border-black dark:border-white border-opacity-5 dark:border-opacity-5 last:border-0"
-                            >
-                              <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? sub.name : sub.nameEn}</div>
-                            </Link>
-                          ))}
-                        </div>
-                      ) : (
-                        // Setler: 2. seviye yan yana, 3. seviye aşağı açılır
-                        <div className="glass rounded-xl border border-black dark:border-white border-opacity-10 dark:border-opacity-10 shadow-xl overflow-visible min-w-[400px]">
-                          <div className="grid grid-cols-2 divide-x divide-black dark:divide-white divide-opacity-10 dark:divide-opacity-10">
-                            {setSecondLevelCategories.map((secondLevel) => (
-                              <div key={secondLevel.key} className="relative group">
-                                <Link
-                                  href={`/products?category=set&subcategory=${secondLevel.key}`}
-                                  className="block px-8 py-4 text-gray-700 dark:text-gray-300 hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-5 transition-colors cursor-pointer"
-                                >
-                                  <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? secondLevel.name : secondLevel.nameEn}</div>
-                                </Link>
-                                {/* 3. seviye aşağı açılan menü */}
-                                <div className="absolute top-full left-0 mt-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all z-50">
-                                  <div className="glass rounded-xl border border-black dark:border-white border-opacity-10 dark:border-opacity-10 shadow-xl overflow-hidden w-64">
-                                    {getThirdLevelCategories(secondLevel.key as 'kreasyonlar' | 'setler').map((third) => (
-                                      <Link
-                                        key={third.key}
-                                        href={`/products?category=set&subcategory=${secondLevel.key}&thirdLevel=${third.key}`}
-                                        className="block px-5 py-3 text-gray-700 dark:text-gray-300 hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-10 hover:text-black dark:hover:text-white transition-colors border-b border-black dark:border-white border-opacity-5 dark:border-opacity-5 last:border-0"
-                                      >
-                                        <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? third.name : third.nameEn}</div>
-                                      </Link>
-                                    ))}
-                                  </div>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </motion.div>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {/* Centered Brand Logo */}
-            <Link href="/" className="flex items-center justify-center">
+        <div className="w-full px-4 md:px-8">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo - Left */}
+            <Link href="/" className="flex items-center gap-2 flex-shrink-0">
               <Image
                 src="/images/logo-symbol.png"
                 alt="Mea Culpa"
-                width={48}
-                height={48}
-                className="h-10 w-auto object-contain"
+                width={40}
+                height={40}
+                className="h-9 w-auto object-contain"
                 priority
               />
             </Link>
 
-            {/* Third Column: Right Navigation + Icons */}
-            <div className="flex items-center space-x-1 justify-end">
-              {/* Right Navigation - Last 2 items (hidden on mobile) */}
+            {/* Right side: Desktop nav + Icons */}
+            <div className="flex items-center gap-1">
+              {/* Desktop nav items */}
               <div className="hidden lg:flex items-center space-x-1">
-                {navItems.slice(5).map((item) => (
+                {navItems.map((item) => (
                   <div
                     key={item.href}
                     className="relative"
@@ -192,19 +117,17 @@ export default function Navbar() {
                       className="nav-link px-3 py-2 rounded-lg hover:bg-white hover:bg-opacity-5 flex items-center gap-1"
                     >
                       {item.name}
-                      {item.hasDropdown && <ChevronDown size={16} />}
+                      {item.hasDropdown && <ChevronDown size={14} />}
                     </Link>
 
-                    {/* Dropdown Menu */}
                     {item.hasDropdown && openDropdown === item.name && (
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
-                        className="absolute top-full left-0 pt-8 pb-32 z-50"
+                        className="absolute top-full right-0 pt-8 pb-32 z-50"
                       >
                         {item.href.includes('kimono') ? (
-                          // Kimono: Tek sütun liste
                           <div className="glass rounded-xl border border-black dark:border-white border-opacity-10 dark:border-opacity-10 shadow-xl overflow-hidden min-w-[280px]">
                             {kimonoSubcategories.map((sub) => (
                               <Link
@@ -217,7 +140,6 @@ export default function Navbar() {
                             ))}
                           </div>
                         ) : (
-                          // Setler: 2. seviye yan yana, 3. seviye aşağı açılır
                           <div className="glass rounded-xl border border-black dark:border-white border-opacity-10 dark:border-opacity-10 shadow-xl overflow-visible min-w-[400px]">
                             <div className="grid grid-cols-2 divide-x divide-black dark:divide-white divide-opacity-10 dark:divide-opacity-10">
                               {setSecondLevelCategories.map((secondLevel) => (
@@ -228,7 +150,6 @@ export default function Navbar() {
                                   >
                                     <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? secondLevel.name : secondLevel.nameEn}</div>
                                   </Link>
-                                  {/* 3. seviye aşağı açılan menü */}
                                   <div className="absolute top-full left-0 mt-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all z-50">
                                     <div className="glass rounded-xl border border-black dark:border-white border-opacity-10 dark:border-opacity-10 shadow-xl overflow-hidden w-64">
                                       {getThirdLevelCategories(secondLevel.key as 'kreasyonlar' | 'setler').map((third) => (
@@ -253,64 +174,58 @@ export default function Navbar() {
                 ))}
               </div>
 
-              {/* Right Side Icons (always visible) */}
-              <div className="flex items-center space-x-4">
-              {/* Search Icon */}
-              <button
-                onClick={() => setSearchOpen(true)}
-                className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
-              >
-                <Search size={18} />
-              </button>
+              {/* Icons */}
+              <div className="flex items-center space-x-3 ml-2">
+                <button
+                  onClick={() => setSearchOpen(true)}
+                  className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
+                >
+                  <Search size={18} />
+                </button>
 
-              {/* Language Switcher */}
-              <button
-                onClick={toggleLanguage}
-                className="flex items-center space-x-1 text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
-              >
-                <Globe size={18} />
-                <span className="text-sm font-medium">
-                  {i18n.language.toUpperCase()}
-                </span>
-              </button>
-
-              {/* Theme Toggle */}
-              <button
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
-                aria-label="Toggle theme"
-              >
-                {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-              </button>
-
-              {/* Cart */}
-              <Link
-                href="/cart"
-                className="relative text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
-              >
-                <ShoppingCart size={18} />
-                {cartCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-mea-gold text-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                    {cartCount}
+                <button
+                  onClick={toggleLanguage}
+                  className="flex items-center space-x-1 text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
+                >
+                  <Globe size={18} />
+                  <span className="text-sm font-medium">
+                    {i18n.language.toUpperCase()}
                   </span>
-                )}
-              </Link>
+                </button>
 
-              {/* User Account */}
-              <Link
-                href="/profile"
-                className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
-              >
-                <User size={18} />
-              </Link>
+                <button
+                  onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                  className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
+                  aria-label="Toggle theme"
+                >
+                  {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                </button>
 
-              {/* Mobile Menu Button */}
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="lg:hidden text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
-              >
-                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
+                <Link
+                  href="/cart"
+                  className="relative text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
+                >
+                  <ShoppingCart size={18} />
+                  {cartCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-mea-gold text-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                      {cartCount}
+                    </span>
+                  )}
+                </Link>
+
+                <Link
+                  href="/profile"
+                  className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
+                >
+                  <User size={18} />
+                </Link>
+
+                <button
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  className="lg:hidden text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
+                >
+                  {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
               </div>
             </div>
           </div>
@@ -349,7 +264,6 @@ export default function Navbar() {
                             >
                               {i18n.language === 'tr' ? sub.name : sub.nameEn}
                             </Link>
-                            {/* Third Level Categories */}
                             {sub.thirdLevel && (sub.key === 'kreasyonlar' || sub.key === 'setler') && getThirdLevelCategories(sub.key as 'kreasyonlar' | 'setler').length > 0 && (
                               <div className="pl-4 pb-2">
                                 {getThirdLevelCategories(sub.key as 'kreasyonlar' | 'setler').map((third) => (
@@ -437,7 +351,7 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      {/* Spacer to prevent content from going under fixed navbar */}
+      {/* Spacer */}
       <div className="h-16" />
     </>
   );

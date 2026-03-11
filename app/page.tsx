@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ChevronDown, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
@@ -13,9 +13,6 @@ import Testimonials from '@/components/Testimonials';
 
 export default function Home() {
   const { t, i18n } = useTranslation();
-  const { scrollY } = useScroll();
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
-  const scale = useTransform(scrollY, [0, 300], [1, 0.8]);
 
   const [kimonoProducts, setKimonoProducts] = useState<Product[]>([]);
   const [setProducts, setSetProducts] = useState<Product[]>([]);
@@ -28,7 +25,6 @@ export default function Home() {
     async function fetchProducts() {
       try {
         const products = await getProducts();
-        // Filter out hidden products
         const visibleProducts = products.filter(p => !p.hidden);
         setKimonoProducts(visibleProducts.filter(p => p.category === 'kimono').slice(0, 6));
         setSetProducts(visibleProducts.filter(p => p.category === 'set').slice(0, 6));
@@ -41,394 +37,349 @@ export default function Home() {
     fetchProducts();
   }, []);
 
-  // Auto-scroll functionality (every 10 seconds)
-  useEffect(() => {
-    const kimonoInterval = setInterval(() => {
-      if (kimonoScrollRef.current) {
-        const container = kimonoScrollRef.current;
-        const cardWidth = 320 + 24; // Card width (80 * 4) + gap (6 * 4)
-        const maxScroll = container.scrollWidth - container.clientWidth;
-        const currentScroll = container.scrollLeft;
-
-        if (currentScroll >= maxScroll - 10) {
-          // Reset to beginning
-          container.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-          // Scroll to next card
-          container.scrollBy({ left: cardWidth, behavior: 'smooth' });
-        }
-      }
-    }, 10000);
-
-    const setInterval2 = setInterval(() => {
-      if (setScrollRef.current) {
-        const container = setScrollRef.current;
-        const cardWidth = 320 + 24;
-        const maxScroll = container.scrollWidth - container.clientWidth;
-        const currentScroll = container.scrollLeft;
-
-        if (currentScroll >= maxScroll - 10) {
-          container.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-          container.scrollBy({ left: cardWidth, behavior: 'smooth' });
-        }
-      }
-    }, 10000);
-
-    return () => {
-      clearInterval(kimonoInterval);
-      clearInterval(setInterval2);
-    };
-  }, [kimonoProducts, setProducts]);
-
   const scrollCarousel = (ref: React.RefObject<HTMLDivElement | null>, direction: 'left' | 'right') => {
     if (ref.current) {
-      const cardWidth = 320 + 24; // Card width + gap
-      const scrollAmount = direction === 'left' ? -cardWidth : cardWidth;
-      ref.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      const cardWidth = 280 + 16;
+      ref.current.scrollBy({ left: direction === 'left' ? -cardWidth : cardWidth, behavior: 'smooth' });
     }
   };
 
-
   return (
     <div>
-      {/* Hero Section - Apple Style */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Background with parallax effect */}
-        <motion.div
-          style={{ opacity, scale }}
-          className="absolute inset-0 z-0"
-        >
-          <Image
-            src="/images/header-hero.jpg"
-            alt="Hero background"
-            fill
-            className="object-cover object-center"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/40" />
-        </motion.div>
+      {/* ── 1. HERO – Split layout ── */}
+      <section className="relative overflow-hidden" style={{ minHeight: '100vh', background: '#FFF4DE' }}>
+        <div className="flex flex-col lg:flex-row" style={{ minHeight: '100vh' }}>
 
-        {/* Content */}
-        <div className="relative z-10 text-center px-4">
+          {/* Left: Logo + Slogan + CTA */}
+          <div className="lg:w-5/12 flex flex-col justify-center px-8 md:px-12 lg:px-16 py-24 lg:py-0">
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.9, ease: 'easeOut' }}
+            >
+              {/* Large brand logo */}
+              <div className="mb-8 md:mb-10">
+                <Image
+                  src="/images/logo-horizontal.png"
+                  alt="Mea Culpa"
+                  width={440}
+                  height={200}
+                  className="w-full max-w-xs md:max-w-sm object-contain"
+                  priority
+                />
+              </div>
+
+              <h1
+                className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4"
+                style={{ color: '#853710' }}
+              >
+                {t('hero.slogan1')}
+              </h1>
+
+              <p
+                className="text-base md:text-lg leading-relaxed mb-8"
+                style={{ color: '#9E906C', fontStyle: 'italic', fontFamily: "'Bellota Text'" }}
+              >
+                {i18n.language === 'tr'
+                  ? 'Doğunun ilhamıyla, modern yaşamın içinde.'
+                  : 'Inspired by the East, within modern life.'}
+              </p>
+
+              <Link
+                href="/products"
+                className="inline-flex items-center gap-2 btn-primary self-start"
+              >
+                {i18n.language === 'tr' ? 'Alışverişe Başla' : 'Start Shopping'}
+                <ArrowRight size={18} />
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* Right: Fashion photo + floating polaroids */}
+          <div className="lg:w-7/12 relative overflow-hidden" style={{ minHeight: '60vh' }}>
+            <Image
+              src="/images/header-hero.jpg"
+              alt="Mea Culpa koleksiyon"
+              fill
+              className="object-cover object-center"
+              priority
+            />
+            <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.18)' }} />
+
+            {/* Floating polaroids */}
+            <div className="absolute inset-0 pointer-events-none hidden md:block">
+              <div
+                className="absolute shadow-2xl"
+                style={{ top: '10%', left: '6%', transform: 'rotate(-4deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 148 }}
+              >
+                <div className="relative" style={{ height: 185 }}>
+                  <Image src="/images/homepage/2polaroid.png" alt="" fill className="object-cover" />
+                </div>
+              </div>
+              <div
+                className="absolute shadow-2xl"
+                style={{ top: '6%', right: '10%', transform: 'rotate(3deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 140 }}
+              >
+                <div className="relative" style={{ height: 175 }}>
+                  <Image src="/images/homepage/3polaroid.png" alt="" fill className="object-cover" />
+                </div>
+              </div>
+              <div
+                className="absolute shadow-2xl"
+                style={{ bottom: '18%', left: '14%', transform: 'rotate(2deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 145 }}
+              >
+                <div className="relative" style={{ height: 180 }}>
+                  <Image src="/images/homepage/polaroid3.png" alt="" fill className="object-cover" />
+                </div>
+              </div>
+              <div
+                className="absolute shadow-2xl"
+                style={{ bottom: '8%', right: '6%', transform: 'rotate(-2deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 138 }}
+              >
+                <div className="relative" style={{ height: 172 }}>
+                  <Image src="/images/homepage/polaroid4.png" alt="" fill className="object-cover" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 2. KİMONO – Sage green, featured image left ── */}
+      <section className="overflow-hidden" style={{ background: '#889177' }}>
+        <div className="flex flex-col lg:flex-row">
+
+          {/* Left: Featured kimono image */}
+          <div className="lg:w-2/5 relative" style={{ minHeight: 520 }}>
+            <Image
+              src="/images/homepage/4kimono.png"
+              alt="Kimono koleksiyonu"
+              fill
+              className="object-cover object-top"
+            />
+          </div>
+
+          {/* Right: Title + cards */}
+          <div className="lg:w-3/5 flex flex-col justify-center px-8 md:px-12 py-14">
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+            >
+              <p className="text-xs tracking-widest uppercase mb-2" style={{ color: '#FFF4DE', opacity: 0.65 }}>
+                {i18n.language === 'tr' ? 'Koleksiyon' : 'Collection'}
+              </p>
+              <h2 className="text-5xl md:text-6xl font-bold mb-1" style={{ color: '#FFF4DE' }}>
+                KİMONO
+              </h2>
+              <p className="text-lg mb-6" style={{ color: '#FFF4DE', opacity: 0.8, fontStyle: 'italic', fontFamily: "'Bellota Text'" }}>
+                {i18n.language === 'tr' ? 'hikayesi olan özel tasarımlar' : 'unique designs with a story'}
+              </p>
+              <Link
+                href="/products?category=kimono"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium mb-10 self-start"
+                style={{ background: '#FFF4DE', color: '#853710' }}
+              >
+                {i18n.language === 'tr' ? 'Koleksiyonu Gör' : 'View Collection'}
+                <ArrowRight size={16} />
+              </Link>
+            </motion.div>
+
+            {/* Product carousel */}
+            {loading ? (
+              <p className="text-sm" style={{ color: '#FFF4DE', opacity: 0.7 }}>{t('common.loading')}</p>
+            ) : kimonoProducts.length > 0 ? (
+              <div className="relative">
+                <div
+                  ref={kimonoScrollRef}
+                  className="flex gap-4 overflow-x-auto pb-2 scroll-smooth scrollbar-hide"
+                >
+                  {kimonoProducts.map((product, index) => (
+                    <div key={product.id} className="w-64 flex-shrink-0">
+                      <ProductCard product={product} index={index} />
+                    </div>
+                  ))}
+                </div>
+                <div className="flex gap-2 mt-4">
+                  <button
+                    onClick={() => scrollCarousel(kimonoScrollRef, 'left')}
+                    className="p-2 rounded-full border"
+                    style={{ borderColor: '#FFF4DE', color: '#FFF4DE' }}
+                    aria-label="Previous"
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+                  <button
+                    onClick={() => scrollCarousel(kimonoScrollRef, 'right')}
+                    className="p-2 rounded-full border"
+                    style={{ borderColor: '#FFF4DE', color: '#FFF4DE' }}
+                    aria-label="Next"
+                  >
+                    <ChevronRight size={18} />
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <p className="text-sm" style={{ color: '#FFF4DE', opacity: 0.6 }}>
+                {i18n.language === 'tr' ? 'Henüz ürün eklenmedi' : 'No products yet'}
+              </p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 3. SETLER – Cream bg, featured image right ── */}
+      <section className="overflow-hidden" style={{ background: '#FFF4DE' }}>
+        <div className="flex flex-col lg:flex-row-reverse">
+
+          {/* Right: Featured set image */}
+          <div className="lg:w-2/5 relative" style={{ minHeight: 520 }}>
+            <Image
+              src="/images/homepage/sag-manken.png"
+              alt="Set koleksiyonu"
+              fill
+              className="object-cover object-top"
+            />
+          </div>
+
+          {/* Left: Title + cards */}
+          <div className="lg:w-3/5 flex flex-col justify-center px-8 md:px-12 py-14">
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+            >
+              <p className="text-xs tracking-widest uppercase mb-2" style={{ color: '#853710', opacity: 0.65 }}>
+                {i18n.language === 'tr' ? 'Koleksiyon' : 'Collection'}
+              </p>
+              <h2 className="text-5xl md:text-6xl font-bold mb-1" style={{ color: '#853710' }}>
+                SETLER
+              </h2>
+              <p className="text-lg mb-6" style={{ color: '#9E906C', fontStyle: 'italic', fontFamily: "'Bellota Text'" }}>
+                {i18n.language === 'tr' ? 'şık ve özgün kombinler' : 'stylish and original combinations'}
+              </p>
+              <Link
+                href="/products?category=set"
+                className="btn-primary inline-flex items-center gap-2 self-start mb-10"
+              >
+                {i18n.language === 'tr' ? 'Koleksiyonu Gör' : 'View Collection'}
+                <ArrowRight size={16} />
+              </Link>
+            </motion.div>
+
+            {/* Product carousel */}
+            {loading ? (
+              <p className="text-sm" style={{ color: '#9E906C' }}>{t('common.loading')}</p>
+            ) : setProducts.length > 0 ? (
+              <div className="relative">
+                <div
+                  ref={setScrollRef}
+                  className="flex gap-4 overflow-x-auto pb-2 scroll-smooth scrollbar-hide"
+                >
+                  {setProducts.map((product, index) => (
+                    <div key={product.id} className="w-64 flex-shrink-0">
+                      <ProductCard product={product} index={index} />
+                    </div>
+                  ))}
+                </div>
+                <div className="flex gap-2 mt-4">
+                  <button
+                    onClick={() => scrollCarousel(setScrollRef, 'left')}
+                    className="p-2 rounded-full border"
+                    style={{ borderColor: '#853710', color: '#853710' }}
+                    aria-label="Previous"
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+                  <button
+                    onClick={() => scrollCarousel(setScrollRef, 'right')}
+                    className="p-2 rounded-full border"
+                    style={{ borderColor: '#853710', color: '#853710' }}
+                    aria-label="Next"
+                  >
+                    <ChevronRight size={18} />
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <p className="text-sm" style={{ color: '#9E906C' }}>
+                {i18n.language === 'tr' ? 'Henüz ürün eklenmedi' : 'No products yet'}
+              </p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 4. BİZ KİMİZ? – Dark sage background ── */}
+      <section className="py-24 px-6 md:px-12" style={{ background: '#5d6b54' }}>
+        <div className="max-w-3xl mx-auto text-center">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            {/* Large Logo */}
-            <div className="mb-8 flex justify-center">
+            {/* Decorative symbol */}
+            <div className="flex justify-center mb-6">
               <Image
-                src="/images/logo-main.png"
-                alt="Mea Culpa"
-                width={600}
-                height={600}
-                className="w-auto h-56 md:h-64 lg:h-72 object-contain drop-shadow-2xl"
-                priority
+                src="/images/logo-symbol.png"
+                alt=""
+                width={52}
+                height={52}
+                className="h-12 w-auto opacity-60"
               />
             </div>
 
-            <p className="text-xl md:text-2xl lg:text-3xl text-white mb-12">
-              {t('hero.slogan1')}
+            <p className="text-xs tracking-widest uppercase mb-4" style={{ color: '#F5D482', opacity: 0.8 }}>
+              {i18n.language === 'tr' ? 'Hikayemiz' : 'Our Story'}
             </p>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/products" className="btn-primary">
-                {t('hero.shopNow')}
-                <ArrowRight className="inline ml-2" size={20} />
-              </Link>
-              <Link href="/about" className="btn-secondary">
-                {t('hero.learnMore')}
-              </Link>
-            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-8" style={{ color: '#FFF4DE' }}>
+              {i18n.language === 'tr' ? 'Biz Kimiz?' : 'Who Are We?'}
+            </h2>
+            <p className="text-lg leading-relaxed mb-4" style={{ color: '#FFF4DE', opacity: 0.85 }}>
+              {t('home.storyText1')}
+            </p>
+            <p className="text-lg leading-relaxed mb-10" style={{ color: '#FFF4DE', opacity: 0.85 }}>
+              {t('home.storyText2')}
+            </p>
+            <Link
+              href="/about"
+              className="inline-flex items-center gap-2 px-8 py-3 rounded-full border font-medium transition-all"
+              style={{ borderColor: '#FFF4DE', color: '#FFF4DE' }}
+            >
+              {i18n.language === 'tr' ? 'Hakkımızda' : 'About Us'}
+              <ArrowRight size={18} />
+            </Link>
           </motion.div>
         </div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-        >
-          <ChevronDown className="text-black dark:text-white" size={32} />
-        </motion.div>
       </section>
 
-      {/* Models / Collection Section */}
-      <section className="grid grid-cols-1 md:grid-cols-2 min-h-[75vh]">
-        {/* Sol: erkek kimono */}
-        <Link href="/products?category=kimono" className="relative overflow-hidden group block">
-          <Image
-            src="/images/homepage/sol-manken.png"
-            alt="Kimono Koleksiyonu"
-            fill
-            className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors duration-300" />
-          <div className="absolute bottom-10 left-8">
-            <p className="text-sm tracking-widest uppercase mb-2" style={{ color: '#FFF4DE', opacity: 0.8 }}>
-              {i18n.language === 'tr' ? 'Koleksiyon' : 'Collection'}
-            </p>
-            <h3 className="text-4xl font-bold mb-4" style={{ color: '#FFF4DE' }}>
-              {t('nav.kimono')}
-            </h3>
-            <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium"
-              style={{ background: '#853710', color: '#FFF4DE' }}>
-              {i18n.language === 'tr' ? 'Keşfet' : 'Explore'} <ArrowRight size={16} />
-            </span>
-          </div>
-        </Link>
+      {/* ── 5. FESTİVALLER & BLOG – Dark forest background ── */}
+      <section className="relative overflow-hidden py-20 px-6 md:px-12" style={{ minHeight: 600 }}>
+        <Image
+          src="/images/homepage/forest.jpg"
+          alt="Festival arka plan"
+          fill
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0" style={{ background: 'rgba(10, 20, 10, 0.65)' }} />
 
-        {/* Sağ: kadın set */}
-        <Link href="/products?category=set" className="relative overflow-hidden group block" style={{ background: '#FFF4DE' }}>
-          <Image
-            src="/images/homepage/sag-manken.png"
-            alt="Set Koleksiyonu"
-            fill
-            className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
-          />
-          <div className="absolute inset-0 transition-colors duration-300" style={{ background: 'rgba(136,145,119,0.05)' }} />
-          <div className="absolute bottom-10 right-8 text-right">
-            <p className="text-sm tracking-widest uppercase mb-2" style={{ color: '#853710', opacity: 0.7 }}>
-              {i18n.language === 'tr' ? 'Koleksiyon' : 'Collection'}
-            </p>
-            <h3 className="text-4xl font-bold mb-4" style={{ color: '#853710' }}>
-              {t('nav.set')}
-            </h3>
-            <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium"
-              style={{ background: '#853710', color: '#FFF4DE' }}>
-              {i18n.language === 'tr' ? 'Keşfet' : 'Explore'} <ArrowRight size={16} />
-            </span>
-          </div>
-        </Link>
-      </section>
-
-      {/* Kimono Section */}
-      <section className="py-20">
-        <div>
-          <div className="flex items-center justify-between mb-12 px-4 max-w-7xl mx-auto">
-            <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
-                {t('nav.kimono')}
-              </h2>
-              <p className="text-black dark:text-white text-lg">
-                {i18n.language === 'tr'
-                  ? 'Özgün tasarımlarımızla tanışın'
-                  : 'Discover our unique designs'}
-              </p>
-            </div>
-            <div className="hidden md:flex items-center gap-4">
-              <button
-                onClick={() => scrollCarousel(kimonoScrollRef, 'left')}
-                className="p-3 glass rounded-full hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-20 transition-colors"
-                aria-label="Previous"
-              >
-                <ChevronLeft size={24} className="text-black dark:text-white" />
-              </button>
-              <button
-                onClick={() => scrollCarousel(kimonoScrollRef, 'right')}
-                className="p-3 glass rounded-full hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-20 transition-colors"
-                aria-label="Next"
-              >
-                <ChevronRight size={24} className="text-black dark:text-white" />
-              </button>
-              <Link
-                href="/products?category=kimono"
-                className="btn-primary flex items-center gap-2"
-              >
-                {t('common.viewAll')}
-                <ArrowRight size={20} />
-              </Link>
-            </div>
-          </div>
-
-          {loading ? (
-            <div className="text-center py-20 text-black dark:text-white">
-              {t('common.loading')}
-            </div>
-          ) : kimonoProducts.length > 0 ? (
-            <div ref={kimonoScrollRef} className="overflow-x-auto pb-4 scroll-smooth">
-              <div className="flex gap-6" style={{ minWidth: 'min-content' }}>
-                {kimonoProducts.map((product, index) => (
-                  <div key={product.id} className="w-80 flex-shrink-0">
-                    <ProductCard product={product} index={index} />
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div className="text-center py-20 text-black dark:text-white">
-              {i18n.language === 'tr'
-                ? 'Henüz ürün eklenmedi'
-                : 'No products added yet'}
-            </div>
-          )}
-
-          <div className="flex md:hidden items-center gap-2 mt-8 px-4">
-            <button
-              onClick={() => scrollCarousel(kimonoScrollRef, 'left')}
-              className="p-3 glass rounded-full"
-              aria-label="Previous"
-            >
-              <ChevronLeft size={20} className="text-black dark:text-white" />
-            </button>
-            <Link
-              href="/products?category=kimono"
-              className="btn-primary flex-1 flex items-center justify-center gap-2"
-            >
-              {t('common.viewAll')}
-              <ArrowRight size={20} />
-            </Link>
-            <button
-              onClick={() => scrollCarousel(kimonoScrollRef, 'right')}
-              className="p-3 glass rounded-full"
-              aria-label="Next"
-            >
-              <ChevronRight size={20} className="text-black dark:text-white" />
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Polaroid Gallery */}
-      <section className="py-16 overflow-hidden" style={{ background: '#FFF4DE' }}>
-        <div className="px-6 md:px-12 mb-8">
-          <p className="text-sm tracking-widest uppercase mb-1" style={{ color: '#853710', opacity: 0.7 }}>
-            {i18n.language === 'tr' ? 'Anlar' : 'Moments'}
-          </p>
-          <h2 className="text-3xl font-bold" style={{ color: '#853710' }}>
-            {i18n.language === 'tr' ? 'Yaşanmış Hikayeler' : 'Lived Stories'}
-          </h2>
-        </div>
-        <div className="flex gap-5 px-6 md:px-12 overflow-x-auto scrollbar-hide pb-4">
-          {[
-            { src: '2polaroid.png', ext: 'png' },
-            { src: '3polaroid.png', ext: 'png' },
-            { src: 'polaroid3.png', ext: 'png' },
-            { src: 'polaroid4.png', ext: 'png' },
-          ].map(({ src }) => (
-            <div
-              key={src}
-              className="flex-shrink-0 shadow-lg rotate-1 odd:rotate-[-1deg] even:rotate-[1deg]"
-              style={{ background: '#fff', padding: '10px 10px 36px 10px', width: 220 }}
-            >
-              <div className="relative w-full" style={{ height: 260 }}>
-                <Image
-                  src={`/images/homepage/${src}`}
-                  alt="Mea Culpa moment"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Set Section */}
-      <section className="py-20">
-        <div>
-          <div className="flex items-center justify-between mb-12 px-4 max-w-7xl mx-auto">
-            <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
-                {t('nav.set')}
-              </h2>
-              <p className="text-black dark:text-white text-lg">
-                {i18n.language === 'tr'
-                  ? 'Şık ve rahat set kombinleri'
-                  : 'Stylish and comfortable set combinations'}
-              </p>
-            </div>
-            <div className="hidden md:flex items-center gap-4">
-              <button
-                onClick={() => scrollCarousel(setScrollRef, 'left')}
-                className="p-3 glass rounded-full hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-20 transition-colors"
-                aria-label="Previous"
-              >
-                <ChevronLeft size={24} className="text-black dark:text-white" />
-              </button>
-              <button
-                onClick={() => scrollCarousel(setScrollRef, 'right')}
-                className="p-3 glass rounded-full hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-20 transition-colors"
-                aria-label="Next"
-              >
-                <ChevronRight size={24} className="text-black dark:text-white" />
-              </button>
-              <Link
-                href="/products?category=set"
-                className="btn-primary flex items-center gap-2"
-              >
-                {t('common.viewAll')}
-                <ArrowRight size={20} />
-              </Link>
-            </div>
-          </div>
-
-          {loading ? (
-            <div className="text-center py-20 text-black dark:text-white">
-              {t('common.loading')}
-            </div>
-          ) : setProducts.length > 0 ? (
-            <div ref={setScrollRef} className="overflow-x-auto pb-4 scroll-smooth">
-              <div className="flex gap-6" style={{ minWidth: 'min-content' }}>
-                {setProducts.map((product, index) => (
-                  <div key={product.id} className="w-80 flex-shrink-0">
-                    <ProductCard product={product} index={index} />
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div className="text-center py-20 text-black dark:text-white">
-              {i18n.language === 'tr'
-                ? 'Henüz ürün eklenmedi'
-                : 'No products added yet'}
-            </div>
-          )}
-
-          <div className="flex md:hidden items-center gap-2 mt-8 px-4">
-            <button
-              onClick={() => scrollCarousel(setScrollRef, 'left')}
-              className="p-3 glass rounded-full"
-              aria-label="Previous"
-            >
-              <ChevronLeft size={20} className="text-black dark:text-white" />
-            </button>
-            <Link
-              href="/products?category=set"
-              className="btn-primary flex-1 flex items-center justify-center gap-2"
-            >
-              {t('common.viewAll')}
-              <ArrowRight size={20} />
-            </Link>
-            <button
-              onClick={() => scrollCarousel(setScrollRef, 'right')}
-              className="p-3 glass rounded-full"
-              aria-label="Next"
-            >
-              <ChevronRight size={20} className="text-black dark:text-white" />
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Festivaller & Blog */}
-      <section className="py-16 px-6 md:px-12" style={{ background: '#FFF4DE' }}>
-        <div className="max-w-7xl mx-auto">
+        <div className="relative z-10 max-w-7xl mx-auto">
           <div className="flex items-end justify-between mb-10">
             <div>
-              <p className="text-sm tracking-widest uppercase mb-1"
-                 style={{ color: '#853710', opacity: 0.7 }}>
+              <p className="text-xs tracking-widest uppercase mb-2" style={{ color: '#F5D482', opacity: 0.8 }}>
                 {i18n.language === 'tr' ? 'Deneyimler' : 'Experiences'}
               </p>
-              <h2 className="text-4xl font-bold" style={{ color: '#853710' }}>
+              <h2 className="text-4xl font-bold" style={{ color: '#FFF4DE' }}>
                 {t('nav.festivalsAndBlog')}
               </h2>
             </div>
             <Link
               href="/festivals-and-blog"
               className="hidden md:inline-flex items-center gap-2 text-sm font-medium"
-              style={{ color: '#853710' }}
+              style={{ color: '#FFF4DE', opacity: 0.85 }}
             >
               {i18n.language === 'tr' ? 'Tümünü Gör' : 'View All'}
               <ArrowRight size={16} />
@@ -443,7 +394,7 @@ export default function Home() {
                 location: 'Guanacaste / Costa Rica',
                 desc: i18n.language === 'tr'
                   ? 'Labryinto artık Mea Culpa\'nın yıllık ritüellerinden biri hâline geldi. Festival atmosferi, markamızın tasarım diliyle güçlü bir uyum içinde ilerliyor.'
-                  : 'Labryinto has become one of Mea Culpa\'s annual rituals, the festival atmosphere evolving in strong harmony with our design language.',
+                  : 'Labryinto has become one of Mea Culpa\'s annual rituals, evolving in strong harmony with our design language.',
               },
               {
                 src: 'BPM.jpg',
@@ -451,16 +402,16 @@ export default function Home() {
                 location: 'Tamarindo, Guanacaste, Costa Rica',
                 desc: i18n.language === 'tr'
                   ? 'Mea Culpa artık BPM sahnesine yabancı değil. Markamız festival içinde çok daha görünür, çok daha bütünsel bir konuma ulaştı.'
-                  : 'Mea Culpa is no longer a stranger to the BPM stage, reaching a much more visible and holistic position within the festival.',
+                  : 'Mea Culpa is no longer a stranger to the BPM stage, reaching a much more visible position within the festival.',
               },
             ].map(({ src, title, location, desc }) => (
               <Link
                 key={src}
                 href="/festivals-and-blog"
                 className="group overflow-hidden rounded-2xl block"
-                style={{ background: '#fff' }}
+                style={{ background: 'rgba(255,244,222,0.08)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,244,222,0.15)' }}
               >
-                <div className="relative h-64 overflow-hidden rounded-t-2xl">
+                <div className="relative overflow-hidden rounded-t-2xl" style={{ height: 220 }}>
                   <Image
                     src={`/images/homepage/${src}`}
                     alt={title}
@@ -469,13 +420,12 @@ export default function Home() {
                   />
                 </div>
                 <div className="p-6">
-                  <p className="text-xs tracking-widest uppercase mb-1"
-                     style={{ color: '#9E906C' }}>{location}</p>
-                  <h3 className="text-xl font-bold mb-3" style={{ color: '#853710' }}>{title}</h3>
-                  <p className="text-sm leading-relaxed mb-4"
-                     style={{ color: '#9E906C' }}>{desc}</p>
-                  <span className="inline-flex items-center gap-1 text-sm font-medium"
-                        style={{ color: '#853710' }}>
+                  <p className="text-xs tracking-widest uppercase mb-1" style={{ color: '#F5D482', opacity: 0.75 }}>
+                    {location}
+                  </p>
+                  <h3 className="text-xl font-bold mb-3" style={{ color: '#FFF4DE' }}>{title}</h3>
+                  <p className="text-sm leading-relaxed mb-4" style={{ color: '#FFF4DE', opacity: 0.75 }}>{desc}</p>
+                  <span className="inline-flex items-center gap-1 text-sm font-medium" style={{ color: '#F5D482' }}>
                     {i18n.language === 'tr' ? 'Detaylı İncele' : 'Read More'}
                     <ArrowRight size={14} />
                   </span>
@@ -492,33 +442,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Brand Story Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-8">
-              {t('home.ourStory')}
-            </h2>
-            <p className="text-black dark:text-white text-lg leading-relaxed mb-6">
-              {t('home.storyText1')}
-            </p>
-            <p className="text-black dark:text-white text-lg leading-relaxed mb-8">
-              {t('home.storyText2')}
-            </p>
-            <Link href="/about" className="btn-primary">
-              {t('home.learnMore')}
-              <ArrowRight className="inline ml-2" size={20} />
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Customer Reviews */}
+      {/* ── 6. MÜŞTERİ YORUMLARI ── */}
       <Testimonials />
     </div>
   );

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
-import { Instagram, Facebook, Twitter, MessageCircle } from 'lucide-react';
+import { Instagram, MessageCircle } from 'lucide-react';
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -25,11 +25,6 @@ export default function Footer() {
       { name: t('footer.privacy'), href: '/privacy' },
       { name: t('footer.returns'), href: '/returns' },
     ],
-    legal: [
-      { name: t('footer.distanceSales'), href: '/distance-sales-agreement' },
-      { name: t('footer.privacy'), href: '/privacy' },
-      { name: t('footer.returns'), href: '/returns' },
-    ],
   };
 
   const socialMedia = [
@@ -43,59 +38,37 @@ export default function Footer() {
       icon: MessageCircle,
       href: 'https://wa.me/905075620802',
     },
-    {
-      name: 'Facebook',
-      icon: Facebook,
-      href: '#',
-    },
-    {
-      name: 'Twitter',
-      icon: Twitter,
-      href: '#',
-    },
   ];
 
   return (
-    <footer className="glass border-t border-black dark:border-white border-opacity-10 dark:border-opacity-10 mt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-          {/* Brand */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center gap-3 mb-4">
-              <Image src="/images/logo-symbol.png" alt="Mea Culpa" width={36} height={36} className="h-9 w-auto" />
-              <h2 className="text-xl font-semibold text-black dark:text-white">Mea Culpa</h2>
-            </div>
-            <p className="text-black dark:text-white text-sm mb-4 max-w-md">
-              {t('footer.brandDescription')}
-            </p>
-            <div className="flex space-x-4">
-              {socialMedia.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-black dark:text-white hover:text-black dark:hover:text-white transition-colors"
-                  aria-label={social.name}
-                >
-                  <social.icon size={20} />
-                </a>
-              ))}
-            </div>
-          </div>
+    <footer style={{ background: '#7a8570' }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
 
+        {/* Top: centered logo */}
+        <div className="flex flex-col items-center mb-12">
+          <Image
+            src="/images/logo-symbol.png"
+            alt="Mea Culpa"
+            width={56}
+            height={56}
+            className="h-14 w-auto mb-3"
+          />
+          <span className="text-lg font-semibold tracking-wider" style={{ color: '#FFF4DE' }}>
+            Mea Culpa
+          </span>
+        </div>
+
+        {/* Link columns */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mb-12">
           {/* Products */}
           <div>
-            <h3 className="text-black dark:text-white font-semibold mb-4">
+            <h3 className="text-xs tracking-widest uppercase font-semibold mb-4" style={{ color: '#F5D482' }}>
               {t('nav.products')}
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-2.5">
               {footerLinks.products.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-black dark:text-white text-sm hover:text-black dark:hover:text-white transition-colors"
-                  >
+                  <Link href={link.href} className="text-sm transition-opacity hover:opacity-100" style={{ color: '#FFF4DE', opacity: 0.8 }}>
                     {link.name}
                   </Link>
                 </li>
@@ -105,16 +78,13 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h3 className="text-black dark:text-white font-semibold mb-4">
+            <h3 className="text-xs tracking-widest uppercase font-semibold mb-4" style={{ color: '#F5D482' }}>
               {t('nav.corporate')}
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-2.5">
               {footerLinks.company.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-black dark:text-white text-sm hover:text-black dark:hover:text-white transition-colors"
-                  >
+                  <Link href={link.href} className="text-sm transition-opacity hover:opacity-100" style={{ color: '#FFF4DE', opacity: 0.8 }}>
                     {link.name}
                   </Link>
                 </li>
@@ -124,14 +94,13 @@ export default function Footer() {
 
           {/* Support */}
           <div>
-            <h3 className="text-black dark:text-white font-semibold mb-4">{t('footer.support')}</h3>
-            <ul className="space-y-2">
+            <h3 className="text-xs tracking-widest uppercase font-semibold mb-4" style={{ color: '#F5D482' }}>
+              {t('footer.support')}
+            </h3>
+            <ul className="space-y-2.5">
               {footerLinks.support.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-black dark:text-white text-sm hover:text-black dark:hover:text-white transition-colors"
-                  >
+                  <Link href={link.href} className="text-sm transition-opacity hover:opacity-100" style={{ color: '#FFF4DE', opacity: 0.8 }}>
                     {link.name}
                   </Link>
                 </li>
@@ -140,65 +109,67 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Payment Methods & Legal */}
-        <div className="mt-12 pt-8 border-t border-black dark:border-white border-opacity-10 dark:border-opacity-10">
-          <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
-            {/* Legal Links */}
-            <div className="flex flex-wrap justify-center gap-4 text-sm">
-              <Link
-                href="/distance-sales-agreement"
-                className="text-black dark:text-white hover:text-black dark:hover:text-white transition-colors"
+        {/* Bottom bar */}
+        <div
+          className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
+          style={{ borderTop: '1px solid rgba(255,244,222,0.2)' }}
+        >
+          {/* Social */}
+          <div className="flex items-center gap-4">
+            {socialMedia.map((social) => (
+              <a
+                key={social.name}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.name}
+                className="transition-opacity hover:opacity-100"
+                style={{ color: '#FFF4DE', opacity: 0.75 }}
               >
-                {t('footer.distanceSales')}
-              </Link>
-              <span className="text-gray-500 dark:text-gray-600">•</span>
-              <Link
-                href="/privacy"
-                className="text-black dark:text-white hover:text-black dark:hover:text-white transition-colors"
-              >
-                {t('footer.privacy')}
-              </Link>
-              <span className="text-gray-500 dark:text-gray-600">•</span>
-              <Link
-                href="/returns"
-                className="text-black dark:text-white hover:text-black dark:hover:text-white transition-colors"
-              >
-                {t('footer.returns')}
-              </Link>
-            </div>
-
-            {/* Payment Logos */}
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                {/* Visa */}
-                <div className="bg-white px-3 py-2 rounded flex items-center justify-center">
-                  <svg className="h-5 w-auto" viewBox="0 0 48 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <text x="0" y="12" fontFamily="Arial, sans-serif" fontSize="14" fontWeight="bold" fill="#1434CB" letterSpacing="1">VISA</text>
-                  </svg>
-                </div>
-                {/* Mastercard */}
-                <div className="bg-white px-3 py-2 rounded flex items-center justify-center">
-                  <svg className="h-5 w-auto" viewBox="0 0 48 32" fill="none">
-                    <circle cx="19" cy="16" r="11" fill="#EB001B"/>
-                    <circle cx="29" cy="16" r="11" fill="#F79E1B"/>
-                    <path d="M24 8a10.97 10.97 0 00-5 8 10.97 10.97 0 005 8 10.97 10.97 0 005-8 10.97 10.97 0 00-5-8z" fill="#FF5F00"/>
-                  </svg>
-                </div>
-                {/* iyzico */}
-                <div className="bg-white px-3 py-2 rounded flex items-center justify-center">
-                  <span className="text-[#1d3557] font-bold text-sm">iyzico</span>
-                </div>
-              </div>
-            </div>
+                <social.icon size={20} />
+              </a>
+            ))}
           </div>
 
-          {/* Copyright */}
-          <div className="mt-6 text-center">
-            <p className="text-black dark:text-white text-sm">
-              &copy; {new Date().getFullYear()} Mea Culpa. {t('footer.copyright')}
-            </p>
+          {/* Legal links */}
+          <div className="flex flex-wrap justify-center gap-4 text-xs" style={{ color: '#FFF4DE', opacity: 0.65 }}>
+            <Link href="/distance-sales-agreement" className="hover:opacity-100 transition-opacity">
+              {t('footer.distanceSales')}
+            </Link>
+            <span>•</span>
+            <Link href="/privacy" className="hover:opacity-100 transition-opacity">
+              {t('footer.privacy')}
+            </Link>
+            <span>•</span>
+            <Link href="/returns" className="hover:opacity-100 transition-opacity">
+              {t('footer.returns')}
+            </Link>
+          </div>
+
+          {/* Payment */}
+          <div className="flex items-center gap-2">
+            <div className="bg-white bg-opacity-15 px-3 py-1.5 rounded">
+              <svg className="h-4 w-auto" viewBox="0 0 48 16" fill="none">
+                <text x="0" y="12" fontFamily="Arial, sans-serif" fontSize="14" fontWeight="bold" fill="#ffffff" letterSpacing="1">VISA</text>
+              </svg>
+            </div>
+            <div className="bg-white bg-opacity-15 px-3 py-1.5 rounded flex items-center justify-center">
+              <svg className="h-4 w-auto" viewBox="0 0 40 26" fill="none">
+                <circle cx="15" cy="13" r="9" fill="#EB001B" fillOpacity="0.9"/>
+                <circle cx="25" cy="13" r="9" fill="#F79E1B" fillOpacity="0.9"/>
+                <path d="M20 6.5a9 9 0 000 13 9 9 0 000-13z" fill="#FF5F00" fillOpacity="0.9"/>
+              </svg>
+            </div>
+            <div className="bg-white bg-opacity-15 px-3 py-1.5 rounded">
+              <span className="text-xs font-bold" style={{ color: '#fff' }}>iyzico</span>
+            </div>
           </div>
         </div>
+
+        {/* Copyright */}
+        <p className="text-center text-xs mt-6" style={{ color: '#FFF4DE', opacity: 0.5 }}>
+          &copy; {new Date().getFullYear()} Mea Culpa. {t('footer.copyright')}
+        </p>
       </div>
     </footer>
   );
