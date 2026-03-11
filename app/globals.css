@@ -27,27 +27,35 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #000000;
-  --mea-gold: #D4AF37;
-  --mea-beige: #F5E6D3;
-  --mea-pearl: #F8F6F0;
-  --mea-earth: #8B7355;
+  --background: #FFF4DE;
+  --foreground: #1a0a00;
+  --mea-cream: #FFF4DE;
+  --mea-gold:  #F5D482;
+  --mea-taupe: #9E906C;
+  --mea-sage:  #889177;
+  --mea-rust:  #853710;
+  --mea-beige: #FFF4DE;
+  --mea-pearl: #FFF4DE;
+  --mea-earth: #9E906C;
 }
 
 .dark {
-  --background: #000000;
-  --foreground: #ffffff;
-  --mea-gold: #D4AF37;
-  --mea-beige: #ffffff;
-  --mea-pearl: #F8F6F0;
-  --mea-earth: #8B7355;
+  --background: #120800;
+  --foreground: #FFF4DE;
+  --mea-cream: #FFF4DE;
+  --mea-gold:  #F5D482;
+  --mea-taupe: #9E906C;
+  --mea-sage:  #889177;
+  --mea-rust:  #853710;
+  --mea-beige: #FFF4DE;
+  --mea-pearl: #FFF4DE;
+  --mea-earth: #9E906C;
 }
 
 @layer base {
   body {
     @apply bg-background text-foreground;
-    font-family: 'New Hero', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-family: var(--font-bellota), 'New Hero', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     min-height: 100vh;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
@@ -57,23 +65,23 @@
   /* Apple-like button */
   .btn-primary {
     @apply px-6 py-3 rounded-full font-medium transition-all duration-300;
-    background-color: var(--mea-beige);
-    color: #000000;
+    background-color: var(--mea-rust);
+    color: #FFF4DE;
   }
 
   .btn-primary:hover {
-    opacity: 0.9;
+    opacity: 0.88;
   }
 
   .btn-secondary {
     @apply px-6 py-3 rounded-full font-medium transition-all duration-300;
-    border: 1px solid var(--foreground);
-    color: var(--foreground);
+    border: 1px solid var(--mea-rust);
+    color: var(--mea-rust);
   }
 
   .btn-secondary:hover {
-    background-color: var(--foreground);
-    color: var(--background);
+    background-color: var(--mea-rust);
+    color: #FFF4DE;
   }
 
   /* Apple-like nav */

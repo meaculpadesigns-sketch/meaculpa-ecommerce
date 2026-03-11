@@ -154,6 +154,55 @@ export default function Home() {
         </motion.div>
       </section>
 
+      {/* Models / Collection Section */}
+      <section className="grid grid-cols-1 md:grid-cols-2 min-h-[75vh]">
+        {/* Sol: erkek kimono */}
+        <Link href="/products?category=kimono" className="relative overflow-hidden group block">
+          <Image
+            src="/images/homepage/sol-manken.png"
+            alt="Kimono Koleksiyonu"
+            fill
+            className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors duration-300" />
+          <div className="absolute bottom-10 left-8">
+            <p className="text-sm tracking-widest uppercase mb-2" style={{ color: '#FFF4DE', opacity: 0.8 }}>
+              {i18n.language === 'tr' ? 'Koleksiyon' : 'Collection'}
+            </p>
+            <h3 className="text-4xl font-bold mb-4" style={{ color: '#FFF4DE' }}>
+              {t('nav.kimono')}
+            </h3>
+            <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium"
+              style={{ background: '#853710', color: '#FFF4DE' }}>
+              {i18n.language === 'tr' ? 'Keşfet' : 'Explore'} <ArrowRight size={16} />
+            </span>
+          </div>
+        </Link>
+
+        {/* Sağ: kadın set */}
+        <Link href="/products?category=set" className="relative overflow-hidden group block" style={{ background: '#FFF4DE' }}>
+          <Image
+            src="/images/homepage/sag-manken.png"
+            alt="Set Koleksiyonu"
+            fill
+            className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 transition-colors duration-300" style={{ background: 'rgba(136,145,119,0.05)' }} />
+          <div className="absolute bottom-10 right-8 text-right">
+            <p className="text-sm tracking-widest uppercase mb-2" style={{ color: '#853710', opacity: 0.7 }}>
+              {i18n.language === 'tr' ? 'Koleksiyon' : 'Collection'}
+            </p>
+            <h3 className="text-4xl font-bold mb-4" style={{ color: '#853710' }}>
+              {t('nav.set')}
+            </h3>
+            <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium"
+              style={{ background: '#853710', color: '#FFF4DE' }}>
+              {i18n.language === 'tr' ? 'Keşfet' : 'Explore'} <ArrowRight size={16} />
+            </span>
+          </div>
+        </Link>
+      </section>
+
       {/* Kimono Section */}
       <section className="py-20">
         <div>
@@ -238,6 +287,41 @@ export default function Home() {
               <ChevronRight size={20} className="text-black dark:text-white" />
             </button>
           </div>
+        </div>
+      </section>
+
+      {/* Polaroid Gallery */}
+      <section className="py-16 overflow-hidden" style={{ background: '#FFF4DE' }}>
+        <div className="px-6 md:px-12 mb-8">
+          <p className="text-sm tracking-widest uppercase mb-1" style={{ color: '#853710', opacity: 0.7 }}>
+            {i18n.language === 'tr' ? 'Anlar' : 'Moments'}
+          </p>
+          <h2 className="text-3xl font-bold" style={{ color: '#853710' }}>
+            {i18n.language === 'tr' ? 'Yaşanmış Hikayeler' : 'Lived Stories'}
+          </h2>
+        </div>
+        <div className="flex gap-5 px-6 md:px-12 overflow-x-auto scrollbar-hide pb-4">
+          {[
+            { src: '2polaroid.png', ext: 'png' },
+            { src: '3polaroid.png', ext: 'png' },
+            { src: 'polaroid3.png', ext: 'png' },
+            { src: 'polaroid4.png', ext: 'png' },
+          ].map(({ src }) => (
+            <div
+              key={src}
+              className="flex-shrink-0 shadow-lg rotate-1 odd:rotate-[-1deg] even:rotate-[1deg]"
+              style={{ background: '#fff', padding: '10px 10px 36px 10px', width: 220 }}
+            >
+              <div className="relative w-full" style={{ height: 260 }}>
+                <Image
+                  src={`/images/homepage/${src}`}
+                  alt="Mea Culpa moment"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -326,6 +410,28 @@ export default function Home() {
             </button>
           </div>
         </div>
+      </section>
+
+      {/* Lifestyle Grid */}
+      <section className="grid grid-cols-1 md:grid-cols-3 h-72 md:h-[480px]">
+        {[
+          { src: 'forest.jpg',    label: i18n.language === 'tr' ? 'Doğa' : 'Nature' },
+          { src: 'labryinto.jpg', label: i18n.language === 'tr' ? 'Festival' : 'Festival' },
+          { src: 'BPM.jpg',       label: i18n.language === 'tr' ? 'Kaçış' : 'Escape' },
+        ].map(({ src, label }) => (
+          <div key={src} className="relative overflow-hidden group">
+            <Image
+              src={`/images/homepage/${src}`}
+              alt={label}
+              fill
+              className="object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-black/25 group-hover:bg-black/10 transition-colors duration-300" />
+            <span className="absolute bottom-6 left-6 text-lg font-semibold tracking-wide" style={{ color: '#FFF4DE' }}>
+              {label}
+            </span>
+          </div>
+        ))}
       </section>
 
       {/* Brand Story Section */}
