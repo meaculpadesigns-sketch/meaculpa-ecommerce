@@ -21,8 +21,9 @@ const config: Config = {
         'mea-earth':  '#9E906C',
       },
       fontFamily: {
-        sans: ["'Bellota'", "'New Hero'", '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-        'bellota': ["'Bellota'", 'sans-serif'],
+        sans: ["'Geom'", '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        'geom': ["'Geom'", 'sans-serif'],
+        'bellota': ["'Bellota Text'", 'sans-serif'],
         'new-hero': ["'New Hero'", '-apple-system', 'sans-serif'],
         'warbler': ["'Warbler Banner'", 'serif'],
       },

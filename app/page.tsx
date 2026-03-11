@@ -412,26 +412,84 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Lifestyle Grid */}
-      <section className="grid grid-cols-1 md:grid-cols-3 h-72 md:h-[480px]">
-        {[
-          { src: 'forest.jpg',    label: i18n.language === 'tr' ? 'Doğa' : 'Nature' },
-          { src: 'labryinto.jpg', label: i18n.language === 'tr' ? 'Festival' : 'Festival' },
-          { src: 'BPM.jpg',       label: i18n.language === 'tr' ? 'Kaçış' : 'Escape' },
-        ].map(({ src, label }) => (
-          <div key={src} className="relative overflow-hidden group">
-            <Image
-              src={`/images/homepage/${src}`}
-              alt={label}
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-black/25 group-hover:bg-black/10 transition-colors duration-300" />
-            <span className="absolute bottom-6 left-6 text-lg font-semibold tracking-wide" style={{ color: '#FFF4DE' }}>
-              {label}
-            </span>
+      {/* Festivaller & Blog */}
+      <section className="py-16 px-6 md:px-12" style={{ background: '#FFF4DE' }}>
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-end justify-between mb-10">
+            <div>
+              <p className="text-sm tracking-widest uppercase mb-1"
+                 style={{ color: '#853710', opacity: 0.7 }}>
+                {i18n.language === 'tr' ? 'Deneyimler' : 'Experiences'}
+              </p>
+              <h2 className="text-4xl font-bold" style={{ color: '#853710' }}>
+                {t('nav.festivalsAndBlog')}
+              </h2>
+            </div>
+            <Link
+              href="/festivals-and-blog"
+              className="hidden md:inline-flex items-center gap-2 text-sm font-medium"
+              style={{ color: '#853710' }}
+            >
+              {i18n.language === 'tr' ? 'Tümünü Gör' : 'View All'}
+              <ArrowRight size={16} />
+            </Link>
           </div>
-        ))}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              {
+                src: 'labryinto.jpg',
+                title: 'LABRYINTO FESTIVAL 2025',
+                location: 'Guanacaste / Costa Rica',
+                desc: i18n.language === 'tr'
+                  ? 'Labryinto artık Mea Culpa\'nın yıllık ritüellerinden biri hâline geldi. Festival atmosferi, markamızın tasarım diliyle güçlü bir uyum içinde ilerliyor.'
+                  : 'Labryinto has become one of Mea Culpa\'s annual rituals, the festival atmosphere evolving in strong harmony with our design language.',
+              },
+              {
+                src: 'BPM.jpg',
+                title: 'THE BPM FESTIVAL 2024',
+                location: 'Tamarindo, Guanacaste, Costa Rica',
+                desc: i18n.language === 'tr'
+                  ? 'Mea Culpa artık BPM sahnesine yabancı değil. Markamız festival içinde çok daha görünür, çok daha bütünsel bir konuma ulaştı.'
+                  : 'Mea Culpa is no longer a stranger to the BPM stage, reaching a much more visible and holistic position within the festival.',
+              },
+            ].map(({ src, title, location, desc }) => (
+              <Link
+                key={src}
+                href="/festivals-and-blog"
+                className="group overflow-hidden rounded-2xl block"
+                style={{ background: '#fff' }}
+              >
+                <div className="relative h-64 overflow-hidden rounded-t-2xl">
+                  <Image
+                    src={`/images/homepage/${src}`}
+                    alt={title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-6">
+                  <p className="text-xs tracking-widest uppercase mb-1"
+                     style={{ color: '#9E906C' }}>{location}</p>
+                  <h3 className="text-xl font-bold mb-3" style={{ color: '#853710' }}>{title}</h3>
+                  <p className="text-sm leading-relaxed mb-4"
+                     style={{ color: '#9E906C' }}>{desc}</p>
+                  <span className="inline-flex items-center gap-1 text-sm font-medium"
+                        style={{ color: '#853710' }}>
+                    {i18n.language === 'tr' ? 'Detaylı İncele' : 'Read More'}
+                    <ArrowRight size={14} />
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          <div className="flex md:hidden justify-center mt-8">
+            <Link href="/festivals-and-blog" className="btn-primary">
+              {i18n.language === 'tr' ? 'Tümünü Gör' : 'View All'}
+            </Link>
+          </div>
+        </div>
       </section>
 
       {/* Brand Story Section */}

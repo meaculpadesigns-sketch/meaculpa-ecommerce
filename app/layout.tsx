@@ -1,15 +1,6 @@
 import type { Metadata } from 'next';
 import { ThemeProvider } from 'next-themes';
-import { Bellota } from 'next/font/google';
 import './globals.css';
-
-const bellota = Bellota({
-  subsets: ['latin'],
-  weight: ['300', '400', '700'],
-  style: ['normal', 'italic'],
-  variable: '--font-bellota',
-  display: 'swap',
-});
 import I18nProvider from '@/components/I18nProvider';
 import { CartProvider } from '@/lib/cart-context';
 import Navbar from '@/components/Navbar';
@@ -76,7 +67,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="tr" suppressHydrationWarning>
-      <body className={`antialiased ${bellota.variable}`}>
+      <body className="antialiased">
         <I18nProvider>
           <CartProvider>
             <ThemeProvider attribute="class" defaultTheme="light" enableSystem={true} storageKey="mea-culpa-theme">
