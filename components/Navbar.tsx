@@ -162,17 +162,17 @@ export default function Navbar() {
           borderColor: isScrolled ? 'rgba(0,0,0,0.1)' : undefined,
         }}
       >
-        <div className="w-full px-4 md:px-8">
+        <div className="w-full px-4 md:px-8 pt-10 md:pt-14">
           <div className="flex items-stretch">
 
             {/* ── SOL: Logo (dikey, tam yüksekliği kaplar) ── */}
-            <Link href="/" className="flex-shrink-0 flex items-end pr-6 md:pr-10 py-2">
+            <Link href="/" className="flex-shrink-0 flex items-end pr-6 md:pr-10 pb-2">
               <Image
                 src="/images/logo-main.svg"
                 alt="Mea Culpa"
-                width={180}
-                height={90}
-                className="w-28 md:w-36 lg:w-44 h-auto object-contain"
+                width={260}
+                height={130}
+                className="w-44 md:w-56 lg:w-64 h-auto object-contain"
                 priority
               />
             </Link>
@@ -181,7 +181,7 @@ export default function Navbar() {
             <div className="flex-1 flex flex-col">
 
               {/* Üst satır: ikonlar sağa hizalı */}
-              <div className="flex items-center justify-end gap-3 pt-2.5 pb-2">
+              <div className="flex items-center justify-end gap-3 pb-2">
                 <button onClick={() => setSearchOpen(true)} className={iconClass}>
                   <Search size={17} />
                 </button>
@@ -341,7 +341,7 @@ export default function Navbar() {
       </AnimatePresence>
 
       {/* Spacer — navbar yüksekliğine uygun */}
-      <div className="h-20" />
+      <div className="h-44" />
     </>
   );
 }

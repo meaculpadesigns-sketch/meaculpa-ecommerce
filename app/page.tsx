@@ -46,7 +46,7 @@ export default function Home() {
   return (
     <div>
       {/* ── 1. HERO – Full bleed fotoğraf + overlay içerik ── */}
-      <section className="relative h-screen -mt-20">
+      <section className="relative h-screen -mt-44">
         {/* Görsel wrapper — overflow-hidden sadece burada */}
         <div className="absolute inset-0 overflow-hidden">
           <Image
