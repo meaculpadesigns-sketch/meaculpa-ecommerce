@@ -46,7 +46,7 @@ export default function Home() {
   return (
     <div>
       {/* ── 1. HERO – Full bleed fotoğraf + overlay içerik ── */}
-      <section className="relative h-screen overflow-hidden">
+      <section className="relative h-screen overflow-hidden -mt-20">
         {/* Tam ekran arka plan fotoğrafı */}
         <Image
           src="/images/homepage/1giristakimlar.png"
@@ -59,22 +59,6 @@ export default function Home() {
 
         {/* Overlay içerik */}
         <div className="absolute inset-0 z-10 flex flex-col justify-between px-8 md:px-16 py-10 md:py-14">
-
-          {/* Sol üst: büyük logo */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <Image
-              src="/images/logo-main.svg"
-              alt="Mea Culpa"
-              width={240}
-              height={240}
-              className="w-40 md:w-52 lg:w-64 object-contain"
-              priority
-            />
-          </motion.div>
 
           {/* Sol alt: slogan + metin + CTA */}
           <motion.div
