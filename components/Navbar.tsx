@@ -35,7 +35,6 @@ export default function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -53,24 +52,103 @@ export default function Navbar() {
     }
   };
 
-  const navItems = [
-    {
-      name: t('nav.kimono'),
-      href: '/products?category=kimono',
-      hasDropdown: false
-    },
-    {
-      name: t('nav.set'),
-      href: '/products?category=set',
-      hasDropdown: true,
-      subcategories: setSecondLevelCategories
-    },
-    { name: t('nav.festivalsAndBlog'), href: '/festivals-and-blog' },
-    { name: t('nav.corporate'), href: '/corporate' },
-    { name: t('nav.aboutUs'), href: '/about' },
-    { name: t('nav.designRequest'), href: '/design-request' },
-    { name: t('nav.tryOn'), href: '/try-on' },
+  type NavItem = { name: string; href: string; hasDropdown: boolean; subcategories?: typeof setSecondLevelCategories; thirdLevel?: boolean };
+
+  // Sol grup: ürün/keşif linkleri
+  const leftNavItems: NavItem[] = [
+    { name: t('nav.kimono'), href: '/products?category=kimono', hasDropdown: false },
+    { name: t('nav.set'), href: '/products?category=set', hasDropdown: true, subcategories: setSecondLevelCategories },
+    { name: t('nav.designRequest'), href: '/design-request', hasDropdown: false },
   ];
+
+  // Sağ grup: kurumsal linkleri
+  const rightNavItems: NavItem[] = [
+    { name: t('nav.aboutUs'), href: '/about', hasDropdown: false },
+    { name: t('nav.corporate'), href: '/corporate', hasDropdown: false },
+    { name: t('nav.tryOn'), href: '/try-on', hasDropdown: false },
+  ];
+
+  // Mobil menü için tüm linkler
+  const allNavItems: NavItem[] = [
+    ...leftNavItems,
+    { name: t('nav.festivalsAndBlog'), href: '/festivals-and-blog', hasDropdown: false },
+    ...rightNavItems,
+  ];
+
+  const linkColor = !isScrolled ? '#FFF4DE' : undefined;
+  const iconClass = !isScrolled
+    ? 'text-[#FFF4DE] opacity-80 hover:opacity-100 transition-opacity'
+    : 'text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors';
+  const dividerColor = !isScrolled ? 'rgba(255,244,222,0.3)' : 'rgba(0,0,0,0.12)';
+
+  const renderNavLink = (item: NavItem) => (
+    <div
+      key={item.href}
+      className="relative"
+      onMouseEnter={() => item.hasDropdown && setOpenDropdown(item.name)}
+      onMouseLeave={() => setOpenDropdown(null)}
+    >
+      <Link
+        href={item.href}
+        className="nav-link px-3 py-1.5 rounded-lg hover:bg-white hover:bg-opacity-5 flex items-center gap-1 text-sm"
+        style={{ color: linkColor }}
+      >
+        {item.name}
+        {item.hasDropdown && <ChevronDown size={13} />}
+      </Link>
+
+      {item.hasDropdown && openDropdown === item.name && (
+        <motion.div
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 6 }}
+          className="absolute top-full left-0 pt-4 pb-20 z-50"
+        >
+          {item.href.includes('kimono') ? (
+            <div className="glass rounded-xl border border-black dark:border-white border-opacity-10 dark:border-opacity-10 shadow-xl overflow-hidden min-w-[280px]">
+              {kimonoSubcategories.map((sub) => (
+                <Link
+                  key={sub.key}
+                  href={`/products?category=kimono&subcategory=${sub.key}`}
+                  className="block px-6 py-3 text-gray-700 dark:text-gray-300 hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-10 hover:text-black dark:hover:text-white transition-colors border-b border-black dark:border-white border-opacity-5 last:border-0"
+                >
+                  <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? sub.name : sub.nameEn}</div>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="glass rounded-xl border border-black dark:border-white border-opacity-10 dark:border-opacity-10 shadow-xl overflow-visible min-w-[400px]">
+              <div className="grid grid-cols-2 divide-x divide-black dark:divide-white divide-opacity-10">
+                {setSecondLevelCategories.map((secondLevel) => (
+                  <div key={secondLevel.key} className="relative group">
+                    <Link
+                      href={`/products?category=set&subcategory=${secondLevel.key}`}
+                      className="block px-8 py-4 text-gray-700 dark:text-gray-300 hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-5 transition-colors"
+                    >
+                      <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? secondLevel.name : secondLevel.nameEn}</div>
+                    </Link>
+                    <div className="absolute top-full left-0 mt-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all z-50">
+                      <div className="glass rounded-xl border border-black dark:border-white border-opacity-10 shadow-xl overflow-hidden w-64">
+                        {getThirdLevelCategories(secondLevel.key as 'kreasyonlar' | 'setler').map((third) => (
+                          <Link
+                            key={third.key}
+                            href={`/products?category=set&subcategory=${secondLevel.key}&thirdLevel=${third.key}`}
+                            className="block px-5 py-3 text-gray-700 dark:text-gray-300 hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-10 hover:text-black dark:hover:text-white transition-colors border-b border-black dark:border-white border-opacity-5 last:border-0"
+                          >
+                            <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? third.name : third.nameEn}</div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </motion.div>
+      )}
+    </div>
+  );
 
   return (
     <>
@@ -78,169 +156,80 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'glass border-b' : ''
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'glass border-b' : ''}`}
         style={{
           background: isScrolled ? undefined : 'transparent',
-          borderColor: isScrolled ? 'rgba(var(--foreground-rgb, 0, 0, 0), 0.1)' : undefined
+          borderColor: isScrolled ? 'rgba(0,0,0,0.1)' : undefined,
         }}
       >
         <div className="w-full px-4 md:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo - Left (unscrolled: küçük sembol; scrolled: tam logo) */}
-            <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-              {isScrolled ? (
-                <Image
-                  src="/images/logo-main.svg"
-                  alt="Mea Culpa"
-                  width={160}
-                  height={80}
-                  className="w-20 md:w-28 h-auto object-contain"
-                  priority
-                />
-              ) : (
-                <Image
-                  src="/images/logo-symbol.png"
-                  alt="Mea Culpa"
-                  width={32}
-                  height={32}
-                  className="w-7 h-7 object-contain opacity-70"
-                  priority
-                />
-              )}
+          <div className="flex items-stretch">
+
+            {/* ── SOL: Logo (dikey, tam yüksekliği kaplar) ── */}
+            <Link href="/" className="flex-shrink-0 flex items-end pr-6 md:pr-10 py-2">
+              <Image
+                src="/images/logo-main.svg"
+                alt="Mea Culpa"
+                width={180}
+                height={90}
+                className="w-28 md:w-36 lg:w-44 h-auto object-contain"
+                priority
+              />
             </Link>
 
-            {/* Right side: Desktop nav + Icons */}
-            <div className="flex items-center gap-1">
-              {/* Desktop nav items */}
-              <div className="hidden lg:flex items-center space-x-1">
-                {navItems.map((item) => (
-                  <div
-                    key={item.href}
-                    className="relative"
-                    onMouseEnter={() => item.hasDropdown && setOpenDropdown(item.name)}
-                    onMouseLeave={() => setOpenDropdown(null)}
-                  >
-                    <Link
-                      href={item.href}
-                      className="nav-link px-3 py-2 rounded-lg hover:bg-white hover:bg-opacity-5 flex items-center gap-1"
-                      style={!isScrolled ? { color: '#FFF4DE', opacity: 0.9 } : undefined}
-                    >
-                      {item.name}
-                      {item.hasDropdown && <ChevronDown size={14} />}
-                    </Link>
+            {/* ── SAĞ: İki satırlı bölüm ── */}
+            <div className="flex-1 flex flex-col">
 
-                    {item.hasDropdown && openDropdown === item.name && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        className="absolute top-full right-0 pt-8 pb-32 z-50"
-                      >
-                        {item.href.includes('kimono') ? (
-                          <div className="glass rounded-xl border border-black dark:border-white border-opacity-10 dark:border-opacity-10 shadow-xl overflow-hidden min-w-[280px]">
-                            {kimonoSubcategories.map((sub) => (
-                              <Link
-                                key={sub.key}
-                                href={`/products?category=kimono&subcategory=${sub.key}`}
-                                className="block px-6 py-3 text-gray-700 dark:text-gray-300 hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-10 hover:text-black dark:hover:text-white transition-colors border-b border-black dark:border-white border-opacity-5 dark:border-opacity-5 last:border-0"
-                              >
-                                <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? sub.name : sub.nameEn}</div>
-                              </Link>
-                            ))}
-                          </div>
-                        ) : (
-                          <div className="glass rounded-xl border border-black dark:border-white border-opacity-10 dark:border-opacity-10 shadow-xl overflow-visible min-w-[400px]">
-                            <div className="grid grid-cols-2 divide-x divide-black dark:divide-white divide-opacity-10 dark:divide-opacity-10">
-                              {setSecondLevelCategories.map((secondLevel) => (
-                                <div key={secondLevel.key} className="relative group">
-                                  <Link
-                                    href={`/products?category=set&subcategory=${secondLevel.key}`}
-                                    className="block px-8 py-4 text-gray-700 dark:text-gray-300 hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-5 transition-colors cursor-pointer"
-                                  >
-                                    <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? secondLevel.name : secondLevel.nameEn}</div>
-                                  </Link>
-                                  <div className="absolute top-full left-0 mt-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all z-50">
-                                    <div className="glass rounded-xl border border-black dark:border-white border-opacity-10 dark:border-opacity-10 shadow-xl overflow-hidden w-64">
-                                      {getThirdLevelCategories(secondLevel.key as 'kreasyonlar' | 'setler').map((third) => (
-                                        <Link
-                                          key={third.key}
-                                          href={`/products?category=set&subcategory=${secondLevel.key}&thirdLevel=${third.key}`}
-                                          className="block px-5 py-3 text-gray-700 dark:text-gray-300 hover:bg-black hover:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-10 hover:text-black dark:hover:text-white transition-colors border-b border-black dark:border-white border-opacity-5 dark:border-opacity-5 last:border-0"
-                                        >
-                                          <div className="font-medium text-sm whitespace-nowrap">{i18n.language === 'tr' ? third.name : third.nameEn}</div>
-                                        </Link>
-                                      ))}
-                                    </div>
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </motion.div>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              {/* Icons */}
-              <div
-                className="flex items-center space-x-3 ml-2"
-                style={!isScrolled ? { color: '#FFF4DE' } : undefined}
-              >
-                <button
-                  onClick={() => setSearchOpen(true)}
-                  className={`transition-colors ${!isScrolled ? 'text-[#FFF4DE] hover:opacity-100 opacity-80' : 'text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white'}`}
-                >
-                  <Search size={18} />
+              {/* Üst satır: ikonlar sağa hizalı */}
+              <div className="flex items-center justify-end gap-3 pt-2.5 pb-2">
+                <button onClick={() => setSearchOpen(true)} className={iconClass}>
+                  <Search size={17} />
                 </button>
-
-                <button
-                  onClick={toggleLanguage}
-                  className={`flex items-center space-x-1 transition-colors ${!isScrolled ? 'text-[#FFF4DE] hover:opacity-100 opacity-80' : 'text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white'}`}
-                >
-                  <Globe size={18} />
-                  <span className="text-sm font-medium">
-                    {i18n.language.toUpperCase()}
-                  </span>
+                <button onClick={toggleLanguage} className={`flex items-center gap-1 ${iconClass}`}>
+                  <Globe size={17} />
+                  <span className="text-xs font-medium">{i18n.language.toUpperCase()}</span>
                 </button>
-
                 <button
                   onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                  className={`transition-colors ${!isScrolled ? 'text-[#FFF4DE] hover:opacity-100 opacity-80' : 'text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white'}`}
+                  className={iconClass}
                   aria-label="Toggle theme"
                 >
-                  {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                  {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
                 </button>
-
-                <Link
-                  href="/cart"
-                  className={`relative transition-colors ${!isScrolled ? 'text-[#FFF4DE] hover:opacity-100 opacity-80' : 'text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white'}`}
-                >
-                  <ShoppingCart size={18} />
+                <Link href="/cart" className={`relative ${iconClass}`}>
+                  <ShoppingCart size={17} />
                   {cartCount > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-mea-gold text-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                    <span className="absolute -top-2 -right-2 bg-mea-gold text-black text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">
                       {cartCount}
                     </span>
                   )}
                 </Link>
-
-                <Link
-                  href="/profile"
-                  className={`transition-colors ${!isScrolled ? 'text-[#FFF4DE] hover:opacity-100 opacity-80' : 'text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white'}`}
-                >
-                  <User size={18} />
+                <Link href="/profile" className={iconClass}>
+                  <User size={17} />
                 </Link>
-
                 <button
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className={`lg:hidden transition-colors ${!isScrolled ? 'text-[#FFF4DE] hover:opacity-100 opacity-80' : 'text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white'}`}
+                  className={`lg:hidden ${iconClass}`}
                 >
-                  {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                  {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
                 </button>
               </div>
+
+              {/* Yatay çizgi */}
+              <div style={{ borderTop: `1px solid ${dividerColor}` }} />
+
+              {/* Alt satır: nav linkleri (sadece desktop) */}
+              <div className="hidden lg:flex items-center justify-between pt-2 pb-2.5">
+                {/* Sol grup */}
+                <div className="flex items-center">
+                  {leftNavItems.map(renderNavLink)}
+                </div>
+                {/* Sağ grup */}
+                <div className="flex items-center">
+                  {rightNavItems.map(renderNavLink)}
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
@@ -257,13 +246,13 @@ export default function Navbar() {
             className="fixed inset-0 z-40 lg:hidden"
           >
             <div className="fixed inset-0 glass">
-              <div className="flex flex-col h-full pt-20 px-6 pb-6 overflow-y-auto">
-                {navItems.map((item) => (
+              <div className="flex flex-col h-full pt-24 px-6 pb-6 overflow-y-auto">
+                {allNavItems.map((item) => (
                   <div key={item.href}>
                     <Link
                       href={item.href}
                       onClick={() => !item.hasDropdown && setIsMobileMenuOpen(false)}
-                      className="text-2xl text-black dark:text-white font-medium py-4 border-b border-black dark:border-white border-opacity-10 dark:border-opacity-10 hover:text-mea-gold transition-colors block"
+                      className="text-2xl text-black dark:text-white font-medium py-4 border-b border-black dark:border-white border-opacity-10 hover:text-mea-gold transition-colors block"
                     >
                       {item.name}
                     </Link>
@@ -298,20 +287,11 @@ export default function Navbar() {
                     )}
                   </div>
                 ))}
-
                 <div className="mt-8 space-y-4">
-                  <Link
-                    href="/login"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block text-center btn-primary w-full"
-                  >
+                  <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="block text-center btn-primary w-full">
                     {t('nav.login')}
                   </Link>
-                  <Link
-                    href="/signup"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block text-center btn-secondary w-full"
-                  >
+                  <Link href="/signup" onClick={() => setIsMobileMenuOpen(false)} className="block text-center btn-secondary w-full">
                     {t('nav.signup')}
                   </Link>
                 </div>
@@ -348,25 +328,20 @@ export default function Navbar() {
                   className="flex-1 px-6 py-4 bg-black dark:bg-white bg-opacity-5 dark:bg-opacity-10 border border-black dark:border-white border-opacity-20 dark:border-opacity-20 rounded-xl text-black dark:text-white placeholder-gray-600 dark:placeholder-gray-400 focus:outline-none focus:border-mea-gold"
                   autoFocus
                 />
-                <button
-                  type="submit"
-                  className="px-8 py-4 bg-mea-gold text-black font-semibold rounded-xl hover:bg-opacity-90 transition-all"
-                >
+                <button type="submit" className="px-8 py-4 bg-mea-gold text-black font-semibold rounded-xl hover:bg-opacity-90 transition-all">
                   {t('common.search')}
                 </button>
               </form>
               <p className="text-gray-600 dark:text-gray-400 text-sm mt-4">
-                {i18n.language === 'tr'
-                  ? 'Ürün adı veya açıklama ile arayın'
-                  : 'Search by product name or description'}
+                {i18n.language === 'tr' ? 'Ürün adı veya açıklama ile arayın' : 'Search by product name or description'}
               </p>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Spacer */}
-      <div className="h-16" />
+      {/* Spacer — navbar yüksekliğine uygun */}
+      <div className="h-20" />
     </>
   );
 }
