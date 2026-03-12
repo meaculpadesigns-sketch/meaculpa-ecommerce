@@ -49,13 +49,13 @@ export default function Home() {
       <section className="relative h-screen overflow-hidden">
         {/* Tam ekran arka plan fotoğrafı */}
         <Image
-          src="/images/header-hero.jpg"
+          src="/images/homepage/1giristakimlar.png"
           alt="Mea Culpa koleksiyon"
           fill
           className="object-cover object-center"
           priority
         />
-        <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.38)' }} />
+        <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.45)' }} />
 
         {/* Overlay içerik */}
         <div className="absolute inset-0 z-10 flex flex-col justify-between px-8 md:px-16 py-10 md:py-14">
@@ -67,11 +67,11 @@ export default function Home() {
             transition={{ duration: 0.8 }}
           >
             <Image
-              src="/images/logo_no_bg.png"
+              src="/images/logo-main.svg"
               alt="Mea Culpa"
-              width={220}
-              height={220}
-              className="w-36 md:w-48 lg:w-56 object-contain"
+              width={240}
+              height={240}
+              className="w-40 md:w-52 lg:w-64 object-contain"
               priority
             />
           </motion.div>
@@ -99,8 +99,8 @@ export default function Home() {
             </p>
             <Link
               href="/products"
-              className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-medium transition-all"
-              style={{ background: '#FFF4DE', color: '#853710' }}
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-lg font-medium transition-all hover:bg-white hover:bg-opacity-10"
+              style={{ border: '1.5px solid #FFF4DE', color: '#FFF4DE' }}
             >
               {i18n.language === 'tr' ? 'Alışverişe Başla' : 'Start Shopping'}
               <ArrowRight size={18} />

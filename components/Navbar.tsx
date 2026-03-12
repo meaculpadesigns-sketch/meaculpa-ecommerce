@@ -79,9 +79,7 @@ export default function Navbar() {
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? 'glass border-b'
-            : 'backdrop-blur-md'
+          isScrolled ? 'glass border-b' : ''
         }`}
         style={{
           borderColor: isScrolled ? 'rgba(var(--foreground-rgb, 0, 0, 0), 0.1)' : undefined
@@ -92,11 +90,11 @@ export default function Navbar() {
             {/* Logo - Left */}
             <Link href="/" className="flex items-center gap-2 flex-shrink-0">
               <Image
-                src="/images/logo_no_bg.png"
+                src={isScrolled ? "/images/logo-main.svg" : "/images/logo-light.svg"}
                 alt="Mea Culpa"
                 width={160}
                 height={80}
-                className="w-24 md:w-32 h-auto object-contain"
+                className="w-20 md:w-28 h-auto object-contain"
                 priority
               />
             </Link>
@@ -115,6 +113,7 @@ export default function Navbar() {
                     <Link
                       href={item.href}
                       className="nav-link px-3 py-2 rounded-lg hover:bg-white hover:bg-opacity-5 flex items-center gap-1"
+                      style={!isScrolled ? { color: '#FFF4DE', opacity: 0.9 } : undefined}
                     >
                       {item.name}
                       {item.hasDropdown && <ChevronDown size={14} />}
@@ -175,17 +174,20 @@ export default function Navbar() {
               </div>
 
               {/* Icons */}
-              <div className="flex items-center space-x-3 ml-2">
+              <div
+                className="flex items-center space-x-3 ml-2"
+                style={!isScrolled ? { color: '#FFF4DE' } : undefined}
+              >
                 <button
                   onClick={() => setSearchOpen(true)}
-                  className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
+                  className={`transition-colors ${!isScrolled ? 'text-[#FFF4DE] hover:opacity-100 opacity-80' : 'text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white'}`}
                 >
                   <Search size={18} />
                 </button>
 
                 <button
                   onClick={toggleLanguage}
-                  className="flex items-center space-x-1 text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
+                  className={`flex items-center space-x-1 transition-colors ${!isScrolled ? 'text-[#FFF4DE] hover:opacity-100 opacity-80' : 'text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white'}`}
                 >
                   <Globe size={18} />
                   <span className="text-sm font-medium">
@@ -195,7 +197,7 @@ export default function Navbar() {
 
                 <button
                   onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                  className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
+                  className={`transition-colors ${!isScrolled ? 'text-[#FFF4DE] hover:opacity-100 opacity-80' : 'text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white'}`}
                   aria-label="Toggle theme"
                 >
                   {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
@@ -203,7 +205,7 @@ export default function Navbar() {
 
                 <Link
                   href="/cart"
-                  className="relative text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
+                  className={`relative transition-colors ${!isScrolled ? 'text-[#FFF4DE] hover:opacity-100 opacity-80' : 'text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white'}`}
                 >
                   <ShoppingCart size={18} />
                   {cartCount > 0 && (
@@ -215,14 +217,14 @@ export default function Navbar() {
 
                 <Link
                   href="/profile"
-                  className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
+                  className={`transition-colors ${!isScrolled ? 'text-[#FFF4DE] hover:opacity-100 opacity-80' : 'text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white'}`}
                 >
                   <User size={18} />
                 </Link>
 
                 <button
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className="lg:hidden text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
+                  className={`lg:hidden transition-colors ${!isScrolled ? 'text-[#FFF4DE] hover:opacity-100 opacity-80' : 'text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white'}`}
                 >
                   {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>
