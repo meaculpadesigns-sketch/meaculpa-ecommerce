@@ -95,23 +95,41 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* Sağ taraf: çapraz polaroidler — top-0 ile kimono'ya taşabilir */}
-        <div className="absolute right-8 md:right-16 top-0 w-72 md:w-96 hidden md:block pointer-events-none" style={{ zIndex: 12, height: '130vh' }}>
-          <div
-            className="absolute shadow-2xl"
-            style={{ top: '48%', left: '0%', transform: 'rotate(-10deg)', background: '#fff', padding: '8px 8px 30px 8px', width: 210 }}
-          >
-            <div className="relative" style={{ height: 258 }}>
-              <Image src="/images/homepage/2polaroid.png" alt="" fill className="object-cover" />
-            </div>
+        {/* 2polaroid — sol üst köşe erkek modelin omzunda */}
+        <div
+          className="absolute shadow-2xl hidden md:block pointer-events-none"
+          style={{
+            top: '37%',
+            left: '42%',
+            transform: 'rotate(-10deg)',
+            transformOrigin: 'top left',
+            background: '#fff',
+            padding: '8px 8px 30px 8px',
+            width: 240,
+            zIndex: 12,
+          }}
+        >
+          <div className="relative" style={{ height: 295 }}>
+            <Image src="/images/homepage/2polaroid.png" alt="" fill className="object-cover" />
           </div>
-          <div
-            className="absolute shadow-2xl"
-            style={{ top: '62%', right: '0%', transform: 'rotate(8deg)', background: '#fff', padding: '8px 8px 30px 8px', width: 195 }}
-          >
-            <div className="relative" style={{ height: 240 }}>
-              <Image src="/images/homepage/3polaroid.png" alt="" fill className="object-cover" />
-            </div>
+        </div>
+
+        {/* 3polaroid — sol üst köşe sağ kenarda, sol alt KİMONO çizgisinde */}
+        <div
+          className="absolute shadow-2xl hidden md:block pointer-events-none"
+          style={{
+            top: 'calc(100vh - 193px)',
+            left: 'calc(100% + 0px)',
+            transform: 'rotate(8deg)',
+            transformOrigin: 'top left',
+            background: '#fff',
+            padding: '8px 8px 30px 8px',
+            width: 228,
+            zIndex: 12,
+          }}
+        >
+          <div className="relative" style={{ height: 278 }}>
+            <Image src="/images/homepage/3polaroid.png" alt="" fill className="object-cover" />
           </div>
         </div>
       </section>
