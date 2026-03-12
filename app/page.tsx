@@ -52,10 +52,10 @@ export default function Home() {
           src="/images/homepage/1giristakimlar.png"
           alt="Mea Culpa koleksiyon"
           fill
-          className="object-cover object-center"
+          className="object-cover object-top"
           priority
         />
-        <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.45)' }} />
+        <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.25)' }} />
 
         {/* Overlay içerik */}
         <div className="absolute inset-0 z-10 flex flex-col justify-between px-8 md:px-16 py-10 md:py-14">
