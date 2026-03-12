@@ -82,21 +82,33 @@ export default function Navbar() {
           isScrolled ? 'glass border-b' : ''
         }`}
         style={{
+          background: isScrolled ? undefined : 'transparent',
           borderColor: isScrolled ? 'rgba(var(--foreground-rgb, 0, 0, 0), 0.1)' : undefined
         }}
       >
         <div className="w-full px-4 md:px-8">
           <div className="flex items-center justify-between h-16">
-            {/* Logo - Left */}
+            {/* Logo - Left (unscrolled: küçük sembol; scrolled: tam logo) */}
             <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-              <Image
-                src={isScrolled ? "/images/logo-main.svg" : "/images/logo-light.svg"}
-                alt="Mea Culpa"
-                width={160}
-                height={80}
-                className="w-20 md:w-28 h-auto object-contain"
-                priority
-              />
+              {isScrolled ? (
+                <Image
+                  src="/images/logo-main.svg"
+                  alt="Mea Culpa"
+                  width={160}
+                  height={80}
+                  className="w-20 md:w-28 h-auto object-contain"
+                  priority
+                />
+              ) : (
+                <Image
+                  src="/images/logo-symbol.png"
+                  alt="Mea Culpa"
+                  width={32}
+                  height={32}
+                  className="w-7 h-7 object-contain opacity-70"
+                  priority
+                />
+              )}
             </Link>
 
             {/* Right side: Desktop nav + Icons */}
