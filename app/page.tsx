@@ -46,19 +46,22 @@ export default function Home() {
   return (
     <div>
       {/* ── 1. HERO – Full bleed fotoğraf + overlay içerik ── */}
-      <section className="relative h-screen overflow-hidden -mt-20">
-        {/* Tam ekran arka plan fotoğrafı */}
-        <Image
-          src="/images/homepage/1giristakimlar.png"
-          alt="Mea Culpa koleksiyon"
-          fill
-          className="object-cover object-top"
-          priority
-        />
-        <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.25)' }} />
+      <section className="relative h-screen -mt-20">
+        {/* Görsel wrapper — overflow-hidden sadece burada */}
+        <div className="absolute inset-0 overflow-hidden">
+          <Image
+            src="/images/homepage/1giristakimlar.png"
+            alt="Mea Culpa koleksiyon"
+            fill
+            className="object-cover"
+            style={{ objectPosition: '50% 20%' }}
+            priority
+          />
+          <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.25)' }} />
+        </div>
 
         {/* Overlay içerik */}
-        <div className="absolute inset-0 z-10 flex flex-col justify-between px-8 md:px-16 py-10 md:py-14">
+        <div className="absolute inset-0 z-10 flex flex-col justify-end px-8 md:px-16 py-10 md:py-14">
 
           {/* Sol alt: slogan + metin + CTA */}
           <motion.div
@@ -92,21 +95,21 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* Sağ taraf: çapraz polaroidler */}
-        <div className="absolute right-8 md:right-16 inset-y-0 w-64 md:w-80 hidden md:block pointer-events-none" style={{ zIndex: 11 }}>
+        {/* Sağ taraf: çapraz polaroidler — top-0 ile kimono'ya taşabilir */}
+        <div className="absolute right-8 md:right-16 top-0 w-72 md:w-96 hidden md:block pointer-events-none" style={{ zIndex: 12, height: '130vh' }}>
           <div
             className="absolute shadow-2xl"
-            style={{ top: '18%', left: '5%', transform: 'rotate(-10deg)', background: '#fff', padding: '7px 7px 26px 7px', width: 156 }}
+            style={{ top: '48%', left: '0%', transform: 'rotate(-10deg)', background: '#fff', padding: '8px 8px 30px 8px', width: 210 }}
           >
-            <div className="relative" style={{ height: 190 }}>
+            <div className="relative" style={{ height: 258 }}>
               <Image src="/images/homepage/2polaroid.png" alt="" fill className="object-cover" />
             </div>
           </div>
           <div
             className="absolute shadow-2xl"
-            style={{ top: '30%', right: '2%', transform: 'rotate(8deg)', background: '#fff', padding: '7px 7px 26px 7px', width: 148 }}
+            style={{ top: '62%', right: '0%', transform: 'rotate(8deg)', background: '#fff', padding: '8px 8px 30px 8px', width: 195 }}
           >
-            <div className="relative" style={{ height: 182 }}>
+            <div className="relative" style={{ height: 240 }}>
               <Image src="/images/homepage/3polaroid.png" alt="" fill className="object-cover" />
             </div>
           </div>
