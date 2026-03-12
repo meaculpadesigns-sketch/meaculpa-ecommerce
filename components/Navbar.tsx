@@ -92,11 +92,11 @@ export default function Navbar() {
             {/* Logo - Left */}
             <Link href="/" className="flex items-center gap-2 flex-shrink-0">
               <Image
-                src="/images/logo-symbol.png"
+                src="/images/logo_no_bg.png"
                 alt="Mea Culpa"
-                width={40}
-                height={40}
-                className="h-9 w-auto object-contain"
+                width={160}
+                height={80}
+                className="w-24 md:w-32 h-auto object-contain"
                 priority
               />
             </Link>

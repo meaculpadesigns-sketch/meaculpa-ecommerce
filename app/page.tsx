@@ -67,7 +67,7 @@ export default function Home() {
             transition={{ duration: 0.8 }}
           >
             <Image
-              src="/images/logo-main.png"
+              src="/images/logo_no_bg.png"
               alt="Mea Culpa"
               width={220}
               height={220}
@@ -112,34 +112,18 @@ export default function Home() {
         <div className="absolute right-8 md:right-16 inset-y-0 w-64 md:w-80 hidden md:block pointer-events-none" style={{ zIndex: 11 }}>
           <div
             className="absolute shadow-2xl"
-            style={{ top: '12%', left: '10%', transform: 'rotate(-12deg)', background: '#fff', padding: '7px 7px 26px 7px', width: 136 }}
+            style={{ top: '18%', left: '5%', transform: 'rotate(-10deg)', background: '#fff', padding: '7px 7px 26px 7px', width: 156 }}
           >
-            <div className="relative" style={{ height: 168 }}>
+            <div className="relative" style={{ height: 190 }}>
               <Image src="/images/homepage/2polaroid.png" alt="" fill className="object-cover" />
             </div>
           </div>
           <div
             className="absolute shadow-2xl"
-            style={{ top: '8%', right: '0%', transform: 'rotate(8deg)', background: '#fff', padding: '7px 7px 26px 7px', width: 128 }}
+            style={{ top: '30%', right: '2%', transform: 'rotate(8deg)', background: '#fff', padding: '7px 7px 26px 7px', width: 148 }}
           >
-            <div className="relative" style={{ height: 158 }}>
+            <div className="relative" style={{ height: 182 }}>
               <Image src="/images/homepage/3polaroid.png" alt="" fill className="object-cover" />
-            </div>
-          </div>
-          <div
-            className="absolute shadow-2xl"
-            style={{ bottom: '24%', left: '5%', transform: 'rotate(6deg)', background: '#fff', padding: '7px 7px 26px 7px', width: 132 }}
-          >
-            <div className="relative" style={{ height: 162 }}>
-              <Image src="/images/homepage/polaroid3.png" alt="" fill className="object-cover" />
-            </div>
-          </div>
-          <div
-            className="absolute shadow-2xl"
-            style={{ bottom: '10%', right: '4%', transform: 'rotate(-8deg)', background: '#fff', padding: '7px 7px 26px 7px', width: 126 }}
-          >
-            <div className="relative" style={{ height: 154 }}>
-              <Image src="/images/homepage/polaroid4.png" alt="" fill className="object-cover" />
             </div>
           </div>
         </div>
