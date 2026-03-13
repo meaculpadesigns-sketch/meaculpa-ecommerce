@@ -156,8 +156,14 @@ export default function Home() {
               <h2 className="text-5xl md:text-6xl font-bold" style={{ color: '#FFF4DE' }}>
                 KİMONO
               </h2>
-              {/* Dekoratif şerit */}
-              <div className="w-14 h-px my-3" style={{ background: '#FFF4DE' }} />
+              {/* Dekoratif şerit — desktop'ta tam genişlik, mobilde kısa */}
+              <div className="relative my-3" style={{ height: '1px' }}>
+                <div
+                  className="absolute hidden lg:block"
+                  style={{ height: '1px', background: '#FFF4DE', opacity: 0.85, left: '-100vw', right: 0, top: 0 }}
+                />
+                <div className="w-14 h-px lg:hidden" style={{ background: '#FFF4DE' }} />
+              </div>
               <p className="text-lg mb-6" style={{ color: '#FFF4DE', opacity: 0.82, fontStyle: 'italic', fontFamily: "'Bellota Text'" }}>
                 {i18n.language === 'tr' ? 'hikayesi olan özel tasarımlar' : 'unique designs with a story'}
               </p>
