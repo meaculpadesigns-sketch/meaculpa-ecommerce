@@ -145,7 +145,7 @@ export default function ProductCard({ product, index, viewMode = 'grid', showPri
       transition={{ delay: index * 0.1 }}
       className="group relative"
     >
-      <div className="product-card">
+      <div className="product-card flex flex-col">
         {/* Image */}
         <Link href={`/products/${product.id}`}>
           <div className="relative aspect-[3/4] overflow-hidden group/image">
@@ -153,104 +153,62 @@ export default function ProductCard({ product, index, viewMode = 'grid', showPri
               <img
                 src={product.images[0]}
                 alt={name}
-                className="w-full h-full object-contain transition-transform duration-300 group-hover/image:scale-110"
+                className="w-full h-full object-cover transition-transform duration-300 group-hover/image:scale-110"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-black dark:text-white">
-                {t('home.productView')}
+              <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
+                {i18n.language === 'tr' ? 'Görsel yok' : 'No image'}
               </div>
             )}
 
             {/* Sold Out Badge */}
             {!product.inStock && (
-              <div className="absolute top-4 left-4 bg-white text-black px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
+              <div className="absolute top-3 left-3 bg-white text-black px-3 py-1 rounded-full text-xs font-semibold shadow">
                 {i18n.language === 'tr' ? 'Tükendi' : 'Sold Out'}
               </div>
             )}
 
             {/* Discount Badge */}
             {product.inStock && product.oldPrice && (
-              <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                {Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}% {t('products.discount')}
+              <div className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                -{Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}%
               </div>
             )}
-
-            {/* Favorite Button */}
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                handleAddToFavorites();
-              }}
-              className={`absolute top-4 right-4 p-2 rounded-full bg-black bg-opacity-50 backdrop-blur-sm ${
-                isFavorite ? 'text-red-500' : 'text-white dark:text-white'
-              } hover:bg-opacity-70 transition-all`}
-            >
-              <Heart size={20} fill={isFavorite ? 'currentColor' : 'none'} />
-            </button>
-
-            {/* Hover Overlay */}
-            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleAddToCart();
-                }}
-                className="btn-primary"
-              >
-                <ShoppingCart size={20} className="mr-2 inline" />
-                {t('products.viewProduct')}
-              </button>
-            </div>
           </div>
         </Link>
 
         {/* Info */}
-        <div className="p-6 glass bg-white bg-opacity-50 dark:bg-black dark:bg-opacity-50">
+        <div className="flex flex-col flex-1 bg-white px-4 pt-3 pb-4">
           <Link href={`/products/${product.id}`}>
-            <h3 className="text-xl font-semibold text-black dark:text-white mb-2 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
+            <h3 className="text-sm font-bold text-black mb-1 hover:opacity-70 transition-opacity line-clamp-1">
               {name}
             </h3>
           </Link>
 
           {story && (
-            <p className="text-black dark:text-white text-sm mb-4 line-clamp-2">
+            <p className="text-xs mb-3 line-clamp-2" style={{ color: '#000', opacity: 0.55 }}>
               {story}
             </p>
           )}
 
           {showPrice && (
-            <div className="flex items-baseline gap-2 mb-4">
-              <span className="text-lg font-bold text-black dark:text-white">{formatPrice(product.price, i18n.language)}</span>
+            <div className="flex items-baseline gap-2 mb-3">
+              <span className="text-sm font-bold text-black">{formatPrice(product.price, i18n.language)}</span>
               {product.oldPrice && (
-                <span className="text-black dark:text-white opacity-60 line-through text-xs">{formatPrice(product.oldPrice, i18n.language)}</span>
+                <span className="text-xs line-through" style={{ color: '#000', opacity: 0.4 }}>{formatPrice(product.oldPrice, i18n.language)}</span>
               )}
             </div>
           )}
 
-          {/* Story Button */}
-          {product.story && (
-            <button
-              onClick={() => setShowStory(!showStory)}
-              className="text-black dark:text-white text-sm hover:text-gray-700 dark:hover:text-gray-300 transition-colors mb-2 font-medium"
+          {/* Detaylı İncele butonu - altta ortalı */}
+          <div className="mt-auto pt-2 flex justify-center">
+            <Link
+              href={`/products/${product.id}`}
+              className="text-xs font-medium px-4 py-2 rounded-lg transition-all hover:bg-black hover:text-white"
+              style={{ border: '1px solid #000', color: '#000' }}
             >
-              {t('products.viewStory')}
-            </button>
-          )}
-
-          {/* Sizes */}
-          <div className="flex flex-wrap gap-2">
-            {product.sizes.slice(0, 4).map((size) => (
-              <span
-                key={size.size}
-                className={`px-2 py-1 rounded text-xs ${
-                  size.inStock
-                    ? 'bg-black dark:bg-white text-white dark:text-black'
-                    : 'bg-gray-700 dark:bg-gray-300 text-gray-300 dark:text-gray-700'
-                }`}
-              >
-                {size.size}
-              </span>
-            ))}
+              {i18n.language === 'tr' ? 'Detaylı İncele' : 'View Details'}
+            </Link>
           </div>
         </div>
       </div>

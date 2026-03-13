@@ -208,7 +208,7 @@ export default function Home() {
                   className="flex gap-3 overflow-x-auto pb-2 scroll-smooth scrollbar-hide"
                 >
                   {kimonoProducts.map((product, index) => (
-                    <div key={product.id} className="w-56 flex-shrink-0">
+                    <div key={product.id} className="flex-shrink-0" style={{ width: 'calc(20vw - 40px)' }}>
                       <ProductCard product={product} index={index} />
                     </div>
                   ))}
@@ -293,7 +293,7 @@ export default function Home() {
                   className="flex gap-3 overflow-x-auto pb-2 scroll-smooth scrollbar-hide"
                 >
                   {setProducts.map((product, index) => (
-                    <div key={product.id} className="w-56 flex-shrink-0">
+                    <div key={product.id} className="flex-shrink-0" style={{ width: 'calc(20vw - 40px)' }}>
                       <ProductCard product={product} index={index} />
                     </div>
                   ))}
