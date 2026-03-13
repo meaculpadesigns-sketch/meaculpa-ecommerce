@@ -95,42 +95,33 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* 2polaroid — sol üst köşe erkek modelin omzunda */}
+        {/* 2polaroid — erkek modelin omuz hizasında, -10deg */}
         <div
-          className="absolute shadow-2xl hidden md:block pointer-events-none"
+          className="absolute hidden md:block pointer-events-none"
           style={{
             top: '37%',
             left: '42%',
             transform: 'rotate(-10deg)',
             transformOrigin: 'top left',
-            background: '#fff',
-            padding: '8px 8px 30px 8px',
-            width: 240,
             zIndex: 12,
+            filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.35))',
           }}
         >
-          <div className="relative" style={{ height: 295 }}>
-            <Image src="/images/homepage/2polaroid.png" alt="" fill className="object-cover" />
-          </div>
+          <Image src="/images/homepage/2polaroid.png" alt="" width={285} height={350} />
         </div>
 
-        {/* 3polaroid — sol üst köşe sağ kenarda, sol alt KİMONO çizgisinde */}
+        {/* 3polaroid — büyük bölümü ekran dışı sağda, alt kısmı kimono bölümüne sarkıyor */}
         <div
-          className="absolute shadow-2xl hidden md:block pointer-events-none"
+          className="absolute hidden md:block pointer-events-none"
           style={{
-            top: 'calc(100vh - 193px)',
-            left: 'calc(100% + 0px)',
+            top: 'calc(100vh - 230px)',
+            right: '-75px',
             transform: 'rotate(8deg)',
-            transformOrigin: 'top left',
-            background: '#fff',
-            padding: '8px 8px 30px 8px',
-            width: 228,
             zIndex: 12,
+            filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.35))',
           }}
         >
-          <div className="relative" style={{ height: 278 }}>
-            <Image src="/images/homepage/3polaroid.png" alt="" fill className="object-cover" />
-          </div>
+          <Image src="/images/homepage/3polaroid.png" alt="" width={270} height={330} />
         </div>
       </section>
 
