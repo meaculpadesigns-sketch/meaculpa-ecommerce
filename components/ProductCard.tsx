@@ -205,7 +205,7 @@ export default function ProductCard({ product, index, viewMode = 'grid', showPri
             <Link
               href={`/products/${product.id}`}
               className="text-xs font-medium px-4 py-2 rounded-lg transition-all hover:bg-black hover:text-white"
-              style={{ border: '1px solid #000', color: '#000' }}
+              style={{ border: '1px solid rgba(0,0,0,0.35)', color: 'rgba(0,0,0,0.45)' }}
             >
               {i18n.language === 'tr' ? 'Detaylı İncele' : 'View Details'}
             </Link>
