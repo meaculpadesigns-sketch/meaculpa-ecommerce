@@ -95,36 +95,36 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* Polaroid container — her iki polaroid birbirine yakın, sağda */}
+        {/* 2polaroid — TL erkek modelin omzunda */}
         <div
-          className="absolute right-8 md:right-12 top-0 hidden md:block pointer-events-none"
-          style={{ zIndex: 12, height: '130vh', width: 340 }}
+          className="absolute hidden md:block pointer-events-none"
+          style={{
+            top: '28%',
+            left: '44%',
+            width: 'min(30vw, 450px)',
+            aspectRatio: '1046 / 1266',
+            transform: 'rotate(-10deg)',
+            zIndex: 12,
+            filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.35))',
+          }}
         >
-          {/* 2polaroid */}
-          <div
-            className="absolute"
-            style={{
-              top: '44%',
-              left: '0%',
-              transform: 'rotate(-10deg)',
-              filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.35))',
-            }}
-          >
-            <Image src="/images/homepage/2polaroid.png" alt="" width={270} height={332} />
-          </div>
+          <Image src="/images/homepage/2polaroid.png" alt="" fill style={{ objectFit: 'contain' }} />
+        </div>
 
-          {/* 3polaroid */}
-          <div
-            className="absolute"
-            style={{
-              top: '60%',
-              right: '0%',
-              transform: 'rotate(8deg)',
-              filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.35))',
-            }}
-          >
-            <Image src="/images/homepage/3polaroid.png" alt="" width={255} height={314} />
-          </div>
+        {/* 3polaroid — sağ kenardan az taşıyor, alt KİMONO çizgisinde */}
+        <div
+          className="absolute hidden md:block pointer-events-none"
+          style={{
+            top: '56%',
+            right: '-1vw',
+            width: 'min(29vw, 430px)',
+            aspectRatio: '1046 / 1266',
+            transform: 'rotate(8deg)',
+            zIndex: 12,
+            filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.35))',
+          }}
+        >
+          <Image src="/images/homepage/3polaroid.png" alt="" fill style={{ objectFit: 'contain' }} />
         </div>
       </section>
 
