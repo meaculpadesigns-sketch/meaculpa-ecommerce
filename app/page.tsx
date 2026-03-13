@@ -150,35 +150,52 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
             >
-              <p className="text-xs tracking-widest uppercase mb-3" style={{ color: '#FFF4DE', opacity: 0.6 }}>
-                {i18n.language === 'tr' ? 'Koleksiyon' : 'Collection'}
-              </p>
-              <h2 className="text-5xl md:text-6xl font-bold" style={{ color: '#FFF4DE' }}>
-                KİMONO
-              </h2>
-              {/* Dekoratif şerit */}
-              <div
-                className="hidden lg:block mt-1 mb-3"
-                style={{
-                  height: '2px',
-                  background: '#FFF4DE',
-                  opacity: 0.85,
-                  marginLeft: 'calc(-40vw - 48px)',
-                  width: 'calc(40vw + 48px)',
-                }}
-              />
-              <div className="lg:hidden w-14 my-3" style={{ height: '2px', background: '#FFF4DE' }} />
-              <p className="text-lg mb-6" style={{ color: '#FFF4DE', opacity: 0.82, fontStyle: 'italic', fontFamily: "'Bellota Text'" }}>
-                {i18n.language === 'tr' ? 'hikayesi olan özel tasarımlar' : 'unique designs with a story'}
-              </p>
-              <Link
-                href="/products?category=kimono"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium mb-10 self-start"
-                style={{ background: '#FFF4DE', color: '#853710' }}
-              >
-                {i18n.language === 'tr' ? 'Koleksiyonu Gör' : 'View Collection'}
-                <ArrowRight size={16} />
-              </Link>
+              {/* === DESKTOP (lg+): metinler sağa yaslı, çubuğun bitiminde === */}
+              <div className="hidden lg:block">
+                <p className="text-xs tracking-widest uppercase mb-1"
+                  style={{ color: '#FFF4DE', opacity: 0.6, textAlign: 'right', marginLeft: 'calc(-40vw - 48px)', width: 'calc(40vw + 48px)' }}>
+                  {i18n.language === 'tr' ? 'Koleksiyon' : 'Collection'}
+                </p>
+                <h2 className="text-5xl md:text-6xl font-bold"
+                  style={{ color: '#FFF4DE', textAlign: 'right', marginLeft: 'calc(-40vw - 48px)', width: 'calc(40vw + 48px)' }}>
+                  KİMONO
+                </h2>
+                {/* Çubuk + Buton aynı satır */}
+                <div className="flex items-center mt-1 mb-3"
+                  style={{ marginLeft: 'calc(-40vw - 48px)', width: 'max-content' }}>
+                  <div style={{ height: '2px', background: '#FFF4DE', opacity: 0.85, width: 'calc(40vw + 48px)', flexShrink: 0 }} />
+                  <Link
+                    href="/products?category=kimono"
+                    className="whitespace-nowrap inline-flex items-center px-7 py-3 rounded-lg font-medium ml-4 transition-all hover:bg-white hover:bg-opacity-10"
+                    style={{ border: '1.5px solid #FFF4DE', color: '#FFF4DE' }}
+                  >
+                    {i18n.language === 'tr' ? 'Koleksiyonu Gör' : 'View Collection'}
+                  </Link>
+                </div>
+                <p className="text-lg mb-10"
+                  style={{ color: '#FFF4DE', opacity: 0.82, fontStyle: 'italic', fontFamily: "'Bellota Text'", textAlign: 'right', marginLeft: 'calc(-40vw - 48px)', width: 'calc(40vw + 48px)' }}>
+                  {i18n.language === 'tr' ? 'hikayesi olan özel tasarımlar' : 'unique designs with a story'}
+                </p>
+              </div>
+
+              {/* === MOBİLE (< lg): normal düzen === */}
+              <div className="lg:hidden">
+                <p className="text-xs tracking-widest uppercase mb-3" style={{ color: '#FFF4DE', opacity: 0.6 }}>
+                  {i18n.language === 'tr' ? 'Koleksiyon' : 'Collection'}
+                </p>
+                <h2 className="text-5xl font-bold" style={{ color: '#FFF4DE' }}>KİMONO</h2>
+                <div className="w-14 my-3" style={{ height: '2px', background: '#FFF4DE' }} />
+                <p className="text-lg mb-6" style={{ color: '#FFF4DE', opacity: 0.82, fontStyle: 'italic', fontFamily: "'Bellota Text'" }}>
+                  {i18n.language === 'tr' ? 'hikayesi olan özel tasarımlar' : 'unique designs with a story'}
+                </p>
+                <Link
+                  href="/products?category=kimono"
+                  className="inline-flex items-center px-7 py-3 rounded-lg font-medium mb-10 self-start transition-all hover:bg-white hover:bg-opacity-10"
+                  style={{ border: '1.5px solid #FFF4DE', color: '#FFF4DE' }}
+                >
+                  {i18n.language === 'tr' ? 'Koleksiyonu Gör' : 'View Collection'}
+                </Link>
+              </div>
             </motion.div>
 
             {/* Ürün kartları */}
