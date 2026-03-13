@@ -160,7 +160,7 @@ export default function Home() {
               <div className="relative my-3" style={{ height: '1px' }}>
                 <div
                   className="absolute hidden lg:block"
-                  style={{ height: '1px', background: '#FFF4DE', opacity: 0.85, left: '-100vw', right: 0, top: 0 }}
+                  style={{ height: '1px', background: '#FFF4DE', opacity: 0.85, left: '-100vw', right: '100%', top: 0 }}
                 />
                 <div className="w-14 h-px lg:hidden" style={{ background: '#FFF4DE' }} />
               </div>
