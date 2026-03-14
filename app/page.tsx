@@ -80,19 +80,21 @@ export default function Home() {
             </h1>
             <p
               className="text-base md:text-lg mb-8 leading-relaxed"
-              style={{ color: '#FFF4DE', opacity: 0.88, fontStyle: 'italic', fontFamily: "'Bellota Text'" }}
+              style={{ color: '#FFF4DE', opacity: 0.88, fontStyle: 'italic', fontFamily: "'Bellota Text'", textAlign: 'justify' }}
             >
               {i18n.language === 'tr'
-                ? 'Mea Culpa; festivallerin özgür enerjisinden, müziğin ritminden,\nçocukların saf neşesinden ve bilinçli yaşamı seçen insanların\nduruşundan ilham alır.'
+                ? 'Mea Culpa; festivallerin özgür enerjisinden, müziğin ritminden, çocukların saf neşesinden ve bilinçli yaşamı seçen insanların duruşundan ilham alır.'
                 : 'Mea Culpa draws inspiration from the free energy of festivals, the rhythm of music, the pure joy of children, and the stance of those who choose conscious living.'}
             </p>
-            <Link
-              href="/products"
-              className="flex items-center justify-center px-7 py-3 rounded-lg font-medium transition-all hover:bg-white hover:bg-opacity-10"
-              style={{ border: '1.5px solid #FFF4DE', color: '#FFF4DE' }}
-            >
-              {i18n.language === 'tr' ? 'Alışverişe Başla' : 'Start Shopping'}
-            </Link>
+            <div className="flex justify-end">
+              <Link
+                href="/products"
+                className="inline-flex items-center px-7 py-3 rounded-lg font-medium transition-all hover:bg-white hover:bg-opacity-10"
+                style={{ border: '1.5px solid #FFF4DE', color: '#FFF4DE' }}
+              >
+                {i18n.language === 'tr' ? 'Alışverişe Başla' : 'Start Shopping'}
+              </Link>
+            </div>
           </motion.div>
         </div>
 
