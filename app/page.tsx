@@ -256,9 +256,8 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
             >
-              {/* Üst alan: ortada buton + sağda başlık */}
-              <div className="relative flex items-start justify-end mb-8">
-                {/* Tam ortada: Koleksiyonu Gör butonu */}
+              {/* Buton satırı — ortada */}
+              <div className="relative mb-6" style={{ minHeight: 50 }}>
                 <div className="absolute left-1/2 -translate-x-1/2 top-0">
                   <Link
                     href="/products?category=set"
@@ -268,18 +267,52 @@ export default function Home() {
                     {i18n.language === 'tr' ? 'Koleksiyonu Gör' : 'View Collection'}
                   </Link>
                 </div>
+              </div>
 
-                {/* Sağ: SETLER başlık */}
-                <div className="text-right flex-shrink-0">
-                  <p className="text-xs tracking-widest uppercase mb-2" style={{ color: '#853710', opacity: 0.6 }}>
-                    {i18n.language === 'tr' ? 'Koleksiyon' : 'Collection'}
-                  </p>
-                  <h2 className="text-5xl md:text-6xl font-bold" style={{ color: '#853710' }}>SETLER</h2>
-                  <div className="w-14 h-px my-2 ml-auto" style={{ background: '#853710' }} />
-                  <p className="text-lg" style={{ color: '#9E906C', fontStyle: 'italic', fontFamily: "'Bellota Text'" }}>
-                    {i18n.language === 'tr' ? 'özel kumaşlardan üretilmiş kombinler' : 'combinations crafted from special fabrics'}
-                  </p>
-                </div>
+              {/* Desktop: SETLER başlığı, çubuk, alt yazı — 3. kartın hizasından sağ kenara */}
+              {/* marginLeft = 2 kart + 2 gap = (200vw - 1048px) / 3 */}
+              {/* bar width = section_sağ - bar_başlangıcı = (100vw + 244px) / 3  */}
+              <div className="hidden lg:block">
+                <p
+                  className="text-xs tracking-widest uppercase mb-1"
+                  style={{ color: '#853710', opacity: 0.6, marginLeft: 'calc((200vw - 1048px) / 3)' }}
+                >
+                  {i18n.language === 'tr' ? 'Koleksiyon' : 'Collection'}
+                </p>
+                <h2
+                  className="text-5xl md:text-6xl font-bold"
+                  style={{ color: '#853710', marginLeft: 'calc((200vw - 1048px) / 3)' }}
+                >
+                  SETLER
+                </h2>
+                <div
+                  style={{
+                    height: '2px',
+                    background: '#853710',
+                    marginLeft: 'calc((200vw - 1048px) / 3)',
+                    width: 'calc((100vw + 244px) / 3)',
+                    marginTop: 4,
+                    marginBottom: 4,
+                  }}
+                />
+                <p
+                  className="text-lg mb-8"
+                  style={{ color: '#9E906C', fontStyle: 'italic', fontFamily: "'Bellota Text'", marginLeft: 'calc((200vw - 1048px) / 3)' }}
+                >
+                  {i18n.language === 'tr' ? 'özel kumaşlardan üretilmiş kombinler' : 'combinations crafted from special fabrics'}
+                </p>
+              </div>
+
+              {/* Mobile: normal düzen */}
+              <div className="lg:hidden">
+                <p className="text-xs tracking-widest uppercase mb-3" style={{ color: '#853710', opacity: 0.6 }}>
+                  {i18n.language === 'tr' ? 'Koleksiyon' : 'Collection'}
+                </p>
+                <h2 className="text-5xl font-bold mb-1" style={{ color: '#853710' }}>SETLER</h2>
+                <div className="w-14 h-px my-3" style={{ background: '#853710' }} />
+                <p className="text-lg mb-8" style={{ color: '#9E906C', fontStyle: 'italic', fontFamily: "'Bellota Text'" }}>
+                  {i18n.language === 'tr' ? 'özel kumaşlardan üretilmiş kombinler' : 'combinations crafted from special fabrics'}
+                </p>
               </div>
             </motion.div>
 
