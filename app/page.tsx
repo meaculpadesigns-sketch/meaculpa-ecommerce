@@ -256,7 +256,7 @@ export default function Home() {
           </div>
 
           {/* Orta: başlık + kartlar */}
-          <div className="flex flex-col justify-center px-8 md:px-12 py-14">
+          <div className="flex flex-col justify-center px-8 md:px-12 py-14 min-w-0">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
