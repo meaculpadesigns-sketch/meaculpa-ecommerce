@@ -256,19 +256,21 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
             >
-              {/* Üst satır: sol buton + sağ başlık */}
+              {/* Üst alan: orta buton + sağ başlık */}
               <div className="flex items-start justify-between mb-8 gap-6">
-                {/* Sol: Koleksiyonu Gör butonu */}
-                <Link
-                  href="/products?category=set"
-                  className="inline-flex items-center px-7 py-3 rounded-lg font-medium flex-shrink-0 transition-all hover:bg-[#853710] hover:text-white"
-                  style={{ border: '1.5px solid #853710', color: '#853710' }}
-                >
-                  {i18n.language === 'tr' ? 'Koleksiyonu Gör' : 'View Collection'}
-                </Link>
+                {/* Orta: Koleksiyonu Gör butonu */}
+                <div className="flex-1 flex justify-center">
+                  <Link
+                    href="/products?category=set"
+                    className="inline-flex items-center px-7 py-3 rounded-lg font-medium transition-all hover:bg-[#853710] hover:text-white"
+                    style={{ border: '1.5px solid #853710', color: '#853710' }}
+                  >
+                    {i18n.language === 'tr' ? 'Koleksiyonu Gör' : 'View Collection'}
+                  </Link>
+                </div>
 
                 {/* Sağ: SETLER başlık */}
-                <div className="text-right">
+                <div className="text-right flex-shrink-0">
                   <p className="text-xs tracking-widest uppercase mb-2" style={{ color: '#853710', opacity: 0.6 }}>
                     {i18n.language === 'tr' ? 'Koleksiyon' : 'Collection'}
                   </p>
@@ -335,7 +337,7 @@ export default function Home() {
             src="/images/homepage/sol-manken.png"
             alt="Setler koleksiyonu"
             fill
-            className="object-cover object-top"
+            className="object-contain object-bottom"
           />
         </div>
 
@@ -348,7 +350,7 @@ export default function Home() {
             src="/images/homepage/sag-manken.png"
             alt="Setler koleksiyonu"
             fill
-            className="object-cover object-top"
+            className="object-contain object-bottom"
           />
         </div>
       </section>
