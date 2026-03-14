@@ -375,8 +375,8 @@ export default function Home() {
           alt="Setler koleksiyonu"
           width={405}
           height={720}
-          className="hidden lg:block absolute left-0"
-          style={{ bottom: -160, zIndex: 10 }}
+          className="hidden lg:block absolute"
+          style={{ bottom: -160, zIndex: 10, left: -50 }}
         />
 
         {/* Sağ manken — section'ı aşağı taşıyor */}
@@ -385,8 +385,8 @@ export default function Home() {
           alt="Setler koleksiyonu"
           width={405}
           height={720}
-          className="hidden lg:block absolute right-0"
-          style={{ bottom: -160, zIndex: 10 }}
+          className="hidden lg:block absolute"
+          style={{ bottom: -160, zIndex: 10, right: -15 }}
         />
       </section>
 
