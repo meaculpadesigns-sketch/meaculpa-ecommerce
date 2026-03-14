@@ -395,30 +395,11 @@ export default function Home() {
       </section>
 
       {/* ── 4. BİZ KİMİZ? – Taupe bg, sol polaroidler, sağ metin ── */}
-      <section style={{ background: '#9E906C' }}>
+      <section className="relative" style={{ background: '#9E906C', zIndex: 1 }}>
         <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr]">
 
-          {/* Sol: üst üste tilted polaroidler */}
-          <div className="relative overflow-hidden hidden lg:block" style={{ minHeight: 220 }}>
-            {/* polaroid4 — sol üst köşeye yapışık */}
-            <div
-              className="absolute shadow-xl"
-              style={{ top: -10, left: -10, transform: 'rotate(-12deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 210, zIndex: 2 }}
-            >
-              <div className="relative" style={{ height: 255 }}>
-                <Image src="/images/homepage/polaroid4.png" alt="" fill className="object-cover" />
-              </div>
-            </div>
-            {/* polaroid3 — polaroid4'ün ortasının biraz altından başlar */}
-            <div
-              className="absolute shadow-xl"
-              style={{ top: '28%', left: '14%', transform: 'rotate(-8deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 190, zIndex: 3 }}
-            >
-              <div className="relative" style={{ height: 230 }}>
-                <Image src="/images/homepage/polaroid3.png" alt="" fill className="object-cover" />
-              </div>
-            </div>
-          </div>
+          {/* Sol: boş spacer — polaroidler absolute olarak section'dan taşıyor */}
+          <div className="hidden lg:block" style={{ minHeight: 220 }} />
 
           {/* Sağ: başlık + [açıklama | buton] */}
           <div className="flex flex-col justify-center px-10 md:px-14 py-8">
@@ -447,6 +428,24 @@ export default function Home() {
                 </Link>
               </div>
             </motion.div>
+          </div>
+        </div>
+
+        {/* Polaroidler — section'dan aşağı taşıyor */}
+        <div
+          className="hidden lg:block absolute shadow-xl"
+          style={{ top: -10, left: -10, transform: 'rotate(-12deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 210, zIndex: 10 }}
+        >
+          <div className="relative" style={{ height: 255 }}>
+            <Image src="/images/homepage/polaroid4.png" alt="" fill className="object-cover" />
+          </div>
+        </div>
+        <div
+          className="hidden lg:block absolute shadow-xl"
+          style={{ top: '28%', left: '14%', transform: 'rotate(-8deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 190, zIndex: 11 }}
+        >
+          <div className="relative" style={{ height: 230 }}>
+            <Image src="/images/homepage/polaroid3.png" alt="" fill className="object-cover" />
           </div>
         </div>
       </section>
