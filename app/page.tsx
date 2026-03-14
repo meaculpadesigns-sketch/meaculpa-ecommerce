@@ -256,13 +256,13 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
             >
-              {/* Üst alan: orta buton + sağ başlık */}
-              <div className="flex items-start justify-between mb-8 gap-6">
-                {/* Orta: Koleksiyonu Gör butonu */}
-                <div className="flex-1 flex justify-center">
+              {/* Üst alan: ortada buton + sağda başlık */}
+              <div className="relative flex items-start justify-end mb-8">
+                {/* Tam ortada: Koleksiyonu Gör butonu */}
+                <div className="absolute left-1/2 -translate-x-1/2 top-0">
                   <Link
                     href="/products?category=set"
-                    className="inline-flex items-center px-7 py-3 rounded-lg font-medium transition-all hover:bg-[#853710] hover:text-white"
+                    className="inline-flex items-center px-7 py-3 rounded-lg font-medium transition-all hover:bg-[#853710] hover:text-white whitespace-nowrap"
                     style={{ border: '1.5px solid #853710', color: '#853710' }}
                   >
                     {i18n.language === 'tr' ? 'Koleksiyonu Gör' : 'View Collection'}
