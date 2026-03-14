@@ -256,22 +256,7 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
             >
-              {/* Buton satırı — ortada */}
-              <div className="relative mb-6" style={{ minHeight: 50 }}>
-                <div className="absolute left-1/2 -translate-x-1/2 top-0">
-                  <Link
-                    href="/products?category=set"
-                    className="inline-flex items-center px-7 py-3 rounded-lg font-medium transition-all hover:bg-[#853710] hover:text-white whitespace-nowrap"
-                    style={{ border: '1.5px solid #853710', color: '#853710' }}
-                  >
-                    {i18n.language === 'tr' ? 'Koleksiyonu Gör' : 'View Collection'}
-                  </Link>
-                </div>
-              </div>
-
-              {/* Desktop: SETLER başlığı, çubuk, alt yazı — 3. kartın hizasından sağ kenara */}
-              {/* marginLeft = 2 kart + 2 gap = (200vw - 1048px) / 3 */}
-              {/* bar width = section_sağ - bar_başlangıcı = (100vw + 244px) / 3  */}
+              {/* Desktop: SETLER başlığı + bar+buton aynı satır + alt yazı */}
               <div className="hidden lg:block">
                 <p
                   className="text-xs tracking-widest uppercase mb-1"
@@ -285,16 +270,32 @@ export default function Home() {
                 >
                   SETLER
                 </h2>
-                <div
-                  style={{
-                    height: '2px',
-                    background: '#853710',
-                    marginLeft: 'calc((200vw - 1048px) / 3)',
-                    width: 'calc((100vw + 244px) / 3)',
-                    marginTop: 4,
-                    marginBottom: 4,
-                  }}
-                />
+
+                {/* Bar + Buton — aynı dikey hizada */}
+                <div className="relative my-1" style={{ height: 50 }}>
+                  {/* Bar: 3. karttan sağ kenara */}
+                  <div
+                    className="absolute top-1/2"
+                    style={{
+                      height: '2px',
+                      background: '#853710',
+                      left: 'calc((200vw - 1048px) / 3)',
+                      right: 'calc(-220px - 48px)',
+                      transform: 'translateY(-50%)',
+                    }}
+                  />
+                  {/* Buton: ortada, barın üstünde */}
+                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" style={{ zIndex: 1 }}>
+                    <Link
+                      href="/products?category=set"
+                      className="inline-flex items-center px-7 py-3 rounded-lg font-medium transition-all hover:bg-[#853710] hover:text-white whitespace-nowrap"
+                      style={{ border: '1.5px solid #853710', color: '#853710', background: '#FFF4DE' }}
+                    >
+                      {i18n.language === 'tr' ? 'Koleksiyonu Gör' : 'View Collection'}
+                    </Link>
+                  </div>
+                </div>
+
                 <p
                   className="text-lg mb-8"
                   style={{ color: '#9E906C', fontStyle: 'italic', fontFamily: "'Bellota Text'", marginLeft: 'calc((200vw - 1048px) / 3)' }}
@@ -310,9 +311,16 @@ export default function Home() {
                 </p>
                 <h2 className="text-5xl font-bold mb-1" style={{ color: '#853710' }}>SETLER</h2>
                 <div className="w-14 h-px my-3" style={{ background: '#853710' }} />
-                <p className="text-lg mb-8" style={{ color: '#9E906C', fontStyle: 'italic', fontFamily: "'Bellota Text'" }}>
+                <p className="text-lg mb-6" style={{ color: '#9E906C', fontStyle: 'italic', fontFamily: "'Bellota Text'" }}>
                   {i18n.language === 'tr' ? 'özel kumaşlardan üretilmiş kombinler' : 'combinations crafted from special fabrics'}
                 </p>
+                <Link
+                  href="/products?category=set"
+                  className="inline-flex items-center px-7 py-3 rounded-lg font-medium mb-8 transition-all hover:bg-[#853710] hover:text-white"
+                  style={{ border: '1.5px solid #853710', color: '#853710' }}
+                >
+                  {i18n.language === 'tr' ? 'Koleksiyonu Gör' : 'View Collection'}
+                </Link>
               </div>
             </motion.div>
 
