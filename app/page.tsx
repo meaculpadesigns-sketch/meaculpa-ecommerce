@@ -370,30 +370,24 @@ export default function Home() {
         </div>
 
         {/* Sol manken — section'ı aşağı taşıyor */}
-        <div
-          className="hidden lg:block absolute top-0 left-0"
-          style={{ width: 300, bottom: -160, zIndex: 10 }}
-        >
-          <Image
-            src="/images/homepage/sol-manken.png"
-            alt="Setler koleksiyonu"
-            fill
-            className="object-contain object-bottom"
-          />
-        </div>
+        <Image
+          src="/images/homepage/sol-manken.png"
+          alt="Setler koleksiyonu"
+          width={405}
+          height={720}
+          className="hidden lg:block absolute left-0"
+          style={{ bottom: -160, zIndex: 10 }}
+        />
 
         {/* Sağ manken — section'ı aşağı taşıyor */}
-        <div
-          className="hidden lg:block absolute top-0 right-0"
-          style={{ width: 300, bottom: -160, zIndex: 10 }}
-        >
-          <Image
-            src="/images/homepage/sag-manken.png"
-            alt="Setler koleksiyonu"
-            fill
-            className="object-contain object-bottom"
-          />
-        </div>
+        <Image
+          src="/images/homepage/sag-manken.png"
+          alt="Setler koleksiyonu"
+          width={405}
+          height={720}
+          className="hidden lg:block absolute right-0"
+          style={{ bottom: -160, zIndex: 10 }}
+        />
       </section>
 
       {/* ── 4. BİZ KİMİZ? – Taupe bg, sol polaroidler, sağ metin ── */}
