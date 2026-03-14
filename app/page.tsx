@@ -256,24 +256,29 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
             >
-              <p className="text-xs tracking-widest uppercase mb-3" style={{ color: '#853710', opacity: 0.6 }}>
-                {i18n.language === 'tr' ? 'Koleksiyon' : 'Collection'}
-              </p>
-              <h2 className="text-5xl md:text-6xl font-bold" style={{ color: '#853710' }}>
-                SETLER
-              </h2>
-              {/* Dekoratif şerit */}
-              <div className="w-14 h-px my-3" style={{ background: '#853710' }} />
-              <p className="text-lg mb-6" style={{ color: '#9E906C', fontStyle: 'italic', fontFamily: "'Bellota Text'" }}>
-                {i18n.language === 'tr' ? 'özel kumaşlardan üretilmiş kombinler' : 'combinations crafted from special fabrics'}
-              </p>
-              <Link
-                href="/products?category=set"
-                className="btn-primary inline-flex items-center gap-2 self-start mb-10"
-              >
-                {i18n.language === 'tr' ? 'Koleksiyonu Gör' : 'View Collection'}
-                <ArrowRight size={16} />
-              </Link>
+              {/* Üst satır: sol buton + sağ başlık */}
+              <div className="flex items-start justify-between mb-8 gap-6">
+                {/* Sol: Koleksiyonu Gör butonu */}
+                <Link
+                  href="/products?category=set"
+                  className="inline-flex items-center px-7 py-3 rounded-lg font-medium flex-shrink-0 transition-all hover:bg-[#853710] hover:text-white"
+                  style={{ border: '1.5px solid #853710', color: '#853710' }}
+                >
+                  {i18n.language === 'tr' ? 'Koleksiyonu Gör' : 'View Collection'}
+                </Link>
+
+                {/* Sağ: SETLER başlık */}
+                <div className="text-right">
+                  <p className="text-xs tracking-widest uppercase mb-2" style={{ color: '#853710', opacity: 0.6 }}>
+                    {i18n.language === 'tr' ? 'Koleksiyon' : 'Collection'}
+                  </p>
+                  <h2 className="text-5xl md:text-6xl font-bold" style={{ color: '#853710' }}>SETLER</h2>
+                  <div className="w-14 h-px my-2 ml-auto" style={{ background: '#853710' }} />
+                  <p className="text-lg" style={{ color: '#9E906C', fontStyle: 'italic', fontFamily: "'Bellota Text'" }}>
+                    {i18n.language === 'tr' ? 'özel kumaşlardan üretilmiş kombinler' : 'combinations crafted from special fabrics'}
+                  </p>
+                </div>
+              </div>
             </motion.div>
 
             {/* Ürün kartları */}
