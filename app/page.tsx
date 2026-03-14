@@ -376,7 +376,7 @@ export default function Home() {
           width={405}
           height={720}
           className="hidden lg:block absolute"
-          style={{ bottom: -160, zIndex: 10, left: -150 }}
+          style={{ bottom: -80, zIndex: 10, left: -150 }}
         />
 
         {/* Sağ manken — section'ı aşağı taşıyor */}
@@ -386,7 +386,7 @@ export default function Home() {
           width={405}
           height={720}
           className="hidden lg:block absolute"
-          style={{ bottom: -160, zIndex: 10, right: -100 }}
+          style={{ bottom: -80, zIndex: 10, right: -100 }}
         />
       </section>
 
