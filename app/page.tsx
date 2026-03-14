@@ -83,16 +83,15 @@ export default function Home() {
               style={{ color: '#FFF4DE', opacity: 0.88, fontStyle: 'italic', fontFamily: "'Bellota Text'" }}
             >
               {i18n.language === 'tr'
-                ? 'Doğunun ilhamıyla, modern yaşamın içinde.'
-                : 'Inspired by the East, within modern life.'}
+                ? 'Mea Culpa; festivallerin özgür enerjisinden, müziğin ritminden,\nçocukların saf neşesinden ve bilinçli yaşamı seçen insanların\nduruşundan ilham alır.'
+                : 'Mea Culpa draws inspiration from the free energy of festivals, the rhythm of music, the pure joy of children, and the stance of those who choose conscious living.'}
             </p>
             <Link
               href="/products"
-              className="inline-flex items-center gap-2 px-7 py-3 rounded-lg font-medium transition-all hover:bg-white hover:bg-opacity-10"
+              className="flex items-center justify-center px-7 py-3 rounded-lg font-medium transition-all hover:bg-white hover:bg-opacity-10"
               style={{ border: '1.5px solid #FFF4DE', color: '#FFF4DE' }}
             >
               {i18n.language === 'tr' ? 'Alışverişe Başla' : 'Start Shopping'}
-              <ArrowRight size={18} />
             </Link>
           </motion.div>
         </div>
@@ -140,7 +139,8 @@ export default function Home() {
               src="/images/homepage/4kimono.png"
               alt="Kimono koleksiyonu"
               fill
-              className="object-cover object-top"
+              className="object-cover"
+              style={{ objectPosition: '30% top' }}
             />
           </div>
 
