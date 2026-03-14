@@ -400,19 +400,21 @@ export default function Home() {
 
           {/* Sol: üst üste tilted polaroidler */}
           <div className="relative overflow-hidden" style={{ minHeight: 320 }}>
+            {/* polaroid4 — sol üst köşeye yapışık */}
             <div
               className="absolute shadow-xl"
-              style={{ top: '12%', left: '8%', transform: 'rotate(-5deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 175, zIndex: 2 }}
+              style={{ top: -10, left: -10, transform: 'rotate(-5deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 210, zIndex: 2 }}
             >
-              <div className="relative" style={{ height: 215 }}>
-                <Image src="/images/homepage/2polaroid.png" alt="" fill className="object-cover" />
+              <div className="relative" style={{ height: 255 }}>
+                <Image src="/images/homepage/polaroid4.png" alt="" fill className="object-cover" />
               </div>
             </div>
+            {/* polaroid3 — polaroid4'ün ortasının biraz altından başlar */}
             <div
               className="absolute shadow-xl"
-              style={{ top: '26%', left: '32%', transform: 'rotate(5deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 162, zIndex: 3 }}
+              style={{ top: '42%', left: '22%', transform: 'rotate(5deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 190, zIndex: 3 }}
             >
-              <div className="relative" style={{ height: 198 }}>
+              <div className="relative" style={{ height: 230 }}>
                 <Image src="/images/homepage/polaroid3.png" alt="" fill className="object-cover" />
               </div>
             </div>
