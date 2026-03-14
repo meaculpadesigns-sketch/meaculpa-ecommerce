@@ -337,7 +337,8 @@ export default function Home() {
             src="/images/homepage/sol-manken.png"
             alt="Setler koleksiyonu"
             fill
-            className="object-contain object-bottom"
+            className="object-cover object-top"
+            style={{ objectPosition: 'right top' }}
           />
         </div>
 
@@ -350,7 +351,7 @@ export default function Home() {
             src="/images/homepage/sag-manken.png"
             alt="Setler koleksiyonu"
             fill
-            className="object-contain object-bottom"
+            className="object-cover object-top"
           />
         </div>
       </section>
