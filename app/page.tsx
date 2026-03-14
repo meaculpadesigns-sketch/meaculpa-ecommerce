@@ -39,7 +39,9 @@ export default function Home() {
 
   const scrollCarousel = (ref: React.RefObject<HTMLDivElement | null>, direction: 'left' | 'right') => {
     if (ref.current) {
-      ref.current.scrollBy({ left: direction === 'left' ? -240 : 240, behavior: 'smooth' });
+      const firstChild = ref.current.firstElementChild as HTMLElement;
+      const cardWidth = firstChild ? firstChild.offsetWidth + 12 : 240; // 12 = gap-3
+      ref.current.scrollBy({ left: direction === 'left' ? -cardWidth : cardWidth, behavior: 'smooth' });
     }
   };
 
