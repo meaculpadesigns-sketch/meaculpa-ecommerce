@@ -373,8 +373,8 @@ export default function Home() {
         <Image
           src="/images/homepage/sol-manken.png"
           alt="Setler koleksiyonu"
-          width={405}
-          height={720}
+          width={562}
+          height={1000}
           className="hidden lg:block absolute"
           style={{ bottom: -80, zIndex: 10, left: -150 }}
         />
@@ -383,8 +383,8 @@ export default function Home() {
         <Image
           src="/images/homepage/sag-manken.png"
           alt="Setler koleksiyonu"
-          width={405}
-          height={720}
+          width={562}
+          height={1000}
           className="hidden lg:block absolute"
           style={{ bottom: -80, zIndex: 10, right: -100 }}
         />
