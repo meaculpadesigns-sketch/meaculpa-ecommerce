@@ -396,10 +396,10 @@ export default function Home() {
 
       {/* ── 4. BİZ KİMİZ? – Taupe bg, sol polaroidler, sağ metin ── */}
       <section style={{ background: '#9E906C' }}>
-        <div className="grid grid-cols-1 lg:grid-cols-2" style={{ minHeight: 380 }}>
+        <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr]">
 
           {/* Sol: üst üste tilted polaroidler */}
-          <div className="relative overflow-hidden" style={{ minHeight: 320 }}>
+          <div className="relative overflow-hidden hidden lg:block" style={{ minHeight: 220 }}>
             {/* polaroid4 — sol üst köşeye yapışık */}
             <div
               className="absolute shadow-xl"
@@ -420,34 +420,32 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Sağ: metin */}
-          <div className="flex flex-col justify-center px-10 md:px-16 py-16">
+          {/* Sağ: başlık + [açıklama | buton] */}
+          <div className="flex flex-col justify-center px-10 md:px-14 py-8">
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
             >
-              <p className="text-xs tracking-widest uppercase mb-3" style={{ color: '#FFF4DE', opacity: 0.65 }}>
-                {i18n.language === 'tr' ? 'Hikayemiz' : 'Our Story'}
-              </p>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: '#FFF4DE' }}>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: '#FFF4DE' }}>
                 {i18n.language === 'tr' ? 'Biz Kimiz?' : 'Who Are We?'}
               </h2>
-              <p
-                className="text-base leading-relaxed mb-8"
-                style={{ color: '#FFF4DE', opacity: 0.88, fontStyle: 'italic', fontFamily: "'Bellota Text'" }}
-              >
-                {t('home.storyText1')}
-              </p>
-              <Link
-                href="/about"
-                className="inline-flex items-center gap-2 px-7 py-3 rounded-full border font-medium self-start transition-all hover:bg-white hover:bg-opacity-10"
-                style={{ borderColor: '#FFF4DE', color: '#FFF4DE' }}
-              >
-                {i18n.language === 'tr' ? 'Hakkımızda' : 'About Us'}
-                <ArrowRight size={18} />
-              </Link>
+              <div className="flex items-center gap-8">
+                <p
+                  className="text-sm leading-relaxed flex-1"
+                  style={{ color: '#FFF4DE', opacity: 0.88, fontStyle: 'italic', fontFamily: "'Bellota Text'" }}
+                >
+                  {t('home.storyText1')}
+                </p>
+                <Link
+                  href="/about"
+                  className="inline-flex items-center px-6 py-2.5 rounded-lg border font-medium whitespace-nowrap flex-shrink-0 transition-all hover:bg-white hover:bg-opacity-10"
+                  style={{ borderColor: '#FFF4DE', color: '#FFF4DE' }}
+                >
+                  {i18n.language === 'tr' ? 'Hakkımızda' : 'About Us'}
+                </Link>
+              </div>
             </motion.div>
           </div>
         </div>
