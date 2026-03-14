@@ -131,7 +131,7 @@ export default function Home() {
       </section>
 
       {/* ── 2. KİMONO – Sage green, featured image sol ── */}
-      <section className="overflow-hidden" style={{ background: '#889177' }}>
+      <section className="overflow-hidden" style={{ background: '#9E906C' }}>
         <div className="flex flex-col lg:flex-row">
 
           {/* Sol: Featured kimono fotoğrafı */}
@@ -211,7 +211,7 @@ export default function Home() {
                 >
                   {kimonoProducts.map((product, index) => (
                     <div key={product.id} className="flex-shrink-0" style={{ width: 'calc(20vw - 40px)' }}>
-                      <ProductCard product={product} index={index} />
+                      <ProductCard product={product} index={index} cardBg="#FFF4DE" />
                     </div>
                   ))}
                 </div>
@@ -337,7 +337,7 @@ export default function Home() {
                 >
                   {setProducts.map((product, index) => (
                     <div key={product.id} className="flex-shrink-0" style={{ width: 'calc((100vw - 560px) / 3)' }}>
-                      <ProductCard product={product} index={index} />
+                      <ProductCard product={product} index={index} cardBg="#9E906C" />
                     </div>
                   ))}
                 </div>

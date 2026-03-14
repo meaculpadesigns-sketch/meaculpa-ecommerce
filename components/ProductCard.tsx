@@ -13,9 +13,10 @@ interface ProductCardProps {
   index: number;
   viewMode?: 'grid' | 'list';
   showPrice?: boolean;
+  cardBg?: string;
 }
 
-export default function ProductCard({ product, index, viewMode = 'grid', showPrice = false }: ProductCardProps) {
+export default function ProductCard({ product, index, viewMode = 'grid', showPrice = false, cardBg = '#ffffff' }: ProductCardProps) {
   const { t, i18n } = useTranslation();
   const [isFavorite, setIsFavorite] = useState(false);
   const [showStory, setShowStory] = useState(false);
@@ -178,7 +179,7 @@ export default function ProductCard({ product, index, viewMode = 'grid', showPri
         </Link>
 
         {/* Info */}
-        <div className="flex flex-col flex-1 bg-white px-4 pt-3 pb-4">
+        <div className="flex flex-col flex-1 px-4 pt-3 pb-4" style={{ background: cardBg }}>
           <Link href={`/products/${product.id}`}>
             <h3 className="text-sm font-bold text-black mb-1 hover:opacity-70 transition-opacity line-clamp-1">
               {name}
