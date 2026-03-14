@@ -145,7 +145,7 @@ export default function Home() {
           </div>
 
           {/* Sağ: Başlık + şerit + kartlar */}
-          <div className="lg:w-3/5 flex flex-col justify-center px-8 md:px-12 py-14">
+          <div className="lg:w-3/5 flex flex-col px-8 md:px-12 pt-14 pb-0">
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -202,20 +202,10 @@ export default function Home() {
 
             {/* Ürün kartları */}
             {loading ? (
-              <p className="text-sm" style={{ color: '#FFF4DE', opacity: 0.6 }}>{t('common.loading')}</p>
+              <p className="text-sm mt-auto" style={{ color: '#FFF4DE', opacity: 0.6 }}>{t('common.loading')}</p>
             ) : kimonoProducts.length > 0 ? (
-              <div>
-                <div
-                  ref={kimonoScrollRef}
-                  className="flex gap-3 overflow-x-auto pb-2 scroll-smooth scrollbar-hide"
-                >
-                  {kimonoProducts.map((product, index) => (
-                    <div key={product.id} className="flex-shrink-0" style={{ width: 'calc(20vw - 40px)' }}>
-                      <ProductCard product={product} index={index} cardBg="#FFF4DE" />
-                    </div>
-                  ))}
-                </div>
-                <div className="flex gap-2 mt-3">
+              <div className="mt-auto">
+                <div className="flex gap-2 mb-3">
                   <button
                     onClick={() => scrollCarousel(kimonoScrollRef, 'left')}
                     className="p-2 rounded-full border"
@@ -233,9 +223,19 @@ export default function Home() {
                     <ChevronRight size={16} />
                   </button>
                 </div>
+                <div
+                  ref={kimonoScrollRef}
+                  className="flex gap-3 overflow-x-auto scroll-smooth scrollbar-hide"
+                >
+                  {kimonoProducts.map((product, index) => (
+                    <div key={product.id} className="flex-shrink-0" style={{ width: 'calc(20vw - 40px)' }}>
+                      <ProductCard product={product} index={index} cardBg="#FFF4DE" />
+                    </div>
+                  ))}
+                </div>
               </div>
             ) : (
-              <p className="text-sm" style={{ color: '#FFF4DE', opacity: 0.5 }}>
+              <p className="text-sm mt-auto" style={{ color: '#FFF4DE', opacity: 0.5 }}>
                 {i18n.language === 'tr' ? 'Henüz ürün eklenmedi' : 'No products yet'}
               </p>
             )}
@@ -251,7 +251,7 @@ export default function Home() {
           <div className="hidden lg:block" />
 
           {/* Orta: başlık + kartlar */}
-          <div className="flex flex-col justify-center px-8 md:px-12 py-14 min-w-0">
+          <div className="flex flex-col px-8 md:px-12 pt-14 pb-0 min-w-0">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -328,20 +328,10 @@ export default function Home() {
 
             {/* Ürün kartları */}
             {loading ? (
-              <p className="text-sm" style={{ color: '#9E906C' }}>{t('common.loading')}</p>
+              <p className="text-sm mt-auto" style={{ color: '#9E906C' }}>{t('common.loading')}</p>
             ) : setProducts.length > 0 ? (
-              <div>
-                <div
-                  ref={setScrollRef}
-                  className="flex gap-3 overflow-x-auto pb-2 scroll-smooth scrollbar-hide"
-                >
-                  {setProducts.map((product, index) => (
-                    <div key={product.id} className="flex-shrink-0" style={{ width: 'calc((100vw - 560px) / 3)' }}>
-                      <ProductCard product={product} index={index} cardBg="#9E906C" />
-                    </div>
-                  ))}
-                </div>
-                <div className="flex gap-2 mt-3" style={{ position: 'relative', zIndex: 20 }}>
+              <div className="mt-auto">
+                <div className="flex gap-2 mb-3" style={{ position: 'relative', zIndex: 20 }}>
                   <button
                     onClick={() => scrollCarousel(setScrollRef, 'left')}
                     className="p-2 rounded-full border"
@@ -359,9 +349,19 @@ export default function Home() {
                     <ChevronRight size={16} />
                   </button>
                 </div>
+                <div
+                  ref={setScrollRef}
+                  className="flex gap-3 overflow-x-auto scroll-smooth scrollbar-hide"
+                >
+                  {setProducts.map((product, index) => (
+                    <div key={product.id} className="flex-shrink-0" style={{ width: 'calc((100vw - 560px) / 3)' }}>
+                      <ProductCard product={product} index={index} cardBg="#9E906C" />
+                    </div>
+                  ))}
+                </div>
               </div>
             ) : (
-              <p className="text-sm" style={{ color: '#9E906C' }}>
+              <p className="text-sm mt-auto" style={{ color: '#9E906C' }}>
                 {i18n.language === 'tr' ? 'Henüz ürün eklenmedi' : 'No products yet'}
               </p>
             )}
