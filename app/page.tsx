@@ -372,27 +372,26 @@ export default function Home() {
         {/* Sol manken — section'ı aşağı taşıyor */}
         <div
           className="hidden lg:block absolute top-0 left-0"
-          style={{ width: 220, bottom: -160, zIndex: 10 }}
+          style={{ width: 300, bottom: -160, zIndex: 10 }}
         >
           <Image
             src="/images/homepage/sol-manken.png"
             alt="Setler koleksiyonu"
             fill
-            className="object-cover object-top"
-            style={{ objectPosition: '65% top' }}
+            className="object-contain object-bottom"
           />
         </div>
 
         {/* Sağ manken — section'ı aşağı taşıyor */}
         <div
           className="hidden lg:block absolute top-0 right-0"
-          style={{ width: 220, bottom: -160, zIndex: 10 }}
+          style={{ width: 300, bottom: -160, zIndex: 10 }}
         >
           <Image
             src="/images/homepage/sag-manken.png"
             alt="Setler koleksiyonu"
             fill
-            className="object-cover object-top"
+            className="object-contain object-bottom"
           />
         </div>
       </section>
