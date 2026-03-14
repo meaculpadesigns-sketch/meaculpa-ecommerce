@@ -136,13 +136,13 @@ export default function Home() {
         <div className="flex flex-col lg:flex-row">
 
           {/* Sol: Featured kimono fotoğrafı */}
-          <div className="lg:w-2/5 relative" style={{ minHeight: 520, zIndex: 1 }}>
+          <div className="lg:w-2/5 relative overflow-hidden" style={{ minHeight: 520, zIndex: 1 }}>
             <Image
               src="/images/homepage/4kimono.png"
               alt="Kimono koleksiyonu"
               fill
-              className="object-cover"
-              style={{ objectPosition: '30% top' }}
+              className="object-cover object-top"
+              style={{ transform: 'scale(1.08) translateX(-6%)' }}
             />
           </div>
 
