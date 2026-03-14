@@ -135,7 +135,7 @@ export default function Home() {
         <div className="flex flex-col lg:flex-row">
 
           {/* Sol: Featured kimono fotoğrafı */}
-          <div className="lg:w-2/5 relative" style={{ minHeight: 520 }}>
+          <div className="lg:w-2/5 relative" style={{ minHeight: 520, zIndex: 1 }}>
             <Image
               src="/images/homepage/4kimono.png"
               alt="Kimono koleksiyonu"
