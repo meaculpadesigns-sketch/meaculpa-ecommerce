@@ -293,7 +293,7 @@ export default function Home() {
                   className="flex gap-3 overflow-x-auto pb-2 scroll-smooth scrollbar-hide"
                 >
                   {setProducts.map((product, index) => (
-                    <div key={product.id} className="flex-shrink-0" style={{ width: 'calc(20vw - 40px)' }}>
+                    <div key={product.id} className="flex-shrink-0" style={{ width: 'calc((100vw - 560px) / 3)' }}>
                       <ProductCard product={product} index={index} />
                     </div>
                   ))}
