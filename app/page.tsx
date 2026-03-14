@@ -339,7 +339,7 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-                <div className="flex gap-2 mt-3">
+                <div className="flex gap-2 mt-3" style={{ position: 'relative', zIndex: 20 }}>
                   <button
                     onClick={() => scrollCarousel(setScrollRef, 'left')}
                     className="p-2 rounded-full border"
