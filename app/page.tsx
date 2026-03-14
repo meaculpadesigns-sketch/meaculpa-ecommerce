@@ -338,7 +338,7 @@ export default function Home() {
             alt="Setler koleksiyonu"
             fill
             className="object-cover object-top"
-            style={{ objectPosition: 'right top' }}
+            style={{ objectPosition: '65% top' }}
           />
         </div>
 
