@@ -264,13 +264,13 @@ export default function Home() {
               <div className="hidden lg:block">
                 <p
                   className="text-xs tracking-widest uppercase mb-1"
-                  style={{ color: '#853710', opacity: 0.6, marginLeft: 'calc((200vw - 1048px) / 3)' }}
+                  style={{ color: '#9E906C', opacity: 0.6, marginLeft: 'calc((200vw - 1048px) / 3)' }}
                 >
                   {i18n.language === 'tr' ? 'Koleksiyon' : 'Collection'}
                 </p>
                 <h2
                   className="text-5xl md:text-6xl font-bold"
-                  style={{ color: '#853710', marginLeft: 'calc((200vw - 1048px) / 3)' }}
+                  style={{ color: '#9E906C', marginLeft: 'calc((200vw - 1048px) / 3)' }}
                 >
                   SETLER
                 </h2>
@@ -282,7 +282,7 @@ export default function Home() {
                     className="absolute top-1/2"
                     style={{
                       height: '2px',
-                      background: '#853710',
+                      background: '#9E906C',
                       left: 'calc((200vw - 1048px) / 3)',
                       right: 'calc(-220px - 48px)',
                       transform: 'translateY(-50%)',
@@ -292,8 +292,8 @@ export default function Home() {
                   <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" style={{ zIndex: 1 }}>
                     <Link
                       href="/products?category=set"
-                      className="inline-flex items-center px-7 py-3 rounded-lg font-medium transition-all hover:bg-[#853710] hover:text-white whitespace-nowrap"
-                      style={{ border: '1.5px solid #853710', color: '#853710', background: '#FFF4DE' }}
+                      className="inline-flex items-center px-7 py-3 rounded-lg font-medium transition-all hover:bg-[#7a6e55] hover:text-white whitespace-nowrap"
+                      style={{ border: '1.5px solid #9E906C', color: '#9E906C', background: '#FFF4DE' }}
                     >
                       {i18n.language === 'tr' ? 'Koleksiyonu Gör' : 'View Collection'}
                     </Link>
@@ -310,18 +310,18 @@ export default function Home() {
 
               {/* Mobile: normal düzen */}
               <div className="lg:hidden">
-                <p className="text-xs tracking-widest uppercase mb-3" style={{ color: '#853710', opacity: 0.6 }}>
+                <p className="text-xs tracking-widest uppercase mb-3" style={{ color: '#9E906C', opacity: 0.6 }}>
                   {i18n.language === 'tr' ? 'Koleksiyon' : 'Collection'}
                 </p>
-                <h2 className="text-5xl font-bold mb-1" style={{ color: '#853710' }}>SETLER</h2>
-                <div className="w-14 h-px my-3" style={{ background: '#853710' }} />
+                <h2 className="text-5xl font-bold mb-1" style={{ color: '#9E906C' }}>SETLER</h2>
+                <div className="w-14 h-px my-3" style={{ background: '#9E906C' }} />
                 <p className="text-lg mb-6" style={{ color: '#9E906C', fontStyle: 'italic', fontFamily: "'Bellota Text'" }}>
                   {i18n.language === 'tr' ? 'özel kumaşlardan üretilmiş kombinler' : 'combinations crafted from special fabrics'}
                 </p>
                 <Link
                   href="/products?category=set"
-                  className="inline-flex items-center px-7 py-3 rounded-lg font-medium mb-8 transition-all hover:bg-[#853710] hover:text-white"
-                  style={{ border: '1.5px solid #853710', color: '#853710' }}
+                  className="inline-flex items-center px-7 py-3 rounded-lg font-medium mb-8 transition-all hover:bg-[#7a6e55] hover:text-white"
+                  style={{ border: '1.5px solid #9E906C', color: '#9E906C' }}
                 >
                   {i18n.language === 'tr' ? 'Koleksiyonu Gör' : 'View Collection'}
                 </Link>
@@ -337,7 +337,7 @@ export default function Home() {
                   <button
                     onClick={() => scrollCarousel(setScrollRef, 'left')}
                     className="p-2 rounded-full border"
-                    style={{ borderColor: '#853710', color: '#853710' }}
+                    style={{ borderColor: '#9E906C', color: '#9E906C' }}
                     aria-label="Previous"
                   >
                     <ChevronLeft size={16} />
@@ -345,7 +345,7 @@ export default function Home() {
                   <button
                     onClick={() => scrollCarousel(setScrollRef, 'right')}
                     className="p-2 rounded-full border"
-                    style={{ borderColor: '#853710', color: '#853710' }}
+                    style={{ borderColor: '#9E906C', color: '#9E906C' }}
                     aria-label="Next"
                   >
                     <ChevronRight size={16} />
@@ -357,7 +357,7 @@ export default function Home() {
                 >
                   {setProducts.map((product, index) => (
                     <div key={product.id} className="flex-shrink-0" style={{ width: 'calc((100vw - 560px) / 3)' }}>
-                      <ProductCard product={product} index={index} cardBg="#9E906C" />
+                      <ProductCard product={product} index={index} cardBg="#9E906C" lightText />
                     </div>
                   ))}
                 </div>

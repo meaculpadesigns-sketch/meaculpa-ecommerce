@@ -14,9 +14,10 @@ interface ProductCardProps {
   viewMode?: 'grid' | 'list';
   showPrice?: boolean;
   cardBg?: string;
+  lightText?: boolean;
 }
 
-export default function ProductCard({ product, index, viewMode = 'grid', showPrice = false, cardBg = '#ffffff' }: ProductCardProps) {
+export default function ProductCard({ product, index, viewMode = 'grid', showPrice = false, cardBg = '#ffffff', lightText = false }: ProductCardProps) {
   const { t, i18n } = useTranslation();
   const [isFavorite, setIsFavorite] = useState(false);
   const [showStory, setShowStory] = useState(false);
@@ -181,22 +182,25 @@ export default function ProductCard({ product, index, viewMode = 'grid', showPri
         {/* Info */}
         <div className="flex flex-col flex-1 px-4 pt-3 pb-4" style={{ background: cardBg }}>
           <Link href={`/products/${product.id}`}>
-            <h3 className="text-sm font-bold text-black mb-1 hover:opacity-70 transition-opacity line-clamp-1">
+            <h3
+              className="text-sm font-bold mb-1 hover:opacity-70 transition-opacity line-clamp-1"
+              style={{ color: lightText ? '#ffffff' : '#000000' }}
+            >
               {name}
             </h3>
           </Link>
 
           {story && (
-            <p className="text-xs mb-3 line-clamp-2" style={{ color: '#000', opacity: 0.55 }}>
+            <p className="text-xs mb-3 line-clamp-2" style={{ color: lightText ? '#FFF4DE' : '#000000', opacity: lightText ? 0.8 : 0.55 }}>
               {story}
             </p>
           )}
 
           {showPrice && (
             <div className="flex items-baseline gap-2 mb-3">
-              <span className="text-sm font-bold text-black">{formatPrice(product.price, i18n.language)}</span>
+              <span className="text-sm font-bold" style={{ color: lightText ? '#ffffff' : '#000000' }}>{formatPrice(product.price, i18n.language)}</span>
               {product.oldPrice && (
-                <span className="text-xs line-through" style={{ color: '#000', opacity: 0.4 }}>{formatPrice(product.oldPrice, i18n.language)}</span>
+                <span className="text-xs line-through" style={{ color: lightText ? '#FFF4DE' : '#000000', opacity: 0.4 }}>{formatPrice(product.oldPrice, i18n.language)}</span>
               )}
             </div>
           )}
@@ -205,8 +209,10 @@ export default function ProductCard({ product, index, viewMode = 'grid', showPri
           <div className="mt-auto pt-2 flex justify-start">
             <Link
               href={`/products/${product.id}`}
-              className="text-xs font-medium px-4 py-2 rounded-lg transition-all hover:bg-black hover:text-white"
-              style={{ border: '1px solid rgba(0,0,0,0.35)', color: 'rgba(0,0,0,0.45)' }}
+              className="text-xs font-medium px-4 py-2 rounded-lg transition-all"
+              style={lightText
+                ? { border: '1px solid rgba(255,255,255,0.5)', color: 'rgba(255,255,255,0.85)' }
+                : { border: '1px solid rgba(0,0,0,0.35)', color: 'rgba(0,0,0,0.45)' }}
             >
               {i18n.language === 'tr' ? 'Detaylı İncele' : 'View Details'}
             </Link>
