@@ -403,7 +403,7 @@ export default function Home() {
             {/* polaroid4 — sol üst köşeye yapışık */}
             <div
               className="absolute shadow-xl"
-              style={{ top: -10, left: -10, transform: 'rotate(-5deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 210, zIndex: 2 }}
+              style={{ top: -10, left: -10, transform: 'rotate(-12deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 210, zIndex: 2 }}
             >
               <div className="relative" style={{ height: 255 }}>
                 <Image src="/images/homepage/polaroid4.png" alt="" fill className="object-cover" />
@@ -412,7 +412,7 @@ export default function Home() {
             {/* polaroid3 — polaroid4'ün ortasının biraz altından başlar */}
             <div
               className="absolute shadow-xl"
-              style={{ top: '42%', left: '22%', transform: 'rotate(5deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 190, zIndex: 3 }}
+              style={{ top: '28%', left: '14%', transform: 'rotate(-8deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 190, zIndex: 3 }}
             >
               <div className="relative" style={{ height: 230 }}>
                 <Image src="/images/homepage/polaroid3.png" alt="" fill className="object-cover" />
