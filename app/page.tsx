@@ -242,18 +242,11 @@ export default function Home() {
       </section>
 
       {/* ── 3. SETLER – 3 sütun (sol manken | orta içerik | sağ manken) ── */}
-      <section className="overflow-hidden" style={{ background: '#FFF4DE' }}>
+      <section className="relative" style={{ background: '#FFF4DE', zIndex: 2 }}>
         <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr_220px]" style={{ minHeight: 560 }}>
 
-          {/* Sol: sol-manken */}
-          <div className="hidden lg:block relative">
-            <Image
-              src="/images/homepage/sol-manken.png"
-              alt="Setler koleksiyonu"
-              fill
-              className="object-cover object-top"
-            />
-          </div>
+          {/* Sol: boş spacer — manken absolute */}
+          <div className="hidden lg:block" />
 
           {/* Orta: başlık + kartlar */}
           <div className="flex flex-col justify-center px-8 md:px-12 py-14 min-w-0">
@@ -324,15 +317,34 @@ export default function Home() {
             )}
           </div>
 
-          {/* Sağ: sag-manken */}
-          <div className="hidden lg:block relative">
-            <Image
-              src="/images/homepage/sag-manken.png"
-              alt="Setler koleksiyonu"
-              fill
-              className="object-cover object-top"
-            />
-          </div>
+          {/* Sağ: boş spacer — manken absolute */}
+          <div className="hidden lg:block" />
+        </div>
+
+        {/* Sol manken — section'ı aşağı taşıyor */}
+        <div
+          className="hidden lg:block absolute top-0 left-0"
+          style={{ width: 220, bottom: -160, zIndex: 10 }}
+        >
+          <Image
+            src="/images/homepage/sol-manken.png"
+            alt="Setler koleksiyonu"
+            fill
+            className="object-cover object-top"
+          />
+        </div>
+
+        {/* Sağ manken — section'ı aşağı taşıyor */}
+        <div
+          className="hidden lg:block absolute top-0 right-0"
+          style={{ width: 220, bottom: -160, zIndex: 10 }}
+        >
+          <Image
+            src="/images/homepage/sag-manken.png"
+            alt="Setler koleksiyonu"
+            fill
+            className="object-cover object-top"
+          />
         </div>
       </section>
 
