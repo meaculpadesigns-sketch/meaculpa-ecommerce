@@ -200,8 +200,8 @@ export default function ProductCard({ product, index, viewMode = 'grid', showPri
             </div>
           )}
 
-          {/* Detaylı İncele butonu - altta ortalı */}
-          <div className="mt-auto pt-2 flex justify-center">
+          {/* Detaylı İncele butonu - altta sola yaslı */}
+          <div className="mt-auto pt-2 flex justify-start">
             <Link
               href={`/products/${product.id}`}
               className="text-xs font-medium px-4 py-2 rounded-lg transition-all hover:bg-black hover:text-white"
