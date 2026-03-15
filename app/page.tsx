@@ -417,12 +417,14 @@ export default function Home() {
                   className="text-sm leading-relaxed flex-1"
                   style={{ color: '#FFF4DE', opacity: 0.88, fontStyle: 'italic', fontFamily: "'Bellota Text'" }}
                 >
-                  {t('home.storyText1')}
+                  {i18n.language === 'tr'
+                    ? 'Mea Culpa, zamana dokunan hikayeler anlatan bir moda markasıdır. Doğu\'nun zengin kültürel mirasından ilham alarak, modern yaşamla buluşturan özgün tasarımlar yaratıyoruz.'
+                    : 'Mea Culpa is a fashion brand that tells stories touching time. Drawing inspiration from the rich cultural heritage of the East, we create unique designs that meet modern life.'}
                 </p>
                 <Link
                   href="/about"
-                  className="inline-flex items-center px-6 py-2.5 rounded-lg border font-medium whitespace-nowrap flex-shrink-0 transition-all hover:bg-white hover:bg-opacity-10"
-                  style={{ borderColor: '#FFF4DE', color: '#FFF4DE' }}
+                  className="inline-flex items-center px-6 py-2.5 font-medium whitespace-nowrap flex-shrink-0 transition-all hover:opacity-80"
+                  style={{ border: '1.5px solid #FFF4DE', color: '#9E906C', background: '#FFF4DE' }}
                 >
                   {i18n.language === 'tr' ? 'Hakkımızda' : 'About Us'}
                 </Link>
