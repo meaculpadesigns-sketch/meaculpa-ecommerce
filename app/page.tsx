@@ -453,14 +453,17 @@ export default function Home() {
       </section>
 
       {/* ── 5. FESTİVALLER & BLOG – Forest bg, yatay kartlar alt alta ── */}
-      <section className="relative overflow-hidden py-12 pr-10 pl-0" style={{ minHeight: 460 }}>
-        <Image
-          src="/images/homepage/forest.jpg"
-          alt="Festival arka plan"
-          fill
-          className="object-cover object-center"
-        />
-        <div className="absolute inset-0" style={{ background: 'rgba(10, 20, 10, 0.65)' }} />
+      <section className="relative py-12 pr-10 pl-0" style={{ minHeight: 460 }}>
+        {/* Arka plan — overflow:hidden içinde clip edildi, logo taşabilsin diye */}
+        <div className="absolute inset-0 overflow-hidden">
+          <Image
+            src="/images/homepage/forest.jpg"
+            alt="Festival arka plan"
+            fill
+            className="object-cover object-center"
+          />
+          <div className="absolute inset-0" style={{ background: 'rgba(10, 20, 10, 0.65)' }} />
+        </div>
 
         {/* İçerik — sol %28 polaroidlere bırakıldı */}
         <div className="relative z-10 flex flex-col" style={{ marginLeft: '28%' }}>
@@ -522,6 +525,16 @@ export default function Home() {
               {i18n.language === 'tr' ? 'Tümünü Gör' : 'View All'}
             </Link>
           </div>
+        </div>
+
+        {/* Mea Culpa sembol logosu — yarısı bu bölümde, yarısı footer'da */}
+        <div className="absolute z-20" style={{ bottom: -64, left: '50%', transform: 'translateX(-50%)' }}>
+          <Image
+            src="/images/MeaCulpaSymbolPNG.png"
+            alt="Mea Culpa"
+            width={128}
+            height={128}
+          />
         </div>
       </section>
 

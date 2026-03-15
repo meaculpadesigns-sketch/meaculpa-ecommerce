@@ -42,7 +42,7 @@ export default function Footer() {
 
   return (
     <footer style={{ background: '#7a8570' }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-8">
 
         {/* Top: centered logo */}
         <div className="flex flex-col items-center mb-12">
