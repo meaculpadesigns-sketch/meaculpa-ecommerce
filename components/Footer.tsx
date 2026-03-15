@@ -15,7 +15,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10" style={{ paddingTop: 76, paddingBottom: 22 }}>
 
         {/* Ana tek satır: 5 bölge */}
-        <div className="flex items-center justify-between gap-4">
+        <div className="relative flex items-center justify-between gap-4">
 
           {/* Sol: ödeme yöntemleri — çerçevesiz */}
           <div className="flex items-center gap-3 flex-shrink-0">
@@ -49,8 +49,8 @@ export default function Footer() {
             </li>
           </ul>
 
-          {/* Merkez: copyright */}
-          <p className="text-xs text-center flex-shrink-0" style={{ color: '#ffffff', opacity: 0.85 }}>
+          {/* Merkez: copyright — sayfanın tam ortasına absolute */}
+          <p className="absolute text-xs text-center pointer-events-none" style={{ color: '#ffffff', opacity: 0.85, left: '50%', transform: 'translateX(-50%)', whiteSpace: 'nowrap' }}>
             © {new Date().getFullYear()} MEA CULPA.<br />
             {i18n.language === 'tr' ? 'TÜM HAKLARI SAKLIDIR.' : 'ALL RIGHTS RESERVED.'}
           </p>
