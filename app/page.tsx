@@ -451,7 +451,7 @@ export default function Home() {
       </section>
 
       {/* ── 5. FESTİVALLER & BLOG – Forest bg, yatay kartlar alt alta ── */}
-      <section className="relative overflow-hidden py-16 px-6 md:px-12" style={{ minHeight: 520 }}>
+      <section className="relative overflow-hidden py-12 pr-10 pl-0" style={{ minHeight: 460 }}>
         <Image
           src="/images/homepage/forest.jpg"
           alt="Festival arka plan"
@@ -460,79 +460,63 @@ export default function Home() {
         />
         <div className="absolute inset-0" style={{ background: 'rgba(10, 20, 10, 0.65)' }} />
 
-        <div className="relative z-10 max-w-4xl mx-auto">
-          <div className="flex items-end justify-between mb-10">
-            <div>
-              <p className="text-xs tracking-widest uppercase mb-2" style={{ color: '#F5D482', opacity: 0.8 }}>
-                {i18n.language === 'tr' ? 'Deneyimler' : 'Experiences'}
+        {/* İçerik — sol %28 polaroidlere bırakıldı */}
+        <div className="relative z-10 flex flex-col" style={{ marginLeft: '28%' }}>
+
+          {/* Başlık — kartların sağ kenarıyla hizalı */}
+          <h2 className="text-4xl font-bold text-right mb-5" style={{ color: '#ffffff' }}>
+            Festivaller & Blog
+          </h2>
+
+          {/* LABRYINTO — metin sol, görsel sağ */}
+          <div className="flex overflow-hidden rounded-xl mb-4 group" style={{ background: 'rgba(0,0,0,0.78)' }}>
+            <div className="flex-1 p-5 flex flex-col">
+              <div className="flex justify-between items-start mb-1">
+                <h3 className="text-sm font-bold tracking-widest uppercase" style={{ color: '#ffffff' }}>
+                  LABRYINTO FESTIVAL 2025
+                </h3>
+                <Link href="/festivals-and-blog" className="text-xs ml-4 whitespace-nowrap flex-shrink-0" style={{ color: '#FFF4DE', opacity: 0.8 }}>
+                  {i18n.language === 'tr' ? 'Detaylı İncele' : 'Read More'}
+                </Link>
+              </div>
+              <p className="text-xs mb-2" style={{ color: '#FFF4DE', opacity: 0.6 }}>Guanacaste / Costa Rica</p>
+              <p className="text-sm leading-relaxed" style={{ color: '#FFF4DE', opacity: 0.82, fontStyle: 'italic', fontFamily: "'Bellota Text'" }}>
+                {i18n.language === 'tr'
+                  ? '2024\'e geldiğimizde, Labryinto artık Mea Culpa\'nın yıllık ritüellerinden biri hâline gelmiştir. Her geçen yıl daha da zenginleşen festival atmosferi, markamızın dinamik tasarım diliyle güçlü bir uyum içinde ilerledi.'
+                  : 'Labryinto has become one of Mea Culpa\'s annual rituals. Each year, the festival atmosphere deepens in strong harmony with our design language.'}
               </p>
-              <h2 className="text-4xl font-bold" style={{ color: '#FFF4DE' }}>
-                {t('nav.festivalsAndBlog')}
-              </h2>
             </div>
-            <Link
-              href="/festivals-and-blog"
-              className="hidden md:inline-flex items-center gap-2 text-sm font-medium"
-              style={{ color: '#FFF4DE', opacity: 0.85 }}
-            >
-              {i18n.language === 'tr' ? 'Tümünü Gör' : 'View All'}
-              <ArrowRight size={16} />
-            </Link>
+            <div className="relative flex-shrink-0" style={{ width: 180 }}>
+              <Image src="/images/homepage/labryinto.jpg" alt="Labryinto Festival" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+            </div>
           </div>
 
-          {/* Yatay kartlar — alt alta */}
-          <div className="flex flex-col gap-5">
-            {[
-              {
-                src: 'labryinto.jpg',
-                title: 'LABRYINTO FESTIVAL 2025',
-                location: 'Guanacaste / Costa Rica',
-                desc: i18n.language === 'tr'
-                  ? 'Labryinto artık Mea Culpa\'nın yıllık ritüellerinden biri hâline geldi. Festival atmosferi, markamızın tasarım diliyle güçlü bir uyum içinde ilerliyor.'
-                  : 'Labryinto has become one of Mea Culpa\'s annual rituals, evolving in strong harmony with our design language.',
-              },
-              {
-                src: 'BPM.jpg',
-                title: 'THE BPM FESTIVAL 2024',
-                location: 'Tamarindo, Guanacaste, Costa Rica',
-                desc: i18n.language === 'tr'
-                  ? 'Mea Culpa artık BPM sahnesine yabancı değil. Markamız festival içinde çok daha görünür, çok daha bütünsel bir konuma ulaştı.'
-                  : 'Mea Culpa is no longer a stranger to the BPM stage, reaching a much more visible position within the festival.',
-              },
-            ].map(({ src, title, location, desc }) => (
-              <Link
-                key={src}
-                href="/festivals-and-blog"
-                className="flex flex-row overflow-hidden rounded-xl group"
-                style={{ background: 'rgba(255,244,222,0.08)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,244,222,0.15)' }}
-              >
-                {/* Sol: fotoğraf */}
-                <div className="relative flex-shrink-0" style={{ width: 192, minHeight: 180 }}>
-                  <Image
-                    src={`/images/homepage/${src}`}
-                    alt={title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
-                {/* Sağ: metin */}
-                <div className="p-5 flex flex-col justify-center">
-                  <p className="text-xs tracking-widest uppercase mb-1" style={{ color: '#F5D482', opacity: 0.75 }}>
-                    {location}
-                  </p>
-                  <h3 className="text-lg font-bold mb-2" style={{ color: '#FFF4DE' }}>{title}</h3>
-                  <p className="text-sm leading-relaxed mb-3" style={{ color: '#FFF4DE', opacity: 0.75 }}>{desc}</p>
-                  <span className="inline-flex items-center gap-1 text-sm font-medium" style={{ color: '#F5D482' }}>
-                    {i18n.language === 'tr' ? 'Detaylı İncele' : 'Read More'}
-                    <ArrowRight size={14} />
-                  </span>
-                </div>
-              </Link>
-            ))}
+          {/* THE BPM — görsel sol, metin sağ */}
+          <div className="flex overflow-hidden rounded-xl group" style={{ background: 'rgba(0,0,0,0.78)' }}>
+            <div className="relative flex-shrink-0" style={{ width: 180 }}>
+              <Image src="/images/homepage/BPM.jpg" alt="BPM Festival" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+            </div>
+            <div className="flex-1 p-5 flex flex-col">
+              <div className="flex justify-between items-start mb-1">
+                <h3 className="text-sm font-bold tracking-widest uppercase" style={{ color: '#ffffff' }}>
+                  THE BPM FESTIVAL 2024
+                </h3>
+                <Link href="/festivals-and-blog" className="text-xs ml-4 whitespace-nowrap flex-shrink-0" style={{ color: '#FFF4DE', opacity: 0.8 }}>
+                  {i18n.language === 'tr' ? 'Detaylı İncele' : 'Read More'}
+                </Link>
+              </div>
+              <p className="text-xs mb-2" style={{ color: '#FFF4DE', opacity: 0.6 }}>Tamarindo, Guanacaste, Costa Rica</p>
+              <p className="text-sm leading-relaxed" style={{ color: '#FFF4DE', opacity: 0.82, fontStyle: 'italic', fontFamily: "'Bellota Text'" }}>
+                {i18n.language === 'tr'
+                  ? '2024\'e geldiğimizde, Mea Culpa artık BPM sahnesine yabancı değildi. İlk yılın deneyimleri üzerine inşa edilen bu edisyonda, markamız festival içinde çok daha görünür. Çok daha tanıdık ve çok daha bütünsel bir konuma ulaştı.'
+                  : 'Mea Culpa is no longer a stranger to the BPM stage, reaching a much more visible and integrated position within the festival.'}
+              </p>
+            </div>
           </div>
 
-          <div className="flex md:hidden justify-center mt-8">
-            <Link href="/festivals-and-blog" className="btn-primary">
+          {/* Tümünü Gör — BPM kartının solunda hizalı */}
+          <div className="mt-4">
+            <Link href="/festivals-and-blog" className="text-sm font-medium" style={{ color: '#FFF4DE', opacity: 0.85 }}>
               {i18n.language === 'tr' ? 'Tümünü Gör' : 'View All'}
             </Link>
           </div>
