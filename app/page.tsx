@@ -395,7 +395,7 @@ export default function Home() {
       </section>
 
       {/* ── 4. BİZ KİMİZ? – Taupe bg, sol polaroidler, sağ metin ── */}
-      <section className="relative" style={{ background: '#9E906C', zIndex: 1 }}>
+      <section className="relative" style={{ background: '#9E906C', zIndex: 1, overflow: 'visible' }}>
         <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr]">
 
           {/* Sol: boş spacer — polaroidler absolute olarak section'dan taşıyor */}
@@ -434,7 +434,7 @@ export default function Home() {
         {/* Polaroidler — section'dan aşağı taşıyor */}
         <div
           className="hidden lg:block absolute shadow-xl"
-          style={{ top: -10, left: -10, transform: 'rotate(-12deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 210, zIndex: 10 }}
+          style={{ top: -10, left: -10, transform: 'rotate(-12deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 210, zIndex: 30 }}
         >
           <div className="relative" style={{ height: 255 }}>
             <Image src="/images/homepage/polaroid4.png" alt="" fill className="object-cover" />
@@ -442,7 +442,7 @@ export default function Home() {
         </div>
         <div
           className="hidden lg:block absolute shadow-xl"
-          style={{ top: '28%', left: '14%', transform: 'rotate(-8deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 190, zIndex: 11 }}
+          style={{ top: '28%', left: '14%', transform: 'rotate(-8deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 190, zIndex: 31 }}
         >
           <div className="relative" style={{ height: 230 }}>
             <Image src="/images/homepage/polaroid3.png" alt="" fill className="object-cover" />
