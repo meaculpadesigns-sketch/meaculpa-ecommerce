@@ -477,7 +477,7 @@ export default function Home() {
                 <h3 className="text-base font-bold tracking-widest uppercase" style={{ color: '#ffffff' }}>
                   LABRYINTO FESTIVAL 2025
                 </h3>
-                <Link href="/festivals-and-blog" className="text-xs ml-4 whitespace-nowrap flex-shrink-0 px-3 py-1" style={{ color: '#ffffff', border: '1px solid rgba(255,255,255,0.55)' }}>
+                <Link href="/festivals-and-blog" className="text-xs ml-4 whitespace-nowrap flex-shrink-0 px-3 py-1" style={{ color: '#FFF4DE', border: '1px solid rgba(255,244,222,0.55)' }}>
                   {i18n.language === 'tr' ? 'Detaylı İncele' : 'Read More'}
                 </Link>
               </div>
@@ -503,7 +503,7 @@ export default function Home() {
                 <h3 className="text-base font-bold tracking-widest uppercase" style={{ color: '#ffffff' }}>
                   THE BPM FESTIVAL 2024
                 </h3>
-                <Link href="/festivals-and-blog" className="text-xs ml-4 whitespace-nowrap flex-shrink-0 px-3 py-1" style={{ color: '#ffffff', border: '1px solid rgba(255,255,255,0.55)' }}>
+                <Link href="/festivals-and-blog" className="text-xs ml-4 whitespace-nowrap flex-shrink-0 px-3 py-1" style={{ color: '#FFF4DE', border: '1px solid rgba(255,244,222,0.55)' }}>
                   {i18n.language === 'tr' ? 'Detaylı İncele' : 'Read More'}
                 </Link>
               </div>
@@ -518,7 +518,7 @@ export default function Home() {
 
           {/* Tümünü Gör — BPM kartının solunda hizalı */}
           <div className="mt-4">
-            <Link href="/festivals-and-blog" className="text-base font-bold px-4 py-1.5" style={{ color: '#ffffff', border: '1px solid rgba(255,255,255,0.55)' }}>
+            <Link href="/festivals-and-blog" className="text-base font-bold px-4 py-1.5" style={{ color: '#FFF4DE', border: '1px solid rgba(255,244,222,0.55)' }}>
               {i18n.language === 'tr' ? 'Tümünü Gör' : 'View All'}
             </Link>
           </div>
