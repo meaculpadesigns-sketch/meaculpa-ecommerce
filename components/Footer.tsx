@@ -1,175 +1,110 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import { Instagram, MessageCircle } from 'lucide-react';
 
 export default function Footer() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
-  const footerLinks = {
-    products: [
-      { name: t('nav.products'), href: '/products' },
-      { name: t('nav.kimono'), href: '/products?category=kimono' },
-      { name: t('nav.set'), href: '/products?category=set' },
-    ],
-    company: [
-      { name: t('nav.aboutUs'), href: '/about' },
-      { name: t('nav.corporate'), href: '/corporate' },
-      { name: t('nav.contact'), href: '/contact' },
-    ],
-    support: [
-      { name: t('nav.orderTracking'), href: '/order-tracking' },
-      { name: t('nav.faq'), href: '/faq' },
-      { name: t('footer.privacy'), href: '/privacy' },
-      { name: t('footer.returns'), href: '/returns' },
-    ],
-  };
-
-  const socialMedia = [
-    {
-      name: 'Instagram',
-      icon: Instagram,
-      href: 'https://www.instagram.com/meaculpadesign/?igsh=MW8ybW9qdGJ6bTAyNw%3D%3D#',
-    },
-    {
-      name: 'WhatsApp',
-      icon: MessageCircle,
-      href: 'https://wa.me/905075620802',
-    },
-  ];
+  const linkColor = { color: '#FFF4DE', opacity: 0.85 };
 
   return (
     <footer style={{ background: '#7a8570' }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-8">
+      {/* Logo için boşluk (128px logo, 64px footer'a taşıyor) + içerik satırı */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-10" style={{ paddingTop: 76, paddingBottom: 22 }}>
 
-        {/* Top: centered logo */}
-        <div className="flex flex-col items-center mb-12">
-          <Image
-            src="/images/logo-symbol.png"
-            alt="Mea Culpa"
-            width={56}
-            height={56}
-            className="h-14 w-auto mb-3"
-          />
-          <span className="text-lg font-semibold tracking-wider" style={{ color: '#FFF4DE' }}>
-            Mea Culpa
-          </span>
-        </div>
+        {/* Ana tek satır: 5 bölge */}
+        <div className="flex items-center justify-between gap-4">
 
-        {/* Link columns */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mb-12">
-          {/* Products */}
-          <div>
-            <h3 className="text-xs tracking-widest uppercase font-semibold mb-4" style={{ color: '#F5D482' }}>
-              {t('nav.products')}
-            </h3>
-            <ul className="space-y-2.5">
-              {footerLinks.products.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-sm transition-opacity hover:opacity-100" style={{ color: '#FFF4DE', opacity: 0.8 }}>
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div>
-            <h3 className="text-xs tracking-widest uppercase font-semibold mb-4" style={{ color: '#F5D482' }}>
-              {t('nav.corporate')}
-            </h3>
-            <ul className="space-y-2.5">
-              {footerLinks.company.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-sm transition-opacity hover:opacity-100" style={{ color: '#FFF4DE', opacity: 0.8 }}>
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Support */}
-          <div>
-            <h3 className="text-xs tracking-widest uppercase font-semibold mb-4" style={{ color: '#F5D482' }}>
-              {t('footer.support')}
-            </h3>
-            <ul className="space-y-2.5">
-              {footerLinks.support.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-sm transition-opacity hover:opacity-100" style={{ color: '#FFF4DE', opacity: 0.8 }}>
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* Bottom bar */}
-        <div
-          className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
-          style={{ borderTop: '1px solid rgba(255,244,222,0.2)' }}
-        >
-          {/* Social */}
-          <div className="flex items-center gap-4">
-            {socialMedia.map((social) => (
-              <a
-                key={social.name}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={social.name}
-                className="transition-opacity hover:opacity-100"
-                style={{ color: '#FFF4DE', opacity: 0.75 }}
-              >
-                <social.icon size={20} />
-              </a>
-            ))}
-          </div>
-
-          {/* Legal links */}
-          <div className="flex flex-wrap justify-center gap-4 text-xs" style={{ color: '#FFF4DE', opacity: 0.65 }}>
-            <Link href="/distance-sales-agreement" className="hover:opacity-100 transition-opacity">
-              {t('footer.distanceSales')}
-            </Link>
-            <span>•</span>
-            <Link href="/privacy" className="hover:opacity-100 transition-opacity">
-              {t('footer.privacy')}
-            </Link>
-            <span>•</span>
-            <Link href="/returns" className="hover:opacity-100 transition-opacity">
-              {t('footer.returns')}
-            </Link>
-          </div>
-
-          {/* Payment */}
-          <div className="flex items-center gap-2">
-            <div className="bg-white bg-opacity-15 px-3 py-1.5 rounded">
-              <svg className="h-4 w-auto" viewBox="0 0 48 16" fill="none">
+          {/* Sol: ödeme yöntemleri */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <div className="px-2 py-1 rounded" style={{ background: 'rgba(255,255,255,0.18)' }}>
+              <svg viewBox="0 0 48 16" fill="none" style={{ height: 14, width: 'auto' }}>
                 <text x="0" y="12" fontFamily="Arial, sans-serif" fontSize="14" fontWeight="bold" fill="#ffffff" letterSpacing="1">VISA</text>
               </svg>
             </div>
-            <div className="bg-white bg-opacity-15 px-3 py-1.5 rounded flex items-center justify-center">
-              <svg className="h-4 w-auto" viewBox="0 0 40 26" fill="none">
+            <div className="px-2 py-1 rounded flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.18)' }}>
+              <svg viewBox="0 0 40 26" fill="none" style={{ height: 14, width: 'auto' }}>
                 <circle cx="15" cy="13" r="9" fill="#EB001B" fillOpacity="0.9"/>
                 <circle cx="25" cy="13" r="9" fill="#F79E1B" fillOpacity="0.9"/>
                 <path d="M20 6.5a9 9 0 000 13 9 9 0 000-13z" fill="#FF5F00" fillOpacity="0.9"/>
               </svg>
             </div>
-            <div className="bg-white bg-opacity-15 px-3 py-1.5 rounded">
+            <div className="px-2 py-1 rounded" style={{ background: 'rgba(255,255,255,0.18)' }}>
               <span className="text-xs font-bold" style={{ color: '#fff' }}>iyzico</span>
             </div>
           </div>
-        </div>
 
-        {/* Copyright */}
-        <p className="text-center text-xs mt-6" style={{ color: '#FFF4DE', opacity: 0.5 }}>
-          &copy; {new Date().getFullYear()} Mea Culpa. {t('footer.copyright')}
-        </p>
+          {/* Sol linkler */}
+          <ul className="space-y-1 text-xs">
+            <li>
+              <Link href="/distance-sales-agreement" className="hover:opacity-100 transition-opacity" style={linkColor}>
+                • {i18n.language === 'tr' ? 'Mesafeli Satış Sözleşmesi' : 'Distance Sales Agreement'}
+              </Link>
+            </li>
+            <li>
+              <Link href="/privacy" className="hover:opacity-100 transition-opacity" style={linkColor}>
+                • {i18n.language === 'tr' ? 'Gizlilik Politikası' : 'Privacy Policy'}
+              </Link>
+            </li>
+            <li>
+              <Link href="/returns" className="hover:opacity-100 transition-opacity" style={linkColor}>
+                • {i18n.language === 'tr' ? 'İade Politikaları' : 'Return Policy'}
+              </Link>
+            </li>
+          </ul>
+
+          {/* Merkez: copyright */}
+          <p className="text-xs text-center flex-shrink-0" style={{ color: '#FFF4DE', opacity: 0.7 }}>
+            © {new Date().getFullYear()} MEA CULPA.<br />
+            {i18n.language === 'tr' ? 'TÜM HAKLARI SAKLIDIR.' : 'ALL RIGHTS RESERVED.'}
+          </p>
+
+          {/* Sağ linkler */}
+          <ul className="space-y-1 text-xs">
+            <li>
+              <Link href="/order-tracking" className="hover:opacity-100 transition-opacity" style={linkColor}>
+                • {i18n.language === 'tr' ? 'Sipariş Takip' : 'Order Tracking'}
+              </Link>
+            </li>
+            <li>
+              <Link href="/faq" className="hover:opacity-100 transition-opacity" style={linkColor}>
+                • {i18n.language === 'tr' ? 'Sıkça Sorulan Sorular' : 'FAQ'}
+              </Link>
+            </li>
+            <li>
+              <Link href="/contact" className="hover:opacity-100 transition-opacity" style={linkColor}>
+                • {i18n.language === 'tr' ? 'Bize Ulaşın' : 'Contact Us'}
+              </Link>
+            </li>
+          </ul>
+
+          {/* Sağ: sosyal medya */}
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <a
+              href="https://www.instagram.com/meaculpadesign/?igsh=MW8ybW9qdGJ6bTAyNw%3D%3D#"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="hover:opacity-100 transition-opacity"
+              style={{ color: '#FFF4DE', opacity: 0.8 }}
+            >
+              <Instagram size={22} />
+            </a>
+            <a
+              href="https://wa.me/905075620802"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp"
+              className="hover:opacity-100 transition-opacity"
+              style={{ color: '#FFF4DE', opacity: 0.8 }}
+            >
+              <MessageCircle size={22} />
+            </a>
+          </div>
+
+        </div>
       </div>
     </footer>
   );
