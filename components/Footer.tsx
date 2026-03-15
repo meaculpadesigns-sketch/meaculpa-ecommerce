@@ -31,7 +31,7 @@ export default function Footer() {
           </div>
 
           {/* Sol linkler */}
-          <ul className="space-y-1 text-xs" style={{ marginLeft: '-6%' }}>
+          <ul className="space-y-1 text-xs" style={{ marginLeft: '-16%' }}>
             <li>
               <Link href="/distance-sales-agreement" className="hover:opacity-100 transition-opacity" style={linkColor}>
                 • {i18n.language === 'tr' ? 'Mesafeli Satış Sözleşmesi' : 'Distance Sales Agreement'}
@@ -56,7 +56,7 @@ export default function Footer() {
           </p>
 
           {/* Sağ linkler */}
-          <ul className="space-y-1 text-xs" style={{ marginRight: '-3%' }}>
+          <ul className="space-y-1 text-xs" style={{ marginRight: '-8%' }}>
             <li>
               <Link href="/order-tracking" className="hover:opacity-100 transition-opacity" style={linkColor}>
                 • {i18n.language === 'tr' ? 'Sipariş Takip' : 'Order Tracking'}
