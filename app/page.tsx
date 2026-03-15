@@ -518,7 +518,7 @@ export default function Home() {
 
           {/* Tümünü Gör — BPM kartının solunda hizalı */}
           <div className="mt-4">
-            <Link href="/festivals-and-blog" className="text-sm font-medium" style={{ color: '#FFF4DE', opacity: 0.85 }}>
+            <Link href="/festivals-and-blog" className="text-base font-bold px-4 py-1.5" style={{ color: '#ffffff', border: '1px solid rgba(255,255,255,0.55)' }}>
               {i18n.language === 'tr' ? 'Tümünü Gör' : 'View All'}
             </Link>
           </div>
