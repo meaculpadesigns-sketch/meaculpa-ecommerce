@@ -442,7 +442,7 @@ export default function Home() {
         </div>
         <div
           className="hidden lg:block absolute shadow-xl"
-          style={{ top: '110%', left: '5%', transform: 'rotate(10deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 280, zIndex: 31 }}
+          style={{ top: '125%', left: '5%', transform: 'rotate(10deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 280, zIndex: 31 }}
         >
           <div className="relative" style={{ height: 340 }}>
             <Image src="/images/homepage/polaroid3.png" alt="" fill className="object-cover" />
