@@ -474,14 +474,14 @@ export default function Home() {
           <div className="flex overflow-hidden rounded-xl mb-4 group" style={{ background: 'rgba(0,0,0,0.78)' }}>
             <div className="flex-1 p-5 flex flex-col">
               <div className="flex justify-between items-start mb-1">
-                <h3 className="text-sm font-bold tracking-widest uppercase" style={{ color: '#ffffff' }}>
+                <h3 className="text-base font-bold tracking-widest uppercase" style={{ color: '#ffffff' }}>
                   LABRYINTO FESTIVAL 2025
                 </h3>
-                <Link href="/festivals-and-blog" className="text-xs ml-4 whitespace-nowrap flex-shrink-0" style={{ color: '#FFF4DE', opacity: 0.8 }}>
+                <Link href="/festivals-and-blog" className="text-xs ml-4 whitespace-nowrap flex-shrink-0 px-3 py-1" style={{ color: '#ffffff', border: '1px solid rgba(255,255,255,0.55)' }}>
                   {i18n.language === 'tr' ? 'Detaylı İncele' : 'Read More'}
                 </Link>
               </div>
-              <p className="text-xs mb-2" style={{ color: '#FFF4DE', opacity: 0.6 }}>Guanacaste / Costa Rica</p>
+              <p className="text-xs mb-2" style={{ color: '#c9a96e' }}>Guanacaste / Costa Rica</p>
               <p className="text-sm leading-relaxed" style={{ color: '#FFF4DE', opacity: 0.82, fontStyle: 'italic', fontFamily: "'Bellota Text'" }}>
                 {i18n.language === 'tr'
                   ? '2024\'e geldiğimizde, Labryinto artık Mea Culpa\'nın yıllık ritüellerinden biri hâline gelmiştir. Her geçen yıl daha da zenginleşen festival atmosferi, markamızın dinamik tasarım diliyle güçlü bir uyum içinde ilerledi.'
@@ -500,14 +500,14 @@ export default function Home() {
             </div>
             <div className="flex-1 p-5 flex flex-col">
               <div className="flex justify-between items-start mb-1">
-                <h3 className="text-sm font-bold tracking-widest uppercase" style={{ color: '#ffffff' }}>
+                <h3 className="text-base font-bold tracking-widest uppercase" style={{ color: '#ffffff' }}>
                   THE BPM FESTIVAL 2024
                 </h3>
-                <Link href="/festivals-and-blog" className="text-xs ml-4 whitespace-nowrap flex-shrink-0" style={{ color: '#FFF4DE', opacity: 0.8 }}>
+                <Link href="/festivals-and-blog" className="text-xs ml-4 whitespace-nowrap flex-shrink-0 px-3 py-1" style={{ color: '#ffffff', border: '1px solid rgba(255,255,255,0.55)' }}>
                   {i18n.language === 'tr' ? 'Detaylı İncele' : 'Read More'}
                 </Link>
               </div>
-              <p className="text-xs mb-2" style={{ color: '#FFF4DE', opacity: 0.6 }}>Tamarindo, Guanacaste, Costa Rica</p>
+              <p className="text-xs mb-2" style={{ color: '#c9a96e' }}>Tamarindo, Guanacaste, Costa Rica</p>
               <p className="text-sm leading-relaxed" style={{ color: '#FFF4DE', opacity: 0.82, fontStyle: 'italic', fontFamily: "'Bellota Text'" }}>
                 {i18n.language === 'tr'
                   ? '2024\'e geldiğimizde, Mea Culpa artık BPM sahnesine yabancı değildi. İlk yılın deneyimleri üzerine inşa edilen bu edisyonda, markamız festival içinde çok daha görünür. Çok daha tanıdık ve çok daha bütünsel bir konuma ulaştı.'
