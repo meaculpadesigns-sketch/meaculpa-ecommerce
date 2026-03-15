@@ -434,7 +434,7 @@ export default function Home() {
         {/* Polaroidler — section'dan aşağı taşıyor */}
         <div
           className="hidden lg:block absolute shadow-xl"
-          style={{ top: -20, left: -15, transform: 'rotate(-15deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 310, zIndex: 30 }}
+          style={{ top: 20, left: -15, transform: 'rotate(-15deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 310, zIndex: 30 }}
         >
           <div className="relative" style={{ height: 375 }}>
             <Image src="/images/homepage/polaroid4.png" alt="" fill className="object-cover" />
@@ -442,7 +442,7 @@ export default function Home() {
         </div>
         <div
           className="hidden lg:block absolute shadow-xl"
-          style={{ top: '55%', left: '5%', transform: 'rotate(10deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 280, zIndex: 31 }}
+          style={{ top: '70%', left: '5%', transform: 'rotate(10deg)', background: '#fff', padding: '8px 8px 28px 8px', width: 280, zIndex: 31 }}
         >
           <div className="relative" style={{ height: 340 }}>
             <Image src="/images/homepage/polaroid3.png" alt="" fill className="object-cover" />
