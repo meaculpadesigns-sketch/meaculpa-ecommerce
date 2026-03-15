@@ -526,7 +526,7 @@ export default function Home() {
       </section>
 
       {/* ── 6. MÜŞTERİ YORUMLARI ── */}
-      <Testimonials />
+      {/* <Testimonials /> */}
     </div>
   );
 }
