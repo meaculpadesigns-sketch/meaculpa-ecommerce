@@ -7,33 +7,27 @@ import { Instagram, MessageCircle } from 'lucide-react';
 export default function Footer() {
   const { t, i18n } = useTranslation();
 
-  const linkColor = { color: '#FFF4DE', opacity: 0.85 };
+  const linkColor = { color: '#ffffff' };
 
   return (
-    <footer style={{ background: '#7a8570' }}>
+    <footer style={{ background: '#9E906C' }}>
       {/* Logo için boşluk (128px logo, 64px footer'a taşıyor) + içerik satırı */}
       <div className="max-w-7xl mx-auto px-6 lg:px-10" style={{ paddingTop: 76, paddingBottom: 22 }}>
 
         {/* Ana tek satır: 5 bölge */}
         <div className="flex items-center justify-between gap-4">
 
-          {/* Sol: ödeme yöntemleri */}
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <div className="px-2 py-1 rounded" style={{ background: 'rgba(255,255,255,0.18)' }}>
-              <svg viewBox="0 0 48 16" fill="none" style={{ height: 14, width: 'auto' }}>
-                <text x="0" y="12" fontFamily="Arial, sans-serif" fontSize="14" fontWeight="bold" fill="#ffffff" letterSpacing="1">VISA</text>
-              </svg>
-            </div>
-            <div className="px-2 py-1 rounded flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.18)' }}>
-              <svg viewBox="0 0 40 26" fill="none" style={{ height: 14, width: 'auto' }}>
-                <circle cx="15" cy="13" r="9" fill="#EB001B" fillOpacity="0.9"/>
-                <circle cx="25" cy="13" r="9" fill="#F79E1B" fillOpacity="0.9"/>
-                <path d="M20 6.5a9 9 0 000 13 9 9 0 000-13z" fill="#FF5F00" fillOpacity="0.9"/>
-              </svg>
-            </div>
-            <div className="px-2 py-1 rounded" style={{ background: 'rgba(255,255,255,0.18)' }}>
-              <span className="text-xs font-bold" style={{ color: '#fff' }}>iyzico</span>
-            </div>
+          {/* Sol: ödeme yöntemleri — çerçevesiz */}
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <svg viewBox="0 0 48 16" fill="none" style={{ height: 14, width: 'auto' }}>
+              <text x="0" y="12" fontFamily="Arial, sans-serif" fontSize="14" fontWeight="bold" fill="#ffffff" letterSpacing="1">VISA</text>
+            </svg>
+            <svg viewBox="0 0 40 26" fill="none" style={{ height: 16, width: 'auto' }}>
+              <circle cx="15" cy="13" r="9" fill="#EB001B"/>
+              <circle cx="25" cy="13" r="9" fill="#F79E1B"/>
+              <path d="M20 6.5a9 9 0 000 13 9 9 0 000-13z" fill="#FF5F00"/>
+            </svg>
+            <span className="text-xs font-bold" style={{ color: '#fff' }}>iyzico</span>
           </div>
 
           {/* Sol linkler */}
@@ -56,7 +50,7 @@ export default function Footer() {
           </ul>
 
           {/* Merkez: copyright */}
-          <p className="text-xs text-center flex-shrink-0" style={{ color: '#FFF4DE', opacity: 0.7 }}>
+          <p className="text-xs text-center flex-shrink-0" style={{ color: '#ffffff', opacity: 0.85 }}>
             © {new Date().getFullYear()} MEA CULPA.<br />
             {i18n.language === 'tr' ? 'TÜM HAKLARI SAKLIDIR.' : 'ALL RIGHTS RESERVED.'}
           </p>
@@ -88,7 +82,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               aria-label="Instagram"
               className="hover:opacity-100 transition-opacity"
-              style={{ color: '#FFF4DE', opacity: 0.8 }}
+              style={{ color: '#ffffff' }}
             >
               <Instagram size={22} />
             </a>
@@ -98,7 +92,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               aria-label="WhatsApp"
               className="hover:opacity-100 transition-opacity"
-              style={{ color: '#FFF4DE', opacity: 0.8 }}
+              style={{ color: '#ffffff' }}
             >
               <MessageCircle size={22} />
             </a>
