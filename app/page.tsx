@@ -395,7 +395,7 @@ export default function Home() {
       </section>
 
       {/* ── 4. BİZ KİMİZ? – Taupe bg, sol polaroidler, sağ metin ── */}
-      <section className="relative" style={{ background: '#9E906C', zIndex: 1, overflow: 'visible' }}>
+      <section className="relative" style={{ background: '#9E906C', overflow: 'visible' }}>
         <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr]">
 
           {/* Sol: boş spacer — polaroidler absolute olarak section'dan taşıyor */}
