@@ -164,7 +164,7 @@ export default function Navbar() {
           borderColor: isScrolled ? 'rgba(0,0,0,0.1)' : undefined,
         }}
       >
-        <div className="w-full px-4 md:px-8 pt-10 md:pt-14">
+        <div className={`w-full px-4 md:px-8 transition-all duration-300 ${isScrolled ? 'py-2' : 'pt-10 md:pt-14'}`}>
           <div className="flex items-stretch">
 
             {/* ── SOL: Logo (dikey, tam yüksekliği kaplar) ── */}
@@ -174,7 +174,7 @@ export default function Navbar() {
                 alt="Mea Culpa"
                 width={260}
                 height={130}
-                className="w-44 md:w-56 lg:w-64 h-auto object-contain"
+                className={`h-auto object-contain transition-all duration-300 ${isScrolled ? 'w-28 md:w-32' : 'w-44 md:w-56 lg:w-64'}`}
                 priority
               />
             </Link>
