@@ -529,12 +529,15 @@ export default function Home() {
 
         {/* Mea Culpa sembol logosu — yarısı bu bölümde, yarısı footer'da */}
         <div className="absolute z-20" style={{ bottom: -64, left: '50%', transform: 'translateX(-50%)' }}>
-          <Image
-            src="/images/MeaCulpaSymbolPNG.png"
-            alt="Mea Culpa"
-            width={128}
-            height={128}
-          />
+          <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} aria-label="Sayfanın başına dön">
+            <Image
+              src="/images/MeaCulpaSymbolPNG.png"
+              alt="Mea Culpa"
+              width={128}
+              height={128}
+              style={{ cursor: 'pointer' }}
+            />
+          </a>
         </div>
       </section>
 

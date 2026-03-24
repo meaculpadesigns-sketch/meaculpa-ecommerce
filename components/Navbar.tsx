@@ -155,7 +155,7 @@ export default function Navbar() {
       <nav
         className={`transition-all duration-300 ${isScrolled ? 'glass border-b' : ''}`}
         style={{
-          position: 'absolute',
+          position: 'fixed',
           top: 0,
           left: 0,
           right: 0,
