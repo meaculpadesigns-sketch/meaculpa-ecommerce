@@ -155,7 +155,8 @@ export default function Home() {
               transition={{ duration: 0.7 }}
             >
               {/* === DESKTOP (lg+): metinler sağa yaslı, çubuğun bitiminde === */}
-              <div className="hidden lg:block" style={{ paddingTop: '90px' }}>
+              <div className="hidden lg:block">
+                <div style={{ height: '90px' }} />
                 <h2 className="text-5xl md:text-6xl font-bold"
                   style={{ color: '#FFF4DE', textAlign: 'right', marginLeft: 'calc(-40vw - 48px)', width: 'calc(40vw + 48px)' }}>
                   KİMONO
