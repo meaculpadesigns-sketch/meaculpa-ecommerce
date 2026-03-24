@@ -156,16 +156,12 @@ export default function Home() {
             >
               {/* === DESKTOP (lg+): metinler sağa yaslı, çubuğun bitiminde === */}
               <div className="hidden lg:block">
-                <p className="text-xs tracking-widest uppercase mb-1"
-                  style={{ color: '#FFF4DE', opacity: 0.6, textAlign: 'right', marginLeft: 'calc(-40vw - 48px)', width: 'calc(40vw + 48px)' }}>
-                  {i18n.language === 'tr' ? 'Koleksiyon' : 'Collection'}
-                </p>
-                <h2 className="text-5xl md:text-6xl font-bold"
+                <h2 className="text-5xl md:text-6xl font-bold mt-4"
                   style={{ color: '#FFF4DE', textAlign: 'right', marginLeft: 'calc(-40vw - 48px)', width: 'calc(40vw + 48px)' }}>
                   KİMONO
                 </h2>
-                {/* Çubuk + Buton aynı satır */}
-                <div className="flex items-center mt-1 mb-3"
+                {/* Çubuk + Buton + Scroll butonları aynı satır */}
+                <div className="flex items-center mt-3 mb-2"
                   style={{ marginLeft: 'calc(-40vw - 48px)', width: 'max-content' }}>
                   <div style={{ height: '2px', background: '#FFF4DE', opacity: 0.85, width: 'calc(40vw + 48px)', flexShrink: 0 }} />
                   <Link
@@ -175,8 +171,24 @@ export default function Home() {
                   >
                     {i18n.language === 'tr' ? 'Koleksiyonu Gör' : 'View Collection'}
                   </Link>
+                  <button
+                    onClick={() => scrollCarousel(kimonoScrollRef, 'left')}
+                    className="ml-3 p-2 rounded-full border"
+                    style={{ borderColor: '#FFF4DE', color: '#FFF4DE' }}
+                    aria-label="Previous"
+                  >
+                    <ChevronLeft size={16} />
+                  </button>
+                  <button
+                    onClick={() => scrollCarousel(kimonoScrollRef, 'right')}
+                    className="ml-1 p-2 rounded-full border"
+                    style={{ borderColor: '#FFF4DE', color: '#FFF4DE' }}
+                    aria-label="Next"
+                  >
+                    <ChevronRight size={16} />
+                  </button>
                 </div>
-                <p className="text-lg mb-10"
+                <p className="text-lg mb-6"
                   style={{ color: '#FFF4DE', opacity: 0.82, fontStyle: 'italic', fontFamily: "'Bellota Text'", textAlign: 'right', marginLeft: 'calc(-40vw - 48px)', width: 'calc(40vw + 48px)' }}>
                   {i18n.language === 'tr' ? 'hikayesi olan özel tasarımlar' : 'unique designs with a story'}
                 </p>
@@ -184,9 +196,6 @@ export default function Home() {
 
               {/* === MOBİLE (< lg): normal düzen === */}
               <div className="lg:hidden">
-                <p className="text-xs tracking-widest uppercase mb-3" style={{ color: '#FFF4DE', opacity: 0.6 }}>
-                  {i18n.language === 'tr' ? 'Koleksiyon' : 'Collection'}
-                </p>
                 <h2 className="text-5xl font-bold" style={{ color: '#FFF4DE' }}>KİMONO</h2>
                 <div className="w-14 my-3" style={{ height: '2px', background: '#FFF4DE' }} />
                 <p className="text-lg mb-6" style={{ color: '#FFF4DE', opacity: 0.82, fontStyle: 'italic', fontFamily: "'Bellota Text'" }}>
@@ -207,24 +216,6 @@ export default function Home() {
               <p className="text-sm mt-auto" style={{ color: '#FFF4DE', opacity: 0.6 }}>{t('common.loading')}</p>
             ) : kimonoProducts.length > 0 ? (
               <div className="mt-auto">
-                <div className="flex gap-2 mb-3">
-                  <button
-                    onClick={() => scrollCarousel(kimonoScrollRef, 'left')}
-                    className="p-2 rounded-full border"
-                    style={{ borderColor: '#FFF4DE', color: '#FFF4DE' }}
-                    aria-label="Previous"
-                  >
-                    <ChevronLeft size={16} />
-                  </button>
-                  <button
-                    onClick={() => scrollCarousel(kimonoScrollRef, 'right')}
-                    className="p-2 rounded-full border"
-                    style={{ borderColor: '#FFF4DE', color: '#FFF4DE' }}
-                    aria-label="Next"
-                  >
-                    <ChevronRight size={16} />
-                  </button>
-                </div>
                 <div
                   ref={kimonoScrollRef}
                   className="flex gap-3 overflow-x-auto scroll-smooth scrollbar-hide"
