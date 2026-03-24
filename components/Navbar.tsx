@@ -170,7 +170,7 @@ export default function Navbar() {
             {/* ── SOL: Logo (dikey, tam yüksekliği kaplar) ── */}
             <Link href="/" className="flex-shrink-0 flex items-end pr-6 md:pr-10 pb-2">
               <Image
-                src="/images/logo-main.svg"
+                src="/images/meaculpa3kahveSVG.svg"
                 alt="Mea Culpa"
                 width={260}
                 height={130}
