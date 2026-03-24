@@ -149,19 +149,19 @@ export default function Home() {
           {/* Sağ: Başlık + şerit + kartlar */}
           <div className="lg:w-3/5 flex flex-col px-8 md:px-12 pt-14 pb-0">
             <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
             >
               {/* === DESKTOP (lg+): metinler sağa yaslı, çubuğun bitiminde === */}
-              <div className="hidden lg:block">
+              <div className="hidden lg:block" style={{ paddingTop: '90px' }}>
                 <h2 className="text-5xl md:text-6xl font-bold"
-                  style={{ marginTop: '90px', color: '#FFF4DE', textAlign: 'right', marginLeft: 'calc(-40vw - 48px)', width: 'calc(40vw + 48px)' }}>
+                  style={{ color: '#FFF4DE', textAlign: 'right', marginLeft: 'calc(-40vw - 48px)', width: 'calc(40vw + 48px)' }}>
                   KİMONO
                 </h2>
                 {/* Çubuk + Buton + Scroll butonları aynı satır */}
-                <div className="flex items-center mt-3 mb-0"
+                <div className="flex items-center mt-2 mb-0"
                   style={{ marginLeft: 'calc(-40vw - 48px)', width: 'max-content' }}>
                   <div style={{ height: '2px', background: '#FFF4DE', opacity: 0.85, width: 'calc(40vw + 48px)', flexShrink: 0 }} />
                   <Link
