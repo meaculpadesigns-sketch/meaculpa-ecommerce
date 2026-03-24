@@ -156,7 +156,7 @@ export default function Home() {
             >
               {/* === DESKTOP (lg+): metinler sağa yaslı, çubuğun bitiminde === */}
               <div className="hidden lg:block">
-                <h2 className="text-5xl md:text-6xl font-bold mt-4"
+                <h2 className="text-5xl md:text-6xl font-bold mt-10"
                   style={{ color: '#FFF4DE', textAlign: 'right', marginLeft: 'calc(-40vw - 48px)', width: 'calc(40vw + 48px)' }}>
                   KİMONO
                 </h2>
@@ -188,7 +188,7 @@ export default function Home() {
                     <ChevronRight size={16} />
                   </button>
                 </div>
-                <p className="text-lg mb-6"
+                <p className="text-lg mb-1"
                   style={{ color: '#FFF4DE', opacity: 0.82, fontStyle: 'italic', fontFamily: "'Bellota Text'", textAlign: 'right', marginLeft: 'calc(-40vw - 48px)', width: 'calc(40vw + 48px)' }}>
                   {i18n.language === 'tr' ? 'hikayesi olan özel tasarımlar' : 'unique designs with a story'}
                 </p>
