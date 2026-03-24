@@ -24,20 +24,11 @@ export default function Navbar() {
   const { t, i18n } = useTranslation();
   const { getCartCount } = useCart();
   const { theme, setTheme } = useTheme();
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const cartCount = getCartCount();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const toggleLanguage = () => {
     i18n.changeLanguage(i18n.language === 'tr' ? 'en' : 'tr');
@@ -75,11 +66,9 @@ export default function Navbar() {
     ...rightNavItems,
   ];
 
-  const linkColor = !isScrolled ? '#FFF4DE' : undefined;
-  const iconClass = !isScrolled
-    ? 'text-[#FFF4DE] opacity-80 hover:opacity-100 transition-opacity'
-    : 'text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors';
-  const dividerColor = !isScrolled ? 'rgba(255,244,222,0.3)' : 'rgba(0,0,0,0.12)';
+  const linkColor = '#FFF4DE';
+  const iconClass = 'text-[#FFF4DE] opacity-80 hover:opacity-100 transition-opacity';
+  const dividerColor = 'rgba(255,244,222,0.3)';
 
   const renderNavLink = (item: NavItem) => (
     <div
@@ -153,18 +142,16 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`transition-all duration-300 ${isScrolled ? 'glass border-b' : ''}`}
         style={{
-          position: 'fixed',
+          position: 'absolute',
           top: 0,
           left: 0,
           right: 0,
           zIndex: 50,
-          background: isScrolled ? undefined : 'transparent',
-          borderColor: isScrolled ? 'rgba(0,0,0,0.1)' : undefined,
+          background: 'transparent',
         }}
       >
-        <div className={`w-full px-4 md:px-8 transition-all duration-300 ${isScrolled ? 'py-2' : 'pt-10 md:pt-14'}`}>
+        <div className="w-full px-4 md:px-8 pt-10 md:pt-14">
           <div className="flex items-stretch">
 
             {/* ── SOL: Logo (dikey, tam yüksekliği kaplar) ── */}
@@ -174,7 +161,7 @@ export default function Navbar() {
                 alt="Mea Culpa"
                 width={260}
                 height={130}
-                className={`h-auto object-contain transition-all duration-300 ${isScrolled ? 'w-28 md:w-32' : 'w-44 md:w-56 lg:w-64'}`}
+                className="w-44 md:w-56 lg:w-64 h-auto object-contain"
                 priority
               />
             </Link>
