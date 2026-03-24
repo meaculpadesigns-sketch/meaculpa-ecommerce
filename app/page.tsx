@@ -156,8 +156,8 @@ export default function Home() {
             >
               {/* === DESKTOP (lg+): metinler sağa yaslı, çubuğun bitiminde === */}
               <div className="hidden lg:block">
-                <h2 className="text-5xl md:text-6xl font-bold" style={{ marginTop: '90px' }}
-                  style={{ color: '#FFF4DE', textAlign: 'right', marginLeft: 'calc(-40vw - 48px)', width: 'calc(40vw + 48px)' }}>
+                <h2 className="text-5xl md:text-6xl font-bold"
+                  style={{ marginTop: '90px', color: '#FFF4DE', textAlign: 'right', marginLeft: 'calc(-40vw - 48px)', width: 'calc(40vw + 48px)' }}>
                   KİMONO
                 </h2>
                 {/* Çubuk + Buton + Scroll butonları aynı satır */}
