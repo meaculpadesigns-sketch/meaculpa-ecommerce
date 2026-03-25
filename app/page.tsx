@@ -148,6 +148,8 @@ export default function Home() {
 
           {/* Sağ: Başlık + şerit + kartlar */}
           <div className="lg:w-3/5 flex flex-col px-8 md:px-12 pt-14 pb-0">
+            {/* Desktop spacer — flex child olarak mt-auto'dan önce */}
+            <div className="hidden lg:block" style={{ height: '60px', flexShrink: 0 }} />
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -156,7 +158,6 @@ export default function Home() {
             >
               {/* === DESKTOP (lg+): metinler sağa yaslı, çubuğun bitiminde === */}
               <div className="hidden lg:block">
-                <div style={{ height: '90px' }} />
                 <h2 className="text-5xl md:text-6xl font-bold"
                   style={{ color: '#FFF4DE', textAlign: 'right', marginLeft: 'calc(-40vw - 48px)', width: 'calc(40vw + 48px)' }}>
                   KİMONO
