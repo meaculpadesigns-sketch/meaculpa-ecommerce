@@ -147,7 +147,7 @@ export default function Home() {
           </div>
 
           {/* Sağ: Başlık + şerit + kartlar */}
-          <div className="lg:w-3/5 flex flex-col px-8 md:px-12 pb-0" style={{ paddingTop: '150px' }}>
+          <div className="lg:w-3/5 flex flex-col px-8 md:px-12 pb-0" style={{ paddingTop: '150px', minHeight: 520 }}>
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
