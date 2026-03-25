@@ -180,7 +180,7 @@ export default function ProductCard({ product, index, viewMode = 'grid', showPri
         </Link>
 
         {/* Info */}
-        <div className="flex flex-col flex-1 px-4 pt-3 pb-4" style={{ background: cardBg }}>
+        <div className="flex flex-col flex-1 px-4 pt-4 pb-6" style={{ background: cardBg }}>
           <Link href={`/products/${product.id}`}>
             <h3
               className="text-sm font-bold mb-1 hover:opacity-70 transition-opacity line-clamp-1"
