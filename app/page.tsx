@@ -213,13 +213,13 @@ export default function Home() {
             {loading ? (
               <p className="text-sm mt-auto" style={{ color: '#FFF4DE', opacity: 0.6 }}>{t('common.loading')}</p>
             ) : kimonoProducts.length > 0 ? (
-              <div className="mt-auto pb-4">
+              <div className="mt-auto">
                 <div
                   ref={kimonoScrollRef}
-                  className="flex gap-3 overflow-x-auto scroll-smooth scrollbar-hide"
+                  className="flex gap-3 overflow-x-auto scroll-smooth scrollbar-hide items-stretch"
                 >
                   {kimonoProducts.map((product, index) => (
-                    <div key={product.id} className="flex-shrink-0" style={{ width: 'calc(20vw - 40px)' }}>
+                    <div key={product.id} className="flex-shrink-0 flex flex-col" style={{ width: 'calc(20vw - 40px)' }}>
                       <ProductCard product={product} index={index} cardBg="#FFF4DE" />
                     </div>
                   ))}
