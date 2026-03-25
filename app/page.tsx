@@ -147,9 +147,9 @@ export default function Home() {
           </div>
 
           {/* Sağ: Başlık + şerit + kartlar */}
-          <div className="lg:w-3/5 flex flex-col px-8 md:px-12 pt-14 pb-0">
+          <div className="lg:w-3/5 flex flex-col px-8 md:px-12 pb-0" style={{ paddingTop: '120px' }}>
             {/* Desktop spacer — flex child olarak mt-auto'dan önce */}
-            <div className="hidden lg:block" style={{ height: '60px', flexShrink: 0 }} />
+            <div style={{ height: '60px', flexShrink: 0 }} />
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
