@@ -136,7 +136,7 @@ export default function Home() {
         <div className="flex flex-col lg:flex-row">
 
           {/* Sol: Featured kimono fotoğrafı */}
-          <div className="lg:w-2/5 relative overflow-hidden" style={{ minHeight: 520, zIndex: 1 }}>
+          <div className="lg:w-2/5 relative overflow-hidden" style={{ minHeight: 520, zIndex: 5 }}>
             <Image
               src="/images/homepage/4kimono.png"
               alt="Kimono koleksiyonu"
@@ -149,9 +149,7 @@ export default function Home() {
           {/* Sağ: Başlık + şerit + kartlar */}
           <div className="lg:w-3/5 flex flex-col px-8 md:px-12 pt-14 pb-0">
             <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
+              initial={{ opacity: 1 }}
               transition={{ duration: 0.7 }}
             >
               {/* === DESKTOP (lg+): metinler sağa yaslı, çubuğun bitiminde === */}
