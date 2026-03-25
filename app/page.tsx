@@ -147,7 +147,7 @@ export default function Home() {
           </div>
 
           {/* Sağ: Başlık + şerit + kartlar */}
-          <div className="lg:w-3/5 flex flex-col px-8 md:px-12 pb-0" style={{ paddingTop: '150px', minHeight: 520, position: 'relative', zIndex: 2 }}>
+          <div className="lg:w-3/5 flex flex-col px-8 md:px-12 pt-14 pb-0">
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -155,7 +155,7 @@ export default function Home() {
               transition={{ duration: 0.7 }}
             >
               {/* === DESKTOP (lg+): metinler sağa yaslı, çubuğun bitiminde === */}
-              <div className="hidden lg:block">
+              <div className="hidden lg:block" style={{ marginTop: '80px' }}>
                 <h2 className="text-5xl md:text-6xl font-bold"
                   style={{ color: '#FFF4DE', textAlign: 'right', marginLeft: 'calc(-40vw - 48px)', width: 'calc(40vw + 48px)' }}>
                   KİMONO
@@ -215,7 +215,7 @@ export default function Home() {
             {loading ? (
               <p className="text-sm mt-auto" style={{ color: '#FFF4DE', opacity: 0.6 }}>{t('common.loading')}</p>
             ) : kimonoProducts.length > 0 ? (
-              <div className="mt-auto">
+              <div className="mt-auto pb-4">
                 <div
                   ref={kimonoScrollRef}
                   className="flex gap-3 overflow-x-auto scroll-smooth scrollbar-hide"
