@@ -161,7 +161,9 @@ export default function Home() {
                 {/* Çubuk + Buton + Scroll butonları aynı satır */}
                 <div className="flex items-center mt-2 mb-0"
                   style={{ marginLeft: 'calc(-40vw - 48px)', width: 'max-content' }}>
-                  <div style={{ height: '2px', background: '#FFF4DE', opacity: 0.85, width: 'calc(40vw + 48px)', flexShrink: 0 }} />
+                  <div className="relative flex-shrink-0" style={{ height: '2px', width: 'calc(40vw + 48px)' }}>
+                    <div style={{ position: 'absolute', height: '2px', background: '#FFF4DE', opacity: 0.85, left: '-100vw', right: 0, top: 0 }} />
+                  </div>
                   <Link
                     href="/products?category=kimono"
                     className="whitespace-nowrap inline-flex items-center px-7 py-3 rounded-lg font-medium ml-4 transition-all hover:bg-white hover:bg-opacity-10"
