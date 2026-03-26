@@ -97,15 +97,15 @@
 
   /* Product card */
   .product-card {
-    @apply rounded-2xl overflow-hidden hover:scale-105 transition-all duration-300 cursor-pointer border;
+    @apply overflow-hidden hover:scale-105 transition-all duration-300 cursor-pointer;
   }
 
   .dark .product-card {
-    @apply bg-zinc-900 border-zinc-800;
+    @apply bg-zinc-900;
   }
 
   :root .product-card {
-    @apply bg-white border-gray-200 shadow-md;
+    @apply bg-white shadow-md;
   }
 
   /* Input fields - Theme aware */
