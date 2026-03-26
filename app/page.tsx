@@ -369,7 +369,7 @@ export default function Home() {
         {/* Sol manken — üstten kırpılmış */}
         <div
           className="hidden lg:block absolute overflow-hidden"
-          style={{ bottom: -120, left: -170, width: 562, height: 640, zIndex: 10 }}
+          style={{ bottom: -120, left: -170, width: 562, height: 820, zIndex: 10 }}
         >
           <Image
             src="/images/homepage/sol-manken.png"
@@ -383,7 +383,7 @@ export default function Home() {
         {/* Sağ manken — üstten kırpılmış */}
         <div
           className="hidden lg:block absolute overflow-hidden"
-          style={{ bottom: -120, right: -120, width: 562, height: 640, zIndex: 10 }}
+          style={{ bottom: -120, right: -120, width: 562, height: 820, zIndex: 10 }}
         >
           <Image
             src="/images/homepage/sag-manken.png"
