@@ -291,6 +291,26 @@ export default function Home() {
                   </div>
                 </div>
 
+                {/* Scroll butonları — Koleksiyonu Gör altında, ortada */}
+                <div className="flex justify-center gap-2 mt-2 mb-2">
+                  <button
+                    onClick={() => scrollCarousel(setScrollRef, 'left')}
+                    className="p-2 rounded-full border"
+                    style={{ borderColor: '#9E906C', color: '#9E906C' }}
+                    aria-label="Previous"
+                  >
+                    <ChevronLeft size={16} />
+                  </button>
+                  <button
+                    onClick={() => scrollCarousel(setScrollRef, 'right')}
+                    className="p-2 rounded-full border"
+                    style={{ borderColor: '#9E906C', color: '#9E906C' }}
+                    aria-label="Next"
+                  >
+                    <ChevronRight size={16} />
+                  </button>
+                </div>
+
                 <p
                   className="text-lg mb-8"
                   style={{ color: '#9E906C', fontStyle: 'italic', fontFamily: "'Bellota Text'", marginLeft: 'calc((200vw - 1048px) / 3)' }}
@@ -324,24 +344,6 @@ export default function Home() {
               <p className="text-sm mt-auto" style={{ color: '#9E906C' }}>{t('common.loading')}</p>
             ) : setProducts.length > 0 ? (
               <div className="mt-auto">
-                <div className="flex gap-2 mb-3" style={{ position: 'relative', zIndex: 20 }}>
-                  <button
-                    onClick={() => scrollCarousel(setScrollRef, 'left')}
-                    className="p-2 rounded-full border"
-                    style={{ borderColor: '#9E906C', color: '#9E906C' }}
-                    aria-label="Previous"
-                  >
-                    <ChevronLeft size={16} />
-                  </button>
-                  <button
-                    onClick={() => scrollCarousel(setScrollRef, 'right')}
-                    className="p-2 rounded-full border"
-                    style={{ borderColor: '#9E906C', color: '#9E906C' }}
-                    aria-label="Next"
-                  >
-                    <ChevronRight size={16} />
-                  </button>
-                </div>
                 <div
                   ref={setScrollRef}
                   className="flex gap-3 overflow-x-auto scroll-smooth scrollbar-hide"
