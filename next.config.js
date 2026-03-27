@@ -1,6 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Alt-Svc',
+            value: 'clear',
+          },
+        ],
+      },
+    ]
+  },
   images: {
     remotePatterns: [
       {
