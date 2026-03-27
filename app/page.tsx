@@ -370,20 +370,20 @@ export default function Home() {
         <Image
           src="/images/homepage/sol-manken.png"
           alt="Setler koleksiyonu"
-          width={562}
-          height={1000}
+          width={477}
+          height={850}
           className="hidden lg:block absolute"
-          style={{ bottom: -120, zIndex: 10, left: -170, clipPath: 'inset(120px 0 0 0)' }}
+          style={{ bottom: -120, zIndex: 10, left: -170 }}
         />
 
         {/* Sağ manken */}
         <Image
           src="/images/homepage/sag-manken.png"
           alt="Setler koleksiyonu"
-          width={562}
-          height={1000}
+          width={477}
+          height={850}
           className="hidden lg:block absolute"
-          style={{ bottom: -120, zIndex: 10, right: -120, clipPath: 'inset(120px 0 0 0)' }}
+          style={{ bottom: -120, zIndex: 10, right: -120 }}
         />
       </section>
 
