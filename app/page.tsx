@@ -366,33 +366,25 @@ export default function Home() {
           <div className="hidden lg:block" />
         </div>
 
-        {/* Sol manken — üstten kırpılmış */}
-        <div
-          className="hidden lg:block absolute overflow-hidden"
-          style={{ bottom: -120, left: -170, width: 562, height: 950, zIndex: 10 }}
-        >
-          <Image
-            src="/images/homepage/sol-manken.png"
-            alt="Setler koleksiyonu"
-            width={562}
-            height={1000}
-            style={{ position: 'absolute', bottom: 0, left: 0 }}
-          />
-        </div>
+        {/* Sol manken */}
+        <Image
+          src="/images/homepage/sol-manken.png"
+          alt="Setler koleksiyonu"
+          width={562}
+          height={1000}
+          className="hidden lg:block absolute"
+          style={{ bottom: -120, zIndex: 10, left: -170, clipPath: 'inset(120px 0 0 0)' }}
+        />
 
-        {/* Sağ manken — üstten kırpılmış */}
-        <div
-          className="hidden lg:block absolute overflow-hidden"
-          style={{ bottom: -120, right: -120, width: 562, height: 950, zIndex: 10 }}
-        >
-          <Image
-            src="/images/homepage/sag-manken.png"
-            alt="Setler koleksiyonu"
-            width={562}
-            height={1000}
-            style={{ position: 'absolute', bottom: 0, left: 0 }}
-          />
-        </div>
+        {/* Sağ manken */}
+        <Image
+          src="/images/homepage/sag-manken.png"
+          alt="Setler koleksiyonu"
+          width={562}
+          height={1000}
+          className="hidden lg:block absolute"
+          style={{ bottom: -120, zIndex: 10, right: -120, clipPath: 'inset(120px 0 0 0)' }}
+        />
       </section>
 
       {/* ── 4. BİZ KİMİZ? – Taupe bg, sol polaroidler, sağ metin ── */}
