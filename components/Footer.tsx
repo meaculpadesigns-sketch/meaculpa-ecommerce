@@ -12,7 +12,7 @@ export default function Footer() {
   return (
     <footer style={{ background: '#9E906C' }}>
       {/* Logo için boşluk (128px logo, 64px footer'a taşıyor) + içerik satırı */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-10" style={{ paddingTop: 76, paddingBottom: 22 }}>
+      <div className="max-w-7xl mx-auto px-6 lg:px-10" style={{ paddingTop: 32, paddingBottom: 10 }}>
 
         {/* Ana tek satır: 5 bölge */}
         <div className="relative flex items-center justify-between gap-4">
@@ -75,7 +75,7 @@ export default function Footer() {
           </ul>
 
           {/* Sağ: sosyal medya */}
-          <div className="flex items-center gap-3 flex-shrink-0">
+          <div className="flex items-center gap-3 flex-shrink-0" style={{ marginLeft: '-3%' }}>
             <a
               href="https://www.instagram.com/meaculpadesign/?igsh=MW8ybW9qdGJ6bTAyNw%3D%3D#"
               target="_blank"
