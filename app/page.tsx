@@ -312,7 +312,7 @@ export default function Home() {
                 </div>
 
                 <p
-                  className="text-lg mb-8"
+                  className="text-lg mt-1 mb-4 whitespace-nowrap"
                   style={{ color: '#9E906C', fontStyle: 'italic', fontFamily: "'Bellota Text'", marginLeft: 'calc((200vw - 1048px) / 3)' }}
                 >
                   {i18n.language === 'tr' ? 'özel kumaşlardan üretilmiş kombinler' : 'combinations crafted from special fabrics'}
