@@ -221,7 +221,7 @@ export default function Home() {
                   className="flex gap-3 overflow-x-auto scroll-smooth scrollbar-hide items-stretch"
                 >
                   {kimonoProducts.map((product, index) => (
-                    <div key={product.id} className="flex-shrink-0 flex flex-col" style={{ width: 'calc(20vw - 40px)' }}>
+                    <div key={product.id} className="carousel-card-kimono">
                       <ProductCard product={product} index={index} cardBg="#FFF4DE" />
                     </div>
                   ))}
@@ -349,7 +349,7 @@ export default function Home() {
                   className="flex gap-3 overflow-x-auto scroll-smooth scrollbar-hide"
                 >
                   {setProducts.map((product, index) => (
-                    <div key={product.id} className="flex-shrink-0" style={{ width: 'calc((100vw - 560px) / 3)' }}>
+                    <div key={product.id} className="carousel-card-setler">
                       <ProductCard product={product} index={index} cardBg="#9E906C" lightText />
                     </div>
                   ))}
@@ -405,7 +405,7 @@ export default function Home() {
               <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: '#FFF4DE' }}>
                 {i18n.language === 'tr' ? 'Biz Kimiz?' : 'Who Are We?'}
               </h2>
-              <div className="flex items-center gap-8">
+              <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-8">
                 <p
                   className="text-sm leading-relaxed flex-1"
                   style={{ color: '#FFF4DE', opacity: 0.88, fontStyle: 'italic', fontFamily: "'Bellota Text'" }}
@@ -446,7 +446,7 @@ export default function Home() {
       </section>
 
       {/* ── 5. FESTİVALLER & BLOG – Forest bg, yatay kartlar alt alta ── */}
-      <section className="relative py-12 pr-10 pl-0" style={{ minHeight: 460 }}>
+      <section className="relative py-8 px-4 lg:py-12 lg:pr-10 lg:pl-0" style={{ minHeight: 460 }}>
         {/* Arka plan — overflow:hidden içinde clip edildi, logo taşabilsin diye */}
         <div className="absolute inset-0 overflow-hidden">
           <Image
@@ -459,15 +459,15 @@ export default function Home() {
         </div>
 
         {/* İçerik — sol %28 polaroidlere bırakıldı */}
-        <div className="relative z-10 flex flex-col" style={{ marginLeft: '28%' }}>
+        <div className="relative z-10 flex flex-col lg:ml-[28%]">
 
           {/* Başlık — kartların sağ kenarıyla hizalı */}
-          <h2 className="text-4xl font-bold text-right mb-5" style={{ color: '#ffffff' }}>
+          <h2 className="text-2xl lg:text-4xl font-bold text-left lg:text-right mb-5" style={{ color: '#ffffff' }}>
             Festivaller & Blog
           </h2>
 
           {/* LABRYINTO — metin sol, görsel sağ */}
-          <div className="flex overflow-hidden rounded-xl mb-4 group" style={{ background: 'rgba(0,0,0,0.78)' }}>
+          <div className="flex flex-col lg:flex-row overflow-hidden rounded-xl mb-4 group" style={{ background: 'rgba(0,0,0,0.78)' }}>
             <div className="flex-1 p-5 flex flex-col">
               <div className="flex justify-between items-start mb-1">
                 <h3 className="text-base font-bold tracking-widest uppercase" style={{ color: '#ffffff' }}>
@@ -484,14 +484,14 @@ export default function Home() {
                   : 'Labryinto has become one of Mea Culpa\'s annual rituals. Each year, the festival atmosphere deepens in strong harmony with our design language.'}
               </p>
             </div>
-            <div className="relative flex-shrink-0" style={{ width: 180 }}>
+            <div className="festival-image-container">
               <Image src="/images/homepage/labryinto.jpg" alt="Labryinto Festival" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
             </div>
           </div>
 
           {/* THE BPM — görsel sol, metin sağ */}
-          <div className="flex overflow-hidden rounded-xl group" style={{ background: 'rgba(0,0,0,0.78)' }}>
-            <div className="relative flex-shrink-0" style={{ width: 180 }}>
+          <div className="flex flex-col lg:flex-row overflow-hidden rounded-xl group" style={{ background: 'rgba(0,0,0,0.78)' }}>
+            <div className="festival-image-container">
               <Image src="/images/homepage/BPM.jpg" alt="BPM Festival" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
             </div>
             <div className="flex-1 p-5 flex flex-col">

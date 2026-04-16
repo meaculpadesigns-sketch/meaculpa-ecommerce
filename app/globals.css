@@ -224,6 +224,42 @@ html {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+/* Responsive carousel cards */
+.carousel-card-kimono {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  width: 72vw;
+}
+@media (min-width: 1024px) {
+  .carousel-card-kimono {
+    width: calc(20vw - 40px);
+  }
+}
+
+.carousel-card-setler {
+  flex-shrink: 0;
+  width: 72vw;
+}
+@media (min-width: 1024px) {
+  .carousel-card-setler {
+    width: calc((100vw - 560px) / 3);
+  }
+}
+
+.festival-image-container {
+  position: relative;
+  width: 100%;
+  height: 11rem;
+  flex-shrink: 0;
+}
+@media (min-width: 1024px) {
+  .festival-image-container {
+    width: 180px;
+    height: auto;
+  }
+}
+
 /* Formatted product descriptions (with HTML from admin) */
 .formatted-description {
   line-height: 1.8;
